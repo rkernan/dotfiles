@@ -23,7 +23,7 @@ stty -ixon
 # disable beep
 setterm -bfreq 0
 # config directory
-ZSH_HOME="$HOME/.dotfiles/zsh"
+ZSH_HOME="$HOME/.zsh"
 # ignore duplicate lines
 setopt histignoredups
 # prevent file clobbering

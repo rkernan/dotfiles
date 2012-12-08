@@ -1,9 +1,29 @@
 #!/bin/sh
-echo "removing default dotfiles..."
-echo rm $HOME/.vimrc
-echo rm $HOME/.zshrc
-echo rm $HOME/.tmux.conf
-echo "setting up symlinks..."
-echo ln -s $HOME/.dotfiles/vim/vimrc $HOME/.vimrc
-echo ln -s $HOME/.dotfiles/zsh/zshrc $HOME/.zshrc
-echo ln -s $HOME/.dotfiles/tmux/tmux.conf $HOME/.tmux.conf
+echo "WARNING: This will destroy any existing config files!"
+read -p "Setup global config? (y/n) " ans
+case $ans in
+	y|Y) ;;
+	*) exit;;
+esac
+DOTFILES_DIR=$HOME/.dotfiles
+echo "Global config directory: \"$DOTFILES_DIR\""
+# show commands
+set -x
+# remove default config files/dirs
+rm $HOME/.vimrc
+rm -rf $HOME/.vim
+rm $HOME/.zshrc
+rm -rf $HOME/.zsh
+rm $HOME/.tmux.conf
+# link global config
+ln -s $DOTFILES_DIR/vim/vimrc $HOME/.vimrc           #  vim- config
+mkdir $HOME/.vim                                     #  vim- config directory
+ln -s $DOTFILES_DIR/vim/colors $HOME/.vim/colors     #  vim- colorscheme
+ln -s $DOTFILES_DIR/vim/syntax $HOME/.vim/syntax     #  vim- syntax
+ln -s $DOTFILES_DIR/vim/pathogen/* $HOME/.vim        #  vim- pathogen
+ln -s $DOTFILES_DIR/vim/snippets $HOME/.vim/snippets #  vim- snipmate snippets
+ln -s $DOTFILES_DIR/vim/bundle $HOME/.vim/bundle     #  vim- plugins
+ln -s $DOTFILES_DIR/zsh/zshrc $HOME/.zshrc           #  zsh- config
+mkdir $HOME/.zsh                                     #  zsh- config directory
+ln -s $DOTFILES_DIR/zsh/plugin $HOME/.zsh/plugin     #  zsh- plugins
+ln -s $DOTFILES_DIR/tmux/tmux.conf $HOME/.tmux.conf  # tmux- config

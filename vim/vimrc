@@ -280,7 +280,7 @@ vnoremap <c-k> :move -2<cr>gv
 
 " Plugins -------------------------------------------------------------------{{{
 " pathogen
-set runtimepath+=$HOME/.vim/pathogen
+" set runtimepath+=$HOME/.vim/pathogen
 call pathogen#infect()
 " nerdtree
 map <f4> :NERDTreeToggle<cr>
@@ -298,7 +298,7 @@ let g:AutoCloseSmartQuote=1
 let g:AutoClosePairs="() {} [] \" '"
 let g:AutoCloseProtectedRegions=["Comment", "String", "Character"]
 " snipmate
-let g:snippets_dir='$HOME/.dotfiles/vim/snippets'
+let g:snippets_dir='$HOME/.vim/snippets'
 " tcomment
 map <leader>c <c-_><c-_>
 " tagbar
