@@ -1,0 +1,86 @@
+# main
+snippet main
+	public static void main(String [] args) {
+		${1}
+	}
+# if
+snippet if
+	if (${1:/* condition */}) {
+		${2}
+	}
+# else if
+snippet elif
+	else if (${1:/* condition */}) {
+		${2}
+	}
+# else
+snippet else
+	else {
+		${1}
+	}
+# while
+snippet wh
+	while (${1:/* condition */}) {
+		${2}
+	}
+# do
+snippet do
+	do {
+		${2}
+	} while (${1:/* condition */});
+# for
+snippet for
+	for (${2:int }${3:i} = 0; $3 < ${1:10}; $3${4:++}) {
+		${5}
+	}
+# for (custom)
+snippet forr
+	for (${1:int }${2:i} = ${3:0}; ${4:$2 < 10}; $2${5:++}) {
+		${6}
+	}
+# for (iterator)
+snippet fore
+	for (${1} : ${2}) ${3}
+# switch
+snippet sw
+	switch (${1}) {
+		${2}
+	}
+# case
+snippet cs
+	case ${1}:
+		${2}
+# class
+snippet cl
+	class ${1:`Filename("", "untitled")`} ${2}
+# interface
+snippet in
+	interface ${1:`Filename("", "untitled")`} ${2:extends Parent}${3}
+# method
+snippet m
+	${1:void} ${2:method}(${3}) ${4:throws }${5}
+# assert
+snippet as
+	assert ${1:test} : "${2:Failure message}";${3}
+# try ... catch
+snippet try
+	try {
+		${3}
+	}
+	catch (${1:Exception} ${2:e}) {
+	}
+# try ... catch ... finally
+snippet tryf
+	try {
+		${3}
+	}
+	catch (${1:Exception} ${2:e}) {
+	}
+	finally {
+	}
+# System.out.print
+snippet syso
+	System.out.print("${1}");${2}
+# System.out.println
+snippet sysol
+	System.out.println("${1}");${2}

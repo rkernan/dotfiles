@@ -1,0 +1,117 @@
+# @author Robert Kernan
+
+# General -------------------------------------------------------------------{{{
+# set terminal type
+case "$TERM" in
+	*-256color)
+		# alias ssh='TERM=${TERM%-256color} ssh'
+		alias ssh='TERM=linux ssh'
+		;;
+	*)
+		POTENTIAL_TERM=${TERM}-256color
+		POTENTIAL_TERMINFO=${TERM:0:1}/$POTENTIAL_TERM
+		BOX_TERMINFO_DIR=/usr/share/terminfo
+		[[ -f $BOX_TERMINFO_DIR/$POTENTIAL_TERMINFO ]] && \
+			export TERM=$POTENTIAL_TERM
+		HOME_TERMINFO_DIR=$HOME/.terminfo
+		[[ -f $HOME_TERMINFO_DIR/$POTENTIAL_TERMINFO ]] && \
+			export TERM=$POTENTIAL_TERM
+		;;
+esac
+# disable XON/XOFF flow control
+stty -ixon
+# disable beep
+setterm -bfreq 0
+# config directory
+ZSH_HOME="$HOME/.dotfiles/zsh"
+# ignore duplicate lines
+setopt histignoredups
+# prevent file clobbering
+setopt noclobber
+# autocorrection
+setopt correct
+# colors
+autoload colors; colors
+# exports
+export EDITOR="vim"
+export VISUAL="vim"
+# }}}
+
+# Mode ----------------------------------------------------------------------{{{
+# use vi keybindings
+bindkey -v
+# (some) emacs bindings in vim mode
+bindkey '^e' end-of-line
+bindkey '^a' beginning-of-line
+bindkey '^h' backward-char
+bindkey '^l' forward-char
+bindkey '^p' up-history
+bindkey '^n' down-history
+# }}}
+
+# Autocompletion ------------------------------------------------------------{{{
+autoload -U compinit
+compinit
+setopt completealiases
+zstyle ':completion:*' menu select
+zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
+zstyle ':completion:*:warnings' format '%BNo matches for: %d%b'
+zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
+# }}}
+
+# Version Control -----------------------------------------------------------{{{
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git svn
+zstyle ':vcs_info:*' get-revision true
+zstyle ':vcs_info:*' stagedstr '%F{green}●'
+zstyle ':vcs_info:*' unstagedstr '%F{yellow}●'
+zstyle ':vcs_info:*' check-for-changes true
+zstyle ':vcs_info:*' formats ' on %F{red}%b%c%u%F{white}'
+precmd() {
+	vcs_info
+}
+# }}}
+
+# Aliases -------------------------------------------------------------------{{{
+alias egrep="egrep --color=auto"
+alias fgrep="fgrep --color=auto"
+alias grep="grep --color=auto"
+
+alias ls="ls --color=auto --group-directories-first"
+alias la="ls --color=auto --group-directories-first -C -AF"
+alias ll="ls --color=auto --group-directories-first -C -lA"
+
+alias mv="nocorrect mv"
+alias cp="nocorrect cp"
+alias mkdir="nocorrect mkdir"
+# }}}
+
+# Highlighting --------------------------------------------------------------{{{
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
+
+source $ZSH_HOME/plugin/syntax-hi/zsh-syntax-highlighting.zsh
+# }}}
+
+# Mode Display --------------------------------------------------------------{{{
+vimode_ins="%B%F{cyan}INS%b%F{white}"
+vimode_cmd="%B%F{green}CMD%b%F{white}"
+vimode_curr=$vimode_ins
+
+function zle-line-finish {
+	vimode_curr=$vimode_ins
+}
+
+function zle-keymap-select {
+	vimode_curr="${${KEYMAP/vicmd/${vimode_cmd}}/(main|viins)/${vimode_ins}}"
+	zle reset-prompt
+}
+
+zle -N zle-line-finish
+zle -N zle-keymap-select
+# }}}
+
+# Prompt --------------------------------------------------------------------{{{
+setopt prompt_subst
+PROMPT='[${vimode_curr}][%F{blue}%n%F{white}@%F{yellow}%m%F{white}:%F{cyan}%~%F{white}${vcs_info_msg_0_}]$ '
+# RPROMPT='(%D{%F %I:%M %p})' # 12-hour time
+# }}}

@@ -1,0 +1,342 @@
+" @author Robert Kernan
+
+" Behavior ------------------------------------------------------------------{{{
+" disable compatability mode
+set nocompatible
+" automatically read file changes
+set autoread
+" set encoding
+set encoding=utf8
+set ffs=unix,dos,mac
+" enable filetype specific settings
+filetype plugin on
+filetype indent on
+" time out keycodes
+set notimeout
+set ttimeout
+set ttimeoutlen=10
+" default backspace behavior
+set backspace=indent,eol,start
+" set shell
+set shell=/bin/zsh\ --login
+" enable mouse
+set mouse=a
+" set leader
+let mapleader="\\"
+let g:mapleader="\\"
+" super user write
+cnoremap w!! s !sudo tee % >/dev/null
+" disable annoying helpscreen mappings
+noremap  <F1> <nop>
+inoremap <F1> <nop>
+" toggle menu
+if has('gui_running')
+	" toggle menu
+	nnoremap <silent> <f2> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
+endif
+" source current selection
+vnoremap <leader>S y:execute @@<cr>:echo "sourced selection"<cr>
+nnoremap <leader>S ^vg_y:execute @@<cr>:echo "sourced line"<cr>
+" set history size
+set history=1000
+set undoreload=1000
+" temporary files
+set undodir=$HOME/.vimundo//
+set backupdir=$HOME/.vimbak//
+set directory=$HOME/.vimswap//
+if !isdirectory(expand(&undodir))
+	call mkdir(expand(&undodir), "p")
+endif
+if !isdirectory(expand(&backupdir))
+	call mkdir(expand(&backupdir), "p")
+endif
+if !isdirectory(expand(&directory))
+	call mkdir(expand(&directory))
+endif
+" enable undo and backup files
+set undofile
+set backup
+" disable swap files
+set noswapfile
+" crontab fix for backup
+set backupskip=/tmp/*,/private/tmp/*"
+" use tilde (caps) as operator
+set tildeop
+" enable alt keys in mappings
+set winaltkeys=no
+" fix common alt mappings
+" noremap <a-`> 0
+" noremap <a-q> \
+" noremap <a-w> |
+" noremap <a-f> [
+" noremap <a-g> ]
+" noremap <a-x> #
+" noremap <a-c> &
+" noremap <a-v> @
+" noremap <a-b> {
+" noremap <a-n> }
+" noremap <a-m> <
+" noremap <a-.> >
+" noremap <a-,> ;
+" }}}
+
+" UI ------------------------------------------------------------------------{{{
+" disable error bells
+set noerrorbells
+set novisualbell
+set t_vb=
+set tm=500
+" show screen title
+set title
+" set text display options
+set shortmess =a " use all abbreviations
+set shortmess+=t " truncate file message if too long
+set shortmess+=s " remove 'search hit TOP/BOTTOM' message
+set shortmess+=I " remove intro message
+" show current mode
+set showmode
+" show partial commands
+set showcmd
+" automatically hide buffers
+set hidden
+" smooth terminal redrawing
+set ttyfast
+" don't redraw in macros
+set lazyredraw
+" enable line position
+set ruler
+" line numbers
+set number
+set norelativenumber
+" always show statusline
+set laststatus=2
+" set invisible characters
+set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
+set showbreak=…
+set list
+set synmaxcol=800
+" completion
+set complete=.,w,b,u,t
+set completeopt=longest,menuone,preview
+" line completion
+inoremap <c-l> <c-x><c-l>
+" filename completion
+inoremap <c-f> <c-x><c-f>
+" resize splits when window is resized
+if has("autocmd")
+	autocmd VimResized * :wincmd =
+endif
+" show current cursorline
+set cursorline
+" gvim appearance
+if has('gui_running')
+	set guioptions-=T " remove toolbar
+	set guioptions-=m " remove menu
+	set guioptions+=g " grey menu items
+	set guioptions-=c " hide intro
+	set guioptions-=i " hide scrollbars
+	set guioptions-=r " hide scrollbars
+	set guioptions-=L " hide scrollbars
+	set guioptions-=l " hide scrollbars
+	set guifont=Terminus\ 9
+endif
+" toggle invisibles
+nnoremap <silent> <leader>l :setlocal list!<cr>
+" toggle line numbers
+nnoremap <silent> <leader>nn :setlocal number!<cr>
+nnoremap <silent> <leader>nr :setlocal relativenumber!<cr>
+" }}}
+
+" Wildmenu ------------------------------------------------------------------{{{
+" enable wildmenu
+set wildmenu
+set wildmode=list:longest
+" things to ignore
+set wildignore+=.hg,.git,.svn                    " version control files
+set wildignore+=*.aux,*.out,*.toc                " LaTeX build files
+set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
+set wildignore+=*.class                          " java compiled objects
+set wildignore+=*.luac                           " lua byte code
+set wildignore+=*.pyc                            " python byte code
+set wildignore+=*.sw                             " vim swap files
+set wildignore+=*.DS_Store                       " OSX something
+" }}}
+
+" Folding -------------------------------------------------------------------{{{
+" function: fold display text {{{
+set foldtext=Custom_foldtext()
+function! Custom_foldtext()
+	let line = getline(v:foldstart)
+	let nucolwidth = &fdc + &number * &numberwidth
+	let windowwidth = winwidth(0) - nucolwidth - 2
+	let foldedlinecount = v:foldend - v:foldstart
+	let onetab = strpart('          ', 0, &tabstop)
+	let line = substitute(line, '\t', onetab, 'g')
+	let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+	let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+	return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . ' '	
+endfunction " }}}
+" function: toggle fold method {{{
+let g:FoldMethod=0
+function! ToggleFold()
+	if g:FoldMethod == 0
+		exe 'setlocal foldmethod=indent'
+		let g:FoldMethod=1
+	else
+		exe 'setlocal foldmethod=marker'
+		let g:FoldMethod=0
+	endif
+endfunction " }}}
+" default fold method
+set foldmethod=marker
+set foldmarker={{{,}}}
+set foldlevelstart=0
+set foldnestmax=30
+set foldminlines=1
+" toggle between indent and marker folding
+noremap <leader>ft :call ToggleFold()<cr>
+" focus fold
+nnoremap <leader>z zMzvzz
+" }}}
+
+" Line Return ---------------------------------------------------------------{{{
+" restore line position on reopen
+if has("autocmd")
+	augroup line_restore
+		autocmd!
+		autocmd BufReadPost
+			\ if line("'\"") > 0 && line("'\"") <= line("$") |
+			\     execute 'normal! g`"zvzz' |
+			\ endif"
+	augroup END
+endif
+set viminfo^=%
+" }}}
+
+" Tabs and Spaces -----------------------------------------------------------{{{
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set noexpandtab
+set wrap
+set textwidth=80
+set formatoptions=qrnlj
+set autoindent
+set smartindent
+set shiftround
+" }}}
+
+" Color Scheme --------------------------------------------------------------{{{
+syntax on
+colorscheme molokai
+" }}}
+
+" Searching  and Selection --------------------------------------------------{{{
+" regex magic
+set magic
+" smart ignore case
+set smartcase
+" incremental search (modern)
+set incsearch
+" highlight previous searches
+set hlsearch
+" show bracket matches
+set showmatch
+set matchtime=2
+" substitude all matches on a line
+set gdefault
+" clear search buffer
+nnoremap <leader>, :nohlsearch<cr>call clearmatches()<cr>
+" increase/decrease indent
+vnoremap >> >gv
+vnoremap << <gv
+" easier system paste
+noremap <leader>y "*y
+noremap <leader>p :set paste<cr>:put *<cr>:set nopaste<cr>
+" }}}
+
+" Movement ------------------------------------------------------------------{{{
+set scrolloff=5
+" normal mode
+" visual mode
+" insert mode
+inoremap <c-a> <home>
+inoremap <c-e> <end>
+inoremap <c-h> <left>
+inoremap <c-j> <down>
+inoremap <c-k> <up>
+inoremap <c-l> <right>
+" command mode
+cnoremap <c-a> <home>
+cnoremap <c-e> <end>
+cnoremap <c-h> <left>
+cnoremap <c-l> <right>
+" bubble lines
+nnoremap <c-j> :move +1<cr>
+nnoremap <c-k> :move -2<cr>
+vnoremap <c-j> :move '>+<cr>gv
+vnoremap <c-k> :move -2<cr>gv
+" }}}
+
+" Plugins -------------------------------------------------------------------{{{
+" pathogen
+set runtimepath+=$HOME/.vim/pathogen
+call pathogen#infect()
+" nerdtree
+map <f4> :NERDTreeToggle<cr>
+let g:NERDTreeShowHidden=1 " show hidden files/dirs
+let g:NERDChristmasTree=1  " fancy colors
+let g:NERDTreeMinimalUI=1  " hide help
+let g:NERDTreeDirArrows=1  " use unicode arrows
+let g:NERDTreeCascadeOpenSingleDir=1
+let g:NERDTreeWinSize=31
+" let g:NERDTreeBookmarksFile='$HOME/.vim/.NERDTreeBookmarks'
+" netrw
+let g:netrw_liststyle=3 " use tree-mode as default view
+" autoclose
+let g:AutoCloseSmartQuote=1
+let g:AutoClosePairs="() {} [] \" '"
+let g:AutoCloseProtectedRegions=["Comment", "String", "Character"]
+" snipmate
+let g:snippets_dir='$HOME/.dotfiles/vim/snippets'
+" tcomment
+map <leader>c <c-_><c-_>
+" tagbar
+map <f3> :TagbarToggle<cr>
+let g:tagbar_compact=1
+let g:tagbar_indent=1
+let g:tagbar_width=31
+let g:tagbar_sort=1
+let g:tagbar_singleclick=1
+" gundo
+map <f5> :GundoToggle<cr>
+let g:gundo_width=31
+let g:gundo_preview_height=15
+let g:gundo_right=0
+let g:gundo_preview_bottom=1
+let g:gundo_help=0
+let g:gundo_close_on_revert=1
+let g:gundo_preview_statusline='Undo diff'
+let g:gundo_tree_statusline='Undo Tree'
+" syntastic
+let g:syntastic_auto_loc_list=1       " automatically open/close list
+let g:syntastic_loc_list_height=5     " 5 lines for error height
+let g:syntastic_check_on_open=1       " check error on file open
+let g:syntastic_echo_current_error=0  " do not put current error in cmd
+let g:syntastic_enable_signs=1        " enable error pointers
+let g:syntastic_quiet_warnings=0      " enable warning pointers
+let g:syntastic_error_symbol='>>'     " error symbol
+let g:syntastic_warning_symbol='>>'   " warning symbol
+let g:syntastic_enable_highlighting=0 " disable inline syntax highlighting
+let g:syntastic_stl_format="%B{[%E{Err: (%e) %fe}%B{, }%W{Warn: (%w) %fw}]}"
+map <silent> <leader>e :Errors<cr>
+" modestatus
+set noshowmode
+" }}}
+
+" Syntax Highlighting ------------------------------------------------------{{{
+if has("autocmd")
+	" GLSL
+	autocmd BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.vp,*.glsl setf glsl
+endif
+" }}}

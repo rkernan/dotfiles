@@ -1,0 +1,11 @@
+# Global snippets
+
+# copyright
+snippet c)
+	Copyright `&enc[:2] == "utf" ? "©" : "(c)"` `strftime("%Y")` ${1:Robert Kernan}. All Rights Reserved.${2}
+# date (short)
+snippet date
+	`strftime("%m-%d-%Y")`
+# date (line)
+snippet ddate
+	`strftime("%B %d, %Y")`
