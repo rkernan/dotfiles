@@ -15,6 +15,9 @@
 [submodule "vim/bundle/modestatus"]
 	path = vim/bundle/modestatus
 	url = https://github.com/kernan/Modestatus-vim.git
+[submodule "vim/bundle/mw-utils"]
+	path = vim/bundle/mw-utils
+	url = git://github.com/MarcWeber/vim-addon-mw-utils.git
 [submodule "vim/bundle/nerdtree"]
 	path = vim/bundle/nerdtree
 	url = git://github.com/scrooloose/nerdtree.git
@@ -33,12 +36,9 @@
 [submodule "vim/bundle/tcomment"]
 	path = vim/bundle/tcomment
 	url = git://github.com/tomtom/tcomment_vim.git
-[submodule "vim/bundle/xtct"]
-	path = vim/bundle/xtct
-	url = git://github.com/guns/xterm-color-table.vim.git
-[submodule "vim/bundle/mw-utils"]
-	path = vim/bundle/mw-utils
-	url = git://github.com/MarcWeber/vim-addon-mw-utils.git
 [submodule "vim/bundle/tlib"]
 	path = vim/bundle/tlib
 	url = git://github.com/tomtom/tlib_vim.git
+[submodule "vim/bundle/xtct"]
+	path = vim/bundle/xtct
+	url = git://github.com/guns/xterm-color-table.vim.git
