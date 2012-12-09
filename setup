@@ -1,12 +1,14 @@
 #!/bin/sh
+# get script directory
+DOTFILES_DIR=$(readlink -m "${0%/*}")
+echo "Global config directory: "\"$DOTFILES_DIR\"""
+# prompt user
 echo "WARNING: This will destroy any existing config files!"
 read -p "Setup global config? (y/n) " ans
 case $ans in
 	y|Y) ;;
 	*) exit;;
 esac
-DOTFILES_DIR=$HOME/.dotfiles
-echo "Global config directory: \"$DOTFILES_DIR\""
 # show commands
 set -x
 # remove default config files/dirs
