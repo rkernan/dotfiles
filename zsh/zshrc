@@ -114,6 +114,6 @@ zle -N zle-keymap-select
 setopt prompt_subst
 # PROMPT='[${vimode_curr}][%F{blue}%n%F{white}@%F{yellow}%m%F{white}:%F{cyan}%~%F{white}${vcs_info_msg_0_}]$ '
 # PROMPT='[%F{blue}%n%F{white}@%F{yellow}%m%F{white}:%F{cyan}%~%F{white}${vcs_info_msg_0_}]$ '
-PROMPT='[%F{blue}%n%F{white}@%F{yellow}%m%F{white}:%F{cyan}%U%~%u%F{white}${vcs_info_msg_0_}]$ '
+PROMPT='[%F{blue}%n%F{white}@%F{yellow}%m%F{white}:%F{cyan}%~%F{white}${vcs_info_msg_0_}]$ '
 RPROMPT='[%D{%Y-%m-%d %H:%M}]'
 # }}}
