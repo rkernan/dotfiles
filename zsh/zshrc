@@ -1,6 +1,8 @@
 # @author Robert Kernan
 
 # General -------------------------------------------------------------------{{{
+# source profile (run as sh)
+[[ -e $HOME/.profile ]] && emulate sh -c 'source ~/.profile'
 # set terminal type
 case "$TERM" in
 	*-256color)
