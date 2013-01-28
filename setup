@@ -26,6 +26,7 @@ ln -s $DOTFILES_DIR/vim/pathogen/* $HOME/.vim        #  vim- pathogen
 ln -s $DOTFILES_DIR/vim/snippets $HOME/.vim/snippets #  vim- snipmate snippets
 ln -s $DOTFILES_DIR/vim/bundle $HOME/.vim/bundle     #  vim- plugins
 ln -s $DOTFILES_DIR/zsh/zshrc $HOME/.zshrc           #  zsh- config
+ln -s $DOTFILES_DIR/zsh/zprofile $HOME/.zprofile     #  zsh- profile
 mkdir $HOME/.zsh                                     #  zsh- config directory
 ln -s $DOTFILES_DIR/zsh/plugin $HOME/.zsh/plugin     #  zsh- plugins
 ln -s $DOTFILES_DIR/tmux/tmux.conf $HOME/.tmux.conf  # tmux- config
