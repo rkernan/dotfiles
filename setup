@@ -12,12 +12,12 @@ esac
 # show commands
 set -x
 # remove default config files/dirs
-rm $HOME/.vimrc
-rm -rf $HOME/.vim
-rm $HOME/.zshrc
-rm -rf $HOME/.zsh
-rm -rf $HOME/.zprofile
-rm $HOME/.tmux.conf
+rm $HOME/.vimrc        # rm  vim- config
+rm -rf $HOME/.vim      # rm  vim- config directory + plugins
+rm $HOME/.zshrc        # rm  zsh- config
+rm -rf $HOME/.zsh      # rm  zsh- config directory + plugins
+rm -rf $HOME/.zprofile # rm  zsh- profile
+rm $HOME/.tmux.conf    # rm tmux- config
 # link global config
 ln -s $DOTFILES_DIR/vim/vimrc $HOME/.vimrc           #  vim- config
 mkdir $HOME/.vim                                     #  vim- config directory
