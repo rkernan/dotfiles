@@ -332,6 +332,10 @@ let g:syntastic_stl_format="%B{[%E{Err: (%e) %fe}%B{, }%W{Warn: (%w) %fw}]}"
 map <silent> <leader>e :Errors<cr>
 " modestatus
 set noshowmode
+" detectindent
+let g:detectindent_preferred_expandtab=0
+let g:detectindent_preferred_indent=4
+autocmd BufReadPost * :DetectIndent
 " }}}
 
 " Syntax Highlighting ------------------------------------------------------{{{
