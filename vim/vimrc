@@ -338,9 +338,3 @@ let g:detectindent_preferred_indent=4
 autocmd BufReadPost * :DetectIndent
 " }}}
 
-" Syntax Highlighting ------------------------------------------------------{{{
-if has("autocmd")
-	" GLSL
-	autocmd BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.vp,*.glsl setf glsl
-endif
-" }}}
