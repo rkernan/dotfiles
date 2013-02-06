@@ -282,17 +282,17 @@ vnoremap <c-k> :move -2<cr>gv
 " pathogen
 " set runtimepath+=$HOME/.vim/pathogen
 call pathogen#infect()
-" nerdtree
-map <f4> :NERDTreeToggle<cr>
-let g:NERDTreeShowHidden=1 " show hidden files/dirs
-let g:NERDChristmasTree=1  " fancy colors
-let g:NERDTreeMinimalUI=1  " hide help
-let g:NERDTreeDirArrows=1  " use unicode arrows
-let g:NERDTreeCascadeOpenSingleDir=1
-let g:NERDTreeWinSize=31
-" let g:NERDTreeBookmarksFile='$HOME/.vim/.NERDTreeBookmarks'
 " command-t
-map <leader>T :CommandTFlush<cr>
+let g:CommandTMaxFile=10000
+let g:CommandTMaxDepth=20
+let g:CommandTMaxCachedDirectories=0
+let g:CommandTMatchWindowReverse=1
+augroup CommandTAutoFlush
+	autocmd!
+	autocmd FocusGained * CommandTFlush
+	autocmd BufWritePost * CommandTFlush
+	autocmd ShellCmdPost * CommandTFlush
+augroup END
 " netrw
 let g:netrw_liststyle=3 " use tree-mode as default view
 " autoclose
@@ -311,7 +311,7 @@ let g:tagbar_width=31
 let g:tagbar_sort=1
 let g:tagbar_singleclick=1
 " gundo
-map <f5> :GundoToggle<cr>
+map <f4> :GundoToggle<cr>
 let g:gundo_width=31
 let g:gundo_preview_height=15
 let g:gundo_right=0
