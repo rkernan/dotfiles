@@ -32,7 +32,7 @@ inoremap <F1> <nop>
 " toggle menu
 if has('gui_running')
 	" toggle menu
-	nnoremap <silent> <f2> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
+	nnoremap <f2> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
 endif
 " source current selection
 vnoremap <leader>S y:execute @@<cr>:echo "sourced selection"<cr>
@@ -64,20 +64,6 @@ set backupskip=/tmp/*,/private/tmp/*"
 set tildeop
 " enable alt keys in mappings
 set winaltkeys=no
-" fix common alt mappings
-" noremap <a-`> 0
-" noremap <a-q> \
-" noremap <a-w> |
-" noremap <a-f> [
-" noremap <a-g> ]
-" noremap <a-x> #
-" noremap <a-c> &
-" noremap <a-v> @
-" noremap <a-b> {
-" noremap <a-n> }
-" noremap <a-m> <
-" noremap <a-.> >
-" noremap <a-,> ;
 " }}}
 
 " UI ------------------------------------------------------------------------{{{
@@ -141,10 +127,10 @@ if has('gui_running')
 	set guifont=Terminus\ 9
 endif
 " toggle invisibles
-nnoremap <silent> <leader>l :setlocal list!<cr>
+nnoremap <leader>l :setlocal list!<cr>
 " toggle line numbers
-nnoremap <silent> <leader>nn :setlocal number!<cr>
-nnoremap <silent> <leader>nr :setlocal relativenumber!<cr>
+nnoremap <leader>nn :setlocal number!<cr>
+nnoremap <leader>nr :setlocal relativenumber!<cr>
 " }}}
 
 " Wildmenu ------------------------------------------------------------------{{{
@@ -331,12 +317,10 @@ let g:syntastic_error_symbol='>>'     " error symbol
 let g:syntastic_warning_symbol='>>'   " warning symbol
 let g:syntastic_enable_highlighting=0 " disable inline syntax highlighting
 let g:syntastic_stl_format="%B{[%E{Err: (%e) %fe}%B{, }%W{Warn: (%w) %fw}]}"
-map <silent> <leader>e :Errors<cr>
+map <leader>e :Errors<cr>
 " modestatus
 set noshowmode
 " detectindent
-let g:detectindent_preferred_expandtab=0
-let g:detectindent_preferred_indent=4
 autocmd BufReadPost * :DetectIndent
 " }}}
 
