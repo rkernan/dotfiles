@@ -322,5 +322,8 @@ map <leader>e :Errors<cr>
 set noshowmode
 " detectindent
 autocmd BufReadPost * :DetectIndent
+" supertab
+let g:SuperTabDefaultCompletiontype='context'
+let g:SuperTabLongestHighlight=1
 " }}}
 
