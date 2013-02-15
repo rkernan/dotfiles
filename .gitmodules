@@ -12,9 +12,6 @@
 [submodule "vim/bundle/gundo"]
 	path = vim/bundle/gundo
 	url = git://github.com/sjl/gundo.vim.git
-[submodule "vim/bundle/modestatus"]
-	path = vim/bundle/modestatus
-	url = https://github.com/kernan/Modestatus-vim.git
 [submodule "vim/bundle/mw-utils"]
 	path = vim/bundle/mw-utils
 	url = git://github.com/MarcWeber/vim-addon-mw-utils.git
@@ -50,4 +47,7 @@
 	url = git://github.com/tpope/vim-rails.git
 [submodule "vim/bundle/supertab"]
 	path = vim/bundle/supertab
-	url = https://github.com/ervandew/supertab.git
+	url = git://github.com/ervandew/supertab.git
+[submodule "vim/bundle/modestaus"]
+	path = vim/bundle/modestaus
+	url = https://github.com/kernan/Modestatus-vim.git
