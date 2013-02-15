@@ -11,11 +11,6 @@
 				"priority": 10
 			},
 			{
-				"name": "readonly_indicator",
-				"draw_divider": false,
-				"after": " "
-			},
-			{
 				"name": "file_directory",
 				"priority": 40,
 				"draw_divider": false
@@ -25,9 +20,9 @@
 				"draw_divider": false
 			},
 			{
-				"name": "file_vcs_status",
-				"before": " ",
-				"draw_divider": false
+				"name": "readonly_indicator",
+				"draw_divider": false,
+				"before": " "
 			},
 			{
 				"name": "modified_indicator",
@@ -45,19 +40,16 @@
 			{
 				"name": "file_format",
 				"draw_divider": false,
-				"exclude_modes": ["nc"],
 				"priority": 50,
 				"divider_highlight_group": "background:divider"
 			},
 			{
 				"name": "file_encoding",
-				"exclude_modes": ["nc"],
 				"priority": 50,
 				"divider_highlight_group": "background:divider"
 			},
 			{
 				"name": "file_type",
-				"exclude_modes": ["nc"],
 				"priority": 50,
 				"divider_highlight_group": "background:divider"
 			},
@@ -68,11 +60,6 @@
 				"after": "%",
 				"width": 4,
 				"align": "r"
-			},
-			{
-				"type": "string",
-				"contents": "ln",
-				"highlight_group": ["line_current_symbol", "line_current"]
 			},
 			{
 				"name": "line_current",

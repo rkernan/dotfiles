@@ -124,8 +124,7 @@ if has('gui_running')
 	set guioptions-=r " hide scrollbars
 	set guioptions-=L " hide scrollbars
 	set guioptions-=l " hide scrollbars
-	" set guifont=Terminus\ 9
-	set guifont=Inconsolata\ for\ Powerline\ 10
+	set guifont=Terminus\ 9
 endif
 " toggle invisibles
 nnoremap <leader>l :setlocal list!<cr>
@@ -271,7 +270,8 @@ set runtimepath+=$HOME/.vim/pathogen
 call pathogen#infect()
 " command-t
 let g:CommandTMaxFile=10000
-let g:CommandTMaxDepth=20
+let g:CommandTMaxDepth=30
+let g:CommandTScanDotDirectories=1
 let g:CommandTMaxCachedDirectories=0
 let g:CommandTMatchWindowReverse=1
 augroup CommandTAutoFlush
@@ -325,6 +325,6 @@ autocmd BufReadPost * :DetectIndent
 let g:SuperTabDefaultCompletiontype='context'
 let g:SuperTabLongestHighlight=1
 " powerline
+set noshowmode
 set runtimepath+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim
 " }}}
-
