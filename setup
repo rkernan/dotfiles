@@ -13,31 +13,33 @@ esac
 set -x
 # remove default config files/dirs
 echo "Removing old config..."
-rm $HOME/.vimrc        # rm  vim- config
-rm -rf $HOME/.vim      # rm  vim- config directory + plugins
-rm $HOME/.zshrc        # rm  zsh- config
-rm -rf $HOME/.zsh      # rm  zsh- config directory + plugins
-rm -rf $HOME/.zprofile # rm  zsh- profile
-rm $HOME/.tmux.conf    # rm tmux- config
-# link global config
-echo "Copying new config..."
+rm $HOME/.vimrc         # rm  vim- config
+rm -rf $HOME/.vim       # rm  vim- config directory + plugins
+rm -rf $HOME/.zshrc     # rm  zsh- config
+rm -rf $HOME/.zsh       # rm  zsh- config directory + plugins
+rm -rf $HOME/.zprofile  # rm  zsh- profile
+rm -f  $HOME/.tmux.conf # rm tmux- config
+# symlink global config
+echo "Symlinking new config..."
 ln -s $DOTFILES_DIR/vim/vimrc $HOME/.vimrc          #  vim- config
 ln -s $DOTFILES_DIR/vim $HOME/.vim                  #  vim- config directory
 ln -s $DOTFILES_DIR/zsh/zshrc $HOME/.zshrc          #  zsh- config
 ln -s $DOTFILES_DIR/zsh $HOME/.zsh                  #  zsh- config directory
 ln -s $DOTFILES_DIR/zsh/zprofile $HOME/.zprofile    #  zsh- profile
 ln -s $DOTFILES_DIR/tmux/tmux.conf $HOME/.tmux.conf # tmux- config
-# additional actions
+# build command-t (vim plugin)
 echo "Compiling command-t (vim plugin)..."
 cd $HOME/.vim/bundle/command-t
 rake make
 cd $DOTFILES_DIR
+# install powerline (pip)
 echo "Installing powerline..."
 pip uninstall powerline
 cd $DOTFILES_DIR/powerline
 pip install --user ./
 cd $DOTFILES_DIR
-echo "Moving powerline config files"
+# symlink powerline config
+echo "Symlinking powerline config files"
 POWERLINE_DIR=$HOME/.local/lib/python2.7/site-packages/powerline
 mv $POWERLINE_DIR/config_files/config.json $POWERLINE_DIR/config_files/config.json.bak
 ln -s $DOTFILES_DIR/powerline-config/config.json $POWERLINE_DIR/config_files/config.json
