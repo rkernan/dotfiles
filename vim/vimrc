@@ -3,40 +3,6 @@
 " Behavior ------------------------------------------------------------------{{{
 " disable compatability mode
 set nocompatible
-" automatically read file changes
-set autoread
-" set encoding
-set encoding=utf8
-set ffs=unix,dos,mac
-" enable filetype specific settings
-filetype plugin on
-filetype indent on
-" time out keycodes
-set notimeout
-set ttimeout
-set ttimeoutlen=10
-" default backspace behavior
-set backspace=indent,eol,start
-" set shell
-set shell=/bin/zsh\ --login
-" enable mouse
-set mouse=a
-" set leader
-let mapleader="\\"
-let g:mapleader="\\"
-" super user write
-cnoremap w!! s !sudo tee % >/dev/null
-" disable annoying helpscreen mappings
-noremap  <F1> <nop>
-inoremap <F1> <nop>
-" toggle menu
-if has('gui_running')
-	" toggle menu
-	nnoremap <f2> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
-endif
-" source current selection
-vnoremap <leader>S y:execute @@<cr>:echo "sourced selection"<cr>
-nnoremap <leader>S ^vg_y:execute @@<cr>:echo "sourced line"<cr>
 " set history size
 set history=1000
 set undoreload=1000
@@ -64,6 +30,40 @@ set backupskip=/tmp/*,/private/tmp/*"
 set tildeop
 " enable alt keys in mappings
 set winaltkeys=no
+" automatically read file changes
+set autoread
+" set encoding
+set encoding=utf8
+set fileformats=unix,dos,mac
+" enable filetype specific settings
+filetype plugin on
+filetype indent on
+" time out keycodes and not mappings
+set notimeout
+set ttimeout
+set ttimeoutlen=100
+" default backspace behavior
+set backspace=indent,eol,start
+" set shell
+set shell=/bin/zsh\ --login
+" enable mouse
+set mouse=a
+" set leader
+let mapleader="\\"
+let g:mapleader="\\"
+" disable annoying helpscreen mappings
+noremap  <F1> <nop>
+inoremap <F1> <nop>
+" toggle menu
+if has('gui_running')
+	" toggle menu
+	nnoremap <f2> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
+endif
+" super user write
+cnoremap w!! !sudo tee % > /dev/null
+" source current selection
+vnoremap <leader>S y:execute @@<cr>:echo "sourced selection"<cr>
+nnoremap <leader>S ^vg_y:execute @@<cr>:echo "sourced line"<cr>
 " }}}
 
 " UI ------------------------------------------------------------------------{{{
@@ -103,7 +103,7 @@ set list
 set synmaxcol=800
 " completion
 set complete=.,w,b,u,t
-set completeopt=longest,menuone,preview
+set completeopt=longest,menuone
 " line completion
 inoremap <c-l> <c-x><c-l>
 " filename completion
@@ -136,7 +136,7 @@ nnoremap <leader>nr :setlocal relativenumber!<cr>
 " Wildmenu ------------------------------------------------------------------{{{
 " enable wildmenu
 set wildmenu
-set wildmode=list:longest
+set wildmode=longest:full,full
 " things to ignore
 set wildignore+=.hg,.git,.svn                    " version control files
 set wildignore+=*.aux,*.out,*.toc                " LaTeX build files
@@ -242,7 +242,7 @@ noremap <leader>p :set paste<cr>:put *<cr>:set nopaste<cr>
 " }}}
 
 " Movement ------------------------------------------------------------------{{{
-set scrolloff=5
+set scrolloff=3
 " normal mode
 " visual mode
 " insert mode
