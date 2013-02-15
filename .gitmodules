@@ -48,6 +48,6 @@
 [submodule "vim/bundle/supertab"]
 	path = vim/bundle/supertab
 	url = git://github.com/ervandew/supertab.git
-[submodule "vim/bundle/modestaus"]
-	path = vim/bundle/modestaus
-	url = https://github.com/kernan/Modestatus-vim.git
+[submodule "powerline"]
+	path = powerline
+	url = git://github.com/Lokaltog/powerline.git

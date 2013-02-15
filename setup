@@ -21,19 +21,27 @@ rm -rf $HOME/.zprofile # rm  zsh- profile
 rm $HOME/.tmux.conf    # rm tmux- config
 # link global config
 echo "Copying new config..."
-ln -s $DOTFILES_DIR/vim/vimrc $HOME/.vimrc           #  vim- config
-mkdir $HOME/.vim                                     #  vim- config directory
-ln -s $DOTFILES_DIR/vim/colors $HOME/.vim/colors     #  vim- colorscheme
-ln -s $DOTFILES_DIR/vim/syntax $HOME/.vim/syntax     #  vim- syntax
-ln -s $DOTFILES_DIR/vim/pathogen/* $HOME/.vim        #  vim- pathogen
-ln -s $DOTFILES_DIR/vim/snippets $HOME/.vim/snippets #  vim- snipmate snippets
-ln -s $DOTFILES_DIR/vim/bundle $HOME/.vim/bundle     #  vim- plugins
-ln -s $DOTFILES_DIR/zsh/zshrc $HOME/.zshrc           #  zsh- config
-ln -s $DOTFILES_DIR/zsh/zprofile $HOME/.zprofile     #  zsh- profile
-mkdir $HOME/.zsh                                     #  zsh- config directory
-ln -s $DOTFILES_DIR/zsh/plugin $HOME/.zsh/plugin     #  zsh- plugins
-ln -s $DOTFILES_DIR/tmux/tmux.conf $HOME/.tmux.conf  # tmux- config
+ln -s $DOTFILES_DIR/vim/vimrc $HOME/.vimrc          #  vim- config
+ln -s $DOTFILES_DIR/vim $HOME/.vim                  #  vim- config directory
+ln -s $DOTFILES_DIR/zsh/zshrc $HOME/.zshrc          #  zsh- config
+ln -s $DOTFILES_DIR/zsh $HOME/.zsh                  #  zsh- config directory
+ln -s $DOTFILES_DIR/zsh/zprofile $HOME/.zprofile    #  zsh- profile
+ln -s $DOTFILES_DIR/tmux/tmux.conf $HOME/.tmux.conf # tmux- config
 # additional actions
 echo "Compiling command-t (vim plugin)..."
 cd $HOME/.vim/bundle/command-t
 rake make
+cd $DOTFILES_DIR
+echo "Installing powerline..."
+pip uninstall powerline
+cd $DOTFILES_DIR/powerline
+pip install --user ./
+cd $DOTFILES_DIR
+echo "Moving powerline config files"
+POWERLINE_DIR=$HOME/.local/lib/python2.7/site-packages/powerline
+mv $POWERLINE_DIR/config_files/config.json $POWERLINE_DIR/config_files/config.json.bak
+ln -s $DOTFILES_DIR/powerline-config/config.json $POWERLINE_DIR/config_files/config.json
+rm -rf $POWERLINE_DIR/config_files/themes/vim/custom.json
+ln -s $DOTFILES_DIR/powerline-config/vim_theme.json $POWERLINE_DIR/config_files/themes/vim/custom.json
+rm -rf $POWERLINE_DIR/config_files/colorschemes/vim/custom.json
+ln -s $DOTFILES_DIR/powerline-config/vim_colorscheme.json $POWERLINE_DIR/config_files/colorschemes/vim/custom.json
