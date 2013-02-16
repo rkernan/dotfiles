@@ -1,6 +1,8 @@
 #!/bin/sh
 # get script directory
 DOTFILES_DIR=$(readlink -m "${0%/*}")
+DOTFILES_LOG="$DOTFILES_DIR/setup.log"
+DOTFILES_ERR="$DOTFILES_DIR/setup.err"
 echo "Global config directory: "\"$DOTFILES_DIR\"""
 # prompt user
 echo "WARNING: This will destroy any existing config files!"
@@ -9,8 +11,13 @@ case $ans in
 	y|Y) ;;
 	*) exit;;
 esac
-# show commands
-set -x
+# set -x
+if [ ! -f $DOTFILES_LOG ]; then
+	touch $DOTFILES_LOG
+fi
+if [ ! -f $DOTFILES_ERR ]; then
+	touch $DOTFILES_ERR
+fi
 # remove default config files/dirs
 echo "Removing old config..."
 rm $HOME/.vimrc         # rm  vim- config
@@ -22,27 +29,44 @@ rm -f $HOME/.tmux.conf  # rm tmux- config
 rm -f $HOME/.Xresources # rm  x11- resources
 rm -rf $HOME/.i3        # rm   i3- config directory
 # symlink global config
-echo "Symlinking new config..."
+echo "Symlinking new config for:"
+echo "  vim..."
 ln -s $DOTFILES_DIR/vim/vimrc $HOME/.vimrc           #  vim- config
 ln -s $DOTFILES_DIR/vim $HOME/.vim                   #  vim- config directory
+echo "  zsh..."
 ln -s $DOTFILES_DIR/zsh/zshrc $HOME/.zshrc           #  zsh- config
 ln -s $DOTFILES_DIR/zsh $HOME/.zsh                   #  zsh- config directory
 ln -s $DOTFILES_DIR/zsh/zprofile $HOME/.zprofile     #  zsh- profile
+echo "  tmux..."
 ln -s $DOTFILES_DIR/tmux/tmux.conf $HOME/.tmux.conf  # tmux- config
+echo "  x11..."
 ln -s $DOTFILES_DIR/x11/Xresources $HOME/.Xresources #  x11- resources
+echo "  i3..."
 ln -s $DOTFILES_DIR/i3 $HOME/.i3                     #   i3- config directory
+# symlink fonts
+echo "Copying fonts..."
+if [ ! -d "$HOME/.fonts" ]; then
+	mkdir $HOME/.fonts
+fi
+rm -f $HOME/.fonts/DejaVuSansMono.ttf
+rm -f $HOME/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf
+cp -s $DOTFILES_DIR/fonts/DejaVuSansMono.ttf $HOME/.fonts/DejaVuSansMono.ttf
+cp -s $DOTFILES_DIR/fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf $HOME/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf
+echo "Running font cache..."
+fc-cache -vf
 # build command-t (vim plugin)
-echo "Compiling command-t (vim plugin)..."
+echo "Compiling command-t..."
 cd $HOME/.vim/bundle/command-t
 rake make
 cd $DOTFILES_DIR
 # install powerline (pip)
+echo "Installing powerline..."
 cp $DOTFILES_DIR/powerline-config/config.json $DOTFILES_DIR/powerline-config/config.json.bak
 cd $DOTFILES_DIR/powerline
 pip install --user ./
 cd $DOTFILES_DIR
 # symlink powerline config
-echo "Symlinking powerline config files"
+echo "Symlinking powerline config files..."
 POWERLINE_DIR=$HOME/.local/lib/python2.7/site-packages/powerline
 rm -f $POWERLINE_DIR/config_files/config.json $POWERLINE_DIR/config_files/config.json.bak
 ln -s $DOTFILES_DIR/powerline-config/config.json $POWERLINE_DIR/config_files/config.json

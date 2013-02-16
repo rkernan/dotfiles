@@ -1,4 +1,4 @@
-! 
+!
 ! colors
 !
 *background: #111111
@@ -27,12 +27,21 @@
 ! grey
 *color7:  #cccccc
 *color15: #ffffff
-! 
+!
+! xft fonts
+!
+xft.dpi: 96
+xft.antialias: true
+xft.rgba: rgb
+xft.hinting: true
+xft.hintstyle: hintslight
+!
 ! urxvt
 !
 URxvt.scrollBar: false
-URxvt.font: xft:terminus:size=8
 ! URxvt.font: xft:terminus:size=12
+URxvt.font: xft:DejaVu Sans Mono for Powerline:size=8
+URxvt*letterSpace: -1
 URxvt.perl-ext-common: default,matcher
 ! clickable url
 URxvt.url-launcher: /usr/bin/firefox
