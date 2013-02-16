@@ -7,12 +7,12 @@
 
 # i3 config file (v4)
 #
-# Please see http://i3wm.org/docs/userguide.html for a complete reference!
+
 
 set $mod Mod4
 
 # font for window titles. ISO 10646 = Unicode
-font -misc-fixed-medium-r-normal--13-120-75-75-C-70-iso10646-1
+font xft:DejaVu Sans Mono:size=8
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -28,25 +28,25 @@ bindsym $mod+d exec dmenu_run
 
 # change focus
 bindsym $mod+h focus left
-bindsym $mod+j focus down
+
 bindsym $mod+k focus up
 bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
-bindsym $mod+Down focus down
+
 bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
 bindsym $mod+Shift+H move left
-bindsym $mod+Shift+J move down
+
 bindsym $mod+Shift+K move up
 bindsym $mod+Shift+L move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
-bindsym $mod+Shift+Down move down
+
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
@@ -61,49 +61,49 @@ bindsym $mod+f fullscreen
 
 # change container layout (stacked, tabbed, default)
 bindsym $mod+t layout stacking
-bindsym $mod+w layout tabbed
+
 bindsym $mod+e layout default
 
-# toggle tiling / floating
+
 bindsym $mod+Shift+space floating toggle
 
-# change focus between tiling / floating windows
+
 bindsym $mod+space focus mode_toggle
 
-# focus the parent container
+
 bindsym $mod+a focus parent
 
-# focus the child container
+
 # bindcode $mod+d focus child
 
-# window focus follows mouse
+
 focus_follows_mouse no
 
-# automatic back and forth
+
 workspace_auto_back_and_forth yes
 
-# switch to workspace
+
 bindsym $mod+1 workspace 1
 bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
+
 bindsym $mod+4 workspace 4
 bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
+
 bindsym $mod+7 workspace 7
 bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
+
 bindsym $mod+0 workspace 10
 
-# move focused container to workspace
+
 bindsym $mod+Shift+exclam move container to workspace 1
 bindsym $mod+Shift+at move container to workspace 2
-bindsym $mod+Shift+numbersign move container to workspace 3
+
 bindsym $mod+Shift+dollar move container to workspace 4
 bindsym $mod+Shift+percent move container to workspace 5
-bindsym $mod+Shift+asciicircum move container to workspace 6
+
 bindsym $mod+Shift+ampersand move container to workspace 7
 bindsym $mod+Shift+asterisk move container to workspace 8
-bindsym $mod+Shift+parenleft move container to workspace 9
+
 bindsym $mod+Shift+parenright move container to workspace 10
 
 # reload the configuration file
