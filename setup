@@ -45,9 +45,7 @@ echo "Copying fonts..."
 if [ ! -d $HOME/.fonts ]; then
 	mkdir $HOME/.fonts
 fi
-rm -f $HOME/.fonts/DejaVuSansMono.ttf
 rm -f $HOME/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf
-cp -s $DOTFILES_DIR/fonts/DejaVuSansMono.ttf $HOME/.fonts/DejaVuSansMono.ttf
 cp -s $DOTFILES_DIR/fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf $HOME/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf
 echo "Running font cache..."
 fc-cache -vf >> $DOTFILES_LOG 2>> $DOTFILES_LOG
