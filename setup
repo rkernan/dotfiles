@@ -1,8 +1,7 @@
 #!/bin/sh
 # get script directory
 DOTFILES_DIR=$(readlink -m "${0%/*}")
-DOTFILES_LOG="$DOTFILES_DIR/setup.log"
-DOTFILES_ERR="$DOTFILES_DIR/setup.err"
+DOTFILES_LOG=$DOTFILES_DIR/setup.log
 echo "Global config directory: "\"$DOTFILES_DIR\"""
 # prompt user
 echo "WARNING: This will destroy any existing config files!"
@@ -15,9 +14,7 @@ esac
 if [ ! -f $DOTFILES_LOG ]; then
 	touch $DOTFILES_LOG
 fi
-if [ ! -f $DOTFILES_ERR ]; then
-	touch $DOTFILES_ERR
-fi
+cat /dev/null > $DOTFILES_LOG
 # remove default config files/dirs
 echo "Removing old config..."
 rm $HOME/.vimrc         # rm  vim- config
@@ -45,7 +42,7 @@ echo "  i3..."
 ln -s $DOTFILES_DIR/i3 $HOME/.i3                     #   i3- config directory
 # symlink fonts
 echo "Copying fonts..."
-if [ ! -d "$HOME/.fonts" ]; then
+if [ ! -d $HOME/.fonts ]; then
 	mkdir $HOME/.fonts
 fi
 rm -f $HOME/.fonts/DejaVuSansMono.ttf
@@ -53,22 +50,37 @@ rm -f $HOME/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf
 cp -s $DOTFILES_DIR/fonts/DejaVuSansMono.ttf $HOME/.fonts/DejaVuSansMono.ttf
 cp -s $DOTFILES_DIR/fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf $HOME/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf
 echo "Running font cache..."
-fc-cache -vf
+fc-cache -vf >> $DOTFILES_LOG 2>> $DOTFILES_LOG
 # build command-t (vim plugin)
 echo "Compiling command-t..."
 cd $HOME/.vim/bundle/command-t
-rake make
+rake make >> $DOTFILES_LOG 2>> $DOTFILES_LOG
 cd $DOTFILES_DIR
 # install powerline (pip)
 echo "Installing powerline..."
-cp $DOTFILES_DIR/powerline-config/config.json $DOTFILES_DIR/powerline-config/config.json.bak
-cd $DOTFILES_DIR/powerline
-pip install --user ./
-cd $DOTFILES_DIR
+POWERLINE_DIR=$HOME/.local/lib/python2.7/site-packages/powerline
+if [ ! -d $POWERLINE_DIR ]; then
+	cd $DOTFILES_DIR/powerline
+	pip install --user ./ >> $DOTFILES_LOG 2>> $DOTFILES_LOG
+	cd $DOTFILES_DIR
+else
+	echo "  already installed!"
+fi
 # symlink powerline config
 echo "Symlinking powerline config files..."
-POWERLINE_DIR=$HOME/.local/lib/python2.7/site-packages/powerline
-rm -f $POWERLINE_DIR/config_files/config.json $POWERLINE_DIR/config_files/config.json.bak
+if [ ! -f $DOTFILES_DIR/powerline-config/config.json ]; then
+	if [ -f $DOTFILES_DIR/powerline-config/config.json.bak ]; then
+		cp $DOTFILES_DIR/powerline-config/config.json.bak $DOTFILES_DIR/powerline-config/config.json
+	else
+		echo "  \"powerline-config/config.json\" is missing and cannot be recovered!"
+		echo "  This happens when powerline is uninstalled. Run \"git checkout -- .\" to recover the file and run \"setup\" again."
+		exit 1
+	fi
+fi
+rm -f $DOTFILES_DIR/powerline-config/config.json.bak
+cp -f $DOTFILES_DIR/powerline-config/config.json $DOTFILES_DIR/powerline-config/config.json.bak
+cp -f $POWERLINE_DIR/config_files/config.json $POWERLINE_DIR/config_files/config.json.bak
+rm -f $POWERLINE_DIR/config_files/config.json
 ln -s $DOTFILES_DIR/powerline-config/config.json $POWERLINE_DIR/config_files/config.json
 # powerline vim config
 rm -f $POWERLINE_DIR/config_files/themes/vim/custom.json
