@@ -53,8 +53,10 @@ inoremap <F1> <nop>
 " toggle menu
 if has('gui_running')
 	" toggle menu
-	nnoremap <f2> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
+	nnoremap <f1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
 endif
+" toggle paste mode
+nnoremap <f2> :set paste!<cr>
 " super user write
 cnoremap suw :w !sudo tee % > /dev/null
 " source current selection
