@@ -38,10 +38,6 @@ set fileformats=unix,dos,mac
 " enable filetype specific settings
 filetype plugin on
 filetype indent on
-" time out keycodes and not mappings
-set notimeout
-set ttimeout
-set ttimeoutlen=100
 " default backspace behavior
 set backspace=indent,eol,start
 " set shell
@@ -60,10 +56,20 @@ if has('gui_running')
 	nnoremap <f2> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
 endif
 " super user write
-cnoremap w!! !sudo tee % > /dev/null
+cnoremap suw :w !sudo tee % > /dev/null
 " source current selection
 vnoremap <leader>S y:execute @@<cr>:echo "sourced selection"<cr>
 nnoremap <leader>S ^vg_y:execute @@<cr>:echo "sourced line"<cr>
+" timeout length
+set ttimeoutlen=1000
+set timeoutlen=1000
+if !has('gui_running')
+	augroup FastEscape
+		autocmd!
+		autocmd InsertEnter * set timeoutlen=0
+		autocmd InsertLeave * set timeoutlen=1000
+	augroup END
+endif
 " }}}
 
 " UI ------------------------------------------------------------------------{{{
