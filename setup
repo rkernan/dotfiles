@@ -3,90 +3,103 @@
 DOTFILES_DIR=$(readlink -m "${0%/*}")
 DOTFILES_LOG=$DOTFILES_DIR/setup.log
 echo "Global config directory: "\"$DOTFILES_DIR\"""
-# prompt user
-echo "WARNING: This will destroy any existing config files!"
-read -p "Setup global config? (y/n) " ans
-case $ans in
-	y|Y) ;;
-	*) exit;;
-esac
-# set -x
-if [ ! -f $DOTFILES_LOG ]; then
-	touch $DOTFILES_LOG
-fi
 cat /dev/null > $DOTFILES_LOG
-# remove default config files/dirs
-echo "Removing old config..."
-rm $HOME/.vimrc         # rm  vim- config
-rm -rf $HOME/.vim       # rm  vim- config directory + plugins
-rm -f $HOME/.zshrc      # rm  zsh- config
-rm -rf $HOME/.zsh       # rm  zsh- config directory + plugins
-rm -f $HOME/.zprofile   # rm  zsh- profile
-rm -f $HOME/.tmux.conf  # rm tmux- config
-rm -f $HOME/.Xresources # rm  x11- resources
-rm -rf $HOME/.i3        # rm   i3- config directory
-# symlink global config
-echo "Symlinking new config for:"
-echo "  vim..."
-ln -s $DOTFILES_DIR/vim/vimrc $HOME/.vimrc           #  vim- config
-ln -s $DOTFILES_DIR/vim $HOME/.vim                   #  vim- config directory
-echo "  zsh..."
-ln -s $DOTFILES_DIR/zsh/zshrc $HOME/.zshrc           #  zsh- config
-ln -s $DOTFILES_DIR/zsh $HOME/.zsh                   #  zsh- config directory
-ln -s $DOTFILES_DIR/zsh/zprofile $HOME/.zprofile     #  zsh- profile
-echo "  tmux..."
-ln -s $DOTFILES_DIR/tmux/tmux.conf $HOME/.tmux.conf  # tmux- config
-echo "  x11..."
-ln -s $DOTFILES_DIR/x11/Xresources $HOME/.Xresources #  x11- resources
-echo "  i3..."
-ln -s $DOTFILES_DIR/i3 $HOME/.i3                     #   i3- config directory
-# symlink fonts
-echo "Copying fonts..."
-if [ ! -d $HOME/.fonts ]; then
-	mkdir $HOME/.fonts
-fi
-rm -f $HOME/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf
-cp -s $DOTFILES_DIR/fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf $HOME/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf
-echo "Running font cache..."
-fc-cache -vf >> $DOTFILES_LOG 2>> $DOTFILES_LOG
-# build command-t (vim plugin)
-echo "Compiling command-t..."
-cd $HOME/.vim/bundle/command-t
-rake make >> $DOTFILES_LOG 2>> $DOTFILES_LOG
-cd $DOTFILES_DIR
-# install powerline (pip)
-echo "Installing powerline..."
-POWERLINE_DIR=$HOME/.local/lib/python2.7/site-packages/powerline
-if [ ! -d $POWERLINE_DIR ]; then
-	cd $DOTFILES_DIR/powerline
-	pip install --user ./ >> $DOTFILES_LOG 2>> $DOTFILES_LOG
-	cd $DOTFILES_DIR
-else
-	echo "  already installed!"
-fi
-# symlink powerline config
-echo "Symlinking powerline config files..."
-if [ ! -f $DOTFILES_DIR/powerline-config/config.json ]; then
-	if [ -f $DOTFILES_DIR/powerline-config/config.json.bak ]; then
-		cp $DOTFILES_DIR/powerline-config/config.json.bak $DOTFILES_DIR/powerline-config/config.json
-	else
-		echo "  \"powerline-config/config.json\" is missing and cannot be recovered!"
-		echo "  This happens when powerline is uninstalled. Run \"git checkout -- .\" to recover the file and run \"setup\" again."
-		exit 1
-	fi
-fi
-rm -f $DOTFILES_DIR/powerline-config/config.json.bak
-cp -f $DOTFILES_DIR/powerline-config/config.json $DOTFILES_DIR/powerline-config/config.json.bak
-cp -f $POWERLINE_DIR/config_files/config.json $POWERLINE_DIR/config_files/config.json.bak
-rm -f $POWERLINE_DIR/config_files/config.json
-ln -s $DOTFILES_DIR/powerline-config/config.json $POWERLINE_DIR/config_files/config.json
-# powerline vim config
-rm -f $POWERLINE_DIR/config_files/themes/vim/custom.json
-rm -f $POWERLINE_DIR/config_files/colorschemes/vim/custom.json
-ln -s $DOTFILES_DIR/powerline-config/vim_theme.json $POWERLINE_DIR/config_files/themes/vim/custom.json
-ln -s $DOTFILES_DIR/powerline-config/vim_colorscheme.json $POWERLINE_DIR/config_files/colorschemes/vim/custom.json
-# powerline tmux config
-rm -f $POWERLINE_DIR/config_files/themes/tmux/custom.json
-rm -f $POWERLINE_DIR/config_files/colorschemes/tmux/custom.json
-ln -s $DOTFILES_DIR/powerline-config/tmux_theme.json $POWERLINE_DIR/config_files/themes/tmux/custom.json
-ln -s $DOTFILES_DIR/powerline-config/tmux_colorscheme.json $POWERLINE_DIR/config_files/colorschemes/tmux/custom.json
+
+case $1 in
+	install)
+		# prompt user
+		echo "WARNING: This will destroy any existing config files!"
+		read -p "Setup global config? (y/n) " ans
+		case $ans in
+			y|Y) ;;
+			*) exit;;
+		esac
+		# set -x
+		if [ ! -f $DOTFILES_LOG ]; then
+			touch $DOTFILES_LOG
+		fi
+		# remove default config files/dirs
+		echo "Removing old config..."
+		rm $HOME/.vimrc         # rm  vim- config
+		rm -rf $HOME/.vim       # rm  vim- config directory + plugins
+		rm -f $HOME/.zshrc      # rm  zsh- config
+		rm -rf $HOME/.zsh       # rm  zsh- config directory + plugins
+		rm -f $HOME/.zprofile   # rm  zsh- profile
+		rm -f $HOME/.tmux.conf  # rm tmux- config
+		rm -f $HOME/.Xresources # rm  x11- resources
+		rm -rf $HOME/.i3        # rm   i3- config directory
+		# symlink global config
+		echo "Linking new config for:"
+		echo "  vim..."
+		ln -s $DOTFILES_DIR/vim/vimrc $HOME/.vimrc           #  vim- config
+		ln -s $DOTFILES_DIR/vim $HOME/.vim                   #  vim- config directory
+		echo "  zsh..."
+		ln -s $DOTFILES_DIR/zsh/zshrc $HOME/.zshrc           #  zsh- config
+		ln -s $DOTFILES_DIR/zsh $HOME/.zsh                   #  zsh- config directory
+		ln -s $DOTFILES_DIR/zsh/zprofile $HOME/.zprofile     #  zsh- profile
+		echo "  tmux..."
+		ln -s $DOTFILES_DIR/tmux/tmux.conf $HOME/.tmux.conf  # tmux- config
+		echo "  x11..."
+		ln -s $DOTFILES_DIR/x11/Xresources $HOME/.Xresources #  x11- resources
+		echo "  i3..."
+		ln -s $DOTFILES_DIR/i3 $HOME/.i3                     #   i3- config directory
+		# symlink fonts
+		echo "Copying fonts..."
+		if [ ! -d $HOME/.fonts ]; then
+			mkdir $HOME/.fonts
+		fi
+		rm -f $HOME/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf
+		cp -s $DOTFILES_DIR/fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf $HOME/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf
+		echo "Running font cache..."
+		fc-cache -vf >> $DOTFILES_LOG 2>> $DOTFILES_LOG
+		# build command-t (vim plugin)
+		echo "Compiling command-t..."
+		cd $HOME/.vim/bundle/command-t
+		rake make >> $DOTFILES_LOG 2>> $DOTFILES_LOG
+		cd $DOTFILES_DIR
+		# install powerline (pip)
+		echo "Installing powerline..."
+		POWERLINE_DIR=$HOME/.local/lib/python2.7/site-packages/powerline
+		if [ ! -d $POWERLINE_DIR ]; then
+			cd $DOTFILES_DIR/powerline
+			pip install --user ./ >> $DOTFILES_LOG 2>> $DOTFILES_LOG
+			cd $DOTFILES_DIR
+		else
+			echo "  already installed!"
+		fi
+		# symlink powerline config
+		echo "Linking powerline config files..."
+		if [ ! -f $POWERLINE_DIR/config_files/config.json.bak ]; then
+			echo "  backing up default config.json to $POWERLINE_DIR/config_files/config.json.bak"
+			mv $POWERLINE_DIR/config_files/config.json $POWERLINE_DIR/config_files/config.json.bak
+		fi
+		rm -f $POWERLINE_DIR/config_files/config.json
+		ln $DOTFILES_DIR/powerline-config/config.json $POWERLINE_DIR/config_files/config.json
+		# powerline vim config
+		rm -f $POWERLINE_DIR/config_files/themes/vim/custom.json
+		rm -f $POWERLINE_DIR/config_files/colorschemes/vim/custom.json
+		ln -s $DOTFILES_DIR/powerline-config/vim_theme.json $POWERLINE_DIR/config_files/themes/vim/custom.json
+		ln -s $DOTFILES_DIR/powerline-config/vim_colorscheme.json $POWERLINE_DIR/config_files/colorschemes/vim/custom.json
+		# powerline tmux config
+		rm -f $POWERLINE_DIR/config_files/themes/tmux/custom.json
+		rm -f $POWERLINE_DIR/config_files/colorschemes/tmux/custom.json
+		ln -s $DOTFILES_DIR/powerline-config/tmux_theme.json $POWERLINE_DIR/config_files/themes/tmux/custom.json
+		ln -s $DOTFILES_DIR/powerline-config/tmux_colorscheme.json $POWERLINE_DIR/config_files/colorschemes/tmux/custom.json
+		;;
+	uninstall)
+		echo "Removing config file links..."
+		rm $HOME/.vimrc         # rm  vim- config
+		rm -rf $HOME/.vim       # rm  vim- config directory + plugins
+		rm -f $HOME/.zshrc      # rm  zsh- config
+		rm -rf $HOME/.zsh       # rm  zsh- config directory + plugins
+		rm -f $HOME/.zprofile   # rm  zsh- profile
+		rm -f $HOME/.tmux.conf  # rm tmux- config
+		rm -f $HOME/.Xresources # rm  x11- resources
+		rm -rf $HOME/.i3        # rm   i3- config directory
+		echo "Uninstalling powerline..."
+		pip uninstall powerline
+		;;
+	*)
+		echo "Invalid option."
+		;;
+esac
