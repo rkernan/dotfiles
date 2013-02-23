@@ -42,13 +42,9 @@ install() {
 	ln -s $DOTFILES_DIR/x11/Xresources $HOME/.Xresources #  x11- resources
 	echo "  i3..."
 	ln -s $DOTFILES_DIR/i3 $HOME/.i3                     #   i3- config directory
-	# symlink fonts
+	# copy patched powerline fonts
 	echo "Copying fonts..."
-	if [ ! -d $HOME/.fonts ]; then
-		mkdir $HOME/.fonts
-	fi
-	rm -f $HOME/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf
-	cp -s $DOTFILES_DIR/fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf $HOME/.fonts/DejaVu\ Sans\ Mono\ for\ Powerline.otf
+	cp $DOTFILES_DIR/powerline/powerline-fonts/*/*.otf $HOME/.fonts/
 	echo "Running font cache..."
 	fc-cache -vf $HOME/.fonts
 	# build command-t (vim plugin)
@@ -60,7 +56,7 @@ install() {
 	echo "Installing powerline..."
 	POWERLINE_DIR=$HOME/.local/lib/python2.7/site-packages/powerline
 	if [ ! -d $POWERLINE_DIR ]; then
-		cd $DOTFILES_DIR/powerline
+		cd $DOTFILES_DIR/powerline/powerline-bin
 		pip install --user ./ >> $DOTFILES_LOG 2>> $DOTFILES_LOG
 		cd $DOTFILES_DIR
 	else
@@ -73,17 +69,17 @@ install() {
 		mv $POWERLINE_DIR/config_files/config.json $POWERLINE_DIR/config_files/config.json.bak
 	fi
 	rm -f $POWERLINE_DIR/config_files/config.json
-	ln $DOTFILES_DIR/powerline-config/config.json $POWERLINE_DIR/config_files/config.json
+	ln $DOTFILES_DIR/powerline/powerline-config/config.json $POWERLINE_DIR/config_files/config.json
 	# powerline vim config
 	rm -f $POWERLINE_DIR/config_files/themes/vim/custom.json
 	rm -f $POWERLINE_DIR/config_files/colorschemes/vim/custom.json
-	ln -s $DOTFILES_DIR/powerline-config/vim_theme.json $POWERLINE_DIR/config_files/themes/vim/custom.json
-	ln -s $DOTFILES_DIR/powerline-config/vim_colorscheme.json $POWERLINE_DIR/config_files/colorschemes/vim/custom.json
+	ln -s $DOTFILES_DIR/powerline/powerline-config/vim_theme.json $POWERLINE_DIR/config_files/themes/vim/custom.json
+	ln -s $DOTFILES_DIR/powerline/powerline-config/vim_colorscheme.json $POWERLINE_DIR/config_files/colorschemes/vim/custom.json
 	# powerline tmux config
 	rm -f $POWERLINE_DIR/config_files/themes/tmux/custom.json
 	rm -f $POWERLINE_DIR/config_files/colorschemes/tmux/custom.json
-	ln -s $DOTFILES_DIR/powerline-config/tmux_theme.json $POWERLINE_DIR/config_files/themes/tmux/custom.json
-	ln -s $DOTFILES_DIR/powerline-config/tmux_colorscheme.json $POWERLINE_DIR/config_files/colorschemes/tmux/custom.json
+	ln -s $DOTFILES_DIR/powerline/powerline-config/tmux_theme.json $POWERLINE_DIR/config_files/themes/tmux/custom.json
+	ln -s $DOTFILES_DIR/powerline/powerline-config/tmux_colorscheme.json $POWERLINE_DIR/config_files/colorschemes/tmux/custom.json
 }
 
 uninstall() {
