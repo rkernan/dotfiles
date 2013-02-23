@@ -62,3 +62,11 @@
 	path = vim/bundle/supertab
 	url = git://github.com/ervandew/supertab.git
 	ignore = untracked
+[submodule "powerline/fonts"]
+	path = powerline/fonts
+	url = git://github.com/Lokaltog/powerline-fonts.git
+	ignore = untracked
+[submodule "powerline/install"]
+	path = powerline/install
+	url = git://github.com/Lokaltog/powerline.git
+	ignore = untracked
