@@ -84,7 +84,7 @@ install() {
 
 uninstall() {
 	echo "Removing config file links..."
-	rm -f $HOME/.vimrc         # rm  vim- config
+	rm -f $HOME/.vimrc      # rm  vim- config
 	rm -rf $HOME/.vim       # rm  vim- config directory + plugins
 	rm -f $HOME/.zshrc      # rm  zsh- config
 	rm -rf $HOME/.zsh       # rm  zsh- config directory + plugins
