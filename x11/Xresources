@@ -37,7 +37,9 @@ xft.rgba: rgb
 !
 ! urxvt
 !
+URxvt.saveLines: 10000
 URxvt.scrollBar: false
+URxvt.scrollBar_right: false
 URxvt.font: xft:Meslo LG S for Powerline:size=8
 URxvt.letterSpace: -1
 URxvt.perl-ext-common: default,matcher

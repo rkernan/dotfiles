@@ -43,8 +43,8 @@ install() {
 	echo "  i3..."
 	ln -s $DOTFILES_DIR/i3 $HOME/.i3                     #   i3- config directory
 	# copy patched powerline fonts
-	echo "Copying fonts..."
-	ln -s $DOTFILES_DIR/powerline/fonts/*/*.otf $HOME/.fonts/
+	echo "Linking fonts..."
+	ln -sf $DOTFILES_DIR/powerline/fonts/*/*.otf $HOME/.fonts/
 	echo "Running font cache..."
 	fc-cache -vf $HOME/.fonts
 	# build command-t (vim plugin)
