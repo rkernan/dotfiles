@@ -130,7 +130,7 @@ if has('gui_running')
 	set guioptions-=r " hide scrollbars
 	set guioptions-=L " hide scrollbars
 	set guioptions-=l " hide scrollbars
-	set guifont=Meslo LG S for Powerline\ 8
+	set guifont=Meslo\ LG\ S\ for\ Powerline\ 8
 endif
 " toggle invisibles
 nnoremap <leader>l :setlocal list!<cr>
