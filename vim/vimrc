@@ -63,13 +63,11 @@ nnoremap <leader>S ^vg_y:execute @@<cr>:echo "sourced line"<cr>
 " timeout length
 set ttimeoutlen=1000
 set timeoutlen=1000
-if !has('gui_running')
-	augroup FastEscape
-		autocmd!
-		autocmd InsertEnter * set timeoutlen=0
-		autocmd InsertLeave * set timeoutlen=1000
-	augroup END
-endif
+augroup FastEscape
+	autocmd!
+	autocmd InsertEnter * set timeoutlen=0
+	autocmd InsertLeave * set timeoutlen=1000
+augroup END
 " }}}
 
 " UI ------------------------------------------------------------------------{{{
