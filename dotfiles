@@ -71,15 +71,8 @@ install() {
 	rm -f $POWERLINE_DIR/config_files/config.json
 	ln $DOTFILES_DIR/powerline/config/config.json $POWERLINE_DIR/config_files/config.json
 	# powerline vim config
-	rm -f $POWERLINE_DIR/config_files/themes/vim/custom.json
 	rm -f $POWERLINE_DIR/config_files/colorschemes/vim/custom.json
-	ln -s $DOTFILES_DIR/powerline/config/vim_theme.json $POWERLINE_DIR/config_files/themes/vim/custom.json
 	ln -s $DOTFILES_DIR/powerline/config/vim_colorscheme.json $POWERLINE_DIR/config_files/colorschemes/vim/custom.json
-	# powerline tmux config
-	rm -f $POWERLINE_DIR/config_files/themes/tmux/custom.json
-	rm -f $POWERLINE_DIR/config_files/colorschemes/tmux/custom.json
-	ln -s $DOTFILES_DIR/powerline/config/tmux_theme.json $POWERLINE_DIR/config_files/themes/tmux/custom.json
-	ln -s $DOTFILES_DIR/powerline/config/tmux_colorscheme.json $POWERLINE_DIR/config_files/colorschemes/tmux/custom.json
 }
 
 uninstall() {
