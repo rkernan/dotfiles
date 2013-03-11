@@ -189,20 +189,6 @@ noremap <leader>ft :call ToggleFold()<cr>
 nnoremap <leader>z zMzvzz
 " }}}
 
-" Line Return ---------------------------------------------------------------{{{
-" restore line position on reopen
-if has("autocmd")
-	augroup line_restore
-		autocmd!
-		autocmd BufReadPost
-			\ if line("'\"") > 0 && line("'\"") <= line("$") |
-			\     execute 'normal! g`"zvzz' |
-			\ endif"
-	augroup END
-endif
-set viminfo^=%
-" }}}
-
 " Tabs and Spaces -----------------------------------------------------------{{{
 set tabstop=4
 set shiftwidth=4
