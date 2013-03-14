@@ -254,6 +254,11 @@ vnoremap <c-j> :move '>+<cr>gv
 vnoremap <c-k> :move -2<cr>gv
 " }}}
 
+" Syntax --------------------------------------------------------------------{{{
+" OpenGL Shader Language
+autocmd BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
+" }}}
+
 " Plugins -------------------------------------------------------------------{{{
 " pathogen
 set runtimepath+=$HOME/.vim/pathogen
