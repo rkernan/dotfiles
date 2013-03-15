@@ -63,11 +63,13 @@ nnoremap <leader>S ^vg_y:execute @@<cr>:echo "sourced line"<cr>
 " timeout length
 set ttimeoutlen=1000
 set timeoutlen=1000
-augroup FastEscape
-	autocmd!
-	autocmd InsertEnter * set timeoutlen=0
-	autocmd InsertLeave * set timeoutlen=1000
-augroup END
+if has("autocmd")
+	augroup FastEscape
+		autocmd!
+		autocmd InsertEnter * set timeoutlen=0
+		autocmd InsertLeave * set timeoutlen=1000
+	augroup END
+endif
 " }}}
 
 " UI ------------------------------------------------------------------------{{{
@@ -116,7 +118,10 @@ inoremap <c-l> <c-x><c-l>
 inoremap <c-f> <c-x><c-f>
 " resize splits when window is resized
 if has("autocmd")
-	autocmd VimResized * :wincmd =
+	augroup ResizeSplits
+		autocmd!
+		autocmd VimResized * :wincmd =
+	augroup END
 endif
 " show current cursorline
 set cursorline
@@ -229,7 +234,11 @@ set noexpandtab
 " formatting
 set wrap
 set textwidth=80
-set formatoptions=tcq
+set formatoptions =c " auto-wrap comments using textwidth
+set formatoptions+=q " allow comment formatting using 'gq'
+set formatoptions+=r " automatically insert comment leader on <Enter>
+set formatoptions+=n " format numbered lists
+set formatoptions+=j " remove comment leaders (where it makes sense)
 " auto indentation
 set autoindent
 set smartindent
@@ -290,15 +299,18 @@ vnoremap <c-k> :move -2<cr>gv
 
 " Filetype Specific ---------------------------------------------------------{{{
 if has("autocmd")
-	" Tabs
-	autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
-	autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
-	" Trailing Whitespace
-	" TODO Set up filetype specific trailing whitespace rules.
-	" Formatting
-	" TODO Set up filetype specific formatting options.
-	" Syntax
-	autocmd BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setfiletype glsl
+	augroup FileTypeSpecific
+		autocmd!
+		" Tabs
+		autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
+		autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+		" Trailing Whitespace
+		" TODO Set up filetype specific trailing whitespace rules.
+		" Formatting
+		" TODO Set up filetype specific formatting options.
+		" Syntax
+		autocmd BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setfiletype glsl
+	augroup END
 endif
 " }}}
 
@@ -312,18 +324,26 @@ let g:CommandTMaxDepth=30
 let g:CommandTScanDotDirectories=1
 let g:CommandTMaxCachedDirectories=0
 let g:CommandTMatchWindowReverse=1
-augroup CommandTAutoFlush
-	autocmd!
-	autocmd FocusGained * CommandTFlush
-	autocmd BufWritePost * CommandTFlush
-	autocmd ShellCmdPost * CommandTFlush
-augroup END
+if has("autocmd")
+	augroup CommandTAutoFlush
+		autocmd!
+		autocmd FocusGained * CommandTFlush
+		autocmd BufWritePost * CommandTFlush
+		autocmd ShellCmdPost * CommandTFlush
+	augroup END
+endif
 " netrw
 let g:netrw_liststyle=3 " use tree-mode as default view
-" autoclose
-let g:AutoCloseSmartQuote=1
-let g:AutoClosePairs="() {} [] \" '"
-let g:AutoCloseProtectedRegions=["Comment", "String", "Character"]
+" delimitmate
+let g:delimitMate_autoclose=1
+let g:delimitMate_matchpairs="(:),[:],{:},<:>"
+let g:delimitMate_smart_matchpairs=1
+let g:delimitMate_balance_matchpairs=1
+let g:delimitMate_quotes="\" '"
+let g:delimitMate_smart_quotes=1
+let g:delimitMate_expand_cr=1
+let g:delimitMate_expand_space=1
+let g:delimitMate_excluded_regions="Comment,String"
 " snipmate
 let g:snippets_dir='$HOME/.vim/snippets'
 " tcomment
