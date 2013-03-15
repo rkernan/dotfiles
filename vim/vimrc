@@ -332,8 +332,6 @@ if has("autocmd")
 		autocmd ShellCmdPost * CommandTFlush
 	augroup END
 endif
-" netrw
-let g:netrw_liststyle=3 " use tree-mode as default view
 " delimitmate
 let g:delimitMate_autoclose=1
 let g:delimitMate_matchpairs="(:),[:],{:},<:>"
@@ -345,9 +343,7 @@ let g:delimitMate_expand_cr=1
 let g:delimitMate_expand_space=1
 let g:delimitMate_excluded_regions="Comment,String"
 " snipmate
-let g:snippets_dir='$HOME/.vim/snippets'
-" tcomment
-map <leader>c <c-_><c-_>
+let g:snippets_dir="$HOME/.vim/snippets"
 " tagbar
 map <f3> :TagbarToggle<cr>
 let g:tagbar_compact=1
@@ -363,23 +359,25 @@ let g:gundo_right=0
 let g:gundo_preview_bottom=1
 let g:gundo_help=0
 let g:gundo_close_on_revert=1
-let g:gundo_preview_statusline='Undo diff'
-let g:gundo_tree_statusline='Undo Tree'
+let g:gundo_preview_statusline="Undo Diff"
+let g:gundo_tree_statusline="Undo Tree"
 " syntastic
-let g:syntastic_auto_loc_list=1       " automatically open/close list
-let g:syntastic_loc_list_height=5     " 5 lines for error height
-let g:syntastic_check_on_open=1       " check error on file open
-let g:syntastic_echo_current_error=0  " do not put current error in cmd
-let g:syntastic_enable_signs=1        " enable error pointers
-let g:syntastic_quiet_warnings=0      " enable warning pointers
-let g:syntastic_error_symbol='>>'     " error symbol
-let g:syntastic_warning_symbol='>>'   " warning symbol
-let g:syntastic_enable_highlighting=0 " disable inline syntax highlighting
+let g:syntastic_auto_loc_list=1
+let g:syntastic_loc_list_height=5
+let g:syntastic_check_on_open=1
+let g:syntastic_echo_current_error=0
+let g:syntastic_enable_signs=1
+let g:syntastic_quiet_warnings=0
+let g:syntastic_error_symbol='>>'
+let g:syntastic_warning_symbol='>>'
+let g:syntastic_enable_highlighting=0
 let g:syntastic_stl_format="%B{[%E{Err: (%e) %fe}%B{, }%W{Warn: (%w) %fw}]}"
 map <leader>e :Errors<cr>
 " supertab
 let g:SuperTabDefaultCompletiontype='context'
 let g:SuperTabLongestHighlight=1
+let g:SuperTabMappingForward='<s-tab>'
+let g:SuperTabMappingBackward='<s-c-tab>'
 " powerline
 set noshowmode
 set runtimepath+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim
