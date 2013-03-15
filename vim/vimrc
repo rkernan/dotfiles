@@ -82,6 +82,8 @@ set title
 set shortmess =a " use all abbreviations
 set shortmess+=t " truncate file message if too long
 set shortmess+=s " remove 'search hit TOP/BOTTOM' message
+set shortmess+=o " file-read message overwrites file-written message
+set shortmess+=O " file-read message overwrites any message
 set shortmess+=I " remove intro message
 " show current mode
 set showmode
@@ -189,17 +191,52 @@ noremap <leader>ft :call ToggleFold()<cr>
 nnoremap <leader>z zMzvzz
 " }}}
 
-" Tabs and Spaces -----------------------------------------------------------{{{
+" Tabs and Whitespace -------------------------------------------------------{{{
+" function: set tab width {{{
+command! -nargs=* Stab call Stab()
+function! Stab()
+	let l:tabstop = 1 * input("set tabstop = softtabstop = shiftwidth = ")
+	if l:tabstop > 0
+		let &l:tw = l:tabstop
+		let &l:sts = l:tabstop
+		let &l:sw = l:tabstop
+	endif
+	echo
+	echo "\n"
+	call SummarizeTabs()
+endfunction
+" }}}
+" function: summarize tab info {{{
+function! SummarizeTabs()
+	try
+		echoh ModeMsg
+		echon "tabstop=" &l:ts " softtabstop=" &l:sts " shiftwidth=" &l:sw ' '
+		if &l:et
+			echon "expandtab"
+		else
+			echon "noexpandtab"
+		endif
+	finally
+		echoh None
+	endtry
+endfunction
+" }}}
+" tabwidth
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set noexpandtab
+" formatting
 set wrap
 set textwidth=80
-set formatoptions=qrnlj
+set formatoptions=tcq
+" auto indentation
 set autoindent
 set smartindent
 set shiftround
+" increase/decrease indent
+vnoremap >> >gv
+vnoremap << <gv
 " }}}
 
 " Color Scheme --------------------------------------------------------------{{{
@@ -223,9 +260,6 @@ set matchtime=2
 set gdefault
 " clear search buffer
 nnoremap <leader>, :nohlsearch<cr>call clearmatches()<cr>
-" increase/decrease indent
-vnoremap >> >gv
-vnoremap << <gv
 " easier system paste
 noremap <leader>y "*y
 noremap <leader>p :set paste<cr>:put *<cr>:set nopaste<cr>
@@ -238,10 +272,10 @@ set scrolloff=3
 " insert mode
 inoremap <c-a> <home>
 inoremap <c-e> <end>
-inoremap <c-h> <left>
-inoremap <c-j> <down>
-inoremap <c-k> <up>
-inoremap <c-l> <right>
+" inoremap <c-h> <left>
+" inoremap <c-j> <down>
+" inoremap <c-k> <up>
+" inoremap <c-l> <right>
 " command mode
 cnoremap <c-a> <home>
 cnoremap <c-e> <end>
@@ -254,9 +288,18 @@ vnoremap <c-j> :move '>+<cr>gv
 vnoremap <c-k> :move -2<cr>gv
 " }}}
 
-" Syntax --------------------------------------------------------------------{{{
-" OpenGL Shader Language
-autocmd BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setf glsl
+" Filetype Specific ---------------------------------------------------------{{{
+if has("autocmd")
+	" Tabs
+	autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
+	autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+	" Trailing Whitespace
+	" TODO Set up filetype specific trailing whitespace rules.
+	" Formatting
+	" TODO Set up filetype specific formatting options.
+	" Syntax
+	autocmd BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setfiletype glsl
+endif
 " }}}
 
 " Plugins -------------------------------------------------------------------{{{
@@ -314,8 +357,6 @@ let g:syntastic_warning_symbol='>>'   " warning symbol
 let g:syntastic_enable_highlighting=0 " disable inline syntax highlighting
 let g:syntastic_stl_format="%B{[%E{Err: (%e) %fe}%B{, }%W{Warn: (%w) %fw}]}"
 map <leader>e :Errors<cr>
-" detectindent
-autocmd BufReadPost * :DetectIndent
 " supertab
 let g:SuperTabDefaultCompletiontype='context'
 let g:SuperTabLongestHighlight=1
