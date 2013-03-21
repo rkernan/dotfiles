@@ -64,15 +64,11 @@ install() {
 	fi
 	# symlink powerline config
 	echo "Linking powerline config files..."
-	if [ ! -f $POWERLINE_DIR/config_files/config.json.bak ]; then
-		echo "  backing up default config to $POWERLINE_DIR/config_files/config.json.bak"
-		mv $POWERLINE_DIR/config_files/config.json $POWERLINE_DIR/config_files/config.json.bak
+	if [ ! -d $HOME/.config ]; then
+		mkdir $HOME/.config
 	fi
-	rm -f $POWERLINE_DIR/config_files/config.json
-	ln $DOTFILES_DIR/powerline/config/config.json $POWERLINE_DIR/config_files/config.json
-	# powerline vim config
-	rm -f $POWERLINE_DIR/config_files/colorschemes/vim/custom.json
-	ln -s $DOTFILES_DIR/powerline/config/vim_colorscheme.json $POWERLINE_DIR/config_files/colorschemes/vim/custom.json
+	rm -rf $HOME/.config/powerline
+	ln -s $DOTFILES_DIR/powerline/config $HOME/.config/powerline
 }
 
 uninstall() {
@@ -87,6 +83,7 @@ uninstall() {
 	rm -rf $HOME/.i3        # rm   i3- config directory
 	echo "Uninstalling powerline..."
 	pip uninstall powerline
+	rm -rf $HOME/.config/powerline
 }
 
 case $1 in
