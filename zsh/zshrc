@@ -61,12 +61,24 @@ zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/s
 
 # Version Control -----------------------------------------------------------{{{
 autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git svn
-zstyle ':vcs_info:*' get-revision true
+zstyle ':vcs_info:*' enable git svn hg
+zstyle ':vcs_info:*' get-revision false
+zstyle ':vcs_info:*' use-simple true
+zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr '%F{green}●'
 zstyle ':vcs_info:*' unstagedstr '%F{yellow}●'
-zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' formats ' on %F{red}%b%c%u%F{white}'
+zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
+# function: hook for untracked git files {{{
+function +vi-git-untracked() {
+	if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
+		if git status --porcelain | grep '??' &> /dev/null ; then
+			hook_com[unstaged]+='%F{red}●'
+		fi
+	fi
+}
+#}}}
+
 precmd() {
 	vcs_info
 }
