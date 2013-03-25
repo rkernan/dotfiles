@@ -275,16 +275,16 @@ noremap <leader>p :set paste<cr>:put *<cr>:set nopaste<cr>
 " }}}
 
 " Movement ------------------------------------------------------------------{{{
-set scrolloff=3
+set scrolloff=5
 " normal mode
 " visual mode
 " insert mode
 inoremap <c-a> <home>
 inoremap <c-e> <end>
-" inoremap <c-h> <left>
-" inoremap <c-j> <down>
-" inoremap <c-k> <up>
-" inoremap <c-l> <right>
+inoremap <c-h> <left>
+inoremap <c-j> <down>
+inoremap <c-k> <up>
+inoremap <c-l> <right>
 " command mode
 cnoremap <c-a> <home>
 cnoremap <c-e> <end>
@@ -345,7 +345,7 @@ let g:delimitMate_quotes="\" '"
 let g:delimitMate_smart_quotes=1
 let g:delimitMate_expand_cr=1
 let g:delimitMate_expand_space=1
-let g:delimitMate_excluded_regions="Comment,String"
+let g:delimitMate_excluded_regions="Comment"
 " -----
 " Gundo
 " -----
@@ -363,7 +363,9 @@ let g:gundo_tree_statusline="Undo Tree"
 " ---------
 set noshowmode
 set runtimepath+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim
+" --------
 " Snipmate
+" --------
 let g:snippets_dir="$HOME/.vim/snippets"
 " --------
 " Supertab
@@ -380,12 +382,12 @@ let g:syntastic_loc_list_height=5
 let g:syntastic_check_on_open=1
 let g:syntastic_echo_current_error=0
 let g:syntastic_enable_signs=1
+let g:syntastic_enable_highlighting=0
 let g:syntastic_quiet_warnings=0
 let g:syntastic_error_symbol='>>'
 let g:syntastic_style_error_symbol='S>'
 let g:syntastic_warning_symbol='>>'
 let g:syntastic_style_warning_symbol='S>'
-let g:syntastic_enable_highlighting=0
 " C
 let g:syntastic_c_check_header=1
 let g:syntastic_c_auto_refresh_includes=1
@@ -395,7 +397,7 @@ let g:syntastic_c_compiler='clang'
 let g:syntastic_cpp_check_header=1
 let g:syntastic_cpp_auto_refresh_includes=1
 let g:syntastic_cpp_include_dirs=[ 'inc', 'include' ]
-" let g:syntastic_cpp_compiler='clang++'
+let g:syntastic_cpp_compiler='clang++'
 " ------
 " Tagbar
 " ------
@@ -406,3 +408,4 @@ let g:tagbar_width=31
 let g:tagbar_sort=1
 let g:tagbar_singleclick=1
 " }}}
+
