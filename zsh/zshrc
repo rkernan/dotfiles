@@ -71,10 +71,9 @@ zstyle ':vcs_info:*' formats ' on %F{red}%b%c%u%F{white}'
 zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 # function: hook for untracked git files {{{
 function +vi-git-untracked() {
-	if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
-		if git status --porcelain | grep '??' &> /dev/null ; then
-			hook_com[unstaged]+='%F{red}●'
-		fi
+	if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] \
+			&& git status --porcelain | grep '??' &> /dev/null ; then
+		hook_com[unstaged]+='%F{red}●'
 	fi
 }
 #}}}
