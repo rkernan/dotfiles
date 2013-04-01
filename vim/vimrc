@@ -338,7 +338,9 @@ endif
 " DelimitMate
 " -----------
 let g:delimitMate_autoclose=1
-let g:delimitMate_matchpairs="(:),[:],{:},<:>"
+" TODO Determine match pairs based on filetype.
+" let g:delimitMate_matchpairs="(:),[:],{:},<:>"
+let g:delimitMate_matchpairs="(:),[:],{:}"
 let g:delimitMate_smart_matchpairs=1
 let g:delimitMate_balance_matchpairs=1
 let g:delimitMate_quotes="\" '"
