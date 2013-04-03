@@ -8,6 +8,7 @@
 # i3 config file (v4)
 #
 
+new_window 1pixel
 
 set $mod Mod4
 
