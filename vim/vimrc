@@ -302,7 +302,7 @@ if has("autocmd")
 	augroup FileTypeSpecific
 		autocmd!
 		" Tabs
-		autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
+		autocmd FileType ruby,eruby setlocal ts=2 sts=2 sw=2 expandtab
 		autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
 		" Trailing Whitespace
 		" TODO Set up filetype specific trailing whitespace rules.
