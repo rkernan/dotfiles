@@ -206,6 +206,12 @@ function! Stab()
 		let &l:sts = l:tabstop
 		let &l:sw = l:tabstop
 	endif
+	let l:et = input("set expandtab = ")
+	if l:et == "no"
+		setlocal noexpandtab
+	else
+		setlocal expandtab
+	end
 	echo
 	echo "\n"
 	call SummarizeTabs()
