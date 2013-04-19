@@ -310,12 +310,6 @@ if has("autocmd")
 		" Tabs
 		autocmd FileType ruby,eruby setlocal ts=2 sts=2 sw=2 expandtab
 		autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
-		" Trailing Whitespace
-		" TODO Set up filetype specific trailing whitespace rules.
-		" Formatting
-		" TODO Set up filetype specific formatting options.
-		" Syntax
-		autocmd BufNewFile,BufRead *.frag,*.vert,*.fp,*.vp,*.glsl setfiletype glsl
 	augroup END
 endif
 " }}}
