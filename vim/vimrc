@@ -368,14 +368,14 @@ set runtimepath+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim
 " --------
 " Snipmate
 " --------
-let g:snippets_dir="$HOME/.vim/snippets"
+" let g:snippets_dir="$HOME/.vim/snippets"
 " --------
 " Supertab
 " --------
-let g:SuperTabDefaultCompletiontype='context'
-let g:SuperTabLongestHighlight=1
-let g:SuperTabMappingForward='<s-tab>'
-let g:SuperTabMappingBackward='<s-c-tab>'
+" let g:SuperTabDefaultCompletiontype='context'
+" let g:SuperTabLongestHighlight=1
+" let g:SuperTabMappingForward='<s-tab>'
+" let g:SuperTabMappingBackward='<s-c-tab>'
 " ---------
 " Syntastic
 " ---------
