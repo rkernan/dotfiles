@@ -409,5 +409,40 @@ let g:tagbar_indent=1
 let g:tagbar_width=31
 let g:tagbar_sort=1
 let g:tagbar_singleclick=1
+" -----------
+" Neosnippets
+" -----------
+imap <c-k> <plug>(neosnippet_expand_or_jump)
+smap <c-k> <plug>(neosnippet_expand_or_jump)
+xmap <c-k> <plug>(neosnippet_expand_target)
+" supertab-like snippet behavior
+imap <expr><tab> neosnippet#expandable_or_jumpable() ?
+	\ "\<plug>(neosnippet_expand_or_jump)"
+	\: pumvisible() ? "\<c-n>" : "\<tab>"
+smap <expr><tab> neosnippet#expandable_or_jumpable() ?
+	\ "\<plug>(neosnippet_expand_or_jump)"
+	\: "\<tab>"
+if has('conceal')
+	set conceallevel=2 concealcursor=i
+endif
+" -------------
+" Neocomplcache
+" -------------
+let g:neocomplcache_enable_at_startup=1
+let g:neocomplcache_enable_smart_case=1
+let g:neocomplcache_enable_camel_case_completion=1
+let g:neocomplcache_enable_underbar_completion=1
+let g:neocomplcache_min_syntax_length=3
+let g:neocomplcache_lock_buffer_name_pattern='\*ku\*'
+
+inoremap <expr><c-g> neocomplcache#undo_completion()
+inoremap <expr><c-l> neocomplcache#complete_common_string()
+
+inoremap <expr><cr> neocomplcache#smart_close_popup() . "\<cr>"
+inoremap <expr><tab> pumvisible() ? "\<c-n>" : "\<tab>"
+inoremap <expr><c-h> neocomplcache#smart_close_popup() . "\<c-h>"
+inoremap <expr><bs> neocomplcache#smart_close_popup() . "\<c-h>"
+inoremap <expr><c-y> neocomplcache#close_popup()
+inoremap <expr><c-e> neocomplcache#cancel_popup()
 " }}}
 
