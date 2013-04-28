@@ -316,7 +316,7 @@ endif
 
 " Plugins -------------------------------------------------------------------{{{
 " pathogen
-set runtimepath+=$HOME/.vim/pathogen
+runtime bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect()
 " ---------
 " Command-T
