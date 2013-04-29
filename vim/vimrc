@@ -399,7 +399,7 @@ inoremap <expr><tab> pumvisible() ? "\<down>" : neosnippet#jumpable() ? neosnipp
 inoremap <expr><s-tab> pumvisible() ? "\<up>" : "\<s-tab>"
 inoremap <expr><c-c> neocomplcache#close_popup()
 inoremap <expr><cr> pumvisible() ? neosnippet#expandable() ? neosnippet#expand_impl() : neocomplcache#smart_close_popup() : "\<cr>"
-inoremap <c-k> <plug>(neosnippet_expand_or_jump)
+imap <c-k> <Plug>(neosnippet_expand_or_jump)
 " ---------
 " Powerline
 " ---------
