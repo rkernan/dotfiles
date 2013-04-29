@@ -380,10 +380,6 @@ let g:neocomplcache_enable_fuzzy_completion=1
 let g:neocomplcache_fuzzy_completion_start_length=2
 let g:neocomplcache_enable_prefetch=1
 let g:neocomplcache_lock_buffer_name_pattern='\*GoToFile*\'
-" menu colors
-" highlight Pmenu ctermbg=8 guibg=#606060
-" highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
-" highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
 " -----------
 " Neosnippets
 " -----------
