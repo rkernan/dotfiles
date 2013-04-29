@@ -380,7 +380,7 @@ let g:neocomplcache_enable_fuzzy_completion=1
 let g:neocomplcache_fuzzy_completion_start_length=2
 let g:neocomplcache_enable_prefetch=1
 let g:neocomplcache_lock_buffer_name_pattern='\*GoToFile*\'
-" menu highlight colors
+" menu colors
 " highlight Pmenu ctermbg=8 guibg=#606060
 " highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
 " highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
@@ -392,9 +392,14 @@ if has('conceal')
 	set concealcursor=i
 endif
 let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets/'
-imap <expr><tab> neosnippet#expandable_or_jumpable() ? "\<plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<c-n>" : "\<tab>"
-smap <expr><tab> neosnippet#expandable_or_jumpable() ? "\<plug>(neosnippet_expand_or_jump)" : "\<tab>"
-xmap <tab> <plug>(neosnippet_expand_target)
+" ------------------------
+" Bindings for Neo plugins
+" ------------------------
+inoremap <expr><tab> pumvisible() ? "\<down>" : neosnippet#jumpable() ? neosnippet#jump_impl() : "\<tab>"
+inoremap <expr><s-tab> pumvisible() ? "\<up>" : "\<s-tab>"
+inoremap <expr><c-c> neocomplcache#close_popup()
+inoremap <expr><cr> pumvisible() ? neosnippet#expandable() ? neosnippet#expand_impl() : neocomplcache#smart_close_popup() : "\<cr>"
+inoremap <c-k> <plug>(neosnippet_expand_or_jump)
 " ---------
 " Powerline
 " ---------
