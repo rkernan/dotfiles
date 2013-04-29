@@ -110,8 +110,8 @@ set showbreak=…
 set list
 set synmaxcol=800
 " completion
-set complete=.,w,b,u,t
-set completeopt=longest,menuone
+" set complete=w,a,m,i,k,i,d,e
+set completeopt=menu,menuone,longest,preview
 " line completion
 inoremap <c-l> <c-x><c-l>
 " filename completion
@@ -367,6 +367,7 @@ let g:gundo_tree_statusline="Undo Tree"
 " -------------
 " Neocomplcache
 " -------------
+let g:acp_enableAtStartup=0
 let g:neocomplcache_enable_at_startup=1
 let g:neocomplcache_auto_completion_start_length=2
 let g:neocomplcache_min_keyword_length=4
@@ -379,6 +380,10 @@ let g:neocomplcache_enable_fuzzy_completion=1
 let g:neocomplcache_fuzzy_completion_start_length=2
 let g:neocomplcache_enable_prefetch=1
 let g:neocomplcache_lock_buffer_name_pattern='\*GoToFile*\'
+" menu highlight colors
+" highlight Pmenu ctermbg=8 guibg=#606060
+" highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
+" highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
 " -----------
 " Neosnippets
 " -----------

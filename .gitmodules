@@ -46,3 +46,6 @@
 [submodule "zsh/plugin/syntax-hi"]
 	path = zsh/plugin/syntax-hi
 	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "vim/bundle/autocomplpop"]
+	path = vim/bundle/autocomplpop
+	url = git://github.com/vim-scripts/AutoComplPop.git
