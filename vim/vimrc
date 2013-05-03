@@ -401,15 +401,17 @@ let g:syntastic_style_error_symbol='S>'
 let g:syntastic_warning_symbol='>>'
 let g:syntastic_style_warning_symbol='S>'
 " C
+let g:syntastic_c_compiler='clang'
 let g:syntastic_c_check_header=1
+let g:syntastic_c_no_default_include_dirs=1
 let g:syntastic_c_auto_refresh_includes=1
 let g:syntastic_c_include_dirs=[ 'inc', 'include' ]
-let g:syntastic_c_compiler='clang'
 " C++
+let g:syntastic_cpp_compiler='clang++'
 let g:syntastic_cpp_check_header=1
+let g:syntastic_cpp_no_default_include_dirs=1
 let g:syntastic_cpp_auto_refresh_includes=1
 let g:syntastic_cpp_include_dirs=[ 'inc', 'include' ]
-let g:syntastic_cpp_compiler='clang++'
 " ------
 " Tagbar
 " ------
@@ -420,4 +422,3 @@ let g:tagbar_width=31
 let g:tagbar_sort=1
 let g:tagbar_singleclick=1
 " }}}
-
