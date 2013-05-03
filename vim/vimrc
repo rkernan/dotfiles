@@ -251,11 +251,6 @@ vnoremap >> >gv
 vnoremap << <gv
 " }}}
 
-" Color Scheme --------------------------------------------------------------{{{
-syntax on
-colorscheme molokai
-" }}}
-
 " Searching  and Selection --------------------------------------------------{{{
 " regex magic
 set magic
@@ -315,6 +310,13 @@ endif
 " pathogen
 runtime bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect()
+" ----------
+" Coloscheme
+" ----------
+syntax on
+colorscheme molokai
+" custom colors
+hi Error ctermfg=214 ctermbg=52 cterm=none
 " ---------
 " Command-T
 " ---------
@@ -357,22 +359,6 @@ let g:gundo_help=0
 let g:gundo_close_on_revert=1
 let g:gundo_preview_statusline="Undo Diff"
 let g:gundo_tree_statusline="Undo Tree"
-" -------------
-" Neocomplcache
-" -------------
-let g:neocomplcache_enable_at_startup=0
-" let g:neocomplcache_enable_at_startup=1
-" let g:neocomplcache_auto_completion_start_length=2
-" let g:neocomplcache_min_keyword_length=4
-" let g:neocomplcache_min_syntax_length=4
-" let g:neocomplcache_enable_smart_case=1
-" let g:neocomplcache_enable_wildcard=1
-" let g:neocomplcache_enable_camel_case_completion=0
-" let g:neocomplcache_enable_underbar_completion=0
-" let g:neocomplcache_enable_fuzzy_completion=1
-" let g:neocomplcache_fuzzy_completion_start_length=2
-" let g:neocomplcache_enable_prefetch=1
-" let g:neocomplcache_lock_buffer_name_pattern='\*GoToFile*\'
 " -----------
 " Neosnippets
 " -----------
@@ -381,6 +367,7 @@ if has('conceal')
 	set concealcursor=i
 endif
 let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets/'
+imap <c-k> <plug>(neosnippet_expand_or_jump)
 " ---------
 " Powerline
 " ---------
