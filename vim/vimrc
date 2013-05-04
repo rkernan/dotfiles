@@ -63,13 +63,6 @@ nnoremap <leader>S ^vg_y:execute @@<cr>:echo "sourced line"<cr>
 " timeout length
 set ttimeoutlen=1000
 set timeoutlen=1000
-" if has("autocmd")
-" 	augroup FastEscape
-" 		autocmd!
-" 		autocmd InsertEnter * set timeoutlen=0
-" 		autocmd InsertLeave * set timeoutlen=1000
-" 	augroup END
-" endif
 " }}}
 
 " UI ------------------------------------------------------------------------{{{
@@ -111,7 +104,7 @@ set list
 set synmaxcol=800
 " completion
 " set complete=w,a,m,i,k,i,d,e
-set completeopt=menu,menuone,longest,preview
+set completeopt=menu,menuone,longest
 " line completion
 inoremap <c-l> <c-x><c-l>
 " filename completion
@@ -256,11 +249,14 @@ set shiftround
 " increase/decrease indent
 vnoremap >> >gv
 vnoremap << <gv
-" }}}
-
-" Color Scheme --------------------------------------------------------------{{{
-syntax on
-colorscheme molokai
+" auto-indent options
+set cinoptions+=L-1 " indent of labels -> none
+set cinoptions+=:0  " indent of cases -> none
+set cinoptions+=l1  " indent of block after case -> align with case statement
+set cinoptions+=g0  " indent of scope declarations -> none
+set cinoptions+=N-s " indent of statements inside namespace -> none
+set cinoptions+=(0  " indent of line continuations with unclosed parens -> line up with open-paren
+set cinoptions+=j1  " indent Java anonymous classes correctly
 " }}}
 
 " Searching  and Selection --------------------------------------------------{{{
@@ -322,6 +318,13 @@ endif
 " pathogen
 runtime bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect()
+" ----------
+" Coloscheme
+" ----------
+syntax on
+colorscheme molokai
+" custom colors
+hi Error ctermfg=214 ctermbg=52 cterm=none
 " ---------
 " Command-T
 " ---------
@@ -364,22 +367,6 @@ let g:gundo_help=0
 let g:gundo_close_on_revert=1
 let g:gundo_preview_statusline="Undo Diff"
 let g:gundo_tree_statusline="Undo Tree"
-" -------------
-" Neocomplcache
-" -------------
-let g:acp_enableAtStartup=0
-let g:neocomplcache_enable_at_startup=1
-let g:neocomplcache_auto_completion_start_length=2
-let g:neocomplcache_min_keyword_length=4
-let g:neocomplcache_min_syntax_length=4
-let g:neocomplcache_enable_smart_case=1
-let g:neocomplcache_enable_wildcard=1
-let g:neocomplcache_enable_camel_case_completion=0
-let g:neocomplcache_enable_underbar_completion=0
-let g:neocomplcache_enable_fuzzy_completion=1
-let g:neocomplcache_fuzzy_completion_start_length=2
-let g:neocomplcache_enable_prefetch=1
-let g:neocomplcache_lock_buffer_name_pattern='\*GoToFile*\'
 " -----------
 " Neosnippets
 " -----------
@@ -388,14 +375,6 @@ if has('conceal')
 	set concealcursor=i
 endif
 let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets/'
-" ------------------------
-" Bindings for Neo plugins
-" ------------------------
-inoremap <expr><tab> pumvisible() ? "\<down>" : neosnippet#jumpable() ? neosnippet#jump_impl() : "\<tab>"
-inoremap <expr><s-tab> pumvisible() ? "\<up>" : "\<s-tab>"
-inoremap <expr><c-c> neocomplcache#close_popup()
-inoremap <expr><cr> pumvisible() ? neosnippet#expandable() ? neosnippet#expand_impl() : neocomplcache#smart_close_popup() : "\<cr>"
-imap <c-k> <Plug>(neosnippet_expand_or_jump)
 " ---------
 " Powerline
 " ---------
@@ -416,15 +395,17 @@ let g:syntastic_style_error_symbol='S>'
 let g:syntastic_warning_symbol='>>'
 let g:syntastic_style_warning_symbol='S>'
 " C
+let g:syntastic_c_compiler='clang'
 let g:syntastic_c_check_header=1
+let g:syntastic_c_no_default_include_dirs=1
 let g:syntastic_c_auto_refresh_includes=1
 let g:syntastic_c_include_dirs=[ 'inc', 'include' ]
-let g:syntastic_c_compiler='clang'
 " C++
+let g:syntastic_cpp_compiler='clang++'
 let g:syntastic_cpp_check_header=1
+let g:syntastic_cpp_no_default_include_dirs=1
 let g:syntastic_cpp_auto_refresh_includes=1
 let g:syntastic_cpp_include_dirs=[ 'inc', 'include' ]
-let g:syntastic_cpp_compiler='clang++'
 " ------
 " Tagbar
 " ------
@@ -435,4 +416,3 @@ let g:tagbar_width=31
 let g:tagbar_sort=1
 let g:tagbar_singleclick=1
 " }}}
-
