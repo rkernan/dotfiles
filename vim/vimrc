@@ -104,7 +104,7 @@ set list
 set synmaxcol=800
 " completion
 " set complete=w,a,m,i,k,i,d,e
-set completeopt=menu,menuone,longest,preview
+set completeopt=menu,menuone,longest
 " line completion
 inoremap <c-l> <c-x><c-l>
 " filename completion
@@ -249,6 +249,14 @@ set shiftround
 " increase/decrease indent
 vnoremap >> >gv
 vnoremap << <gv
+" auto-indent options
+set cinoptions+=L-1 " indent of labels -> none
+set cinoptions+=:0  " indent of cases -> none
+set cinoptions+=l1  " indent of block after case -> align with case statement
+set cinoptions+=g0  " indent of scope declarations -> none
+set cinoptions+=N-s " indent of statements inside namespace -> none
+set cinoptions+=(0  " indent of line continuations with unclosed parens -> line up with open-paren
+set cinoptions+=j1  " indent Java anonymous classes correctly
 " }}}
 
 " Searching  and Selection --------------------------------------------------{{{
@@ -367,7 +375,8 @@ if has('conceal')
 	set concealcursor=i
 endif
 let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets/'
-imap <c-k> <plug>(neosnippet_expand_or_jump)
+imap <expr><tab> neosnippet#expandable_or_jumpable() ? "\<plug>(neosnippet_expand_or_jump)" : pumvisible() ? "\<c-n>" : "\<tab>"
+" imap <c-k> <plug>(neosnippet_expand_or_jump)
 " ---------
 " Powerline
 " ---------
