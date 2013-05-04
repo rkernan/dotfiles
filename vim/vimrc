@@ -375,6 +375,7 @@ if has('conceal')
 	set concealcursor=i
 endif
 let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets/'
+imap <c-k> <plug>(neosnippet_expand_or_jump)
 " ---------
 " Powerline
 " ---------
