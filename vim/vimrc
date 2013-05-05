@@ -63,6 +63,8 @@ nnoremap <leader>S ^vg_y:execute @@<cr>:echo "sourced line"<cr>
 " timeout length
 set ttimeoutlen=1000
 set timeoutlen=1000
+" look for tags file upwards
+set tags=./tags;/
 " }}}
 
 " UI ------------------------------------------------------------------------{{{
