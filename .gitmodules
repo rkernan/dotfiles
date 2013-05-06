@@ -46,3 +46,6 @@
 [submodule "zsh/plugin/syntax-hi"]
 	path = zsh/plugin/syntax-hi
 	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "vim/bundle/tags"]
+	path = vim/bundle/tags
+	url = git://github.com/szw/vim-tags.git

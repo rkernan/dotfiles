@@ -63,8 +63,9 @@ nnoremap <leader>S ^vg_y:execute @@<cr>:echo "sourced line"<cr>
 " timeout length
 set ttimeoutlen=1000
 set timeoutlen=1000
-" look for tags file upwards
-set tags=./tags;/
+" allow local vimrc files
+set exrc
+set secure
 " }}}
 
 " UI ------------------------------------------------------------------------{{{
@@ -417,4 +418,12 @@ let g:tagbar_indent=1
 let g:tagbar_width=31
 let g:tagbar_sort=1
 let g:tagbar_singleclick=1
+" ----
+" Tags
+" ----
+set tags =./tags;/
+set tags+=./.git/tags;/.git/
+set tags+=./.svn/tags;/.svn/
+set tags+=./.CVS/tags;/.CVS/
+let g:vim_tags_auto_generate=1
 " }}}
