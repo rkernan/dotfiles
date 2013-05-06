@@ -4,9 +4,6 @@
 [submodule "powerline/install"]
 	path = powerline/install
 	url = git://github.com/Lokaltog/powerline.git
-[submodule "vim/bundle/autotag"]
-	path = vim/bundle/autotag
-	url = git://github.com/vim-scripts/AutoTag.git
 [submodule "vim/bundle/command-t"]
 	path = vim/bundle/command-t
 	url = git://github.com/wincent/Command-T.git
