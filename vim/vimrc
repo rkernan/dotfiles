@@ -422,9 +422,7 @@ let g:tagbar_singleclick=1
 " Tags
 " ----
 set tags =./tags;/
-set tags+=./.git/tags;/.git/
-set tags+=./.svn/tags;/.svn/
-set tags+=./.CVS/tags;/.CVS/
-" TODO(Kernan, Robert) Set global tags based on filetype.
+set tags+=/usr/include/std.tags " system tags
+let g:vim_tags_directories=[]
 let g:vim_tags_auto_generate=1
 " }}}
