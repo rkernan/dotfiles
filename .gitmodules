@@ -49,6 +49,3 @@
 [submodule "vim/bundle/tags"]
 	path = vim/bundle/tags
 	url = git://github.com/szw/vim-tags.git
-[submodule "i3/py3status/install"]
-	path = i3/py3status/install
-	url = git://github.com/ultrabug/py3status.git
