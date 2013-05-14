@@ -62,6 +62,16 @@ install() {
 	else
 		echo "  already installed!"
 	fi
+	# install py3status
+	echo "Installing py3status..."
+	PY3STATUS_DIR=$HOME/.local/lib/python2.7/site-packages/py3status
+	if [ ! -d $PY3STATUS_DIR ]; then
+		cd $DOTFILES_DIR/i3/py3status
+		pip install --user ./ >> $DOTFILES_LOG 2>> $DOTFILES_LOG
+		cd $DOTFILES_DIR
+	else
+		echo "  already installed!"
+	fi
 	# symlink powerline config
 	echo "Linking powerline config files..."
 	if [ ! -d $HOME/.config ]; then
@@ -84,6 +94,8 @@ uninstall() {
 	echo "Uninstalling powerline..."
 	pip uninstall powerline
 	rm -rf $HOME/.config/powerline
+	echo "Uninstalling py3status..."
+	pip uninstall py3status
 }
 
 case $1 in

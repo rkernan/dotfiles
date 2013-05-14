@@ -147,5 +147,5 @@ bindsym $mod+r mode "resize"
 bar {
         position bottom
         workspace_buttons yes
-        status_command i3status --config ~/.i3/status.conf
+        status_command py3status -c ~/.i3/status.conf
 }
