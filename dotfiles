@@ -66,7 +66,7 @@ install() {
 	echo "Installing py3status..."
 	PY3STATUS_DIR=$HOME/.local/lib/python2.7/site-packages/py3status
 	if [ ! -d $PY3STATUS_DIR ]; then
-		cd $DOTFILES_DIR/i3/py3status
+		cd $DOTFILES_DIR/i3/py3status/install
 		pip install --user ./ >> $DOTFILES_LOG 2>> $DOTFILES_LOG
 		cd $DOTFILES_DIR
 	else

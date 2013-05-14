@@ -1,4 +1,4 @@
 class Py3status:
     def empty(self, json, i3status_config):
-        response = { 'full_text' : '', 'name' : 'empty' }
+        response = { 'full_text' : 'py3status!', 'name' : 'empty' }
         return (0, response)
