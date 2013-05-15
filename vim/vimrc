@@ -370,14 +370,6 @@ let g:gundo_help=0
 let g:gundo_close_on_revert=1
 let g:gundo_preview_statusline="Undo Diff"
 let g:gundo_tree_statusline="Undo Tree"
-" -----------
-" Neosnippets
-" -----------
-if has('conceal')
-	set conceallevel=2
-endif
-let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets/'
-imap <c-k> <plug>(neosnippet_expand_or_jump)
 " ---------
 " Powerline
 " ---------

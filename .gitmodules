@@ -34,15 +34,15 @@
 [submodule "vim/bundle/tagbar"]
 	path = vim/bundle/tagbar
 	url = git://github.com/majutsushi/tagbar.git
-[submodule "vim/bundle/tcomment"]
-	path = vim/bundle/tcomment
-	url = git://github.com/tomtom/tcomment_vim.git
-[submodule "vim/bundle/vim-snippets"]
-	path = vim/bundle/vim-snippets
-	url = https://github.com/kernan/vim-snippets.git
-[submodule "zsh/plugin/syntax-hi"]
-	path = zsh/plugin/syntax-hi
-	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "vim/bundle/tags"]
 	path = vim/bundle/tags
 	url = git://github.com/szw/vim-tags.git
+[submodule "vim/bundle/tcomment"]
+	path = vim/bundle/tcomment
+	url = git://github.com/tomtom/tcomment_vim.git
+[submodule "vim/bundle/ultisnips"]
+	path = vim/bundle/ultisnips
+	url = git://github.com/SirVer/ultisnips.git
+[submodule "zsh/plugin/syntax-hi"]
+	path = zsh/plugin/syntax-hi
+	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
