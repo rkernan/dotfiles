@@ -25,6 +25,9 @@
 [submodule "vim/bundle/rails"]
 	path = vim/bundle/rails
 	url = git://github.com/tpope/vim-rails.git
+[submodule "vim/bundle/snippets"]
+	path = vim/bundle/snippets
+	url = https://github.com/kernan/vim-snippets.git
 [submodule "vim/bundle/syntastic"]
 	path = vim/bundle/syntastic
 	url = git://github.com/scrooloose/syntastic.git
@@ -46,6 +49,3 @@
 [submodule "zsh/plugin/syntax-hi"]
 	path = zsh/plugin/syntax-hi
 	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "vim/bundle/snippets"]
-	path = vim/bundle/snippets
-	url = https://github.com/kernan/vim-snippets.git
