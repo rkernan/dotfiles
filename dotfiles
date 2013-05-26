@@ -44,7 +44,10 @@ install() {
 	# copy patched powerline fonts
 	echo "Installing fonts"
 	echo "  linking font files"
-	ln -sf $DOTFILES_DIR/powerline/fonts/*/*.otf $HOME/.fonts/
+	if [ ! -d $HOME/.fonts ]; then
+		mkdir $HOME/.fonts
+	fi
+	find $DOTFILES_DIR/powerline/fonts/ -type f \( ! -iname "*.rst" ! -iname "*.markdown" ! -iname "*.txt" \) -exec ln -sf {} $HOME/.fonts/ \;
 	echo "  running font cache"
 	fc-cache -vf $HOME/.fonts >> $DOTFILES_LOG 2>> $DOTFILES_LOG
 	# build command-t (vim plugin)

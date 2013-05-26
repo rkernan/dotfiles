@@ -67,13 +67,23 @@ zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr '%F{green}●'
 zstyle ':vcs_info:*' unstagedstr '%F{yellow}●'
-zstyle ':vcs_info:*' formats ' on %F{red}%b%c%u%F{white}'
+zstyle ':vcs_info:*' formats ' %F{cyan}[ %b%c%u %F{cyan}]'
 zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 # function: hook for untracked git files {{{
 function +vi-git-untracked() {
 	if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] \
 			&& git status --porcelain | grep '??' &> /dev/null ; then
 		hook_com[unstaged]+='%F{red}●'
+	fi
+}
+#}}}
+zstyle ':vcs_info:git*+set-message:*' hooks git-tslc
+# function: hook for time since last commit {{{
+function +vi-git-tslc() {
+	if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
+		prefix=' %F{yellow}'
+		tslc=$(git log -1 --pretty=format:"%ar" | sed 's/\([0-9]*\) \(.\).*/\1\2/')
+		hook_com[unstaged]+=$prefix$tslc
 	fi
 }
 #}}}
@@ -99,31 +109,14 @@ alias mkdir="nocorrect mkdir"
 
 # Highlighting --------------------------------------------------------------{{{
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-
 source $ZSH_HOME/plugin/syntax-hi/zsh-syntax-highlighting.zsh
-# }}}
-
-# Mode Display --------------------------------------------------------------{{{
-vimode_ins="%B%F{cyan}INS%b%F{white}"
-vimode_cmd="%B%F{green}CMD%b%F{white}"
-vimode_curr=$vimode_ins
-
-function zle-line-finish {
-	vimode_curr=$vimode_ins
-}
-
-function zle-keymap-select {
-	vimode_curr="${${KEYMAP/vicmd/${vimode_cmd}}/(main|viins)/${vimode_ins}}"
-	zle reset-prompt
-}
-
-zle -N zle-line-finish
-zle -N zle-keymap-select
 # }}}
 
 # Prompt --------------------------------------------------------------------{{{
 setopt prompt_subst
-PROMPT='[%F{blue}%n%F{white}@%F{yellow}%m%F{white}:%F{cyan}%~%F{white}${vcs_info_msg_0_}]$ '
-RPROMPT='[%D{%Y-%m-%d %H:%M}]'
+# PROMPT='[%F{blue}%n%F{white}@%F{yellow}%m%F{white}:%F{cyan}%~%F{white}${vcs_info_msg_0_}]$ '
+# RPROMPT='[%D{%Y-%m-%d %H:%M}]'
 # . "$HOME/.local/lib/python2.7/site-packages/powerline/bindings/zsh/powerline.zsh"
+PROMPT='%F{cyan}%c${vcs_info_msg_0_} %F{white}%(!.#.⚡) %{$reset_color%}'
+RPROMPT=''
 # }}}
