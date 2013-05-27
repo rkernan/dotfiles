@@ -326,8 +326,6 @@ call pathogen#infect()
 " ----------
 syntax on
 colorscheme molokai
-" custom colors
-hi Error ctermfg=214 ctermbg=52 cterm=none
 " ---------
 " Command-T
 " ---------
