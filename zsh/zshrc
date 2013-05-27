@@ -97,10 +97,10 @@ function +vi-git-hooks() {
 		if [ "$minutes" -gt 0 ] && [ "$days" -eq 0 ]; then
 			time_passed+=$minutes
 			time_passed+="m"
+		elif [ "$minutes" -eq 0 ] && [ "$days" -eq 0 ] && [ "$hours" -eq 0 ]; then
+			time_passed+="0m"
 		fi
 		hook_com[unstaged]+=" %F{cyan}] %F{yellow}%{$time_passed%}"
-	else
-		hook_com[unstaged]=""
 	fi
 }
 #}}}
