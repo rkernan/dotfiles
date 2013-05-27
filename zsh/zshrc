@@ -124,6 +124,11 @@ alias mkdir="nocorrect mkdir"
 cd() {
 	builtin cd "$@"; print "$fg[green]$PWD$reset_color"
 }
+
+pwd() {
+	printf "$fg[green]$PWD$reset_color\n"
+}
+
 # }}}
 
 # Highlighting --------------------------------------------------------------{{{
