@@ -99,6 +99,8 @@ function +vi-git-hooks() {
 			time_passed+="m"
 		fi
 		hook_com[unstaged]+=" %F{cyan}] %F{yellow}%{$time_passed%}"
+	else
+		hook_com[unstaged]=""
 	fi
 }
 #}}}
