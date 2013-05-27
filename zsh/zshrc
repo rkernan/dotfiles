@@ -80,25 +80,27 @@ function +vi-git-hooks() {
 		last_commit=$(git log -1 --pretty=format:"%at")
 		now=$(date +%s)
 		seconds=$((now - last_commit))
-		minutes=$((seconds / 60))
-		hours=$((seconds / 3600))
-		days=$((seconds / 86400))
-		local time_passed=""
-		if [ "$days" -gt 0 ]; then
-			time_passed+=$days
-			time_passed+="d"
-			hours=$((hours % 24))
-		fi
-		if [ "$hours" -gt 0 ]; then
-			time_passed+=$hours
-			time_passed+="h"
-			minutes=$((minutes % 60))
-		fi
-		if [ "$minutes" -gt 0 ] && [ "$days" -eq 0 ]; then
-			time_passed+=$minutes
-			time_passed+="m"
-		elif [ "$minutes" -eq 0 ] && [ "$days" -eq 0 ] && [ "$hours" -eq 0 ]; then
-			time_passed+="0m"
+		if [ "$seconds" -lt 60 ]; then
+			time_passed="0m"
+		else
+			minutes=$((seconds / 60))
+			hours=$((seconds / 3600))
+			days=$((seconds / 86400))
+			local time_passed=""
+			if [ "$days" -gt 0 ]; then
+				time_passed+=$days
+				time_passed+="d"
+				hours=$((hours % 24))
+			fi
+			if [ "$hours" -gt 0 ]; then
+				time_passed+=$hours
+				time_passed+="h"
+				minutes=$((minutes % 60))
+			fi
+			if [ "$minutes" -gt 0 ] && [ "$days" -eq 0 ]; then
+				time_passed+=$minutes
+				time_passed+="m"
+			fi
 		fi
 		hook_com[unstaged]+=" %F{cyan}] %F{yellow}%{$time_passed%}"
 	fi
@@ -140,6 +142,6 @@ source $ZSH_HOME/plugin/syntax-hi/zsh-syntax-highlighting.zsh
 
 # Prompt --------------------------------------------------------------------{{{
 setopt prompt_subst
-PROMPT='%F{cyan}%c${vcs_info_msg_0_} %F{white}%(!.#.⚡) %{$reset_color%}'
+PROMPT='%F{cyan}%c${vcs_info_msg_0_} %F{white}%% %{$reset_color%}'
 RPROMPT=''
 # }}}
