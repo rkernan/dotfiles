@@ -67,23 +67,38 @@ zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr '%F{green}●'
 zstyle ':vcs_info:*' unstagedstr '%F{yellow}●'
-zstyle ':vcs_info:*' formats ' %F{cyan}[ %b%c%u %F{cyan}]'
-zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
-# function: hook for untracked git files {{{
-function +vi-git-untracked() {
-	if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] \
-			&& git status --porcelain | grep '??' &> /dev/null ; then
-		hook_com[unstaged]+='%F{red}●'
-	fi
-}
-#}}}
-zstyle ':vcs_info:git*+set-message:*' hooks git-tslc
-# function: hook for time since last commit {{{
-function +vi-git-tslc() {
+zstyle ':vcs_info:*' formats ' %F{cyan}[ %b%c%u'
+zstyle ':vcs_info:git*+set-message:*' hooks git-hooks
+# function: hook for git vcs {{{
+function +vi-git-hooks() {
 	if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
-		prefix=' %F{yellow}'
-		tslc=$(git log -1 --pretty=format:"%ar" | sed 's/\([0-9]*\) \(.\).*/\1\2/')
-		hook_com[unstaged]+=$prefix$tslc
+		# untracked files
+		if [[ $(git status --porcelain | grep '??' 2> /dev/null) != '' ]]; then
+			hook_com[unstaged]+='%F{red}●'
+		fi
+		# time since last commit
+		last_commit=$(git log -1 --pretty=format:"%at")
+		now=$(date +%s)
+		seconds=$((now - last_commit))
+		minutes=$((seconds / 60))
+		hours=$((seconds / 3600))
+		days=$((seconds / 86400))
+		local time_passed=""
+		if [ "$days" -gt 0 ]; then
+			time_passed+=$days
+			time_passed+="d"
+			hours=$((hours % 24))
+		fi
+		if [ "$hours" -gt 0 ]; then
+			time_passed+=$hours
+			time_passed+="h"
+			minutes=$((minutes % 60))
+		fi
+		if [ "$minutes" -gt 0 ] && [ "$days" -eq 0 ]; then
+			time_passed+=$minutes
+			time_passed+="m"
+		fi
+		hook_com[unstaged]+=" %F{cyan}] %F{yellow}%{$time_passed%}"
 	fi
 }
 #}}}
