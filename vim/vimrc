@@ -417,9 +417,4 @@ set tags =./tags;/
 set tags+=/usr/include/std.tags " system tags
 let g:vim_tags_directories=[]
 let g:vim_tags_auto_generate=1
-" ---------
-" UltiSnips
-" ---------
-let g:UltiSnipsSnippetDirectories=["snippets"]
-let g:UltiSnipsDontReverseSearchPath=1
 " }}}
