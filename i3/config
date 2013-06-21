@@ -10,7 +10,7 @@
 
 new_window 1pixel
 
-set $mod Mod4
+set $mod Mod1
 
 # font for window titles. ISO 10646 = Unicode
 font xft:DejaVu Sans Mono:size=8
