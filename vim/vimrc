@@ -198,8 +198,8 @@ nnoremap <leader>z zMzvzz
 
 " Tabs and Whitespace -------------------------------------------------------{{{
 " function: set tab width {{{
-command! -nargs=* Stab call Stab()
-function! Stab()
+command! -nargs=* Stab call SetTab()
+function! SetTab()
 	let l:tabstop = 1 * input("set tabstop = softtabstop = shiftwidth = ")
 	if l:tabstop > 0
 		let &l:tw = l:tabstop
