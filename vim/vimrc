@@ -358,6 +358,10 @@ let g:delimitMate_smart_quotes=1
 let g:delimitMate_expand_cr=1
 let g:delimitMate_expand_space=1
 let g:delimitMate_excluded_regions="Comment"
+" -------
+" DoxyGen
+" -------
+let g:load_doxygen_syntax=1
 " -----
 " Gundo
 " -----
