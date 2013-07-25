@@ -327,34 +327,6 @@ call pathogen#infect()
 syntax on
 let g:rehash256=1
 colorscheme molokai
-" Special Colors
-if exists("g:molokai_original") && g:molokai_original == 1
-	hi doxygenBrief                guifg=#75715E gui=bold
-	hi doxygenParam                guifg=#75715E gui=underline
-	hi doxygenParamName            guifg=#75715E gui=bold
-	hi doxygenSpecialMultilineDesc guifg=#75715E gui=bold
-else
-	hi doxygenBrief                guifg=#7E8E91 gui=bold
-	hi doxygenParam                guifg=#7E8E91 gui=underline
-	hi doxygenParamName            guifg=#7E8E91 gui=bold
-	hi doxygenSpecialMultilineDesc guifg=#7E8E91 gui=bold
-endif
-if &t_Co > 255
-	hi PmenuSel                    ctermfg=17  ctermbg=244
-	if exists("g:rehash256") && g:rehash256 == 1
-		hi doxygenSpecial              ctermfg=244 cterm=underline
-		hi doxygenBrief                ctermfg=244 cterm=bold
-		hi doxygenParam                ctermfg=244 cterm=underline
-		hi doxygenParamName            ctermfg=244 cterm=bold
-		hi doxygenSpecialMultilineDesc ctermfg=244 cterm=none
-	else
-		hi doxygenSpecial              ctermfg=59 cterm=underline
-		hi doxygenBrief                ctermfg=59 cterm=bold
-		hi doxygenParam                ctermfg=59 cterm=underline
-		hi doxygenParamName            ctermfg=59 cterm=bold
-		hi doxygenSpecialMultilineDesc ctermfg=59 cterm=none
-	endif
-endif
 " ---------
 " Command-T
 " ---------
