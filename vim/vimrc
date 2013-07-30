@@ -360,7 +360,7 @@ let g:delimitMate_excluded_regions="Comment"
 " -------
 " DoxyGen
 " -------
-let g:load_doxygen_syntax=1
+let g:load_doxygen_syntax=0
 " -----
 " Gundo
 " -----
