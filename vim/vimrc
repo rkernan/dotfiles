@@ -397,12 +397,14 @@ let g:syntastic_c_compiler='clang'
 let g:syntastic_c_check_header=1
 let g:syntastic_c_no_default_include_dirs=1
 let g:syntastic_c_auto_refresh_includes=1
+let g:syntastic_c_compiler_options=' -std=c11'
 let g:syntastic_c_include_dirs=[ 'inc', 'include' ]
 " C++
 let g:syntastic_cpp_compiler='clang++'
 let g:syntastic_cpp_check_header=1
 let g:syntastic_cpp_no_default_include_dirs=1
 let g:syntastic_cpp_auto_refresh_includes=1
+let g:syntastic_cpp_compiler_options=' -std=c++11'
 let g:syntastic_cpp_include_dirs=[ 'inc', 'include' ]
 " ------
 " Tagbar
