@@ -1,4 +1,8 @@
 " Behavior ------------------------------------------------------------------{{{
+" use 256 colors in Terminator
+if $COLORTERM == 'gnome-terminal'
+	set t_Co=256
+endif
 " disable compatability mode
 set nocompatible
 " set history size
