@@ -365,18 +365,6 @@ let g:delimitMate_excluded_regions="Comment"
 " DoxyGen
 " -------
 let g:load_doxygen_syntax=0
-" -----
-" Gundo
-" -----
-map <f4> :GundoToggle<cr>
-let g:gundo_width=31
-let g:gundo_preview_height=15
-let g:gundo_right=0
-let g:gundo_preview_bottom=1
-let g:gundo_help=0
-let g:gundo_close_on_revert=1
-let g:gundo_preview_statusline="Undo Diff"
-let g:gundo_tree_statusline="Undo Tree"
 " ---------
 " Powerline
 " ---------
@@ -410,20 +398,4 @@ let g:syntastic_cpp_no_default_include_dirs=1
 let g:syntastic_cpp_auto_refresh_includes=1
 let g:syntastic_cpp_compiler_options=' -std=c++11'
 let g:syntastic_cpp_include_dirs=[ 'inc', 'include' ]
-" ------
-" Tagbar
-" ------
-map <f3> :TagbarToggle<cr>
-let g:tagbar_compact=1
-let g:tagbar_indent=1
-let g:tagbar_width=31
-let g:tagbar_sort=1
-let g:tagbar_singleclick=1
-" ----
-" Tags
-" ----
-set tags =./tags;/
-set tags+=/usr/include/std.tags " system tags
-let g:vim_tags_directories=[]
-let g:vim_tags_auto_generate=1
 " }}}
