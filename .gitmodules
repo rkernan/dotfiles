@@ -10,12 +10,12 @@
 [submodule "vim/bundle/delimitmate"]
 	path = vim/bundle/delimitmate
 	url = git://github.com/Raimondi/delimitMate.git
+[submodule "vim/bundle/easymotion"]
+	path = vim/bundle/easymotion
+	url = git://github.com/Lokaltog/vim-easymotion.git
 [submodule "vim/bundle/glsl"]
 	path = vim/bundle/glsl
 	url = git://github.com/tikhomirov/vim-glsl.git
-[submodule "vim/bundle/gundo"]
-	path = vim/bundle/gundo
-	url = git://github.com/sjl/gundo.vim.git
 [submodule "vim/bundle/molokai"]
 	path = vim/bundle/molokai
 	url = git://github.com/tomasr/molokai.git
@@ -31,21 +31,9 @@
 [submodule "vim/bundle/syntastic"]
 	path = vim/bundle/syntastic
 	url = git://github.com/scrooloose/syntastic.git
-[submodule "vim/bundle/tabular"]
-	path = vim/bundle/tabular
-	url = git://github.com/godlygeek/tabular.git
-[submodule "vim/bundle/tagbar"]
-	path = vim/bundle/tagbar
-	url = git://github.com/majutsushi/tagbar.git
-[submodule "vim/bundle/tags"]
-	path = vim/bundle/tags
-	url = git://github.com/szw/vim-tags.git
 [submodule "vim/bundle/tcomment"]
 	path = vim/bundle/tcomment
 	url = git://github.com/tomtom/tcomment_vim.git
-[submodule "vim/bundle/ultisnips"]
-	path = vim/bundle/ultisnips
-	url = git://github.com/SirVer/ultisnips.git
 [submodule "zsh/plugin/syntax-hi"]
 	path = zsh/plugin/syntax-hi
 	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
