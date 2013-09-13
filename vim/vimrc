@@ -353,6 +353,10 @@ let g:delimitMate_excluded_regions="Comment"
 " DoxyGen
 " -------
 let g:load_doxygen_syntax=0
+" ---------------
+" Omni Completion
+" ---------------
+set omnifunc=syntaxcomplete#Complete
 " ---------
 " Powerline
 " ---------
