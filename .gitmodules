@@ -1,39 +1,33 @@
 [submodule "powerline/fonts"]
 	path = powerline/fonts
-	url = git://github.com/Lokaltog/powerline-fonts.git
+	url = https://github.com/Lokaltog/powerline-fonts.git
 [submodule "powerline/install"]
 	path = powerline/install
-	url = git://github.com/Lokaltog/powerline.git
+	url = https://github.com/Lokaltog/powerline.git
 [submodule "vim/bundle/command-t"]
 	path = vim/bundle/command-t
-	url = git://github.com/wincent/Command-T.git
+	url = https://github.com/wincent/Command-T.git
 [submodule "vim/bundle/delimitmate"]
 	path = vim/bundle/delimitmate
-	url = git://github.com/Raimondi/delimitMate.git
-[submodule "vim/bundle/easymotion"]
-	path = vim/bundle/easymotion
-	url = git://github.com/Lokaltog/vim-easymotion.git
+	url = https://github.com/Raimondi/delimitMate.git
 [submodule "vim/bundle/glsl"]
 	path = vim/bundle/glsl
-	url = git://github.com/tikhomirov/vim-glsl.git
+	url = https://github.com/tikhomirov/vim-glsl.git
 [submodule "vim/bundle/molokai"]
 	path = vim/bundle/molokai
-	url = git://github.com/tomasr/molokai.git
+	url = https://github.com/tomasr/molokai.git
 [submodule "vim/bundle/pathogen"]
 	path = vim/bundle/pathogen
-	url = git://github.com/tpope/vim-pathogen.git
+	url = https://github.com/tpope/vim-pathogen.git
 [submodule "vim/bundle/rails"]
 	path = vim/bundle/rails
-	url = git://github.com/tpope/vim-rails.git
-[submodule "vim/bundle/snippets"]
-	path = vim/bundle/snippets
-	url = https://github.com/kernan/vim-snippets.git
+	url = https://github.com/tpope/vim-rails.git
 [submodule "vim/bundle/syntastic"]
 	path = vim/bundle/syntastic
-	url = git://github.com/scrooloose/syntastic.git
+	url = https://github.com/scrooloose/syntastic.git
 [submodule "vim/bundle/tcomment"]
 	path = vim/bundle/tcomment
-	url = git://github.com/tomtom/tcomment_vim.git
+	url = https://github.com/tomtom/tcomment_vim.git
 [submodule "zsh/plugin/syntax-hi"]
 	path = zsh/plugin/syntax-hi
-	url = git://github.com/zsh-users/zsh-syntax-highlighting.git
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
