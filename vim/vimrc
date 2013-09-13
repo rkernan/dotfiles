@@ -159,10 +159,6 @@ set wildignore+=*.sw                             " vim swap files
 set wildignore+=*.DS_Store                       " OSX something
 " }}}
 
-" Omni-completion -----------------------------------------------------------{{{
-set omnifunc=syntaxcomplete#Complete
-" }}}
-
 " Folding -------------------------------------------------------------------{{{
 " function: fold display text {{{
 set foldtext=Custom_foldtext()
