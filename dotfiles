@@ -50,11 +50,6 @@ install() {
 	find $DOTFILES_DIR/powerline/fonts/ -type f \( ! -iname "*.rst" ! -iname "*.markdown" ! -iname "*.txt" \) -exec ln -sf {} $HOME/.fonts/ \;
 	echo "  running font cache"
 	fc-cache -vf $HOME/.fonts >> $DOTFILES_LOG 2>> $DOTFILES_LOG
-	# build command-t (vim plugin)
-	echo "Compiling command-t"
-	cd $HOME/.vim/bundle/command-t
-	rake make >> $DOTFILES_LOG 2>> $DOTFILES_LOG
-	cd $DOTFILES_DIR
 	# install powerline (pip)
 	echo "Installing powerline"
 	POWERLINE_DIR=$HOME/.local/lib/python2.7/site-packages/powerline

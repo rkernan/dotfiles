@@ -327,22 +327,12 @@ call pathogen#infect()
 syntax on
 let g:rehash256=1
 colorscheme molokai
-" ---------
-" Command-T
-" ---------
-let g:CommandTMaxFile=10000
-let g:CommandTMaxDepth=30
-let g:CommandTScanDotDirectories=1
-let g:CommandTMaxCachedDirectories=0
-let g:CommandTMatchWindowReverse=1
-if has("autocmd")
-	augroup CommandTAutoFlush
-		autocmd!
-		autocmd FocusGained * CommandTFlush
-		autocmd BufWritePost * CommandTFlush
-		autocmd ShellCmdPost * CommandTFlush
-	augroup END
-endif
+" -----
+" ctrlp
+" -----
+let g:ctrlp_map='<leader>t'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip    " MacOSX/Linux
+set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe " Windows
 " -----------
 " DelimitMate
 " -----------
