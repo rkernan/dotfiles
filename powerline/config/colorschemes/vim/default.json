@@ -1,5 +1,5 @@
 {
-	"name": "Default color scheme",
+	"name": "(Modified) Default color scheme",
 	"groups": {
 		"background":               { "fg": "white", "bg": "gray2" },
 		"background:divider":       { "fg": "gray6", "bg": "gray2" },
