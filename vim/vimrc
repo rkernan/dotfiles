@@ -104,6 +104,8 @@ set number
 set norelativenumber
 " always show statusline
 set laststatus=2
+" disable background color erase
+set t_ut=
 " set invisible characters
 set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
 set showbreak=…
