@@ -65,8 +65,16 @@ cnoremap suw :w !sudo tee % > /dev/null
 vnoremap <leader>S y:execute @@<cr>:echo "sourced selection"<cr>
 nnoremap <leader>S ^vg_y:execute @@<cr>:echo "sourced line"<cr>
 " timeout length
-set ttimeoutlen=1000
-set timeoutlen=1000
+if !has('gui_running')
+	set ttimeoutlen=10
+	if has('autocmd')
+		augroup FastEscape
+			autocmd!
+			autocmd InsertEnter * set timeoutlen=0
+			autocmd InsertLeave * set timeoutlen=1000
+		augroup END
+	endif
+endif
 " allow local vimrc files
 set exrc
 set secure
@@ -119,7 +127,7 @@ inoremap <c-l> <c-x><c-l>
 " filename completion
 inoremap <c-f> <c-x><c-f>
 " resize splits when window is resized
-if has("autocmd")
+if has('autocmd')
 	augroup ResizeSplits
 		autocmd!
 		autocmd VimResized * :wincmd =
@@ -309,7 +317,7 @@ vnoremap <c-k> :move -2<cr>gv
 " }}}
 
 " Filetype Specific ---------------------------------------------------------{{{
-if has("autocmd")
+if has('autocmd')
 	augroup FileTypeSpecific
 		autocmd!
 		" Tabs
