@@ -65,16 +65,9 @@ cnoremap suw :w !sudo tee % > /dev/null
 vnoremap <leader>S y:execute @@<cr>:echo "sourced selection"<cr>
 nnoremap <leader>S ^vg_y:execute @@<cr>:echo "sourced line"<cr>
 " timeout length
-if !has('gui_running')
-	set ttimeoutlen=10
-	if has('autocmd')
-		augroup FastEscape
-			autocmd!
-			autocmd InsertEnter * set timeoutlen=0
-			autocmd InsertLeave * set timeoutlen=1000
-		augroup END
-	endif
-endif
+set ttimeoutlen=100
+set timeoutlen=3000
+set noesckeys
 " allow local vimrc files
 set exrc
 set secure
