@@ -31,7 +31,6 @@ set noesckeys " automatically recognize esc in insert mode
 set noerrorbells
 set novisualbell
 set t_vb=
-set tm=500
 set shortmess =a " use all abbreviations
 set shortmess+=t " truncate file message if too long
 set shortmess+=s " remove 'search hit TOP/BOTTOM' message
