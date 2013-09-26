@@ -103,8 +103,6 @@ endif
 filetype plugin on
 filetype indent on
 
-set omnifunc=syntaxcomplete#Complete
-
 syntax on
 let g:rehash256=1
 colorscheme molokai
