@@ -1,10 +1,20 @@
 #!/bin/sh
+
 # get script directory
 DOTFILES_DIR=$(readlink -m "${0%/*}")
-# DOTFILES_LOG=$DOTFILES_DIR/dotfiles.log
-# cat /dev/null > $DOTFILES_LOG
+
+update_gitmodules() {
+	git submodule update --init --recursive
+}
+
+build_youcompleteme() {
+	update_gitmodules
+	cd $DOTFILES_DIR/vim/bundle/youcompleteme
+	./install.sh --clang-completer --omnisharp-completer
+}
 
 install() {
+	update_gitmodules
 	# prompt user
 	echo "WARNING: This will destroy any existing config files!"
 	read -p "  continue? (y/n) " ans
@@ -12,12 +22,7 @@ install() {
 		y|Y) ;;
 		*) exit;;
 	esac
-	# set -x
-	# if [ ! -f $DOTFILES_LOG ]; then
-	# 	touch $DOTFILES_LOG
-	# fi
 	# remove default config files/dirs
-	echo "Removing old config files"
 	rm -f $HOME/.vimrc      # rm  vim- config
 	rm -rf $HOME/.vim       # rm  vim- config directory + plugins
 	rm -f $HOME/.zshrc      # rm  zsh- config
@@ -27,51 +32,46 @@ install() {
 	rm -f $HOME/.Xresources # rm  x11- resources
 	rm -rf $HOME/.i3        # rm   i3- config directory
 	# symlink global config
-	echo "Linking new config files"
-	echo "  vim"
 	ln -s $DOTFILES_DIR/vim/vimrc $HOME/.vimrc           #  vim- config
 	ln -s $DOTFILES_DIR/vim $HOME/.vim                   #  vim- config directory
-	echo "  zsh"
 	ln -s $DOTFILES_DIR/zsh/zshrc $HOME/.zshrc           #  zsh- config
 	ln -s $DOTFILES_DIR/zsh $HOME/.zsh                   #  zsh- config directory
 	ln -s $DOTFILES_DIR/zsh/zprofile $HOME/.zprofile     #  zsh- profile
-	echo "  tmux"
 	ln -s $DOTFILES_DIR/tmux/tmux.conf $HOME/.tmux.conf  # tmux- config
-	echo "  x11"
 	ln -s $DOTFILES_DIR/x11/Xresources $HOME/.Xresources #  x11- resources
-	echo "  i3"
 	ln -s $DOTFILES_DIR/i3 $HOME/.i3                     #   i3- config directory
 	cd $DOTFILES_DIR
 	# copy patched powerline fonts
-	echo "Installing fonts"
-	echo "  linking font files"
 	if [ ! -d $HOME/.fonts ]; then
 		mkdir $HOME/.fonts
 	fi
 	find $DOTFILES_DIR/powerline/fonts/ -type f \( ! -iname "*.rst" ! -iname "*.markdown" ! -iname "*.txt" \) -exec ln -sf {} $HOME/.fonts/ \;
-	echo "  running font cache"
 	fc-cache -vf $HOME/.fonts
 	# install powerline (pip)
-	echo "Installing powerline"
 	POWERLINE_DIR=$HOME/.local/lib/python2.7/site-packages/powerline
 	if [ ! -d $POWERLINE_DIR ]; then
 		cd $DOTFILES_DIR/powerline/install
 		pip install --user ./
 		cd $DOTFILES_DIR
-	else
-		echo "  already installed"
 	fi
 	# symlink powerline config
-	echo "  linking config files"
 	if [ ! -d $HOME/.config ]; then
 		mkdir $HOME/.config
 	fi
 	rm -rf $HOME/.config/powerline
 	ln -s $DOTFILES_DIR/powerline/config $HOME/.config/powerline
+	# conditionally build/install YouCompleteMe.vim
+	echo "Do you want to build and install YouCompleteMe.vim?"
+	echo "NOTE: Should only be done if prompted when starting vim."
+	read -p "  install? (y/n) " ans
+	case $ans in
+		y|Y)
+			build_youcompleteme
+			;;
+	esac
 }
 
 uninstall() {
-	echo "Removing config file links"
 	rm -f $HOME/.vimrc      # rm  vim- config
 	rm -rf $HOME/.vim       # rm  vim- config directory + plugins
 	rm -f $HOME/.zshrc      # rm  zsh- config
@@ -80,32 +80,25 @@ uninstall() {
 	rm -f $HOME/.tmux.conf  # rm tmux- config
 	rm -f $HOME/.Xresources # rm  x11- resources
 	rm -rf $HOME/.i3        # rm   i3- config directory
-	echo "Uninstalling powerline"
 	pip uninstall --yes powerline
 	rm -rf $HOME/.config/powerline
-}
-
-build_youcompleteme() {
-	echo "Building YouCompleteMe"
-	cd $DOTFILES_DIR/vim/bundle/youcompleteme
-	./install.sh --clang-completer --omnisharp-completer
 }
 
 case $1 in
 install)
 	install
 	;;
+install_full)
+	install_full
+	;;
 uninstall)
 	uninstall
 	;;
-reinstall)
-	uninstall
-	install
-	;;
-build_youcompleteme)
-	build_youcompleteme
-	;;
 *)
-	echo "Options: install, uninstall, reinstall, build_youcompleteme"
+	echo "Options: install, uninstall"
+	echo "Options:"
+	echo "  install   - symlink dotfiles and build extras (if necessary)"
+	echo "  uninstall - remove all dotfile links"
+	echo "  reinstall - uninstall and install"
 	;;
 esac
