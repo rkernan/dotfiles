@@ -100,6 +100,9 @@ if has('gui_running')
 	set guifont=Meslo\ LG\ S\ for\ Powerline\ 8
 endif
 
+filetype plugin on
+filetype indent on
+
 set omnifunc=syntaxcomplete#Complete
 
 syntax on
@@ -229,11 +232,7 @@ command! -nargs=* Stab call SetTab()
 " Auto Commands
 " -------------
 if has('autocmd')
-	" Enable filetype specific settings
-	filetype plugin on
-	filetype indent on
-
-	" Autosource vimrc
+	" Auto-source vimrc
 	augroup VimAutoSource
 		autocmd!
 		autocmd BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc nested source %
