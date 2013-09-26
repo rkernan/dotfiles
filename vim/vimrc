@@ -1,84 +1,56 @@
-" Behavior ------------------------------------------------------------------{{{
-" use 256 colors in Terminator
-if $COLORTERM == 'gnome-terminal'
-	set t_Co=256
-endif
-" disable compatability mode
 set nocompatible
-" set history size
-set history=1000
-set undoreload=1000
-" temporary files
-set undodir=$HOME/.vimundo//
-set backupdir=$HOME/.vimbak//
-set directory=$HOME/.vimswap//
-if !isdirectory(expand(&undodir))
-	call mkdir(expand(&undodir), "p")
-endif
-if !isdirectory(expand(&backupdir))
-	call mkdir(expand(&backupdir), "p")
-endif
-if !isdirectory(expand(&directory))
-	call mkdir(expand(&directory))
-endif
-" enable undo and backup files
-set undofile
-set backup
-" disable swap files
-set noswapfile
-" crontab fix for backup
-set backupskip=/tmp/*,/private/tmp/*"
-" use tilde (caps) as operator
-set tildeop
-" enable alt keys in mappings
-set winaltkeys=no
-" automatically read file changes
-set autoread
-" set encoding
-set encoding=utf8
-set fileformats=unix,dos,mac
-" enable filetype specific settings
-filetype plugin on
-filetype indent on
-" default backspace behavior
-set backspace=indent,eol,start
-" set shell
-set shell=/bin/zsh\ --login
-" enable mouse
-set mouse=a
+
+" pathogen
+runtime bundle/pathogen/autoload/pathogen.vim
+call pathogen#infect()
+call pathogen#helptags()
+
 " set leader
 let mapleader="\\"
 let g:mapleader="\\"
-" disable annoying helpscreen mappings
-noremap  <F1> <nop>
-inoremap <F1> <nop>
-" toggle menu
-if has('gui_running')
-	" toggle menu
-	nnoremap <f1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
-endif
-" toggle paste mode
-nnoremap <f2> :set paste!<cr>
-" super user write
-cnoremap suw :w !sudo tee % > /dev/null
-" source current selection
-vnoremap <leader>S y:execute @@<cr>:echo "sourced selection"<cr>
-nnoremap <leader>S ^vg_y:execute @@<cr>:echo "sourced line"<cr>
+
+" history size
+set history=1000
+set undoreload=1000
+
+" temporary files
+set backupdir=$HOME/.vimbak//
+set undodir=$HOME/.vimundo//
+set directory=$HOME/.vimswap//
+set undofile   " enable undo files
+set backup     " enable backup files
+set noswapfile " disable swap files
+
+" input
+set pastetoggle=<F2>
+set mouse=a
+set backspace=2
+set clipboard=unnamed
+
+" automatically read file changes
+set autoread
+set hidden
+
+" enable filetype specific settings
+filetype plugin on
+filetype indent on
+
 " timeout length
 set ttimeoutlen=100
 set timeoutlen=3000
 set noesckeys
-" allow local vimrc files
-set exrc
-set secure
-" }}}
 
-" UI ------------------------------------------------------------------------{{{
+" toggle menu
+if has('gui_running')
+	nnoremap <f1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
+endif
+
 " disable error bells
 set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
+
 " show screen title
 set title
 " set text display options
@@ -88,6 +60,7 @@ set shortmess+=s " remove 'search hit TOP/BOTTOM' message
 set shortmess+=o " file-read message overwrites file-written message
 set shortmess+=O " file-read message overwrites any message
 set shortmess+=I " remove intro message
+
 " show current mode
 set showmode
 " show partial commands
@@ -100,25 +73,32 @@ set ttyfast
 set lazyredraw
 " enable line position
 set ruler
+
 " line numbers
 set number
 set norelativenumber
+" toggle line numbers
+nnoremap <leader>nn :setlocal number!<cr>
+nnoremap <leader>nr :setlocal relativenumber!<cr>
+
 " always show statusline
 set laststatus=2
+
 " disable background color erase
 set t_ut=
+
 " set invisible characters
 set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
 set showbreak=…
 set list
 set synmaxcol=800
+" toggle invisibles
+nnoremap <leader>l :setlocal list!<cr>
+
 " completion
 " set complete=w,a,m,i,k,i,d,e
 set completeopt=menu,menuone,longest
-" line completion
-inoremap <c-l> <c-x><c-l>
-" filename completion
-inoremap <c-f> <c-x><c-f>
+
 " resize splits when window is resized
 if has('autocmd')
 	augroup ResizeSplits
@@ -126,8 +106,10 @@ if has('autocmd')
 		autocmd VimResized * :wincmd =
 	augroup END
 endif
+
 " show current cursorline
 set cursorline
+
 " gvim appearance
 if has('gui_running')
 	set guioptions-=T " remove toolbar
@@ -140,14 +122,7 @@ if has('gui_running')
 	set guioptions-=l " hide scrollbars
 	set guifont=Meslo\ LG\ S\ for\ Powerline\ 8
 endif
-" toggle invisibles
-nnoremap <leader>l :setlocal list!<cr>
-" toggle line numbers
-nnoremap <leader>nn :setlocal number!<cr>
-nnoremap <leader>nr :setlocal relativenumber!<cr>
-" }}}
 
-" Wildmenu ------------------------------------------------------------------{{{
 " enable wildmenu
 set wildmenu
 set wildmode=longest:full,full
@@ -160,47 +135,8 @@ set wildignore+=*.luac                           " lua byte code
 set wildignore+=*.pyc                            " python byte code
 set wildignore+=*.sw                             " vim swap files
 set wildignore+=*.DS_Store                       " OSX something
-" }}}
 
-" Folding -------------------------------------------------------------------{{{
-" function: fold display text {{{
-set foldtext=Custom_foldtext()
-function! Custom_foldtext()
-	let line = getline(v:foldstart)
-	let nucolwidth = &fdc + &number * &numberwidth
-	let windowwidth = winwidth(0) - nucolwidth - 2
-	let foldedlinecount = v:foldend - v:foldstart
-	let onetab = strpart('          ', 0, &tabstop)
-	let line = substitute(line, '\t', onetab, 'g')
-	let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
-	let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
-	return line . '…' . repeat(" ",fillcharcount) . foldedlinecount . ' '	
-endfunction " }}}
-" function: toggle fold method {{{
-let g:FoldMethod=0
-function! ToggleFold()
-	if g:FoldMethod == 0
-		exe 'setlocal foldmethod=indent'
-		let g:FoldMethod=1
-	else
-		exe 'setlocal foldmethod=marker'
-		let g:FoldMethod=0
-	endif
-endfunction " }}}
-" default fold method
-set foldmethod=marker
-set foldmarker={{{,}}}
-set foldlevelstart=0
-set foldnestmax=30
-set foldminlines=1
-" toggle between indent and marker folding
-noremap <leader>ft :call ToggleFold()<cr>
-" focus fold
-nnoremap <leader>z zMzvzz
-" }}}
-
-" Tabs and Whitespace -------------------------------------------------------{{{
-" function: set tab width {{{
+" set tab width using a nice prompt
 command! -nargs=* Stab call SetTab()
 function! SetTab()
 	let l:tabstop = 1 * input("set tabstop = softtabstop = shiftwidth = ")
@@ -219,8 +155,8 @@ function! SetTab()
 	echo "\n"
 	call SummarizeTabs()
 endfunction
-" }}}
-" function: summarize tab info {{{
+
+" summarize current tab info
 function! SummarizeTabs()
 	try
 		echoh ModeMsg
@@ -234,12 +170,13 @@ function! SummarizeTabs()
 		echoh None
 	endtry
 endfunction
-" }}}
-" tabwidth
+
+" tabwidth (default)
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
 set noexpandtab
+
 " formatting
 set wrap
 set textwidth=80
@@ -248,13 +185,16 @@ set formatoptions+=q " allow comment formatting using 'gq'
 set formatoptions+=r " automatically insert comment leader on <Enter>
 set formatoptions+=n " format numbered lists
 set formatoptions+=j " remove comment leaders (where it makes sense)
+
 " auto indentation
 set autoindent
 set smartindent
 set shiftround
+
 " increase/decrease indent
-vnoremap >> >gv
-vnoremap << <gv
+vnoremap > >gv
+vnoremap < <gv
+
 " auto-indent options
 set cinoptions+=L-1 " indent of labels -> none
 set cinoptions+=:0  " indent of cases -> none
@@ -263,9 +203,10 @@ set cinoptions+=g0  " indent of scope declarations -> none
 set cinoptions+=N-s " indent of statements inside namespace -> none
 set cinoptions+=(0  " indent of line continuations with unclosed parens -> line up with open-paren
 set cinoptions+=j1  " indent Java anonymous classes correctly
-" }}}
 
-" Searching  and Selection --------------------------------------------------{{{
+" omni-completion
+set omnifunc=syntaxcomplete#Complete
+
 " regex magic
 set magic
 " smart ignore case
@@ -284,32 +225,19 @@ nnoremap <leader>, :nohlsearch<cr>call clearmatches()<cr>
 " easier system paste
 noremap <leader>y "*y
 noremap <leader>p :set paste<cr>:put *<cr>:set nopaste<cr>
-" }}}
 
-" Movement ------------------------------------------------------------------{{{
+" movement
 set scrolloff=5
-" normal mode
-" visual mode
-" insert mode
-inoremap <c-a> <home>
-inoremap <c-e> <end>
-inoremap <c-h> <left>
-inoremap <c-j> <down>
-inoremap <c-k> <up>
-inoremap <c-l> <right>
-" command mode
-cnoremap <c-a> <home>
-cnoremap <c-e> <end>
 cnoremap <c-h> <left>
 cnoremap <c-l> <right>
+
 " bubble lines
 nnoremap <c-j> :move +1<cr>
 nnoremap <c-k> :move -2<cr>
 vnoremap <c-j> :move '>+<cr>gv
 vnoremap <c-k> :move -2<cr>gv
-" }}}
 
-" Filetype Specific ---------------------------------------------------------{{{
+" filetype specific settings
 if has('autocmd')
 	augroup FileTypeSpecific
 		autocmd!
@@ -318,28 +246,18 @@ if has('autocmd')
 		autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
 	augroup END
 endif
-" }}}
 
-" Plugins -------------------------------------------------------------------{{{
-" pathogen
-runtime bundle/pathogen/autoload/pathogen.vim
-call pathogen#infect()
-call pathogen#helptags()
-" ----------
 " Coloscheme
-" ----------
 syntax on
 let g:rehash256=1
 colorscheme molokai
-" -----
+
 " ctrlp
-" -----
 let g:ctrlp_map='<leader>t'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip    " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe " Windows
-" -----------
+
 " DelimitMate
-" -----------
 let g:delimitMate_autoclose=1
 " TODO Determine match pairs based on filetype.
 " let g:delimitMate_matchpairs="(:),[:],{:},<:>"
@@ -351,22 +269,15 @@ let g:delimitMate_smart_quotes=1
 let g:delimitMate_expand_cr=1
 let g:delimitMate_expand_space=1
 let g:delimitMate_excluded_regions="Comment"
-" -------
+
 " DoxyGen
-" -------
 let g:load_doxygen_syntax=0
-" ---------------
-" Omni Completion
-" ---------------
-set omnifunc=syntaxcomplete#Complete
-" ---------
+
 " Powerline
-" ---------
 set noshowmode
 set runtimepath+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim
-" ---------
+
 " Syntastic
-" ---------
 let g:syntastic_auto_loc_list=1
 let g:syntastic_loc_list_height=5
 let g:syntastic_check_on_open=1
@@ -392,4 +303,3 @@ let g:syntastic_cpp_no_default_include_dirs=1
 let g:syntastic_cpp_auto_refresh_includes=1
 let g:syntastic_cpp_compiler_options=' -std=c++11'
 let g:syntastic_cpp_include_dirs=[ 'inc', 'include' ]
-" }}}
