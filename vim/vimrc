@@ -48,7 +48,7 @@ set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
 set showbreak=…
 set list " show hidden characters
 set synmaxcol=800 " max column for syntax highlighting
-set completeopt=menu,menuone,longest
+set completeopt=menu,menuone,longest,preview
 set cursorline " highlight the current cursor line
 set wildmenu " enable wildmenu
 set wildmode=longest:full,full
