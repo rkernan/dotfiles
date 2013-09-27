@@ -100,8 +100,7 @@ if has('gui_running')
 	set guifont=Meslo\ LG\ S\ for\ Powerline\ 8
 endif
 
-filetype plugin on
-filetype indent on
+filetype plugin indent on
 
 syntax on
 let g:rehash256=1
@@ -144,24 +143,13 @@ let g:syntastic_echo_current_error=0
 let g:syntastic_enable_signs=1
 let g:syntastic_enable_highlighting=0
 let g:syntastic_quiet_warnings=0
-let g:syntastic_error_symbol='>>'
-let g:syntastic_style_error_symbol='S>'
-let g:syntastic_warning_symbol='>>'
-let g:syntastic_style_warning_symbol='S>'
-" C
-let g:syntastic_c_compiler='clang'
-let g:syntastic_c_check_header=1
-let g:syntastic_c_no_default_include_dirs=1
-let g:syntastic_c_auto_refresh_includes=1
-let g:syntastic_c_compiler_options=' -std=c11'
-let g:syntastic_c_include_dirs=[ 'inc', 'include' ]
-" C++
-let g:syntastic_cpp_compiler='clang++'
-let g:syntastic_cpp_check_header=1
-let g:syntastic_cpp_no_default_include_dirs=1
-let g:syntastic_cpp_auto_refresh_includes=1
-let g:syntastic_cpp_compiler_options=' -std=c++11'
-let g:syntastic_cpp_include_dirs=[ 'inc', 'include' ]
+let g:syntastic_error_symbol='✗'
+let g:syntastic_style_error_symbol='≈'
+let g:syntastic_warning_symbol='✗'
+let g:syntastic_style_warning_symbol='≈'
+
+" YouCompleteMe
+let g:ycm_global_ycm_extra_conf='~/.vim/ycm_conf/ycm_extra_conf.py'
 
 " ---------
 " Functions
@@ -230,12 +218,6 @@ command! -nargs=* Stab call SetTab()
 " Auto Commands
 " -------------
 if has('autocmd')
-	" Auto-source vimrc
-	augroup VimAutoSource
-		autocmd!
-		autocmd BufWritePost .vimrc,_vimrc,vimrc,.gvimrc,_gvimrc,gvimrc nested source %
-	augroup END
-
 	" Automatically resize splits on window resize
 	augroup ResizeSplits
 		autocmd!
