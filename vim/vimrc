@@ -21,16 +21,20 @@ set backup     " enable backup files
 set noswapfile " disable swap files
 set pastetoggle=<F2>
 set mouse=a " enable all mouse modes
-set clipboard=unnamed " use system clipboard by default
-set backspace=2
+set mousemodel=popup_setpos
+if has('unnamedplus')
+	" properly handle system clipboard in x11
+	set clipboard=unnamedplus,unnamed
+else
+	set clipboard+=unnamed
+endif
+set backspace=indent,eol,start
 set autoread " automatically read file changes
 set hidden " automatically manage hidden buffers
 set ttimeoutlen=100
 set timeoutlen=3000
 set noesckeys " automatically recognize esc in insert mode
-set noerrorbells
-set novisualbell
-set t_vb=
+set noerrorbells novisualbell t_vb=
 set shortmess =a " use all abbreviations
 set shortmess+=t " truncate file message if too long
 set shortmess+=s " remove 'search hit TOP/BOTTOM' message
@@ -81,6 +85,7 @@ set cinoptions+=g0  " indent of scope declarations -> none
 set cinoptions+=N-s " indent of statements inside namespace -> none
 set cinoptions+=(0  " indent of line continuations with unclosed parens -> line up with open-paren
 set cinoptions+=j1  " indent Java anonymous classes correctly
+set tags=./tags;/
 set magic      " use special characters in search patterns
 set ignorecase " ignore case of search term
 set smartcase  " stop ignoring case when search pattern includes upper-case characters
@@ -210,8 +215,8 @@ nnoremap <c-k> :move -2<cr>
 vnoremap <c-j> :move '>+<cr>gv
 vnoremap <c-k> :move -2<cr>gv
 nnoremap <leader>, :nohlsearch<cr>call clearmatches()<cr>
-vnoremap >> >gv
-vnoremap << <gv
+vnoremap > >gv
+vnoremap < <gv
 nnoremap <leader>l :setlocal list!<cr>
 nnoremap <leader>nn :setlocal number!<cr>
 nnoremap <leader>nr :setlocal relativenumber!<cr>
