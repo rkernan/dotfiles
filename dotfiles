@@ -7,10 +7,17 @@ update_gitmodules() {
 	git submodule update --init --recursive
 }
 
-build_youcompleteme() {
+install_youcompleteme() {
 	update_gitmodules
-	cd $DOTFILES_DIR/vim/bundle/youcompleteme
-	./install.sh --clang-completer --omnisharp-completer
+	echo "Do you want to build and install YouCompleteMe.vim?"
+	echo "NOTE: Should only be done if prompted when starting vim."
+	read -p "  install? (y/n) " ans
+	case $ans in
+		y|Y)
+			cd $DOTFILES_DIR/vim/bundle/youcompleteme
+			./install.sh --clang-completer --omnisharp-completer
+			;;
+	esac
 }
 
 install() {
@@ -60,15 +67,8 @@ install() {
 	fi
 	rm -rf $HOME/.config/powerline
 	ln -s $DOTFILES_DIR/powerline/config $HOME/.config/powerline
-	# conditionally build/install YouCompleteMe.vim
-	echo "Do you want to build and install YouCompleteMe.vim?"
-	echo "NOTE: Should only be done if prompted when starting vim."
-	read -p "  install? (y/n) " ans
-	case $ans in
-		y|Y)
-			build_youcompleteme
-			;;
-	esac
+	# conditionally install YouCompleteMe.vim
+	install_youcompleteme
 }
 
 uninstall() {
@@ -88,8 +88,9 @@ case $1 in
 install)
 	install
 	;;
-install_full)
-	install_full
+reinstall)
+	uninstall
+	install
 	;;
 uninstall)
 	uninstall

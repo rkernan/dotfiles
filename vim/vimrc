@@ -144,6 +144,24 @@ let g:syntastic_error_symbol='✗'
 let g:syntastic_style_error_symbol='≈'
 let g:syntastic_warning_symbol='✗'
 let g:syntastic_style_warning_symbol='≈'
+" C
+let g:syntastic_c_compiler='clang'
+let g:syntastic_c_check_header=1
+let g:syntastic_c_no_default_include_dirs=1
+let g:syntastic_c_auto_refresh_includes=1
+let g:syntastic_c_compiler_options=' -std=c11'
+let g:syntastic_c_include_dirs=[ 'inc', 'include' ]
+" C++
+let g:syntastic_cpp_compiler='clang++'
+let g:syntastic_cpp_check_header=1
+let g:syntastic_cpp_no_default_include_dirs=1
+let g:syntastic_cpp_auto_refresh_includes=1
+let g:syntastic_cpp_compiler_options=' -std=c++11'
+let g:syntastic_cpp_include_dirs=[ 'inc', 'include' ]
+
+" YouCompleteMe
+let g:ycm_global_ycm_extra_conf='~/.vim/ycm/ycm_extra_conf.py' " Should be set locally if needed
+let g:ycm_confirm_extra_conf=0
 
 " ---------
 " Functions
