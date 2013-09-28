@@ -24,10 +24,9 @@ def FlagsForFile(filename):
                 "-I", AbsolutePath("inc"),
                 "-I", AbsolutePath("include"),
                 "-DDEBUG",
-                "-D%s" % GetPlatformName()
                 ]
         try:
-            flags += "-D%s" % GetPlatformName()
+            flags += ["-D%s" % GetPlatformName()]
         except:
             pass
     elif filetype == "cpp":
@@ -39,10 +38,9 @@ def FlagsForFile(filename):
                 "-I", AbsolutePath("inc"),
                 "-I", AbsolutePath("include"),
                 "-DDEBUG",
-                "-D%s" % GetPlatformName()
                 ]
         try:
-            flags += "-D%s" % GetPlatformName()
+            flags += ["-D%s" % GetPlatformName()]
         except:
             pass
     return {"flags": flags, "do_cache": True}
