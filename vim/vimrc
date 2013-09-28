@@ -128,6 +128,9 @@ colorscheme molokai
 set noshowmode
 set runtimepath+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim
 
+" CSS Color
+let g:cssColorVimDoNotMessMyUpdatetime=1
+
 " ctrlp
 let g:ctrlp_map='<leader>t'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip    " MacOSX/Linux

@@ -37,3 +37,6 @@
 [submodule "zsh/plugin/syntax-hi"]
 	path = zsh/plugin/syntax-hi
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "vim/bundle/css-color"]
+	path = vim/bundle/css-color
+	url = https://github.com/skammer/vim-css-color.git
