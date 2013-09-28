@@ -267,6 +267,7 @@ endfunction
 " Mappings
 " --------
 noremap <c-s> :w<cr>
+noremap <c-x> :x<cr>
 cnoremap <c-h> <left>
 cnoremap <c-l> <right>
 nnoremap <c-j> :move +1<cr>
