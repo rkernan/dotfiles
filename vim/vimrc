@@ -1,7 +1,24 @@
+" Vundle
+filetype off
+set runtimepath+=$HOME/.vim/bundle/vundle
+call vundle#rc()
+
+Bundle 'skammer/vim-css-color'
+Bundle 'kien/ctrlp.vim'
+Bundle 'Raimondi/delimitMate'
+Bundle 'tikhomirov/vim-glsl'
+Bundle 'tomasr/molokai'
+Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim'}
+Bundle 'tpope/vim-rails'
+Bundle 'scrooloose/syntastic'
+Bundle 'tomtom/tcomment_vim'
+Bundle 'SirVer/ultisnips'
+Bundle 'Valloric/YouCompleteMe'
+
 " Pathogen
-runtime bundle/pathogen/autoload/pathogen.vim
-call pathogen#infect()
-call pathogen#helptags()
+" runtime bundle/pathogen/autoload/pathogen.vim
+" call pathogen#infect()
+" call pathogen#helptags()
 
 function! MkdirIfNone(dir)
 	if !isdirectory(a:dir)

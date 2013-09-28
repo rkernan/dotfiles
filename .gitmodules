@@ -1,42 +1,9 @@
-[submodule "vim/bundle/ctrlp"]
-	path = vim/bundle/ctrlp
-	url = https://github.com/kien/ctrlp.vim.git
-[submodule "vim/bundle/delimitmate"]
-	path = vim/bundle/delimitmate
-	url = https://github.com/Raimondi/delimitMate.git
-[submodule "vim/bundle/glsl"]
-	path = vim/bundle/glsl
-	url = https://github.com/tikhomirov/vim-glsl.git
-[submodule "vim/bundle/molokai"]
-	path = vim/bundle/molokai
-	url = https://github.com/tomasr/molokai.git
-[submodule "vim/bundle/pathogen"]
-	path = vim/bundle/pathogen
-	url = https://github.com/tpope/vim-pathogen.git
-[submodule "vim/bundle/powerline"]
-	path = vim/bundle/powerline
-	url = https://github.com/Lokaltog/powerline.git
-[submodule "vim/bundle/rails"]
-	path = vim/bundle/rails
-	url = https://github.com/tpope/vim-rails.git
-[submodule "vim/bundle/syntastic"]
-	path = vim/bundle/syntastic
-	url = https://github.com/scrooloose/syntastic.git
-[submodule "vim/bundle/tcomment"]
-	path = vim/bundle/tcomment
-	url = https://github.com/tomtom/tcomment_vim.git
-[submodule "vim/bundle/ultisnips"]
-	path = vim/bundle/ultisnips
-	url = https://github.com/SirVer/ultisnips.git
-[submodule "vim/bundle/youcompleteme"]
-	path = vim/bundle/youcompleteme
-	url = https://github.com/Valloric/YouCompleteMe.git
-[submodule "zsh/plugin/syntax-hi"]
-	path = zsh/plugin/syntax-hi
-	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "vim/bundle/css-color"]
-	path = vim/bundle/css-color
-	url = https://github.com/skammer/vim-css-color.git
 [submodule "fonts"]
 	path = fonts
 	url = https://github.com/Lokaltog/powerline-fonts.git
+[submodule "vim/bundle/vundle"]
+	path = vim/bundle/vundle
+	url = https://github.com/gmarik/vundle.git
+[submodule "zsh/plugin/syntax-hi"]
+	path = zsh/plugin/syntax-hi
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
