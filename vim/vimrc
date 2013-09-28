@@ -3,6 +3,7 @@ filetype off
 set runtimepath+=$HOME/.vim/bundle/vundle
 call vundle#rc()
 
+Bundle 'gmarik/vundle'
 Bundle 'skammer/vim-css-color'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Raimondi/delimitMate'
