@@ -3,25 +3,38 @@ runtime bundle/pathogen/autoload/pathogen.vim
 call pathogen#infect()
 call pathogen#helptags()
 
+function! MkdirIfNone(dir)
+	if !isdirectory(a:dir)
+		if exists('*mkdir')
+			call mkdir(a:dir, 'p')
+			echo 'created directory: ' . a:dir
+		else
+			echo 'cannot make directory: ' . a:dir
+		endif
+	endif
+endfunction
+
+call MkdirIfNone(expand('~/.vim/undo'))
+
 " --------
 " Settings
 " --------
 set nocompatible
+
+filetype plugin indent on
+set omnifunc=syntaxcomplete#Complete
 
 let mapleader="\\"
 let g:mapleader="\\"
 
 set history=1000
 set undoreload=1000
-set backupdir=$HOME/.vimbak//
-set undodir=$HOME/.vimundo//
-set directory=$HOME/.vimswap//
+set undodir=$HOME/.vim/undo
 set undofile   " enable undo files
-set backup     " enable backup files
+set nobackup   " disable backup files
 set noswapfile " disable swap files
 set pastetoggle=<F2>
 set mouse=a " enable all mouse modes
-set mousemodel=popup_setpos
 if has('unnamedplus')
 	" properly handle system clipboard in x11
 	set clipboard=unnamedplus,unnamed
@@ -33,7 +46,6 @@ set autoread " automatically read file changes
 set hidden " automatically manage hidden buffers
 set ttimeoutlen=100
 set timeoutlen=3000
-set noesckeys " automatically recognize esc in insert mode
 set noerrorbells novisualbell t_vb=
 set shortmess =a " use all abbreviations
 set shortmess+=t " truncate file message if too long
@@ -105,8 +117,6 @@ if has('gui_running')
 	set guifont=Meslo\ LG\ S\ for\ Powerline\ 8
 endif
 
-filetype plugin indent on
-
 syntax on
 let g:rehash256=1
 colorscheme molokai
@@ -166,7 +176,7 @@ let g:syntastic_cpp_include_dirs=[ 'inc', 'include' ]
 
 " YouCompleteMe
 let g:ycm_global_ycm_extra_conf='~/.vim/ycm/ycm_extra_conf.py' " Should be set locally if needed
-let g:ycm_confirm_extra_conf=0
+let g:ycm_confirm_extra_conf=1
 
 " ---------
 " Functions
