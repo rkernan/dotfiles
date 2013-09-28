@@ -23,6 +23,8 @@ set nocompatible
 
 filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
+set tags=./tags;/
+" set spell spelllang=en_us
 
 let mapleader="\\"
 let g:mapleader="\\"
