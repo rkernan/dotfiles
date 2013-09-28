@@ -11,8 +11,7 @@ def GetPlatformName():
         return "LINUX"
     elif system == "Windows":
         return "WIN32"
-    else:
-        return "nul"
+    raise Exception("Unknow platform.")
 
 def FlagsForFile(filename):
     filetype = vim.eval("&filetype")
@@ -27,6 +26,10 @@ def FlagsForFile(filename):
                 "-DDEBUG",
                 "-D%s" % GetPlatformName()
                 ]
+        try:
+            flags += "-D%s" % GetPlatformName()
+        except:
+            pass
     elif filetype == "cpp":
         flags = [
                 "-std=c++11",
@@ -38,4 +41,8 @@ def FlagsForFile(filename):
                 "-DDEBUG",
                 "-D%s" % GetPlatformName()
                 ]
+        try:
+            flags += "-D%s" % GetPlatformName()
+        except:
+            pass
     return {"flags": flags, "do_cache": True}
