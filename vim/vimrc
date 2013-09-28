@@ -174,29 +174,39 @@ let g:syntastic_cpp_auto_refresh_includes=1
 let g:syntastic_cpp_compiler_options=' -std=c++11'
 let g:syntastic_cpp_include_dirs=[ 'inc', 'include' ]
 
+" UltiSnips
+" let g:UltiSnipsSnippetsDir=expand('~/.vim/snippets')
+let g:UltiSnipsExpandTrigger='<c-j>'
+" let g:UltiSnipsListSnippets=''
+let g:UltiSnipsJumpForwardTrigger='<c-j>'
+let g:UltiSnipsJumpBackwardTrigger='<c-k>'
+
 " YouCompleteMe
 let g:ycm_global_ycm_extra_conf='~/.vim/ycm/ycm_extra_conf.py' " Should be set locally if needed
 let g:ycm_confirm_extra_conf=1
+let g:ycm_cache_omnifunc=0
+let g:ycm_key_list_select_completion=['<tab>']
+let g:ycm_key_list_previous_completion=['<s-tab>']
 
 " ---------
 " Functions
 " ---------
 " Set tab width using a nice prompt
 function! SetTab()
-	let l:tabstop = 1 * input("set tabstop = softtabstop = shiftwidth = ")
+	let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
 	if l:tabstop > 0
 		let &l:tw = l:tabstop
 		let &l:sts = l:tabstop
 		let &l:sw = l:tabstop
 	endif
-	let l:et = input("set expandtab = ")
-	if l:et == "no"
+	let l:et = input('set expandtab = ')
+	if l:et == 'no'
 		setlocal noexpandtab
 	else
 		setlocal expandtab
 	end
 	echo
-	echo "\n"
+	echo '\n'
 	call SummarizeTabs()
 endfunction
 
@@ -204,11 +214,11 @@ endfunction
 function! SummarizeTabs()
 	try
 		echoh ModeMsg
-		echon "tabstop=" &l:ts " softtabstop=" &l:sts " shiftwidth=" &l:sw ' '
+		echon 'tabstop=' &l:ts ' softtabstop=' &l:sts ' shiftwidth=' &l:sw ' '
 		if &l:et
-			echon "expandtab"
+			echon 'expandtab'
 		else
-			echon "noexpandtab"
+			echon 'noexpandtab'
 		endif
 	finally
 		echoh None
@@ -256,6 +266,7 @@ if has('autocmd')
 		autocmd!
 		autocmd FileType ruby,eruby setlocal ts=2 sts=2 sw=2 expandtab
 		autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+		autocmd FileType snippets setlocal expandtab
 	augroup END
 
 	" Filetype specific match pairs settings
