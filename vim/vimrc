@@ -13,7 +13,6 @@ function! MkdirIfNone(dir)
 		endif
 	endif
 endfunction
-
 call MkdirIfNone(expand('~/.vim/undo'))
 
 " --------
@@ -23,7 +22,7 @@ set nocompatible
 
 filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
-set tags=./tags;/
+set tags=./tags;
 " set spell spelllang=en_us
 
 let mapleader="\\"
@@ -119,6 +118,22 @@ if has('gui_running')
 	set guifont=Meslo\ LG\ S\ for\ Powerline\ 8
 endif
 
+if has('autocmd')
+	" Automatically resize splits on window resize
+	augroup ResizeSplits
+		autocmd!
+		autocmd VimResized * :wincmd =
+	augroup END
+
+	" Filetype specific tab settings
+	augroup FileTypeTabs
+		autocmd!
+		autocmd FileType ruby,eruby setlocal ts=2 sts=2 sw=2 expandtab
+		autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+		autocmd FileType snippets setlocal expandtab
+	augroup END
+endif
+
 syntax on
 let g:rehash256=1
 colorscheme molokai
@@ -148,6 +163,17 @@ let g:delimitMate_smart_quotes=1
 let g:delimitMate_expand_cr=1
 let g:delimitMate_expand_space=1
 let g:delimitMate_excluded_regions="Comment"
+if has('autocmd')
+	" Filetype specific match pairs settings
+	augroup FileTypeQuotes
+		autocmd!
+		autocmd FileType vim let b:delimitMate_quotes="'"
+	augroup END
+	augroup FileTypePairs
+		autocmd!
+		autocmd FileType c,cpp,vim let b:delimitMate_matchPairs="(:),[:],{:},<:>"
+	augroup END
+endif
 
 " DoxyGen
 let g:load_doxygen_syntax=0
@@ -192,6 +218,13 @@ let g:ycm_confirm_extra_conf=1
 let g:ycm_cache_omnifunc=0
 let g:ycm_key_list_select_completion=['<tab>', '<down>']
 let g:ycm_key_list_previous_completion=['<s-tab>', '<up>']
+if has('autocmd')
+	" Use vim's default jump binding
+	augroup YcmJump
+		autocmd!
+		autocmd FileType c,cpp,objc,objcpp,python,cs noremap <c-]> :YcmCompleter GoToDefinitionElseDeclaration<cr>
+	augroup END
+endif
 
 " ---------
 " Functions
@@ -241,8 +274,10 @@ nnoremap <c-k> :move -2<cr>
 vnoremap <c-j> :move '>+<cr>gv
 vnoremap <c-k> :move -2<cr>gv
 nnoremap <leader>, :nohlsearch<cr>call clearmatches()<cr>
-vnoremap > >gv
-vnoremap < <gv
+vnoremap <tab> >gv
+vnoremap <s-tab> <gv
+nnoremap <tab> >>
+nnoremap <s-tab> <<
 nnoremap <leader>l :setlocal list!<cr>
 nnoremap <leader>nn :setlocal number!<cr>
 nnoremap <leader>nr :setlocal relativenumber!<cr>
@@ -256,31 +291,3 @@ endif
 " Commands
 " --------
 command! -nargs=* Stab call SetTab()
-
-" -------------
-" Auto Commands
-" -------------
-if has('autocmd')
-	" Automatically resize splits on window resize
-	augroup ResizeSplits
-		autocmd!
-		autocmd VimResized * :wincmd =
-	augroup END
-
-	" Filetype specific tab settings
-	augroup FileTypeTabs
-		autocmd!
-		autocmd FileType ruby,eruby setlocal ts=2 sts=2 sw=2 expandtab
-		autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
-		autocmd FileType snippets setlocal expandtab
-	augroup END
-
-	" Filetype specific match pairs settings
-	augroup FileTypePairs
-		autocmd!
-		" quotes
-		autocmd FileType vim let b:delimitMate_quotes="'"
-		" brackets
-		autocmd FileType c,cpp let b:delimitMate_matchPairs="(:),[:],{:},<:>"
-	augroup END
-endif
