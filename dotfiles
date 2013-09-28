@@ -8,7 +8,6 @@ update_gitmodules() {
 }
 
 install_youcompleteme() {
-	update_gitmodules
 	echo "Do you want to build and install YouCompleteMe.vim?"
 	echo "NOTE: Should only be done if prompted when starting vim."
 	read -p "  install? (y/n) " ans
@@ -52,21 +51,14 @@ install() {
 	if [ ! -d $HOME/.fonts ]; then
 		mkdir $HOME/.fonts
 	fi
-	find $DOTFILES_DIR/powerline/fonts/ -type f \( ! -iname "*.rst" ! -iname "*.markdown" ! -iname "*.txt" \) -exec ln -sf {} $HOME/.fonts/ \;
+	find $DOTFILES_DIR/fonts/ -type f \( ! -iname "*.rst" ! -iname "*.markdown" ! -iname "*.txt" \) -exec ln -sf {} $HOME/.fonts/ \;
 	fc-cache -vf $HOME/.fonts
-	# install powerline (pip)
-	POWERLINE_DIR=$HOME/.local/lib/python2.7/site-packages/powerline
-	if [ ! -d $POWERLINE_DIR ]; then
-		cd $DOTFILES_DIR/powerline/install
-		pip install --user ./
-		cd $DOTFILES_DIR
-	fi
 	# symlink powerline config
 	if [ ! -d $HOME/.config ]; then
 		mkdir $HOME/.config
 	fi
 	rm -rf $HOME/.config/powerline
-	ln -s $DOTFILES_DIR/powerline/config $HOME/.config/powerline
+	ln -s $DOTFILES_DIR/powerline $HOME/.config/powerline
 	# conditionally install YouCompleteMe.vim
 	install_youcompleteme
 }
@@ -80,7 +72,6 @@ uninstall() {
 	rm -f $HOME/.tmux.conf  # rm tmux- config
 	rm -f $HOME/.Xresources # rm  x11- resources
 	rm -rf $HOME/.i3        # rm   i3- config directory
-	pip uninstall --yes powerline
 	rm -rf $HOME/.config/powerline
 }
 
