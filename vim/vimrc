@@ -176,7 +176,7 @@ let g:syntastic_cpp_include_dirs=[ 'inc', 'include' ]
 
 " UltiSnips
 " let g:UltiSnipsSnippetsDir=expand('~/.vim/snippets')
-let g:UltiSnipsExpandTrigger='<c-j>'
+let g:UltiSnipsExpandTrigger='<c-h>'
 " let g:UltiSnipsListSnippets=''
 let g:UltiSnipsJumpForwardTrigger='<c-j>'
 let g:UltiSnipsJumpBackwardTrigger='<c-k>'
@@ -185,8 +185,8 @@ let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 let g:ycm_global_ycm_extra_conf='~/.vim/ycm/ycm_extra_conf.py' " Should be set locally if needed
 let g:ycm_confirm_extra_conf=1
 let g:ycm_cache_omnifunc=0
-let g:ycm_key_list_select_completion=['<tab>']
-let g:ycm_key_list_previous_completion=['<s-tab>']
+let g:ycm_key_list_select_completion=['<tab>', '<down>']
+let g:ycm_key_list_previous_completion=['<s-tab>', '<up>']
 
 " ---------
 " Functions
@@ -228,6 +228,7 @@ endfunction
 " --------
 " Mappings
 " --------
+noremap <c-s> :w<cr>
 cnoremap <c-h> <left>
 cnoremap <c-l> <right>
 nnoremap <c-j> :move +1<cr>
