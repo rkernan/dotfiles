@@ -5,6 +5,7 @@ call vundle#rc()
 
 Bundle 'gmarik/vundle'
 Bundle 'kien/ctrlp.vim'
+Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim'}
 Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/syntastic'
@@ -13,6 +14,7 @@ Bundle 'SirVer/ultisnips'
 Bundle 'tikhomirov/vim-glsl'
 Bundle 'tomasr/molokai'
 Bundle 'tomtom/tcomment_vim'
+Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-rails'
 Bundle 'Valloric/YouCompleteMe'
 
