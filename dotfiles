@@ -27,16 +27,16 @@ update_gitmodules() {
 	git submodule update --init --recursive
 }
 
-install_vim_plugins() {
+update_vim_plugins() {
 	echo "installing vim plugins"
-	vim +BundleInstall! +qall
+	vim +BundleClean +BundleInstall! +qall
 }
 
 link_dotfiles() {
 	echo "linking vim config"
 	ln -s $DOTFILES_DIR/vim/vimrc $HOME/.vimrc           #  vim- config
 	ln -s $DOTFILES_DIR/vim $HOME/.vim                   #  vim- config directory
-	install_vim_plugins
+	update_vim_plugins
 	echo "linking zsh config"
 	ln -s $DOTFILES_DIR/zsh/zshrc $HOME/.zshrc           #  zsh- config
 	ln -s $DOTFILES_DIR/zsh $HOME/.zsh                   #  zsh- config directory
@@ -125,7 +125,7 @@ uninstall)
 	;;
 update)
 	update_gitmodules
-	install_vim_plugins
+	update_vim_plugins
 	;;
 *)
 	echo "Options:"
