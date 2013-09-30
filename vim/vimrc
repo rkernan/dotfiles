@@ -37,8 +37,8 @@ set nocompatible
 
 filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
-set tags=./tags;
-" set spell spelllang=en_us
+set tags=./tags;/
+set spelllang=en_us
 
 let mapleader="\\"
 let g:mapleader="\\"
@@ -113,7 +113,6 @@ set cinoptions+=g0  " indent of scope declarations -> none
 set cinoptions+=N-s " indent of statements inside namespace -> none
 set cinoptions+=(0  " indent of line continuations with unclosed parens -> line up with open-paren
 set cinoptions+=j1  " indent Java anonymous classes correctly
-set tags=./tags;/
 set magic      " use special characters in search patterns
 set ignorecase " ignore case of search term
 set smartcase  " stop ignoring case when search pattern includes upper-case characters
@@ -229,7 +228,7 @@ let g:UltiSnipsJumpForwardTrigger='<c-j>'
 let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 
 " YouCompleteMe
-let g:ycm_global_ycm_extra_conf='~/.vim/ycm/ycm_extra_conf.py' " Should be set locally if needed
+let g:ycm_global_ycm_extra_conf=expand('~/.vim/ycm/ycm_extra_conf.py')
 let g:ycm_confirm_extra_conf=1
 let g:ycm_cache_omnifunc=0
 let g:ycm_key_list_select_completion=['<tab>', '<down>']
@@ -242,9 +241,39 @@ if has('autocmd')
 	augroup END
 endif
 
-" ---------
-" Functions
-" ---------
+" --------
+" Mappings
+" --------
+" write
+noremap <c-s> :w<cr>
+noremap <c-x> :x<cr>
+
+" move cursor in command-mode
+cnoremap <c-h> <left>
+cnoremap <c-l> <right>
+
+" bubble lines
+nnoremap <c-j> :move +1<cr>
+nnoremap <c-k> :move -2<cr>
+vnoremap <c-j> :move '>+<cr>gv
+vnoremap <c-k> :move -2<cr>gv
+
+" clear search matches
+nnoremap <leader>, :nohlsearch<cr>call clearmatches()<cr>
+
+" indent and un-indent
+vnoremap <tab> >gv
+vnoremap <s-tab> <gv
+nnoremap <tab> >>
+nnoremap <s-tab> <<
+
+" toggle invisible characters
+nnoremap <leader>l :setlocal list!<cr>
+
+" toggle line numbers
+nnoremap <leader>nn :setlocal number!<cr>
+nnoremap <leader>nr :setlocal relativenumber!<cr>
+
 " Set tab width using a nice prompt
 function! SetTab()
 	let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
@@ -279,32 +308,10 @@ function! SummarizeTabs()
 	endtry
 endfunction
 
-" --------
-" Mappings
-" --------
-noremap <c-s> :w<cr>
-noremap <c-x> :x<cr>
-cnoremap <c-h> <left>
-cnoremap <c-l> <right>
-nnoremap <c-j> :move +1<cr>
-nnoremap <c-k> :move -2<cr>
-vnoremap <c-j> :move '>+<cr>gv
-vnoremap <c-k> :move -2<cr>gv
-nnoremap <leader>, :nohlsearch<cr>call clearmatches()<cr>
-vnoremap <tab> >gv
-vnoremap <s-tab> <gv
-nnoremap <tab> >>
-nnoremap <s-tab> <<
-nnoremap <leader>l :setlocal list!<cr>
-nnoremap <leader>nn :setlocal number!<cr>
-nnoremap <leader>nr :setlocal relativenumber!<cr>
+command! -nargs=* Stab call SetTab()
 
 if has('gui_running')
+
 	" Toggle menu
 	nnoremap <f1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
 endif
-
-" --------
-" Commands
-" --------
-command! -nargs=* Stab call SetTab()
