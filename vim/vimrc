@@ -4,22 +4,17 @@ set runtimepath+=$HOME/.vim/bundle/vundle
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
-Bundle 'skammer/vim-css-color'
 Bundle 'kien/ctrlp.vim'
+Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim'}
 Bundle 'Raimondi/delimitMate'
+Bundle 'scrooloose/syntastic'
+Bundle 'skammer/vim-css-color'
+Bundle 'SirVer/ultisnips'
 Bundle 'tikhomirov/vim-glsl'
 Bundle 'tomasr/molokai'
-Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim'}
-Bundle 'tpope/vim-rails'
-Bundle 'scrooloose/syntastic'
 Bundle 'tomtom/tcomment_vim'
-Bundle 'SirVer/ultisnips'
+Bundle 'tpope/vim-rails'
 Bundle 'Valloric/YouCompleteMe'
-
-" Pathogen
-" runtime bundle/pathogen/autoload/pathogen.vim
-" call pathogen#infect()
-" call pathogen#helptags()
 
 function! MkdirIfNone(dir)
 	if !isdirectory(a:dir)
@@ -225,9 +220,9 @@ let g:syntastic_cpp_compiler_options=' -std=c++11'
 let g:syntastic_cpp_include_dirs=[ 'inc', 'include' ]
 
 " UltiSnips
-" let g:UltiSnipsSnippetsDir=expand('~/.vim/snippets')
+let g:UltiSnipsEditSplit='vertical'
+let g:UltiSnipsSnippetDirectories=['snippets']
 let g:UltiSnipsExpandTrigger='<c-h>'
-" let g:UltiSnipsListSnippets=''
 let g:UltiSnipsJumpForwardTrigger='<c-j>'
 let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 

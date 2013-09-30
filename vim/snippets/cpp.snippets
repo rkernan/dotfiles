@@ -1,0 +1,45 @@
+extends c
+
+snippet cl "class .."
+class ${1:`!p snip.rv = snip.basename or "name"`} {
+public:
+    ${1/(\w+).*/$1/}(${2:arguments});
+    virtual ~${1/(\w+).*/$1/}();
+private:
+    $0
+};
+endsnippet
+
+snippet met "class::method" b
+${2:void} ${1:class_name}::${3:method_name}(${4}) {
+	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+}
+endsnippet
+
+snippet tp "template<typename ..>"
+template<typename ${1:type}>$0
+endsnippet
+
+snippet ns "namespace .." b
+namespace${1/.+/ /m}${1:`!p snip.rv = (snip.basename or "name")`} {
+${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+}
+endsnippet
+
+snippet map "std::map .."
+std::map<${1:key}, ${2:type}> ${0:temp};
+endsnippet
+
+snippet str "std::string .."
+std::string ${0:temp};
+endsnippet
+
+snippet vec "std::vector .."
+std::vector<${1:type}> ${0:temp};
+endsnippet
+
+snippet for "for each" b
+for (${1:auto}& ${2:element} : ${3:list}) {
+    ${0:/* code */}
+}
+endsnippet
