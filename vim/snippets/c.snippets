@@ -9,8 +9,8 @@ snippet ifndef "#ifndef ... #define ... #endif"
 endsnippet
 
 snippet #if "#if #endif" b
-#if ${1:0}
-${VISUAL}${0:${VISUAL/(.*)/(?1::code)/}}
+#if ${1:condition}
+${VISUAL}$0
 #endif
 endsnippet
 
@@ -22,22 +22,22 @@ snippet Inc "#include <>" b
 #include <${1:.h}>
 endsnippet
 
-snippet main "int main(int argc, char** argv)" b
-int main(int argc, char** argv) {
-	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+snippet main "int main(int argc, char** argv)"
+int main(int argc, const char* argv[]) {
+	${VISUAL}$0
 	return 0;
 }
 endsnippet
 
 snippet for "for .."
 for (${2:i} = 0; $2 < ${1:count}; ${3:++$2}) {
-	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+	${VISUAL}$0
 }
 endsnippet
 
 snippet fori "for int .."
 for (${4:int} ${2:i} = 0; $2 < ${1:count}; ${3:++$2}) {
-	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+	${VISUAL}$0
 }
 endsnippet
 
@@ -46,76 +46,70 @@ enum ${1:name} { $0 };
 endsnippet
 
 snippet once "header guard"
-#ifndef ${1:`!p
-if not snip.c:
-	import string
-	name = re.sub(r'[^A-Za-z0-9]+','_', snip.fn).upper()
-	snip.rv = ('%s_%s' % name.upper()
-else:
-    snip.rv = snip.c`}
+#ifndef ${1:`!p snip.rv = snip.fn.replace(".", "_").upper()`}
 #define $1
 
-${0}
+${VISUAL}$0
 
 #endif
 endsnippet
 
 snippet td "typedef .."
-typedef ${1:old_type} ${2:new_type};
+typedef ${1:old_type} ${2:new_type};$0
 endsnippet
 
 snippet wh "while .."
-while (${1:/* condition */}) {
-	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+while (${1:condition}) {
+	${VISUAL}$0
 }
 endsnippet
 
 snippet do "do .. while"
 do {
-	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
-} while (${1:/* condition */});
+	${VISUAL}$0
+} while (${1:condition});
 endsnippet
 
 snippet if "if .."
-if (${1:/* condition */}) {
-	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+if (${1:condition}) {
+	${VISUAL}$0
 }
 endsnippet
 
 snippet el "else"
 else {
-	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+	${VISUAL}$0
 }
 endsnippet
 
 snippet ife "if .. else"
-if (${1:/* condition */}) {
-	${2:/* code */}
+if (${1:condition}) {
+	${VISUAL}$2
 } else {
-	${3:/* else */}
+	$3
 }
 endsnippet
 
 snippet fprintf "fprintf"
-fprintf(${1:stderr}, "${2:%s}\n"${2/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$3${2/([^%]|%%)*(%.)?.*/(?2:\);)/}
+fprintf(${1:stderr}, "${2:%s}\n"${2/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$3${2/([^%]|%%)*(%.)?.*/(?2:\);)/}$0
 endsnippet
 
 snippet printf "printf .. (printf)"
-printf("${1:%s}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$2${1/([^%]|%%)*(%.)?.*/(?2:\);)/}
+printf("${1:%s}\n"${1/([^%]|%%)*(%.)?.*/(?2:, :\);)/}$2${1/([^%]|%%)*(%.)?.*/(?2:\);)/}$0
 endsnippet
 
 snippet st "struct"
 struct ${1:`!p snip.rv = (snip.basename or "name") + "_t"`} {
-	${0:/* data */}
+	$0
 };
 endsnippet
 
-snippet fun "function" b
-${1:void} ${2:function_name}(${3}) {
-	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+snippet fun "function"
+${2:void} ${1:function}(${3:void}) {
+	${VISUAL}$0
 }
 endsnippet
 
-snippet dec "function/method declaration" b
-${1:void} ${2:function_name}(${3});
+snippet dec "function/method declaration"
+${2:void} ${1:function}(${3:void});$0
 endsnippet

@@ -3,16 +3,16 @@ extends c
 snippet cl "class .."
 class ${1:`!p snip.rv = snip.basename or "name"`} {
 public:
-    ${1/(\w+).*/$1/}(${2:arguments});
-    virtual ~${1/(\w+).*/$1/}();
+	${1/(\w+).*/$1/}(${2:void});
+	virtual ~${1/(\w+).*/$1/}(void);
 private:
-    $0
+	$0
 };
 endsnippet
 
-snippet met "class::method" b
-${2:void} ${1:class_name}::${3:method_name}(${4}) {
-	${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+snippet met "class::method"
+${3:void} ${1:class}::${2:method}(${4:void}) {
+	${VISUAL}$0
 }
 endsnippet
 
@@ -22,24 +22,24 @@ endsnippet
 
 snippet ns "namespace .." b
 namespace${1/.+/ /m}${1:`!p snip.rv = (snip.basename or "name")`} {
-${VISUAL}${0:${VISUAL/(.*)/(?1::\/* code *\/)/}}
+${VISUAL}$0
 }
 endsnippet
 
 snippet map "std::map .."
-std::map<${1:key}, ${2:type}> ${0:temp};
+std::map<${1:key}, ${2:type}> ${0:name};
 endsnippet
 
 snippet str "std::string .."
-std::string ${0:temp};
+std::string ${0:name};
 endsnippet
 
 snippet vec "std::vector .."
-std::vector<${1:type}> ${0:temp};
+std::vector<${1:type}> ${0:name};
 endsnippet
 
-snippet for "for each" b
+snippet for "for each"
 for (${1:auto}& ${2:element} : ${3:list}) {
-    ${0:/* code */}
+	${VISUAL}$0
 }
 endsnippet
