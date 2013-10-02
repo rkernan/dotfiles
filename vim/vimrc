@@ -9,6 +9,7 @@ Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim'}
 Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/syntastic'
+Bundle 'sjl/gundo.vim'
 Bundle 'skammer/vim-css-color'
 Bundle 'SirVer/ultisnips'
 Bundle 'tikhomirov/vim-glsl'
@@ -144,7 +145,6 @@ if has('autocmd')
 		autocmd!
 		autocmd FileType ruby,eruby setlocal ts=2 sts=2 sw=2 expandtab
 		autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
-		autocmd FileType snippets setlocal expandtab
 	augroup END
 endif
 
@@ -192,6 +192,10 @@ endif
 
 " DoxyGen
 let g:load_doxygen_syntax=0
+
+" Gundo
+let g:gundo_preview_bottom=1
+nnoremap <f4> :GundoToggle<cr>
 
 " Syntastic
 let g:syntastic_auto_loc_list=1
