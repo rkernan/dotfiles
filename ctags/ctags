@@ -1,4 +1,3 @@
 --fields=+l
 --c-kinds=+p
 --c++-kinds=+p
---extra=+q
