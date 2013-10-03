@@ -17,7 +17,10 @@ Bundle 'tomasr/molokai'
 Bundle 'tomtom/tcomment_vim'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-rails'
+Bundle 'Valloric/ListToggle'
 Bundle 'Valloric/YouCompleteMe'
+Bundle 'xolox/vim-easytags'
+Bundle 'xolox/vim-misc'
 
 function! MkdirIfNone(dir)
 	if !isdirectory(a:dir)
@@ -38,8 +41,6 @@ set nocompatible
 
 filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
-set tags=./tags;/
-set spelllang=en_us
 
 let mapleader="\\"
 let g:mapleader="\\"
@@ -165,6 +166,7 @@ let g:cssColorVimDoNotMessMyUpdatetime=1
 
 " ctrlp
 let g:ctrlp_map='<leader>t'
+noremap <leader>b :CtrlPBuffer<cr>
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip    " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe " Windows
 
@@ -193,9 +195,19 @@ endif
 " DoxyGen
 let g:load_doxygen_syntax=0
 
+" EasyTags
+set tags=./tags;/
+let g:easytags_dynamic_files=1
+let g:easytags_by_filetype=0
+let g:easytags_updatetime_warn=0
+let g:easytags_include_members=1
+
 " Gundo
 let g:gundo_preview_bottom=1
 nnoremap <f4> :GundoToggle<cr>
+
+" ListToggle
+let g:lt_height=10
 
 " Syntastic
 let g:syntastic_auto_loc_list=1
@@ -235,6 +247,8 @@ let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 let g:ycm_global_ycm_extra_conf=expand('~/.vim/ycm/ycm_extra_conf.py')
 let g:ycm_confirm_extra_conf=1
 let g:ycm_cache_omnifunc=0
+let g:ycm_collect_identifiers_from_tags_files=1
+let g:ycm_seed_identifiers_with_syntax=0
 let g:ycm_key_list_select_completion=['<tab>', '<down>']
 let g:ycm_key_list_previous_completion=['<s-tab>', '<up>']
 if has('autocmd')
@@ -270,9 +284,6 @@ vnoremap <tab> >gv
 vnoremap <s-tab> <gv
 nnoremap <tab> >>
 nnoremap <s-tab> <<
-
-" toggle invisible characters
-nnoremap <leader>l :setlocal list!<cr>
 
 " toggle line numbers
 nnoremap <leader>nn :setlocal number!<cr>

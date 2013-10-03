@@ -33,6 +33,8 @@ update_vim_plugins() {
 }
 
 link_dotfiles() {
+	echo "linking ctags config"                          #ctags-config
+	ln -s $DOTFILES_DIR/ctags/ctags $HOME/.ctags
 	echo "linking vim config"
 	ln -s $DOTFILES_DIR/vim/vimrc $HOME/.vimrc           #  vim- config
 	ln -s $DOTFILES_DIR/vim $HOME/.vim                   #  vim- config directory
