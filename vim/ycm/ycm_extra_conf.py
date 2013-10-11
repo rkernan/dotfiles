@@ -20,7 +20,7 @@ def GetPlatformName():
     if system == "Linux":
         return "LINUX"
     elif system == "Windows":
-        return "WIN32"
+        return "WINDOWS"
     raise Exception("Unknown platform.")
 
 
