@@ -179,7 +179,7 @@ let g:delimitMate_balance_matchpairs=1
 let g:delimitMate_quotes="\" '"
 let g:delimitMate_smart_quotes=1
 let g:delimitMate_expand_cr=1
-let g:delimitMate_expand_space=1
+let g:delimitMate_expand_space=0
 let g:delimitMate_excluded_regions="Comment"
 if has('autocmd')
 	" Filetype specific match pairs settings
@@ -264,6 +264,7 @@ endif
 " --------
 " Mappings
 " --------
+
 " write
 noremap <c-s> :w<cr>
 noremap <c-x> :x<cr>
