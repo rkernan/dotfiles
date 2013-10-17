@@ -263,10 +263,6 @@ endif
 " Mappings
 " --------
 
-" write
-noremap <c-s> :w<cr>
-noremap <c-x> :x<cr>
-
 " move cursor in command-mode
 cnoremap <c-h> <left>
 cnoremap <c-l> <right>
