@@ -159,8 +159,6 @@ colorscheme molokai
 " -------
 " Powerline
 set noshowmode
-" set runtimepath+=$HOME/.local/lib/python2.7/site-packages/powerline/bindings/vim
-set runtimepath+=$HOME/.vim/bundle/powerline/powerline/bindings/vim
 
 " CSS Color
 let g:cssColorVimDoNotMessMyUpdatetime=1
