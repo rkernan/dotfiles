@@ -3,10 +3,14 @@ ADOTDIR=$HOME/.zsh/bundle
 
 antigen use oh-my-zsh
 
+COMPLETION_WAITING_DOTS="true"
 ZSH_TMUX_AUTOSTART=true
+ZSH_TMUX_AUTOCONNECT=false
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets root)
 
+antigen bundle command-not-found
 antigen bundle tmux
-# antigen bundle last-working-dir
+antigen bundle zsh-users/zsh-completions src
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen apply
@@ -70,14 +74,12 @@ alias grep="grep --color=auto"
 
 alias ls="ls --color=auto --group-directories-first"
 alias la="ls --color=auto --group-directories-first -C -AF"
-alias ll="ls --color=auto --group-directories-first -C -lA"
 
 alias mv="nocorrect mv"
 alias cp="nocorrect cp"
 alias mkdir="nocorrect mkdir"
 
 cd() {
-	# TODO Doesn't work with lwd
 	builtin cd "$@"; print "$fg[green]$PWD$reset_color"
 }
 

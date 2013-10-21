@@ -23,12 +23,12 @@ mkdir_if_none() {
 }
 
 update_gitmodules() {
-	echo "Updating git submodules"
+	echo "updating git submodules"
 	git submodule update --init --recursive
 }
 
 update_vim_plugins() {
-	echo "installing vim plugins"
+	echo "updating vim plugins"
 	cd $DOTFILES_DIR/vim/bundle/vundle # vundle can't update itself otherwise
 	git checkout master
 	cd $DOTFILES_DIR
