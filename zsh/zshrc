@@ -1,65 +1,17 @@
+source $HOME/.zsh/bundle/antigen/antigen.zsh
+ADOTDIR=$HOME/.zsh/bundle
 
-# General -------------------------------------------------------------------{{{
-# @author Robert Kernan
-# set terminal type
-case "$TERM" in
-	*-256color)
-		# alias ssh='TERM=${TERM%-256color} ssh'
-		alias ssh='TERM=linux ssh'
-		;;
-	*)
-		POTENTIAL_TERM=${TERM}-256color
-		POTENTIAL_TERMINFO=${TERM:0:1}/$POTENTIAL_TERM
-		BOX_TERMINFO_DIR=/usr/share/terminfo
-		[[ -f $BOX_TERMINFO_DIR/$POTENTIAL_TERMINFO ]] && \
-			export TERM=$POTENTIAL_TERM
-		HOME_TERMINFO_DIR=$HOME/.terminfo
-		[[ -f $HOME_TERMINFO_DIR/$POTENTIAL_TERMINFO ]] && \
-			export TERM=$POTENTIAL_TERM
-		;;
-esac
-# disable XON/XOFF flow control
-stty -ixon
-# disable beep
-setterm -bfreq 0
-# config directory
-ZSH_HOME="$HOME/.zsh"
-# ignore duplicate lines
-setopt histignoredups
-# prevent file clobbering
-setopt noclobber
-# autocorrection
-setopt correct
-# colors
-autoload colors; colors
-# exports
-export EDITOR="vim"
-export VISUAL="vim"
-# }}}
+antigen use oh-my-zsh
 
-# Mode ----------------------------------------------------------------------{{{
-# use vi keybindings
-bindkey -v
-# (some) emacs bindings in vim mode
-bindkey '^e' end-of-line
-bindkey '^a' beginning-of-line
-bindkey '^h' backward-char
-bindkey '^l' forward-char
-bindkey '^p' up-history
-bindkey '^n' down-history
-# }}}
+ZSH_TMUX_AUTOSTART=true
 
-# Autocompletion ------------------------------------------------------------{{{
-autoload -U compinit
-compinit
-setopt completealiases
-zstyle ':completion:*' menu select
-zstyle ':completion:*:descriptions' format '%U%B%d%b%u'
-zstyle ':completion:*:warnings' format '%BNo matches for: %d%b'
-zstyle ':completion:*:sudo:*' command-path /usr/local/sbin /usr/local/bin /usr/sbin /usr/bin /sbin /bin /usr/X11R6/bin
-# }}}
+antigen bundle tmux
+# antigen bundle last-working-dir
+antigen bundle zsh-users/zsh-syntax-highlighting
 
-# Version Control -----------------------------------------------------------{{{
+antigen apply
+
+# Version Control
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git svn hg
 zstyle ':vcs_info:*' get-revision false
@@ -69,7 +21,8 @@ zstyle ':vcs_info:*' stagedstr '%F{green}●'
 zstyle ':vcs_info:*' unstagedstr '%F{yellow}●'
 zstyle ':vcs_info:*' formats ' %F{cyan}[ %b%c%u %F{cyan}]'
 zstyle ':vcs_info:git*+set-message:*' hooks git-hooks
-# function: hook for git vcs {{{
+
+# function: hook for git vcs
 function +vi-git-hooks() {
 	if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
 		# untracked files
@@ -105,14 +58,12 @@ function +vi-git-hooks() {
 		hook_com[unstaged]+=" %F{yellow}$time_passed"
 	fi
 }
-#}}}
 
 precmd() {
 	vcs_info
 }
-# }}}
 
-# Aliases -------------------------------------------------------------------{{{
+# Aliases
 alias egrep="egrep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias grep="grep --color=auto"
@@ -126,6 +77,7 @@ alias cp="nocorrect cp"
 alias mkdir="nocorrect mkdir"
 
 cd() {
+	# TODO Doesn't work with lwd
 	builtin cd "$@"; print "$fg[green]$PWD$reset_color"
 }
 
@@ -133,15 +85,7 @@ pwd() {
 	printf "$fg[green]$PWD$reset_color\n"
 }
 
-# }}}
-
-# Highlighting --------------------------------------------------------------{{{
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets)
-source $ZSH_HOME/plugin/syntax-hi/zsh-syntax-highlighting.zsh
-# }}}
-
-# Prompt --------------------------------------------------------------------{{{
+# Prompt
 setopt prompt_subst
 PROMPT='%F{cyan}%c${vcs_info_msg_0_} %F{white}%% %{$reset_color%}'
 RPROMPT=''
-# }}}

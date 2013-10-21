@@ -4,6 +4,6 @@
 [submodule "vim/bundle/vundle"]
 	path = vim/bundle/vundle
 	url = https://github.com/gmarik/vundle.git
-[submodule "zsh/plugin/syntax-hi"]
-	path = zsh/plugin/syntax-hi
-	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "zsh/bundle/antigen"]
+	path = zsh/bundle/antigen
+	url = https://github.com/zsh-users/antigen.git
