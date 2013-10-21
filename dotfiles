@@ -29,6 +29,9 @@ update_gitmodules() {
 
 update_vim_plugins() {
 	echo "installing vim plugins"
+	cd $DOTFILES_DIR/vim/bundle/vundle # vundle can't update itself otherwise
+	git checkout master
+	cd $DOTFILES_DIR
 	vim +BundleClean +BundleInstall! +qall
 }
 
@@ -58,6 +61,8 @@ link_dotfiles() {
 }
 
 remove_dotfiles() {
+	echo "removing ctags config"
+	rm -f $HOME/.ctags      # rm ctags- config
 	echo "removing vim config"
 	rm -f $HOME/.vimrc      # rm  vim- config
 	rm -rf $HOME/.vim       # rm  vim- config directory + plugins
