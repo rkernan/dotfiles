@@ -3,17 +3,19 @@ ADOTDIR=$HOME/.zsh/bundle
 
 antigen use oh-my-zsh
 
-COMPLETION_WAITING_DOTS="true"
 ZSH_TMUX_AUTOSTART=true
 ZSH_TMUX_AUTOCONNECT=false
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets root)
 
 antigen bundle command-not-found
+antigen bundle per-directory-history
 antigen bundle tmux
 antigen bundle zsh-users/zsh-completions src
 antigen bundle zsh-users/zsh-syntax-highlighting
 
 antigen apply
+
+ZLS_COLORS=$LS_COLORS
 
 # Version Control
 autoload -Uz vcs_info
@@ -72,8 +74,8 @@ alias egrep="egrep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias grep="grep --color=auto"
 
-alias ls="ls --color=auto --group-directories-first"
-alias la="ls --color=auto --group-directories-first -C -AF"
+# alias ls="ls --color=auto --group-directories-first"
+# alias la="ls --color=auto --group-directories-first -C -AF"
 
 alias mv="nocorrect mv"
 alias cp="nocorrect cp"
