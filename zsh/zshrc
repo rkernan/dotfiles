@@ -8,7 +8,6 @@ ZSH_TMUX_AUTOCONNECT=false
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets root)
 
 antigen bundle command-not-found
-antigen bundle per-directory-history
 antigen bundle tmux
 antigen bundle zsh-users/zsh-completions src
 antigen bundle zsh-users/zsh-syntax-highlighting
