@@ -1,20 +1,37 @@
-source $HOME/.zsh/bundle/antigen/antigen.zsh
-ADOTDIR=$HOME/.zsh/bundle
+autoload -U colors
+colors
 
-antigen use oh-my-zsh
+# Plugins
+source $HOME/.zsh/plugin/syntax-highlighting/zsh-syntax-highlighting.zsh
+ZSH_HIGHLIGHT_HIGHLIGHTERS=(main root brackets)
 
-ZSH_TMUX_AUTOSTART=true
-ZSH_TMUX_AUTOCONNECT=false
-ZSH_HIGHLIGHT_HIGHLIGHTERS=(main brackets root)
+# History
+HISTFILE=$HOME/.zsh_history
+HISTSIZE=10000
+SAVEHIST=10000
 
-antigen bundle command-not-found
-antigen bundle tmux
-antigen bundle zsh-users/zsh-completions src
-antigen bundle zsh-users/zsh-syntax-highlighting
+setopt append_history
+setopt extended_history
+setopt hist_expire_dups_first
+setopt hist_ignore_dups
+setopt hist_ignore_space
+setopt hist_verify
+setopt inc_append_history
+setopt share_history
 
-antigen apply
+# Completion
+unsetopt menu_complete
+unsetopt flowcontrol
+setopt auto_menu
+setopt complete_in_word
+setopt always_to_end
 
-ZLS_COLORS=$LS_COLORS
+zstyle ':completion:*' matcher-list 'm:{a-zA-z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+zstyle ':completion:*:*:*:*:*:' menu select
+zstyle ':completion:*:*:*:*:processes' command "ps -u `whoami` -o pid,user,comm -w -W"
+zstyle ':completion:*:cd:*' tag-order local-directories directory-stack path-directories
+zstyle ':completion::complete:*' use-cache 1
+zstyle ':completion::complete:*' cache-path $ZSH/cache/
 
 # Version Control
 autoload -Uz vcs_info
@@ -24,7 +41,7 @@ zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' stagedstr '%F{green}●'
 zstyle ':vcs_info:*' unstagedstr '%F{yellow}●'
-zstyle ':vcs_info:*' formats ' %F{cyan}[ %b%c%u %F{cyan}]'
+zstyle ':vcs_info:*' formats ' %F{cyan}[%b%c%u%F{cyan}]'
 zstyle ':vcs_info:git*+set-message:*' hooks git-hooks
 
 # function: hook for git vcs
@@ -34,33 +51,6 @@ function +vi-git-hooks() {
 		if [[ $(git status --porcelain | grep '??' 2> /dev/null) != '' ]]; then
 			hook_com[unstaged]+='%F{red}●'
 		fi
-		# time since last commit
-		last_commit=$(git log -1 --pretty=format:"%at")
-		now=$(date +%s)
-		seconds=$((now - last_commit))
-		if [ "$seconds" -lt 60 ]; then
-			time_passed="0m"
-		else
-			minutes=$((seconds / 60))
-			hours=$((seconds / 3600))
-			days=$((seconds / 86400))
-			local time_passed=""
-			if [ "$days" -gt 0 ]; then
-				time_passed+=$days
-				time_passed+="d"
-				hours=$((hours % 24))
-			fi
-			if [ "$hours" -gt 0 ]; then
-				time_passed+=$hours
-				time_passed+="h"
-				minutes=$((minutes % 60))
-			fi
-			if [ "$minutes" -gt 0 ] && [ "$days" -eq 0 ]; then
-				time_passed+=$minutes
-				time_passed+="m"
-			fi
-		fi
-		hook_com[unstaged]+=" %F{yellow}$time_passed"
 	fi
 }
 
@@ -68,13 +58,14 @@ precmd() {
 	vcs_info
 }
 
-# Aliases
+# Alias
 alias egrep="egrep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias grep="grep --color=auto"
 
-# alias ls="ls --color=auto --group-directories-first"
-# alias la="ls --color=auto --group-directories-first -C -AF"
+alias ls="ls --color=auto --group-directories-first"
+alias ll='ls --color=auto --group-directories-first -l'
+alias la="ls --color=auto --group-directories-first -lA"
 
 alias mv="nocorrect mv"
 alias cp="nocorrect cp"
@@ -90,5 +81,5 @@ pwd() {
 
 # Prompt
 setopt prompt_subst
-PROMPT='%F{cyan}%c${vcs_info_msg_0_} %F{white}%% %{$reset_color%}'
+PROMPT='%F{blue}%c${vcs_info_msg_0_} %F{white}» %{$reset_color%}'
 RPROMPT=''
