@@ -1,6 +1,6 @@
 import os
 import platform
-import vim
+# import vim
 
 
 # Convert a relative path to an abosolute path.
@@ -24,9 +24,21 @@ def GetPlatformName():
     raise Exception("Unknown platform.")
 
 
+def GetFiletype(filename):
+    # TODO Nasty hack. Remove ASAP.
+    extension = os.path.splitext(filename)[1][1:].strip().lower()
+    if extension == 'c' or extension == 'h':
+        return 'c'
+    elif extension == 'cpp' or extension == 'hpp' or \
+            extension == 'cc' or extension == 'hh':
+        return 'cpp'
+
+
 # Create filetype flags.
 def FlagsForFile(filename):
-    filetype = vim.eval("&filetype")
+    # TODO After the new YCM update (2013-10-25) `import vim` cannot be done.
+    # filetype = vim.eval('&filetype')
+    filetype = GetFiletype(filename)
     if filetype == "c":
         flags = [
             "-std=c11",
