@@ -1,12 +1,22 @@
+if has('autocmd')
+	augroup AutoSourceVIMRC
+		autocmd!
+		autocmd BufWritePost vimrc,.vimrc,_vimrc nested source $MYVIMRC
+	augroup END
+endif
+
 " Vundle
 filetype off
 set runtimepath+=$HOME/.vim/bundle/vundle
 call vundle#rc()
 
 Bundle 'gmarik/vundle'
+Bundle 'hynek/vim-python-pep8-indent'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim'}
+Bundle 'mattn/emmet-vim'
+Bundle 'othree/html5.vim'
 Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/syntastic'
 Bundle 'sjl/gundo.vim'
@@ -14,11 +24,16 @@ Bundle 'skammer/vim-css-color'
 Bundle 'SirVer/ultisnips'
 Bundle 'tikhomirov/vim-glsl'
 Bundle 'tomasr/molokai'
-Bundle 'tomtom/tcomment_vim'
+Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-endwise'
+Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-rails'
+Bundle 'tpope/vim-repeat'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-unimpaired'
 Bundle 'Valloric/ListToggle'
 Bundle 'Valloric/YouCompleteMe'
+Bundle 'vim-ruby/vim-ruby'
 Bundle 'xolox/vim-easytags'
 Bundle 'xolox/vim-misc'
 
@@ -114,7 +129,6 @@ set cinoptions+=:0  " indent of cases -> none
 set cinoptions+=l1  " indent of block after case -> align with case statement
 set cinoptions+=g0  " indent of scope declarations -> none
 set cinoptions+=N-s " indent of statements inside namespace -> none
-set cinoptions+=(0  " indent of line continuations with unclosed parens -> line up with open-paren
 set cinoptions+=j1  " indent Java anonymous classes correctly
 set magic      " use special characters in search patterns
 set ignorecase " ignore case of search term
@@ -122,7 +136,7 @@ set smartcase  " stop ignoring case when search pattern includes upper-case char
 set incsearch  " show matches as the command is being type
 set hlsearch   " highlight all search results
 set gdefault   " substitute all matches on a line by default
-set scrolloff=5
+set scrolloff=3
 if has('gui_running')
 	set guioptions-=T " remove toolbar
 	set guioptions-=m " remove menu
@@ -141,13 +155,6 @@ if has('autocmd')
 		autocmd!
 		autocmd VimResized * :wincmd =
 	augroup END
-
-	" Filetype specific tab settings
-	augroup FileTypeTabs
-		autocmd!
-		autocmd FileType ruby,eruby setlocal ts=2 sts=2 sw=2 expandtab
-		autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
-	augroup END
 endif
 
 syntax on
@@ -165,7 +172,7 @@ let g:cssColorVimDoNotMessMyUpdatetime=1
 
 " ctrlp
 let g:ctrlp_map='<leader>t'
-noremap <leader>b :CtrlPBuffer<cr>
+map <leader>b :CtrlPBuffer<cr>
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip    " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe " Windows
 
@@ -202,7 +209,8 @@ let g:easytags_include_members=0
 
 " Gundo
 let g:gundo_preview_bottom=1
-nnoremap <f4> :GundoToggle<cr>
+let g:gundo_width=30
+nmap <f4> :GundoToggle<cr>
 
 " ListToggle
 let g:lt_height=10
@@ -243,48 +251,43 @@ let g:UltiSnipsExpandTrigger='<c-h>'
 let g:UltiSnipsJumpForwardTrigger='<c-j>'
 let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 
+" Unimpaired
+nmap bk [e
+nmap bj ]e
+vmap bk [egv
+vmap bj ]egv
+
 " YouCompleteMe
 let g:ycm_global_ycm_extra_conf=expand('~/.vim/ycm/ycm_extra_conf.py')
 let g:ycm_confirm_extra_conf=1
 let g:ycm_cache_omnifunc=0
 let g:ycm_collect_identifiers_from_tags_files=1
 let g:ycm_seed_identifiers_with_syntax=0
-let g:ycm_key_list_select_completion=['<tab>', '<down>']
-let g:ycm_key_list_previous_completion=['<s-tab>', '<up>']
-if has('autocmd')
-	" Use vim's default jump binding
-	augroup YcmJump
-		autocmd!
-		autocmd FileType c,cpp,objc,objcpp,python,cs noremap <c-]> :YcmCompleter GoToDefinitionElseDeclaration<cr>
-	augroup END
-endif
+let g:ycm_key_list_select_completion=['<tab>']
+let g:ycm_key_list_previous_completion=['<s-tab>']
 
 " --------
 " Mappings
 " --------
-
-" move cursor in command-mode
-cnoremap <c-h> <left>
-cnoremap <c-l> <right>
-
-" bubble lines
-nnoremap <c-j> :move +1<cr>
-nnoremap <c-k> :move -2<cr>
-vnoremap <c-j> :move '>+<cr>gv
-vnoremap <c-k> :move -2<cr>gv
-
-" clear search matches
-nnoremap <leader>, :nohlsearch<cr>call clearmatches()<cr>
+map  <left>  <nop>
+map  <right> <nop>
+map  <up>    <nop>
+map  <down>  <nop>
+cmap <left>  <nop>
+cmap <right> <nop>
+cmap <up>    <nop>
+cmap <down>  <nop>
+imap <left>  <nop>
+imap <right> <nop>
+imap <up>    <nop>
+imap <down>  <nop>
 
 " indent and un-indent
-vnoremap <tab> >gv
-vnoremap <s-tab> <gv
-nnoremap <tab> >>
-nnoremap <s-tab> <<
+vmap > >gv
+vmap < <gv
 
-" toggle line numbers
-nnoremap <leader>nn :setlocal number!<cr>
-nnoremap <leader>nr :setlocal relativenumber!<cr>
+" visually select last edited/pasted text
+nmap gV `[v`]
 
 " Set tab width using a nice prompt
 function! SetTab()
@@ -323,7 +326,6 @@ endfunction
 command! -nargs=* Stab call SetTab()
 
 if has('gui_running')
-
 	" Toggle menu
-	nnoremap <f1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
+	nmap <f1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
 endif
