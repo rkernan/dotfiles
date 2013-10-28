@@ -39,20 +39,10 @@ zstyle ':vcs_info:*' enable git svn hg
 zstyle ':vcs_info:*' get-revision false
 zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' stagedstr '%F{green}●'
-zstyle ':vcs_info:*' unstagedstr '%F{yellow}●'
-zstyle ':vcs_info:*' formats ' %F{cyan}[%b%c%u%F{cyan}]'
-zstyle ':vcs_info:git*+set-message:*' hooks git-hooks
-
-# function: hook for git vcs
-function +vi-git-hooks() {
-	if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]]; then
-		# untracked files
-		if [[ $(git status --porcelain | grep '??' 2> /dev/null) != '' ]]; then
-			hook_com[unstaged]+='%F{red}●'
-		fi
-	fi
-}
+zstyle ':vcs_info:*' stagedstr "%{$fg_bold[green]%}✓"
+zstyle ':vcs_info:*' unstagedstr "%{$fg_bold[yellow]%}✕"
+zstyle ':vcs_info:*' formats " %{$fg_bold[white]%}‹%{$fg[cyan]%}(%s) %b %c%u%{$fg_bold[white]%}›"
+zstyle ':vcs_info:*' actionformats " %{$fg_bold[white]%}‹%{$fg[cyan]%}%b %c%u%{$fg_bold[red]%}⚡%{$fg_bold[white]%}›"
 
 precmd() {
 	vcs_info
@@ -77,5 +67,5 @@ pwd() {
 
 # Prompt
 setopt prompt_subst
-PROMPT='%F{blue}%c${vcs_info_msg_0_} %F{white}» %{$reset_color%}'
+PROMPT='%{$fg[blue]%}%c${vcs_info_msg_0_} %{$fg_bold[white]%}» %{$reset_color%}'
 RPROMPT=''
