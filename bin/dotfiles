@@ -3,7 +3,7 @@
 # go to dotfiles dir
 cd $(readlink -f $(dirname $0))/..
 
-function prompt() {
+prompt() {
 	read -p "$1 (y/n) " -n 1 -r
 	echo
 	case $REPLY in
@@ -17,14 +17,14 @@ function prompt() {
 	return "$retval"
 }
 
-function mkdir_if_none() {
+mkdir_if_none() {
 	if [ ! -d $1 ]; then
 		mkdir $1
 	fi
 }
 
-function required() {
-	git submodule update --init --recursive > /dev/null
+required() {
+	git submodule --quiet update --init --recursive
 	# local config directory
 	mkdir_if_none $HOME/.config
 	# fonts
@@ -33,7 +33,7 @@ function required() {
 	fc-cache -vf $HOME/.fonts > /dev/null
 }
 
-function install() {
+install() {
 	required
 	ln -sf $PWD/bin            $HOME/bin
 	ln -sf $PWD/ctags/ctags    $HOME/.ctags
@@ -52,7 +52,7 @@ function install() {
 	ln -sf $PWD/zsh/zshrc      $HOME/.zshrc
 }
 
-function remove() {
+remove() {
 	if prompt "WARNING: This will destroy any existing config files! Continue?"; then
 		rm -rf $HOME/bin
 		rm -rf $HOME/.ctags
@@ -72,9 +72,16 @@ function remove() {
 	fi
 }
 
-function update() {
-	vim +BundleClean +qall
-	vim +BundleInstall! +qall
+update() {
+	# checkout vim/vundle master
+	LWD=$PWD
+	cd $PWD/vim/bundle/vundle
+	git checkout --quiet master
+	cd $LWD
+	# update vim bundles
+	vim -silent +BundleClean +qall
+	vim -silent +BundleInstall! +qall
+	# build YouCompleteMe
 	if prompt "Build YouCompleteMe? (Only do if prompted by vim)"; then
 		YCM_BUILD_FLAGS=""
 		if prompt "  C/C++ completion?"; then
