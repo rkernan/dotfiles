@@ -212,6 +212,7 @@ let g:load_doxygen_syntax=0
 set tags=./tags;/
 let g:easytags_dynamic_files=1
 let g:easytags_by_filetype=0
+let g:easytags_auto_highlight=0
 let g:easytags_updatetime_warn=0
 let g:easytags_include_members=0
 
