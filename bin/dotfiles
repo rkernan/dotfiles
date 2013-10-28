@@ -79,10 +79,10 @@ update() {
 	git checkout --quiet master
 	cd $LWD
 	# update vim bundles
-	vim -silent +BundleClean +qall
-	vim -silent +BundleInstall! +qall
+	vim +BundleClean +qall
+	vim +BundleInstall! +qall
 	# build YouCompleteMe
-	if prompt "Build YouCompleteMe? (Only do if prompted by vim)"; then
+	if prompt "Build YouCompleteMe?"; then
 		YCM_BUILD_FLAGS=""
 		if prompt "  C/C++ completion?"; then
 			YCM_BUILD_FLAGS="$YCM_BUILD_FLAGS --clang-completer"
