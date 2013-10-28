@@ -9,3 +9,9 @@
 	external = git_vimdiff
 [pager]
 	diff =
+[alias]
+	co = checkout
+	ci = commit
+	st = status -s
+	br = branch
+	hist = log --pretty=format:\"%h %ad | %s%d [%an]\" --graph --date=short
