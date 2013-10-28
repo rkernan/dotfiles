@@ -1,0 +1,11 @@
+[user]
+	name = Robert Kernan
+	email = rkernan@gmail.com
+[push]
+	default = simple
+[color]
+	ui = auto
+[diff]
+	external = git_vimdiff
+[pager]
+	diff =

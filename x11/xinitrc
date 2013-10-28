@@ -1,0 +1,12 @@
+#!/bin/sh
+
+xrdb -merge ~/.Xresources
+
+case $1 in
+i3|*)
+	exec i3
+	;;
+openbox)
+	exec openbox-session
+	;;
+esac

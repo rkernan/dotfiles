@@ -1,0 +1,109 @@
+#!/bin/bash
+
+# go to dotfiles dir
+cd $(readlink -f $(dirname $0))/..
+
+function prompt() {
+	read -p "$1 (y/n) " -n 1 -r
+	echo
+	case $REPLY in
+		y|Y)
+			retval=0
+			;;
+		*)
+			retval=1
+			;;
+	esac
+	return "$retval"
+}
+
+function mkdir_if_none() {
+	if [ ! -d $1 ]; then
+		mkdir $1
+	fi
+}
+
+function required() {
+	git submodule update --init --recursive > /dev/null
+	# local config directory
+	mkdir_if_none $HOME/.config
+	# fonts
+	mkdir_if_none $HOME/.fonts
+	find $PWD/fonts/ -type f \( ! -iname "*.rst" ! -iname "*.markdown" ! -iname "*.txt" \) -exec ln -sf {} $HOME/.fonts/ \;
+	fc-cache -vf $HOME/.fonts > /dev/null
+}
+
+function install() {
+	required
+	ln -sf $PWD/bin            $HOME/bin
+	ln -sf $PWD/ctags/ctags    $HOME/.ctags
+	ln -sf $PWD/git/gitconfig  $HOME/.gitconfig
+	ln -sf $PWD/i3             $HOME/.i3
+	ln -sf $PWD/powerline      $HOME/.config/powerline
+	ln -sf $PWD/sh/aliases     $HOME/.aliases
+	ln -sf $PWD/sh/profile     $HOME/.profile
+	ln -sf $PWD/tmux/tmux.conf $HOME/.tmux.conf
+	ln -sf $PWD/vim            $HOME/.vim
+	ln -sf $PWD/vim/vimrc      $HOME/.vimrc
+	ln -sf $PWD/x11/xinitrc    $HOME/.xinitrc
+	ln -sf $PWD/x11/Xresources $HOME/.Xresources
+	ln -sf $PWD/zsh            $HOME/.zsh
+	ln -sf $PWD/zsh/zshenv     $HOME/.zshenv
+	ln -sf $PWD/zsh/zshrc      $HOME/.zshrc
+}
+
+function remove() {
+	if prompt "WARNING: This will destroy any existing config files! Continue?"; then
+		rm -rf $HOME/bin
+		rm -rf $HOME/.ctags
+		rm -rf $HOME/.gitconfig
+		rm -rf $HOME/.i3
+		rm -rf $HOME/.config/powerline
+		rm -rf $HOME/.aliases
+		rm -rf $HOME/.profile
+		rm -rf $HOME/.tmux.conf
+		rm -rf $HOME/.vim
+		rm -rf $HOME/.vimrc
+		rm -rf $HOME/.xinitrc
+		rm -rf $HOME/.Xresources
+		rm -rf $HOME/.zsh
+		rm -rf $HOME/.zshenv
+		rm -rf $HOME/.zshrc
+	fi
+}
+
+function update() {
+	vim +BundleClean +qall
+	vim +BundleInstall! +qall
+	if prompt "Build YouCompleteMe? (Only do if prompted by vim)"; then
+		YCM_BUILD_FLAGS=""
+		if prompt "  C/C++ completion?"; then
+			YCM_BUILD_FLAGS="$YCM_BUILD_FLAGS --clang-completer"
+		fi
+		if prompt "  C# completion?   "; then
+			YCM_BUILD_FLAGS="$YCM_BUILD_FLAGS --omnisharp-completer"
+		fi
+		LWD=$PWD
+		cd $PWD/vim/bundle/YouCompleteMe
+		$PWD/install.sh $YCM_BUILD_FLAGS
+		cd $LWD
+	fi
+}
+
+case $1 in
+install)
+	remove
+	install
+	;;
+remove)
+	remove
+	;;
+update)
+	update
+	;;
+*)
+	echo "Options:"
+	echo "  install - symlink dotfiles"
+	echo "  remove  - remove all dotfiles"
+	;;
+esac
