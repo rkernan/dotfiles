@@ -217,6 +217,14 @@ let g:easytags_auto_highlight=0
 let g:easytags_updatetime_warn=0
 let g:easytags_include_members=0
 
+" Fugitive
+if has('autocmd')
+	augroup AutoCloseFugitiveBuffers
+		autocmd!
+		autocmd BufReadPost fugitive://* setlocal bufhidden=delete
+	augroup END
+endif
+
 " Gundo
 let g:gundo_width=30
 let g:gundo_preview_height=10
