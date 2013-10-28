@@ -74,10 +74,9 @@ remove() {
 
 update() {
 	# checkout vim/vundle master
-	LWD=$PWD
 	cd $PWD/vim/bundle/vundle
 	git checkout --quiet master
-	cd $LWD
+	cd - > /dev/null
 	# update vim bundles
 	vim +BundleClean +qall
 	vim +BundleInstall! +qall
@@ -90,10 +89,9 @@ update() {
 		if prompt "  C# completion?   "; then
 			YCM_BUILD_FLAGS="$YCM_BUILD_FLAGS --omnisharp-completer"
 		fi
-		LWD=$PWD
 		cd $PWD/vim/bundle/YouCompleteMe
 		$PWD/install.sh $YCM_BUILD_FLAGS
-		cd $LWD
+		cd - > /dev/null
 	fi
 }
 
@@ -112,5 +110,6 @@ update)
 	echo "Options:"
 	echo "  install - symlink dotfiles"
 	echo "  remove  - remove all dotfiles"
+	echo "  update  - update vim plugins"
 	;;
 esac
