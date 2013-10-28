@@ -18,6 +18,7 @@ Bundle 'othree/html5.vim'
 Bundle 'pangloss/vim-javascript'
 Bundle 'skammer/vim-css-color'
 Bundle 'tikhomirov/vim-glsl'
+Bundle 'tpope/vim-git'
 Bundle 'tpope/vim-rails'
 Bundle 'vim-ruby/vim-ruby'
 
