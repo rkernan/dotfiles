@@ -13,3 +13,5 @@
 	stat = status -s
 [core]
 	excludesfile = ~/.gitignore
+
+# vim:set filetype=gitconfig:

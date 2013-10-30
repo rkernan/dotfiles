@@ -85,6 +85,8 @@ if has('unnamedplus')
 else
 	set clipboard+=unnamed
 endif
+set modeline
+set modelines=5
 set backspace=indent,eol,start
 set autoread " automatically read file changes
 set hidden " automatically manage hidden buffers
