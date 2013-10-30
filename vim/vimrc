@@ -339,7 +339,7 @@ function! SetTab()
 		setlocal expandtab
 	end
 	echo
-	echo '\n'
+	echo "\r"
 	call SummarizeTabs()
 endfunction
 
