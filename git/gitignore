@@ -1,0 +1,11 @@
+# Macs OSX
+.DS_Store
+
+# Vim swap files
+.*.sw?
+
+# YouCompleteMe config
+.ycm_extra_conf.py
+
+# tag file
+tags
