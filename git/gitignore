@@ -1,11 +1,31 @@
-# Macs OSX
-.DS_Store
+#--------------------
+# Linux and OSX
+#--------------------
+
+# ctag files
+tags
+.tags
 
 # Vim swap files
 .*.sw?
 
 # YouCompleteMe config
 .ycm_extra_conf.py
+.ycm_extra_conf.pyc
 
-# tag file
-tags
+# Random
+.DS_Store
+
+#--------------------
+# Windows (Visual Studio)
+#--------------------
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+
+# Recycle Bin used on file shares
+$RECYCLE.BIN/

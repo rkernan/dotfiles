@@ -38,6 +38,7 @@ install() {
 	ln -sf $PWD/bin            $HOME/bin
 	ln -sf $PWD/ctags/ctags    $HOME/.ctags
 	ln -sf $PWD/git/gitconfig  $HOME/.gitconfig
+	ln -sf $PWD/git/gitignore  $HOME/.gitignore
 	ln -sf $PWD/i3             $HOME/.i3
 	ln -sf $PWD/powerline      $HOME/.config/powerline
 	ln -sf $PWD/sh/aliases     $HOME/.aliases
@@ -57,6 +58,7 @@ remove() {
 		rm -rf $HOME/bin
 		rm -rf $HOME/.ctags
 		rm -rf $HOME/.gitconfig
+		rm -rf $HOME/.gitignore
 		rm -rf $HOME/.i3
 		rm -rf $HOME/.config/powerline
 		rm -rf $HOME/.aliases
