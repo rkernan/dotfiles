@@ -12,11 +12,9 @@
 	stat = status -s
 [core]
 	excludesfile = ~/.gitignore
-
-# vim:set filetype=gitconfig:
 [branch]
 	autosetuprebase = always
 [pull]
 	rebase = true
 [push]
-	defalt = upstream
+	default = upstream
