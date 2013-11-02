@@ -1,8 +1,7 @@
+# vim:set filetype=gitconfig:
 [user]
 	name = Robert Kernan
 	email = rkernan@gmail.com
-[push]
-	default = simple
 [color]
 	ui = auto
 [diff]
@@ -15,3 +14,9 @@
 	excludesfile = ~/.gitignore
 
 # vim:set filetype=gitconfig:
+[branch]
+	autosetuprebase = always
+[pull]
+	rebase = true
+[push]
+	defalt = upstream
