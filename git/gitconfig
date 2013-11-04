@@ -4,10 +4,6 @@
 	email = rkernan@gmail.com
 [color]
 	ui = auto
-[diff]
-	external = git_vimdiff
-[pager]
-	diff =
 [alias]
 	stat = status -s
 [core]
@@ -18,3 +14,8 @@
 	rebase = true
 [push]
 	default = upstream
+[mergetool "fugitive"]
+	; cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+	cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
+[merge]
+	tool = fugitive
