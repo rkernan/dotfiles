@@ -29,6 +29,7 @@ Bundle 'kana/vim-textobj-entire'
 Bundle 'kana/vim-textobj-user'
 Bundle 'kien/ctrlp.vim'
 Bundle 'mattn/emmet-vim'
+Bundle 'mhinz/vim-signify'
 Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/syntastic'
 Bundle 'sjl/gundo.vim'
@@ -170,19 +171,52 @@ if has('autocmd')
 	augroup END
 endif
 
+" -----------
+" Colorscheme
+" -----------
 syntax on
 let g:rehash256=1
+set background=dark
 silent! colorscheme molokai
+
+highlight DiffAdd                   guibg=PaleGreen guifg=bg     gui=none
+highlight DiffDelete                guibg=Tomato    guifg=bg     gui=none
+highlight DiffChange                guibg=Khaki     guifg=bg     gui=none
+highlight DiffText                  guibg=SkyBlue3  guifg=bg     gui=none
+highlight SignifySignAdd            guibg=#232526   guifg=Green  gui=none
+highlight SignifySignDelete         guibg=#232526   guifg=Red    gui=none
+highlight SignifySignChange         guibg=#232526   guifg=Yellow gui=none
+highlight SyntasticErrorSign        guibg=#232526   guifg=Red    gui=none
+highlight SyntasticWarningSign      guibg=#232526   guifg=Yellow gui=none
+highlight SyntasticStyleErrorSign   guibg=#232526   guifg=Red    gui=none
+highlight SyntasticStyleWarningSign guibg=#232526   guifg=Yellow gui=none
+" 256-color terminal
+if &t_Co > 255
+	highlight DiffAdd                   ctermbg=120 ctermfg=bg  cterm=none
+	highlight DiffDelete                ctermbg=202 ctermfg=bg  cterm=none
+	highlight DiffChange                ctermbg=192 ctermfg=bg  cterm=none
+	highlight DiffText                  ctermbg=74  ctermfg=bg  cterm=none
+	highlight SignifySignAdd            ctermbg=235 ctermfg=28  cterm=none
+	highlight SignifySignDelete         ctermbg=235 ctermfg=196 cterm=none
+	highlight SignifySignChange         ctermbg=235 ctermfg=226 cterm=none
+	highlight SyntasticErrorSign        ctermbg=235 ctermfg=196 cterm=none
+	highlight SyntasticWarningSign      ctermbg=235 ctermfg=226 cterm=none
+	highlight SyntasticStyleErrorSign   ctermbg=235 ctermfg=196 cterm=none
+	highlight SyntasticStyleWarningSign ctermbg=235 ctermfg=226 cterm=none
+endif
 
 " -------
 " Plugins
 " -------
 " Airline
+let g:airline#extensions#syntastic_enabled=1
+let g:airline#extensions#hunks#enabled=1
+let g:airline#extensions#hunks#non_zero_only=1
 let g:airline_left_sep=''
-let g:airline_left_alt_sep='»'
+let g:airline_left_alt_sep='›'
 let g:airline_right_sep=''
-let g:airline_right_alt_sep='«'
-let g:airline_theme='powerlineish_mod'
+let g:airline_right_alt_sep='‹'
+let g:airline_theme='powerlineish'
 if !exists('g:airline_symbols')
 	let g:airline_symbols={}
 endif
@@ -190,14 +224,17 @@ let g:airline_symbols.branch=''
 let g:airline_symbols.linenr='¶'
 let g:airline_symbols.paste='PASTE'
 let g:airline_symbols.readonly='RO'
-let g:airline_section_y="%{strlen(&ft)?&ft:'none'}"
+call airline#parts#define_raw('modified', '%{&modified ? " +" : ""}')
+call airline#parts#define_accent('modified', 'red')
+let g:airline_section_c = airline#section#create(['%f', 'modified'])
 
 " CSS Color
 let g:cssColorVimDoNotMessMyUpdatetime=1
 
 " ctrlp
-let g:ctrlp_map='<leader>t'
+map <leader>f :CtrlP<cr>
 map <leader>b :CtrlPBuffer<cr>
+map <leader>m :CtrlPMRU<cr>
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip    " MacOSX/Linux
 set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe " Windows
 
@@ -256,6 +293,13 @@ let g:lt_height=10
 let g:session_autosave=0
 let g:session_autoload=0
 
+" Signify
+let g:signify_sign_overwrite=0
+let g:signify_sign_add='+'
+let g:signify_sign_change='~'
+let g:signify_sign_delete='-'
+let g:signify_sign_delete_first_line='-'
+
 " Syntastic
 let g:syntastic_check_on_wq=0
 let g:syntastic_auto_loc_list=1
@@ -266,9 +310,9 @@ let g:syntastic_enable_signs=1
 let g:syntastic_enable_highlighting=0
 let g:syntastic_enable_baloons=1
 let g:syntastic_quiet_warnings=0
-let g:syntastic_error_symbol='✗'
-let g:syntastic_style_error_symbol='≈'
-let g:syntastic_warning_symbol='✗'
+let g:syntastic_error_symbol='✕'
+let g:syntastic_style_error_symbol='△'
+let g:syntastic_warning_symbol='✠'
 let g:syntastic_style_warning_symbol='≈'
 " C
 let g:syntastic_c_compiler='clang'
@@ -296,10 +340,10 @@ let g:UltiSnipsJumpForwardTrigger='<c-j>'
 let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 
 " Unimpaired
-nmap bk [e
-nmap bj ]e
-vmap bk [egv
-vmap bj ]egv
+nmap mk [e
+nmap mj ]e
+vmap mk [egv
+vmap mj ]egv
 
 " YouCompleteMe
 let g:ycm_global_ycm_extra_conf=expand('~/.vim/ycm/ycm_extra_conf.py')
