@@ -1,4 +1,4 @@
-# vim:set filetype=gitconfig:
+; vim:set filetype=gitconfig:
 [user]
 	name = Robert Kernan
 	email = rkernan@gmail.com
@@ -14,8 +14,13 @@
 	rebase = true
 [push]
 	default = upstream
-[mergetool "fugitive"]
-	; cmd = vim -f -c \"Gdiff\" \"$MERGED\"
-	cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
+[diff]
+	tool = vimdiff
+	; tool = gvimdiff
+[difftool]
+	prompt = false
 [merge]
 	tool = fugitive
+[mergetool "fugitive"]
+	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+	; cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
