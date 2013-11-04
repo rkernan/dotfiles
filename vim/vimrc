@@ -27,12 +27,13 @@ Bundle 'derekwyatt/vim-fswitch'
 Bundle 'godlygeek/tabular'
 Bundle 'kana/vim-textobj-entire'
 Bundle 'kana/vim-textobj-user'
-Bundle 'kien/ctrlp.vim'
 Bundle 'mattn/emmet-vim'
 Bundle 'mhinz/vim-signify'
 Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/syntastic'
 Bundle 'sjl/gundo.vim'
+Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/unite-session'
 Bundle 'SirVer/ultisnips'
 Bundle 'tpope/vim-bundler'
 Bundle 'tpope/vim-commentary'
@@ -46,7 +47,6 @@ Bundle 'Valloric/ListToggle'
 Bundle 'Valloric/YouCompleteMe'
 Bundle 'xolox/vim-easytags'
 Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-session'
 
 function! MkdirIfNone(dir)
 	if !isdirectory(a:dir)
@@ -231,13 +231,6 @@ let g:airline_section_c = airline#section#create(['%f', 'modified'])
 " CSS Color
 let g:cssColorVimDoNotMessMyUpdatetime=1
 
-" ctrlp
-map <leader>f :CtrlP<cr>
-map <leader>b :CtrlPBuffer<cr>
-map <leader>m :CtrlPMRU<cr>
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip    " MacOSX/Linux
-set wildignore+=*\\tmp\\*,*.swp,*.zip,*.exe " Windows
-
 " DelimitMate
 let g:delimitMate_autoclose=1
 let g:delimitMate_matchpairs="(:),[:],{:}"
@@ -289,16 +282,12 @@ nmap <f4> :GundoToggle<cr>
 " ListToggle
 let g:lt_height=10
 
-" Session
-let g:session_autosave=0
-let g:session_autoload=0
-
 " Signify
 let g:signify_sign_overwrite=0
 let g:signify_sign_add='+'
 let g:signify_sign_change='~'
 let g:signify_sign_delete='-'
-let g:signify_sign_delete_first_line='-'
+let g:signify_sign_delete_first_line='^'
 
 " Syntastic
 let g:syntastic_check_on_wq=0
@@ -344,6 +333,44 @@ nmap mk [e
 nmap mj ]e
 vmap mk [egv
 vmap mj ]egv
+
+" Unite
+let g:unite_source_history_yank_enable=1
+let g:unite_data_directory=expand('~/.vim/cache')
+let g:unite_source_rec_max_cache_files=2000
+let g:unite_enable_start_insert=1
+let g:unite_split_rule='botright'
+let g:unite_force_overwrite_statusline=0
+let g:unite_winheight=10
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+
+nmap <leader>f :Unite file_rec<cr>
+nmap <leader>b :Unite buffer<cr>
+nmap <leader>y :Unite history/yank<cr>
+
+function! UniteBufferSettings()
+	imap <buffer> <tab>   <Plug>(unite_select_next_line)
+	imap <buffer> <s-tab> <Plug>(unite_select_previous_line)
+	nmap <buffer> <esc> <Plug>(unite_exit)
+	imap <buffer><expr> <c-s> unite#do_action('split')
+	imap <buffer><expr> <c-v> unite#do_action('vsplit')
+	imap <buffer><expr> <c-t> unite#do_action('tabopen')
+endfunction
+
+if has('autocmd')
+	augroup ApplyUniteBufferSettings
+		autocmd!
+		autocmd FileType unite call UniteBufferSettings()
+	augroup END
+endif
+
+" Unite Session
+let g:unite_source_session_default_session_name='default'
+let g:unite_source_session_path=expand('~/.vim/sessions')
+nmap <leader>s :Unite session<cr>
+command! -nargs=* LoadSession UniteSessionLoad
+command! -nargs=* SaveSession UniteSessionSave
 
 " YouCompleteMe
 let g:ycm_global_ycm_extra_conf=expand('~/.vim/ycm/ycm_extra_conf.py')
@@ -415,7 +442,7 @@ function! SummarizeTabs()
 	endtry
 endfunction
 
-command! -nargs=* Stab call SetTab()
+command! -nargs=0 Stab call SetTab()
 
 if has('gui_running')
 	" Toggle menu
