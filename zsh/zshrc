@@ -1,6 +1,9 @@
 autoload -U colors
 colors
 
+# disable XON/XOFF flow control
+stty -ixon
+
 # Plugins
 source $HOME/.zsh/plugin/syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main root brackets)
