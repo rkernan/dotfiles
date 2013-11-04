@@ -182,15 +182,14 @@ let g:airline_left_sep=''
 let g:airline_left_alt_sep='»'
 let g:airline_right_sep=''
 let g:airline_right_alt_sep='«'
-let g:airline_theme='badwolf'
+let g:airline_theme='powerlineish_mod'
 if !exists('g:airline_symbols')
 	let g:airline_symbols={}
 endif
 let g:airline_symbols.branch=''
 let g:airline_symbols.linenr='¶'
-let g:airline_symbols.paste='ρ'
+let g:airline_symbols.paste='PASTE'
 let g:airline_symbols.readonly='RO'
-let g:airline_section_x=''
 let g:airline_section_y="%{strlen(&ft)?&ft:'none'}"
 
 " CSS Color
