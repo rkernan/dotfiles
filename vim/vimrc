@@ -325,8 +325,8 @@ map ta :Tabularize
 let g:UltiSnipsEditSplit='vertical'
 let g:UltiSnipsSnippetDirectories=['snippets']
 let g:UltiSnipsExpandTrigger='<c-h>'
-let g:UltiSnipsJumpForwardTrigger='<c-j>'
-let g:UltiSnipsJumpBackwardTrigger='<c-k>'
+let g:UltiSnipsJumpForwardTrigger='<c-n>'
+let g:UltiSnipsJumpBackwardTrigger='<c-p>'
 
 " Unimpaired
 nmap mk [e
@@ -335,6 +335,7 @@ vmap mk [egv
 vmap mj ]egv
 
 " Unite
+let g:unite_prompt='» '
 let g:unite_source_history_yank_enable=1
 let g:unite_data_directory=expand('~/.vim/cache')
 let g:unite_source_rec_max_cache_files=2000
