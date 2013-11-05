@@ -38,7 +38,7 @@ zstyle ':completion::complete:*' cache-path $ZSH/cache/
 
 # Version Control
 autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git svn hg
+zstyle ':vcs_info:*' enable bzr cdv cvs darcs fossil git tla hg mtn p4 svn svk
 zstyle ':vcs_info:*' get-revision false
 zstyle ':vcs_info:*' use-simple true
 zstyle ':vcs_info:*' check-for-changes true
