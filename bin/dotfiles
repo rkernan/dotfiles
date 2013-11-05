@@ -23,56 +23,15 @@ mkdir_if_none() {
 	fi
 }
 
-required() {
+pre_install() {
 	git submodule --quiet update --init --recursive
-	# local config directory
-	mkdir_if_none $HOME/.config
 	# fonts
 	mkdir_if_none $HOME/.fonts
 	ln -sf $PWD/fonts/Meslo/MesloLGM-Regular.ttf $HOME/.fonts/MesloLGM-Regular.ttf
 	fc-cache -vf $HOME/.fonts > /dev/null
 }
 
-install() {
-	required
-	ln -sf $PWD/bin            $HOME/bin
-	ln -sf $PWD/ctags/ctags    $HOME/.ctags
-	ln -sf $PWD/git/gitconfig  $HOME/.gitconfig
-	ln -sf $PWD/git/gitignore  $HOME/.gitignore
-	ln -sf $PWD/i3             $HOME/.i3
-	ln -sf $PWD/sh/aliases     $HOME/.aliases
-	ln -sf $PWD/sh/profile     $HOME/.profile
-	ln -sf $PWD/tmux/tmux.conf $HOME/.tmux.conf
-	ln -sf $PWD/vim            $HOME/.vim
-	ln -sf $PWD/vim/vimrc      $HOME/.vimrc
-	ln -sf $PWD/x11/xinitrc    $HOME/.xinitrc
-	ln -sf $PWD/x11/Xresources $HOME/.Xresources
-	ln -sf $PWD/zsh            $HOME/.zsh
-	ln -sf $PWD/zsh/zshenv     $HOME/.zshenv
-	ln -sf $PWD/zsh/zshrc      $HOME/.zshrc
-}
-
-remove() {
-	if prompt "WARNING: This will destroy any existing config files! Continue?"; then
-		rm -rf $HOME/bin
-		rm -rf $HOME/.ctags
-		rm -rf $HOME/.gitconfig
-		rm -rf $HOME/.gitignore
-		rm -rf $HOME/.i3
-		rm -rf $HOME/.aliases
-		rm -rf $HOME/.profile
-		rm -rf $HOME/.tmux.conf
-		rm -rf $HOME/.vim
-		rm -rf $HOME/.vimrc
-		rm -rf $HOME/.xinitrc
-		rm -rf $HOME/.Xresources
-		rm -rf $HOME/.zsh
-		rm -rf $HOME/.zshenv
-		rm -rf $HOME/.zshrc
-	fi
-}
-
-update() {
+post_install() {
 	# checkout vim/vundle master
 	cd $PWD/vim/bundle/vundle
 	git checkout --quiet master
@@ -95,6 +54,46 @@ update() {
 	fi
 }
 
+install() {
+	pre_install
+	ln -sf $PWD/bin            $HOME/bin
+	ln -sf $PWD/ctags/ctags    $HOME/.ctags
+	ln -sf $PWD/git/gitconfig  $HOME/.gitconfig
+	ln -sf $PWD/git/gitignore  $HOME/.gitignore
+	ln -sf $PWD/i3             $HOME/.i3
+	ln -sf $PWD/sh/aliases     $HOME/.aliases
+	ln -sf $PWD/sh/profile     $HOME/.profile
+	ln -sf $PWD/tmux/tmux.conf $HOME/.tmux.conf
+	ln -sf $PWD/vim            $HOME/.vim
+	ln -sf $PWD/vim/vimrc      $HOME/.vimrc
+	ln -sf $PWD/x11/xinitrc    $HOME/.xinitrc
+	ln -sf $PWD/x11/Xresources $HOME/.Xresources
+	ln -sf $PWD/zsh            $HOME/.zsh
+	ln -sf $PWD/zsh/zshenv     $HOME/.zshenv
+	ln -sf $PWD/zsh/zshrc      $HOME/.zshrc
+	post_install
+}
+
+remove() {
+	if prompt "WARNING: This will destroy any existing config files! Continue?"; then
+		rm -rf $HOME/bin
+		rm -rf $HOME/.ctags
+		rm -rf $HOME/.gitconfig
+		rm -rf $HOME/.gitignore
+		rm -rf $HOME/.i3
+		rm -rf $HOME/.aliases
+		rm -rf $HOME/.profile
+		rm -rf $HOME/.tmux.conf
+		rm -rf $HOME/.vim
+		rm -rf $HOME/.vimrc
+		rm -rf $HOME/.xinitrc
+		rm -rf $HOME/.Xresources
+		rm -rf $HOME/.zsh
+		rm -rf $HOME/.zshenv
+		rm -rf $HOME/.zshrc
+	fi
+}
+
 case $1 in
 install)
 	remove
@@ -103,13 +102,9 @@ install)
 remove)
 	remove
 	;;
-update)
-	update
-	;;
 *)
 	echo "Options:"
 	echo "  install - symlink dotfiles"
 	echo "  remove  - remove all dotfiles"
-	echo "  update  - update vim plugins"
 	;;
 esac
