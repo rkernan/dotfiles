@@ -23,7 +23,12 @@ Bundle 'tpope/vim-git'
 Bundle 'tpope/vim-rails'
 Bundle 'vim-ruby/vim-ruby'
 
-" functionality
+" unite
+Bundle 'Shougo/unite.vim'
+Bundle 'Shougo/unite-session'
+Bundle 'Shougo/unite-outline'
+
+" other
 Bundle 'derekwyatt/vim-fswitch'
 Bundle 'godlygeek/tabular'
 Bundle 'kana/vim-textobj-entire'
@@ -33,14 +38,10 @@ Bundle 'mhinz/vim-signify'
 Bundle 'Raimondi/delimitMate'
 Bundle 'scrooloose/syntastic'
 Bundle 'sjl/gundo.vim'
-Bundle 'Shougo/unite.vim'
-Bundle 'Shougo/unite-session'
 Bundle 'SirVer/ultisnips'
-Bundle 'tpope/vim-bundler'
 Bundle 'tpope/vim-commentary'
 Bundle 'tpope/vim-endwise'
 Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-rake'
 Bundle 'tpope/vim-repeat'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-unimpaired'
@@ -326,22 +327,31 @@ vmap mj ]egv
 let g:unite_prompt='» '
 let g:unite_source_history_yank_enable=1
 let g:unite_data_directory=expand('~/.vim/cache')
-let g:unite_source_rec_max_cache_files=2000
-let g:unite_enable_start_insert=1
+let g:unite_source_session_default_session_name='default'
+let g:unite_source_session_path=expand('~/.vim/sessions')
+let g:unite_source_rec_max_cache_files=5000
 let g:unite_split_rule='botright'
 let g:unite_force_overwrite_statusline=0
 let g:unite_winheight=10
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 
-nmap <leader>f :Unite file_rec<cr>
-nmap <leader>b :Unite buffer<cr>
-nmap <leader>y :Unite history/yank<cr>
+nmap <leader>f :Unite -buffer-name=files    -start-insert file_rec<cr>
+nmap <leader>b :Unite -buffer-name=buffers  -start-insert buffer<cr>
+nmap <leader>s :Unite -buffer-name=sessions -start-insert session<cr>
+nmap <leader>o :Unite -buffer-name=outline -no-split -start-insert outline<cr>
+nmap <leader>y :Unite -buffer-name=yank history/yank<cr>
+
+command -nargs=? LoadSession UniteSessionLoad <args>
+command -nargs=? SaveSession UniteSessionSave <args>
 
 function! UniteBufferSettings()
+	nmap <buffer> <c-c> <Plug>(unite_exit)
+	imap <buffer> <c-c> <Plug>(unite_exit)
+
 	imap <buffer> <tab>   <Plug>(unite_select_next_line)
 	imap <buffer> <s-tab> <Plug>(unite_select_previous_line)
-	nmap <buffer> <esc> <Plug>(unite_exit)
+
 	imap <buffer><expr> <c-s> unite#do_action('split')
 	imap <buffer><expr> <c-v> unite#do_action('vsplit')
 	imap <buffer><expr> <c-t> unite#do_action('tabopen')
@@ -353,13 +363,6 @@ if has('autocmd')
 		autocmd FileType unite call UniteBufferSettings()
 	augroup END
 endif
-
-" Unite Session
-let g:unite_source_session_default_session_name='default'
-let g:unite_source_session_path=expand('~/.vim/sessions')
-nmap <leader>s :Unite session<cr>
-command! -nargs=* LoadSession UniteSessionLoad
-command! -nargs=* SaveSession UniteSessionSave
 
 " YouCompleteMe
 let g:ycm_global_ycm_extra_conf=expand('~/.vim/ycm/ycm_extra_conf.py')
