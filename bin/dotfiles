@@ -31,10 +31,6 @@ pre_install() {
 	fc-cache -vf $HOME/.fonts > /dev/null
 }
 
-post_install() {
-	update
-}
-
 install() {
 	pre_install
 	ln -sf $PWD/bin            $HOME/bin
@@ -52,7 +48,6 @@ install() {
 	ln -sf $PWD/zsh            $HOME/.zsh
 	ln -sf $PWD/zsh/zshenv     $HOME/.zshenv
 	ln -sf $PWD/zsh/zshrc      $HOME/.zshrc
-	post_install
 }
 
 remove() {
@@ -86,7 +81,6 @@ update() {
 case $1 in
 install)
 	if remove; then
-		echo "installing"
 		install
 	fi
 	;;

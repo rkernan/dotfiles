@@ -3,6 +3,7 @@
 " -----
 if has('vim_starting')
 	set nocompatible
+	filetype off
 	set runtimepath+=$HOME/.vim/bundle/neobundle
 endif
 
@@ -27,15 +28,15 @@ NeoBundle 'bling/vim-airline', {'augroup': 'airline'}
 
 " languages
 NeoBundle 'Blackrush/vim-gocode'
-NeoBundle 'elzr/vim-json'
-NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'hynek/vim-python-pep8-indent'
-NeoBundle 'othree/html5.vim'
-NeoBundle 'pangloss/vim-javascript'
+NeoBundleLazy 'elzr/vim-json', {'filetypes': 'json'}
+NeoBundleLazy 'hail2u/vim-css3-syntax', {'filetypes': 'css'}
+NeoBundleLazy 'hynek/vim-python-pep8-indent', {'filetypes': 'python'}
+NeoBundleLazy 'othree/html5.vim', {'filetypes': 'html'}
+NeoBundleLazy 'pangloss/vim-javascript', {'filetypes': 'javascript'}
 NeoBundle 'tikhomirov/vim-glsl'
 NeoBundle 'tpope/vim-git'
-NeoBundle 'tpope/vim-rails', {'augroup': ['railsPluginDetect', 'railsPluginAbolish']}
-NeoBundle 'vim-ruby/vim-ruby'
+NeoBundle 'tpope/vim-rails', {'augroup': 'railsPluginDetect'}
+NeoBundleLazy 'vim-ruby/vim-ruby', {'filetypes': 'ruby'}
 
 " unite
 NeoBundle 'Shougo/unite.vim'
@@ -193,171 +194,234 @@ endif
 " Colorscheme
 " -----------
 syntax on
-let g:rehash256=1
-set background=dark
-colorscheme molokai
 
-highlight DiffAdd                   guibg=PaleGreen guifg=bg     gui=none
-highlight DiffDelete                guibg=Tomato    guifg=bg     gui=none
-highlight DiffChange                guibg=Khaki     guifg=bg     gui=none
-highlight DiffText                  guibg=SkyBlue3  guifg=bg     gui=none
-highlight SignifySignAdd            guibg=#232526   guifg=Green  gui=none
-highlight SignifySignDelete         guibg=#232526   guifg=Red    gui=none
-highlight SignifySignChange         guibg=#232526   guifg=Yellow gui=none
-highlight SyntasticErrorSign        guibg=#232526   guifg=Red    gui=none
-highlight SyntasticWarningSign      guibg=#232526   guifg=Yellow gui=none
-highlight SyntasticStyleErrorSign   guibg=#232526   guifg=Red    gui=none
-highlight SyntasticStyleWarningSign guibg=#232526   guifg=Yellow gui=none
-" 256-color terminal
-if &t_Co > 255
-	highlight DiffAdd                   ctermbg=120 ctermfg=bg  cterm=none
-	highlight DiffDelete                ctermbg=202 ctermfg=bg  cterm=none
-	highlight DiffChange                ctermbg=192 ctermfg=bg  cterm=none
-	highlight DiffText                  ctermbg=74  ctermfg=bg  cterm=none
-	highlight SignifySignAdd            ctermbg=235 ctermfg=28  cterm=none
-	highlight SignifySignDelete         ctermbg=235 ctermfg=196 cterm=none
-	highlight SignifySignChange         ctermbg=235 ctermfg=226 cterm=none
-	highlight SyntasticErrorSign        ctermbg=235 ctermfg=196 cterm=none
-	highlight SyntasticWarningSign      ctermbg=235 ctermfg=226 cterm=none
-	highlight SyntasticStyleErrorSign   ctermbg=235 ctermfg=196 cterm=none
-	highlight SyntasticStyleWarningSign ctermbg=235 ctermfg=226 cterm=none
-endif
+let bundle=neobundle#get('molokai')
+function! bundle.hooks.on_source(bundle)
+	let g:rehash256=1
+	set background=dark
+	colorscheme molokai
+
+	highlight DiffAdd                   guibg=PaleGreen guifg=bg     gui=none
+	highlight DiffDelete                guibg=Tomato    guifg=bg     gui=none
+	highlight DiffChange                guibg=Khaki     guifg=bg     gui=none
+	highlight DiffText                  guibg=SkyBlue3  guifg=bg     gui=none
+	highlight SignifySignAdd            guibg=#232526   guifg=Green  gui=none
+	highlight SignifySignDelete         guibg=#232526   guifg=Red    gui=none
+	highlight SignifySignChange         guibg=#232526   guifg=Yellow gui=none
+	highlight SyntasticErrorSign        guibg=#232526   guifg=Red    gui=none
+	highlight SyntasticWarningSign      guibg=#232526   guifg=Yellow gui=none
+	highlight SyntasticStyleErrorSign   guibg=#232526   guifg=Red    gui=none
+	highlight SyntasticStyleWarningSign guibg=#232526   guifg=Yellow gui=none
+	" 256-color terminal
+	if &t_Co > 255
+		highlight DiffAdd                   ctermbg=120 ctermfg=bg  cterm=none
+		highlight DiffDelete                ctermbg=202 ctermfg=bg  cterm=none
+		highlight DiffChange                ctermbg=192 ctermfg=bg  cterm=none
+		highlight DiffText                  ctermbg=74  ctermfg=bg  cterm=none
+		highlight SignifySignAdd            ctermbg=235 ctermfg=28  cterm=none
+		highlight SignifySignDelete         ctermbg=235 ctermfg=196 cterm=none
+		highlight SignifySignChange         ctermbg=235 ctermfg=226 cterm=none
+		highlight SyntasticErrorSign        ctermbg=235 ctermfg=196 cterm=none
+		highlight SyntasticWarningSign      ctermbg=235 ctermfg=226 cterm=none
+		highlight SyntasticStyleErrorSign   ctermbg=235 ctermfg=196 cterm=none
+		highlight SyntasticStyleWarningSign ctermbg=235 ctermfg=226 cterm=none
+	endif
+endfunction
 
 " -------
 " Plugins
 " -------
 " Airline
-let g:airline#extensions#syntastic_enabled=1
-let g:airline#extensions#hunks#enabled=1
-let g:airline#extensions#hunks#non_zero_only=1
-let g:airline_left_sep=''
-let g:airline_left_alt_sep='›'
-let g:airline_right_sep=''
-let g:airline_right_alt_sep='‹'
-let g:airline_theme='powerlineish'
-if !exists('g:airline_symbols')
-	let g:airline_symbols={}
-endif
-let g:airline_symbols.branch=''
-let g:airline_symbols.linenr='¶'
-let g:airline_symbols.paste='PASTE'
-let g:airline_symbols.readonly='RO'
-call airline#parts#define_raw('modified', '%{&modified ? " +" : ""}')
-call airline#parts#define_accent('modified', 'red')
-let g:airline_section_c = airline#section#create(['%f', 'modified'])
+let bundle=neobundle#get('airline')
+function! bundle.hooks.on_source(bundle)
+	let g:airline#extensions#syntastic_enabled=1
+	let g:airline#extensions#hunks#enabled=1
+	let g:airline#extensions#hunks#non_zero_only=1
+	let g:airline_left_sep=''
+	let g:airline_left_alt_sep='›'
+	let g:airline_right_sep=''
+	let g:airline_right_alt_sep='‹'
+	let g:airline_theme='powerlineish'
+	if !exists('g:airline_symbols')
+		let g:airline_symbols={}
+	endif
+	let g:airline_symbols.branch=''
+	let g:airline_symbols.linenr='¶'
+	let g:airline_symbols.paste='PASTE'
+	let g:airline_symbols.readonly='RO'
+	call airline#parts#define_raw('modified', '%{&modified ? " +" : ""}')
+	call airline#parts#define_accent('modified', 'red')
+	let g:airline_section_c = airline#section#create(['%f', 'modified'])
+endfunction
 
 " CSS Color
-let g:cssColorVimDoNotMessMyUpdatetime=1
+let bundle=neobundle#get('css-color')
+function! bundle.hooks.on_source(bundle)
+	let g:cssColorVimDoNotMessMyUpdatetime=1
+endfunction
 
 " DelimitMate
-let g:delimitMate_autoclose=1
-let g:delimitMate_matchpairs="(:),[:],{:}"
-let g:delimitMate_smart_matchpairs=1
-let g:delimitMate_balance_matchpairs=1
-let g:delimitMate_quotes="\" '"
-let g:delimitMate_smart_quotes=1
-let g:delimitMate_expand_cr=1
-let g:delimitMate_expand_space=0
-let g:delimitMate_excluded_regions="Comment"
-if has('autocmd')
-	" Filetype specific match pairs settings
-	augroup FileTypeQuotes
-		autocmd!
-		autocmd FileType vim let b:delimitMate_quotes="'"
-	augroup END
-	augroup FileTypePairs
-		autocmd!
-	augroup END
-endif
-
-" DoxyGen
-let g:load_doxygen_syntax=0
+let bundle=neobundle#get('delimitMate')
+function! bundle.hooks.on_source(bundle)
+	let g:delimitMate_autoclose=1
+	let g:delimitMate_matchpairs="(:),[:],{:}"
+	let g:delimitMate_smart_matchpairs=1
+	let g:delimitMate_balance_matchpairs=1
+	let g:delimitMate_quotes="\" '"
+	let g:delimitMate_smart_quotes=1
+	let g:delimitMate_expand_cr=1
+	let g:delimitMate_expand_space=0
+	let g:delimitMate_excluded_regions="Comment"
+	if has('autocmd')
+		" Filetype specific match pairs settings
+		augroup FileTypeQuotes
+			autocmd!
+			autocmd FileType vim let b:delimitMate_quotes="'"
+		augroup END
+		augroup FileTypePairs
+			autocmd!
+		augroup END
+	endif
+endfunction
 
 " EasyTags
-set tags=./tags;/
-let g:easytags_dynamic_files=1
-call MkdirIfNone(expand('~/.vim/tags'))
-let g:easytags_by_filetype=expand('~/.vim/tags')
-let g:easytags_auto_highlight=0
-let g:easytags_updatetime_warn=0
-let g:easytags_include_members=0
+let bundle=neobundle#get('easytags')
+function! bundle.hooks.on_source(bundle)
+	set tags=./tags;/
+	let g:easytags_dynamic_files=1
+	call MkdirIfNone(expand('~/.vim/tags'))
+	let g:easytags_by_filetype=expand('~/.vim/tags')
+	let g:easytags_auto_highlight=0
+	let g:easytags_updatetime_warn=0
+	let g:easytags_include_members=0
+endfunction
+
+" Emmet
+let bundle=neobundle#get('emmet')
+function! bundle.hooks.on_source(bundle)
+	let g:use_emmet_complete_tag=1
+	let g:emmet_html5=1
+endfunction
 
 " Fugitive
-if has('autocmd')
-	augroup AutoCloseFugitiveBuffers
-		autocmd!
-		autocmd BufReadPost fugitive://* setlocal bufhidden=delete
-	augroup END
-endif
+let bundle=neobundle#get('fugitive')
+function! bundle.hooks.on_source(bundle)
+	if has('autocmd')
+		augroup AutoCloseFugitiveBuffers
+			autocmd!
+			autocmd BufReadPost fugitive://* setlocal bufhidden=delete
+		augroup END
+	endif
+endfunction
+
+" Gocode
+let bundle=neobundle#get('gocode')
+function! bundle.hooks.on_source(bundle)
+	if has('autocmd')
+		" FIXME Temporary fix for Fmt not working on the first file.
+		augroup AutoformatGo
+			autocmd!
+			autocmd FileType go autocmd BufWritePre <buffer> :keepjumps Fmt
+		augroup END
+	endif
+endfunction
 
 " Gundo
-let g:gundo_width=30
-let g:gundo_preview_height=10
-let g:gundo_preview_bottom=1
-let g:gundo_right=1
-let g:gundo_help=0
-nmap <f4> :GundoToggle<cr>
+let bundle=neobundle#get('gundo')
+function! bundle.hooks.on_source(bundle)
+	let g:gundo_width=30
+	let g:gundo_preview_height=10
+	let g:gundo_preview_bottom=1
+	let g:gundo_right=1
+	let g:gundo_help=0
+	nmap <f4> :GundoToggle<cr>
+endfunction
 
 " Signify
-let g:signify_sign_overwrite=0
-let g:signify_sign_add='+'
-let g:signify_sign_change='~'
-let g:signify_sign_delete='-'
-let g:signify_sign_delete_first_line='^'
+let bundle=neobundle#get('signify')
+function! bundle.hooks.on_source(bundle)
+	let g:signify_sign_overwrite=0
+	let g:signify_sign_add='+'
+	let g:signify_sign_change='~'
+	let g:signify_sign_delete='-'
+	let g:signify_sign_delete_first_line='^'
+endfunction
 
 " Syntastic
-let g:syntastic_check_on_wq=0
-let g:syntastic_auto_loc_list=1
-let g:syntastic_loc_list_height=5
-let g:syntastic_check_on_open=1
-let g:syntastic_echo_current_error=0
-let g:syntastic_enable_signs=1
-let g:syntastic_enable_highlighting=0
-let g:syntastic_enable_baloons=1
-let g:syntastic_quiet_warnings=0
-let g:syntastic_error_symbol='✕'
-let g:syntastic_style_error_symbol='△'
-let g:syntastic_warning_symbol='✠'
-let g:syntastic_style_warning_symbol='≈'
+let bundle=neobundle#get('syntastic')
+function! bundle.hooks.on_source(bundle)
+	let g:syntastic_check_on_wq=0
+	let g:syntastic_auto_loc_list=1
+	let g:syntastic_loc_list_height=5
+	let g:syntastic_check_on_open=1
+	let g:syntastic_echo_current_error=0
+	let g:syntastic_enable_signs=1
+	let g:syntastic_enable_highlighting=0
+	let g:syntastic_enable_baloons=1
+	let g:syntastic_quiet_warnings=0
+	let g:syntastic_error_symbol='✕'
+	let g:syntastic_style_error_symbol='△'
+	let g:syntastic_warning_symbol='✠'
+	let g:syntastic_style_warning_symbol='≈'
+endfunction
 
 " Tabularize
-map ta :Tabularize
+let bundle=neobundle#get('tabular')
+function! bundle.hooks.on_source(bundle)
+	map ta :Tabularize
+endfunction
 
 " UltiSnips
-let g:UltiSnipsEditSplit='vertical'
-let g:UltiSnipsSnippetDirectories=['snippets']
-let g:UltiSnipsExpandTrigger='<c-h>'
-let g:UltiSnipsJumpForwardTrigger='<c-n>'
-let g:UltiSnipsJumpBackwardTrigger='<c-p>'
+let bundle=neobundle#get('ultisnips')
+function! bundle.hooks.on_source(bundle)
+	let g:UltiSnipsEditSplit='vertical'
+	let g:UltiSnipsSnippetDirectories=['snippets']
+	let g:UltiSnipsExpandTrigger='<c-h>'
+	let g:UltiSnipsJumpForwardTrigger='<c-n>'
+	let g:UltiSnipsJumpBackwardTrigger='<c-p>'
+endfunction
 
 " Unimpaired
-nmap mk [e
-nmap mj ]e
-vmap mk [egv
-vmap mj ]egv
+let bundle=neobundle#get('unimpaired')
+function! bundle.hooks.on_source(bundle)
+	nmap mk [e
+	nmap mj ]e
+	vmap mk [egv
+	vmap mj ]egv
+endfunction
 
 " Unite
-let g:unite_prompt='» '
-let g:unite_source_history_yank_enable=1
-let g:unite_data_directory=expand('~/.vim/cache')
-let g:unite_source_session_default_session_name='default'
-let g:unite_source_session_path=expand('~/.vim/sessions')
-let g:unite_source_rec_max_cache_files=5000
-let g:unite_split_rule='botright'
-let g:unite_force_overwrite_statusline=0
-let g:unite_winheight=20
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
+let bundle=neobundle#get('unite')
+function! bundle.hooks.on_source(bundle)
+	let g:unite_prompt='» '
+	let g:unite_source_history_yank_enable=1
+	let g:unite_data_directory=expand('~/.vim/cache')
+	let g:unite_source_session_default_session_name='default'
+	let g:unite_source_session_path=expand('~/.vim/sessions')
+	let g:unite_source_rec_max_cache_files=5000
+	let g:unite_split_rule='botright'
+	let g:unite_force_overwrite_statusline=0
+	let g:unite_winheight=20
+	call unite#filters#matcher_default#use(['matcher_fuzzy'])
+	call unite#filters#sorter_default#use(['sorter_rank'])
 
-nmap <leader>f :Unite -buffer-name=files    -start-insert file_rec<cr>
-nmap <leader>b :Unite -buffer-name=buffers  -start-insert buffer<cr>
-nmap <leader>s :Unite -buffer-name=sessions -start-insert session<cr>
-nmap <leader>o :Unite -buffer-name=outline -no-split -start-insert outline<cr>
-nmap <leader>j :Unite -buffer-name=jump -no-split jump<cr>
-nmap <leader>y :Unite -buffer-name=yank history/yank<cr>
+	nmap <leader>f :Unite -buffer-name=files    -start-insert file_rec<cr>
+	nmap <leader>b :Unite -buffer-name=buffers  -start-insert buffer<cr>
+	nmap <leader>j :Unite -buffer-name=jump -no-split jump<cr>
+	nmap <leader>y :Unite -buffer-name=yank history/yank<cr>
+endfunction
 
-command -nargs=? LoadSession UniteSessionLoad <args>
-command -nargs=? SaveSession UniteSessionSave <args>
+let bundle=neobundle#get('unite-outline')
+function! bundle.hooks.on_source(bundle)
+	nmap <leader>o :Unite -buffer-name=outline -no-split -start-insert outline<cr>
+endfunction
+
+let bundle=neobundle#get('unite-session')
+function! bundle.hooks.on_source(bundle)
+	nmap <leader>s :Unite -buffer-name=sessions -start-insert session<cr>
+	command -nargs=? LoadSession UniteSessionLoad <args>
+	command -nargs=? SaveSession UniteSessionSave <args>
+endfunction
 
 function! UniteBufferSettings()
 	nmap <buffer> <c-c> <Plug>(unite_exit)
@@ -379,20 +443,23 @@ if has('autocmd')
 endif
 
 " YouCompleteMe
-let g:ycm_global_ycm_extra_conf=expand('~/.vim/ycm/ycm_extra_conf.py')
-let g:ycm_confirm_extra_conf=1
-let g:ycm_cache_omnifunc=1
-let g:ycm_collect_identifiers_from_tags_files=1
-let g:ycm_seed_identifiers_with_syntax=1
-let g:ycm_key_list_select_completion=['<tab>']
-let g:ycm_key_list_previous_completion=['<s-tab>']
-let g:ycm_extra_conf_c_flags='-xc -std=c11 -Wall -Wextra -Iinc -Iinclude'
-let g:ycm_extra_conf_cpp_flags='-xc++ -std=c++11 -Wall -Wextra -Iinc -Iinclude'
-let g:ycm_extra_conf_vim_data=[
-			\   '&filetype',
-			\   'g:ycm_extra_conf_c_flags',
-			\   'g:ycm_extra_conf_cpp_flags'
-			\]
+let bundle=neobundle#get('YouCompleteMe')
+function! bundle.hooks.on_source(bundle)
+	let g:ycm_global_ycm_extra_conf=expand('~/.vim/ycm/ycm_extra_conf.py')
+	let g:ycm_confirm_extra_conf=1
+	let g:ycm_cache_omnifunc=1
+	let g:ycm_collect_identifiers_from_tags_files=1
+	let g:ycm_seed_identifiers_with_syntax=1
+	let g:ycm_key_list_select_completion=['<tab>']
+	let g:ycm_key_list_previous_completion=['<s-tab>']
+	let g:ycm_extra_conf_c_flags='-xc -std=c11 -Wall -Wextra -Iinc -Iinclude'
+	let g:ycm_extra_conf_cpp_flags='-xc++ -std=c++11 -Wall -Wextra -Iinc -Iinclude'
+	let g:ycm_extra_conf_vim_data=[
+				\   '&filetype',
+				\   'g:ycm_extra_conf_c_flags',
+				\   'g:ycm_extra_conf_cpp_flags'
+				\]
+endfunction
 
 " --------
 " Mappings
@@ -461,3 +528,6 @@ if has('gui_running')
 	" Toggle menu
 	nmap <f1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
 endif
+
+NeoBundleCheck
+call neobundle#call_hook('on_source')
