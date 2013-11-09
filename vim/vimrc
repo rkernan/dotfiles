@@ -37,7 +37,6 @@ NeoBundle 'bling/vim-airline', {'augroup': 'airline'}
 NeoBundle 'Blackrush/vim-gocode'
 NeoBundleLazy 'elzr/vim-json', {'filetypes': 'json'}
 NeoBundleLazy 'hail2u/vim-css3-syntax', {'filetypes': 'css'}
-NeoBundleLazy 'hynek/vim-python-pep8-indent', {'filetypes': 'python'}
 NeoBundleLazy 'othree/html5.vim', {'filetypes': 'html'}
 NeoBundleLazy 'pangloss/vim-javascript', {'filetypes': 'javascript'}
 NeoBundle 'tikhomirov/vim-glsl'
@@ -51,7 +50,6 @@ NeoBundle 'Shougo/unite-session', {'depends': 'Shougo/unite.vim'}
 NeoBundle 'Shougo/unite-outline', {'depends': 'Shougo/unite.vim'}
 
 " other
-NeoBundleLazy 'derekwyatt/vim-fswitch', {'autoload': {'filetypes': ['c', 'cpp']}}
 NeoBundle 'godlygeek/tabular'
 NeoBundle 'kana/vim-textobj-entire', {'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'mattn/emmet-vim', {'autoload': {'filetypes': ['css', 'html']}}
@@ -61,6 +59,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'sjl/gundo.vim'
 NeoBundleLazy 'skammer/vim-css-color', {'autoload': {'filetypes': 'css'}}
 NeoBundle 'SirVer/ultisnips'
+NeoBundle 'tmhedberg/matchit'
 NeoBundle 'tpope/vim-commentary'
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tpope/vim-fugitive', {'augroup': 'fugitive'}
@@ -75,6 +74,12 @@ NeoBundle 'Valloric/YouCompleteMe', {
 			\   }
 			\}
 NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc'}
+
+if has('autocmd')
+	augroup vimrc
+		autocmd!
+	augroup END
+endif
 
 " --------
 " Settings
@@ -96,7 +101,7 @@ filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 
 let mapleader="\\"
-let g:mapleader="\\"
+let maplocalleader="\\"
 
 set history=1000
 set undoreload=1000
@@ -190,12 +195,12 @@ if has('gui_running')
 endif
 
 if has('autocmd')
-	" Automatically resize splits on window resize
-	augroup ResizeSplits
-		autocmd!
+	augroup vimrc
+		" automatically resize splits on window resize
 		autocmd VimResized * :wincmd =
 	augroup END
 endif
+
 
 " -----------
 " Colorscheme
@@ -241,9 +246,10 @@ endfunction
 " Airline
 let bundle=neobundle#get('airline')
 function! bundle.hooks.on_source(bundle)
-	let g:airline#extensions#syntastic_enabled=1
 	let g:airline#extensions#hunks#enabled=1
 	let g:airline#extensions#hunks#non_zero_only=1
+	let g:airline#extensions#syntastic#enabled=1
+	let g:airline#extensions#whitespace#enabled=0
 	let g:airline_left_sep=''
 	let g:airline_left_alt_sep='›'
 	let g:airline_right_sep=''
@@ -280,13 +286,9 @@ function! bundle.hooks.on_source(bundle)
 	let g:delimitMate_expand_space=0
 	let g:delimitMate_excluded_regions="Comment"
 	if has('autocmd')
-		" Filetype specific match pairs settings
-		augroup FileTypeQuotes
-			autocmd!
+		augroup vimrc
+			" filetype specific quotes
 			autocmd FileType vim let b:delimitMate_quotes="'"
-		augroup END
-		augroup FileTypePairs
-			autocmd!
 		augroup END
 	endif
 endfunction
@@ -314,8 +316,8 @@ endfunction
 let bundle=neobundle#get('fugitive')
 function! bundle.hooks.on_source(bundle)
 	if has('autocmd')
-		augroup AutoCloseFugitiveBuffers
-			autocmd!
+		augroup vimrc
+			" automatically delete fugitive buffers
 			autocmd BufReadPost fugitive://* setlocal bufhidden=delete
 		augroup END
 	endif
@@ -325,9 +327,8 @@ endfunction
 let bundle=neobundle#get('gocode')
 function! bundle.hooks.on_source(bundle)
 	if has('autocmd')
-		" FIXME Temporary fix for Fmt not working on the first file.
-		augroup AutoformatGo
-			autocmd!
+		augroup vimrc
+			" FIXME temporary fix for Fmt not working on the first file
 			autocmd FileType go autocmd BufWritePre <buffer> :keepjumps Fmt
 		augroup END
 	endif
@@ -405,46 +406,38 @@ function! bundle.hooks.on_source(bundle)
 	let g:unite_data_directory=expand('~/.vim/cache')
 	let g:unite_source_session_default_session_name='default'
 	let g:unite_source_session_path=expand('~/.vim/sessions')
-	let g:unite_source_rec_max_cache_files=5000
 	let g:unite_split_rule='botright'
 	let g:unite_force_overwrite_statusline=0
 	let g:unite_winheight=20
 	call unite#filters#matcher_default#use(['matcher_fuzzy'])
 	call unite#filters#sorter_default#use(['sorter_rank'])
+	call unite#custom#source('file_rec,file_rec/async', 'max_candidates', 0)
 
-	nmap <leader>f :Unite -buffer-name=files    -start-insert file_rec<cr>
-	nmap <leader>b :Unite -buffer-name=buffers  -start-insert buffer<cr>
-	nmap <leader>j :Unite -buffer-name=jump -no-split jump<cr>
-	nmap <leader>y :Unite -buffer-name=yank history/yank<cr>
+	nnoremap <leader>f :<c-u>Unite -buffer-name=files -start-insert file_rec/async<cr>
+	nnoremap <leader>b :<c-u>Unite -buffer-name=buffers -start-insert buffer<cr>
+	nnoremap <leader>j :<c-u>Unite -buffer-name=jump -no-split jump<cr>
+	nnoremap <leader>y :<c-u>Unite -buffer-name=yank history/yank<cr>
 endfunction
 
 let bundle=neobundle#get('unite-outline')
 function! bundle.hooks.on_source(bundle)
-	nmap <leader>o :Unite -buffer-name=outline -no-split -start-insert outline<cr>
+	nnoremap <leader>o :<c-u>Unite -buffer-name=outline -no-split -start-insert outline<cr>
 endfunction
 
 let bundle=neobundle#get('unite-session')
 function! bundle.hooks.on_source(bundle)
-	nmap <leader>s :Unite -buffer-name=sessions -start-insert session<cr>
-	command -nargs=? LoadSession UniteSessionLoad <args>
-	command -nargs=? SaveSession UniteSessionSave <args>
+	nnoremap <leader>s :<c-u>Unite -buffer-name=sessions -start-insert session<cr>
+	command! -nargs=? LoadSession UniteSessionLoad <args>
+	command! -nargs=? SaveSession UniteSessionSave <args>
 endfunction
 
 function! UniteBufferSettings()
-	nmap <buffer> <c-c> <Plug>(unite_exit)
-	imap <buffer> <c-c> <Plug>(unite_exit)
-
-	imap <buffer> <tab>   <Plug>(unite_select_next_line)
-	imap <buffer> <s-tab> <Plug>(unite_select_previous_line)
-
-	imap <buffer><expr> <c-s> unite#do_action('split')
-	imap <buffer><expr> <c-v> unite#do_action('vsplit')
-	imap <buffer><expr> <c-t> unite#do_action('tabopen')
+	nmap <buffer> <esc> <Plug>(unite_exit)
 endfunction
 
 if has('autocmd')
-	augroup ApplyUniteBufferSettings
-		autocmd!
+	augroup vimrc
+		" apply unite buffer settings
 		autocmd FileType unite call UniteBufferSettings()
 	augroup END
 endif
@@ -471,29 +464,29 @@ endfunction
 " --------
 " Mappings
 " --------
-map  <left>  <nop>
-map  <right> <nop>
-map  <up>    <nop>
-map  <down>  <nop>
-cmap <left>  <nop>
-cmap <right> <nop>
-cmap <up>    <nop>
-cmap <down>  <nop>
-imap <left>  <nop>
-imap <right> <nop>
-imap <up>    <nop>
-imap <down>  <nop>
+noremap  <left>  <nop>
+noremap  <right> <nop>
+noremap  <up>    <nop>
+noremap  <down>  <nop>
+cnoremap <left>  <nop>
+cnoremap <right> <nop>
+cnoremap <up>    <nop>
+cnoremap <down>  <nop>
+inoremap <left>  <nop>
+inoremap <right> <nop>
+inoremap <up>    <nop>
+inoremap <down>  <nop>
 
 " treat line wraps as real lines
-nmap j gj
-nmap k gk
+nnoremap j gj
+nnoremap k gk
 
 " indent and un-indent
-vmap > >gv
-vmap < <gv
+vnoremap > >gv
+vnoremap < <gv
 
 " visually select last edited/pasted text
-nmap gV `[v`]
+nnoremap gV `[v`]
 
 " Set tab width using a nice prompt
 function! SetTab()
@@ -504,7 +497,7 @@ function! SetTab()
 		let &l:sw = l:tabstop
 	endif
 	let l:et = input('set expandtab = ')
-	if l:et == 'no'
+	if l:et == 'no' || l:et == 0
 		setlocal noexpandtab
 	else
 		setlocal expandtab
@@ -517,24 +510,37 @@ endfunction
 " Summarize current tab info
 function! SummarizeTabs()
 	try
-		echoh ModeMsg
-		echon 'tabstop=' &l:ts ' softtabstop=' &l:sts ' shiftwidth=' &l:sw ' '
-		if &l:et
-			echon 'expandtab'
-		else
-			echon 'noexpandtab'
-		endif
-	finally
-		echoh None
+		echom 'tabstop=' . &l:ts . ' softtabstop=' . &l:sts . ' shiftwidth=' . &l:sw .
+					\' ' . ((&l:et) ? 'expandtab' : 'noexpandtab')
 	endtry
 endfunction
 
-command -nargs=0 Stab call SetTab()
+command! -nargs=0 SetTab call SetTab()
+
+" Remove trailing whitespace
+function! RemoveTrailingWhitespace()
+	if exists('b:no_strip_whitespace') && b:no_strip_whitespace == 1
+		return
+	endif
+
+	exe 'normal mz'
+	%s/\s\+$//ge
+	exe 'normal `z'
+endfunction
+
+if has('autocmd')
+	augroup vimrc
+		autocmd BufWritePre * :call RemoveTrailingWhitespace()
+	augroup END
+endif
 
 if has('gui_running')
 	" Toggle menu
 	nmap <f1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
 endif
 
+" check for plugin updates
 NeoBundleCheck
+
+" apply loaded plugin settings
 call neobundle#call_hook('on_source')
