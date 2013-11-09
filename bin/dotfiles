@@ -32,26 +32,7 @@ pre_install() {
 }
 
 post_install() {
-	# checkout vim/vundle master
-	cd $PWD/vim/bundle/vundle
-	git checkout --quiet master
-	cd - > /dev/null
-	# update vim bundles
-	vim +BundleClean +qall
-	vim +BundleInstall! +qall
-	# build YouCompleteMe
-	if prompt "Build YouCompleteMe?"; then
-		YCM_BUILD_FLAGS=""
-		if prompt "  C/C++ completion?"; then
-			YCM_BUILD_FLAGS="$YCM_BUILD_FLAGS --clang-completer"
-		fi
-		if prompt "  C# completion?   "; then
-			YCM_BUILD_FLAGS="$YCM_BUILD_FLAGS --omnisharp-completer"
-		fi
-		cd $PWD/vim/bundle/YouCompleteMe
-		$PWD/install.sh $YCM_BUILD_FLAGS
-		cd - > /dev/null
-	fi
+	update
 }
 
 install() {
@@ -91,20 +72,34 @@ remove() {
 		rm -rf $HOME/.zsh
 		rm -rf $HOME/.zshenv
 		rm -rf $HOME/.zshrc
+		retval=0
+	else
+		retval=1
 	fi
+	return "$retval"
+}
+
+update() {
+	vim +NeoBundleInstall! +qall
 }
 
 case $1 in
 install)
-	remove
-	install
+	if remove; then
+		echo "installing"
+		install
+	fi
 	;;
 remove)
 	remove
+	;;
+update)
+	update
 	;;
 *)
 	echo "Options:"
 	echo "  install - symlink dotfiles"
 	echo "  remove  - remove all dotfiles"
+	echo "  update  - update plugins"
 	;;
 esac
