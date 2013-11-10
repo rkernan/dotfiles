@@ -78,6 +78,8 @@ NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc'}
 if has('autocmd')
 	augroup vimrc
 		autocmd!
+		" auto-source vimrc
+		autocmd BufWritePost vimrc,.vimrc,_vimrc nested source $MYVIMRC
 	augroup END
 endif
 
@@ -182,17 +184,6 @@ set incsearch  " show matches as the command is being type
 set hlsearch   " highlight all search results
 set gdefault   " substitute all matches on a line by default
 set scrolloff=3
-if has('gui_running')
-	set guioptions-=T " remove toolbar
-	set guioptions-=m " remove menu
-	set guioptions+=g " grey menu items
-	set guioptions-=c " hide intro
-	set guioptions-=i " hide scrollbars
-	set guioptions-=r " hide scrollbars
-	set guioptions-=L " hide scrollbars
-	set guioptions-=l " hide scrollbars
-	set guifont=Meslo\ LG\ M\ 8
-endif
 
 if has('autocmd')
 	augroup vimrc
@@ -532,11 +523,6 @@ if has('autocmd')
 	augroup vimrc
 		autocmd BufWritePre * :call RemoveTrailingWhitespace()
 	augroup END
-endif
-
-if has('gui_running')
-	" Toggle menu
-	nmap <f1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
 endif
 
 " check for plugin updates

@@ -1,0 +1,20 @@
+if has('autocmd')
+	augroup gvimrc
+		autocmd!
+		" auto-source gvimrc
+		autocmd BufWritePost gvimrc,.gvimrc,_gvimrc nested source $MYGVIMRC
+	augroup END
+endif
+
+set guioptions-=T " remove toolbar
+set guioptions-=m " remove menu
+set guioptions+=g " grey menu items
+set guioptions-=c " hide intro
+set guioptions-=i " hide scrollbars
+set guioptions-=r " hide scrollbars
+set guioptions-=L " hide scrollbars
+set guioptions-=l " hide scrollbars
+set guifont=Meslo\ LG\ M\ 8
+
+" Toggle menu
+nmap <f1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
