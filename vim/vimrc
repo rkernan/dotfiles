@@ -34,15 +34,19 @@ NeoBundle 'tomasr/molokai'
 NeoBundle 'bling/vim-airline', {'augroup': 'airline'}
 
 " languages
+NeoBundle 'python.vim'
+NeoBundle 'STL-improved'
 NeoBundle 'Blackrush/vim-gocode'
-NeoBundleLazy 'elzr/vim-json', {'filetypes': 'json'}
-NeoBundleLazy 'hail2u/vim-css3-syntax', {'filetypes': 'css'}
-NeoBundleLazy 'othree/html5.vim', {'filetypes': 'html'}
-NeoBundleLazy 'pangloss/vim-javascript', {'filetypes': 'javascript'}
+NeoBundle 'elzr/vim-json'
+NeoBundle 'groenewege/vim-less'
+NeoBundle 'hail2u/vim-css3-syntax'
+NeoBundle 'othree/html5.vim'
+NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'tikhomirov/vim-glsl'
 NeoBundle 'tpope/vim-git'
+NeoBundle 'tpope/vim-markdown'
 NeoBundle 'tpope/vim-rails', {'augroup': 'railsPluginDetect'}
-NeoBundleLazy 'vim-ruby/vim-ruby', {'filetypes': 'ruby'}
+NeoBundle 'vim-ruby/vim-ruby'
 
 " unite
 NeoBundle 'Shougo/unite.vim'
@@ -50,14 +54,15 @@ NeoBundle 'Shougo/unite-session', {'depends': 'Shougo/unite.vim'}
 NeoBundle 'Shougo/unite-outline', {'depends': 'Shougo/unite.vim'}
 
 " other
+NeoBundle 'bufkill.vim'
 NeoBundle 'godlygeek/tabular'
+NeoBundle 'gorodinskiy/vim-coloresque'
 NeoBundle 'kana/vim-textobj-entire', {'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'mattn/emmet-vim', {'autoload': {'filetypes': ['css', 'html']}}
 NeoBundle 'mhinz/vim-signify', {'augroup': 'signify'}
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'sjl/gundo.vim'
-NeoBundleLazy 'skammer/vim-css-color', {'autoload': {'filetypes': 'css'}}
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'tmhedberg/matchit'
 NeoBundle 'tpope/vim-commentary'
@@ -254,12 +259,6 @@ function! bundle.hooks.on_source(bundle)
 	call airline#parts#define_raw('modified', '%{&modified ? " +" : ""}')
 	call airline#parts#define_accent('modified', 'red')
 	let g:airline_section_c = airline#section#create(['%f', 'modified'])
-endfunction
-
-" CSS Color
-let bundle=neobundle#get('css-color')
-function! bundle.hooks.on_source(bundle)
-	let g:cssColorVimDoNotMessMyUpdatetime=1
 endfunction
 
 " DelimitMate
