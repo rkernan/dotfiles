@@ -78,8 +78,6 @@ NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc'}
 if has('autocmd')
 	augroup vimrc
 		autocmd!
-		" auto-source vimrc
-		autocmd BufWritePost vimrc,.vimrc,_vimrc nested source $MYVIMRC
 	augroup END
 endif
 
