@@ -336,6 +336,14 @@ function! bundle.hooks.on_source(bundle)
 	nmap <f4> :GundoToggle<cr>
 endfunction
 
+" NeoBundle AutoUpdate
+let bundle=neobundle#get('neobundle_autoupdate')
+function! bundle.hooks.on_source(bundle)
+	call MkdirIfNone(expand('~/.vim/cache'))
+	let g:neobundle_autoupdate_dir=expand('~/.vim/cache')
+	let g:neobundle_autoupdate_time=172800
+endfunction
+
 " Signify
 let bundle=neobundle#get('signify')
 function! bundle.hooks.on_source(bundle)
