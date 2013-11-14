@@ -43,6 +43,7 @@ NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'othree/html5.vim'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'tikhomirov/vim-glsl'
+NeoBundle 'tpope/vim-dispatch'
 NeoBundle 'tpope/vim-git'
 NeoBundle 'tpope/vim-markdown'
 NeoBundle 'tpope/vim-rails', {'augroup': 'railsPluginDetect'}
@@ -54,9 +55,13 @@ NeoBundle 'Shougo/unite-session', {'depends': 'Shougo/unite.vim'}
 NeoBundle 'Shougo/unite-outline', {'depends': 'Shougo/unite.vim'}
 
 " other
-NeoBundle 'bufkill.vim'
+NeoBundle 'amilaperera/bufkill.vim'
 NeoBundle 'godlygeek/tabular'
-NeoBundle 'gorodinskiy/vim-coloresque'
+NeoBundleLazy 'gorodinskiy/vim-coloresque', {
+			\   'autoload': {
+			\       'filetypes': ['html', 'less', 'sass', 'scss', 'stylus', 'vim']
+			\   }
+			\}
 NeoBundle 'kana/vim-textobj-entire', {'depends': 'kana/vim-textobj-user'}
 NeoBundleLazy 'mattn/emmet-vim', {'autoload': {'filetypes': ['css', 'html']}}
 NeoBundle 'mhinz/vim-signify', {'augroup': 'signify'}
@@ -65,12 +70,12 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'tmhedberg/matchit'
-NeoBundle 'tpope/vim-commentary'
+NeoBundle 'tpope/vim-abolish', {'depends': 'tpope/vim-repeat'}
+NeoBundle 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-endwise'
-NeoBundle 'tpope/vim-fugitive', {'augroup': 'fugitive'}
-NeoBundle 'tpope/vim-repeat'
-NeoBundle 'tpope/vim-surround'
-NeoBundle 'tpope/vim-unimpaired'
+NeoBundle 'tpope/vim-fugitive', {'augroup': 'fugitive', 'external_commands': 'git'}
+NeoBundle 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
+NeoBundle 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'Valloric/YouCompleteMe', {
 			\   'build': {
 			\       'unix'  : './install.sh --clang-completer --omnisharp-completer',
@@ -78,7 +83,7 @@ NeoBundle 'Valloric/YouCompleteMe', {
 			\       'cygwin': './install.sh --clang-completer --omnisharp-completer'
 			\   }
 			\}
-NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc'}
+NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc', 'external_commands': 'ctags'}
 
 if has('autocmd')
 	augroup vimrc
@@ -195,7 +200,6 @@ if has('autocmd')
 	augroup END
 endif
 
-
 " -----------
 " Colorscheme
 " -----------
@@ -259,6 +263,14 @@ function! bundle.hooks.on_source(bundle)
 	call airline#parts#define_raw('modified', '%{&modified ? " +" : ""}')
 	call airline#parts#define_accent('modified', 'red')
 	let g:airline_section_c = airline#section#create(['%f', 'modified'])
+
+	let g:airline#extensions#unite#enabled=0
+endfunction
+
+" BufKill
+let bundle=neobundle#get('bufkill')
+function! bundle.hooks.on_source(bundle)
+	let g:BufKillCreateMappings=0
 endfunction
 
 " DelimitMate
@@ -330,7 +342,7 @@ function! bundle.hooks.on_source(bundle)
 	let g:gundo_preview_bottom=1
 	let g:gundo_right=1
 	let g:gundo_help=0
-	nmap <f4> :GundoToggle<cr>
+	nmap \ut :GundoToggle<cr>
 endfunction
 
 " NeoBundle AutoUpdate
@@ -369,12 +381,6 @@ function! bundle.hooks.on_source(bundle)
 	let g:syntastic_style_warning_symbol='≈'
 endfunction
 
-" Tabularize
-let bundle=neobundle#get('tabular')
-function! bundle.hooks.on_source(bundle)
-	map ta :Tabularize
-endfunction
-
 " UltiSnips
 let bundle=neobundle#get('ultisnips')
 function! bundle.hooks.on_source(bundle)
@@ -397,6 +403,12 @@ endfunction
 " Unite
 let bundle=neobundle#get('unite')
 function! bundle.hooks.on_source(bundle)
+	if executable('ack')
+		let g:unite_source_grep_command='ack'
+		let g:unite_source_grep_default_opts='--noheading --nocolor -H'
+		let g:unite_source_grep_recursive_opt=''
+	endif
+
 	let g:unite_prompt='» '
 	let g:unite_source_history_yank_enable=1
 	let g:unite_data_directory=expand('~/.vim/cache')
@@ -413,6 +425,7 @@ function! bundle.hooks.on_source(bundle)
 	nnoremap <leader>b :<c-u>Unite -buffer-name=buffers -start-insert buffer<cr>
 	nnoremap <leader>j :<c-u>Unite -buffer-name=jump -no-split jump<cr>
 	nnoremap <leader>y :<c-u>Unite -buffer-name=yank history/yank<cr>
+	nnoremap <leader>/ :<c-u>Unite -buffer-name=search grep:.<cr>
 endfunction
 
 let bundle=neobundle#get('unite-outline')
@@ -429,6 +442,7 @@ endfunction
 
 function! UniteBufferSettings()
 	nmap <buffer> <esc> <Plug>(unite_exit)
+	imap <buffer> <s-tab> <Plug>(unite_exit)
 endfunction
 
 if has('autocmd')
