@@ -76,13 +76,7 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tpope/vim-fugitive', {'augroup': 'fugitive', 'external_commands': 'git'}
 NeoBundle 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
-NeoBundle 'Valloric/YouCompleteMe', {
-			\   'build': {
-			\       'unix'  : './install.sh --clang-completer --omnisharp-completer',
-			\       'mac'   : './install.sh --clang-completer --omnisharp-completer',
-			\       'cygwin': './install.sh --clang-completer --omnisharp-completer'
-			\   }
-			\}
+NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc', 'external_commands': 'ctags'}
 
 if has('autocmd')

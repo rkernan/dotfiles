@@ -74,7 +74,10 @@ remove() {
 }
 
 update() {
-	vim +NeoBundleInstall! +qall
+	LWD=$PWD
+	cd $PWD/vim/bundle/YouCompleteMe
+	./install.sh --clang-completer --omnisharp-completer
+	cd $LWD
 }
 
 case $1 in
