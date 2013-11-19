@@ -29,4 +29,5 @@ Abolish reproducable                                 reproducible
 Abolish resouce{,s}                                  resource{}
 Abolish restraunt{,s}                                restaurant{}
 Abolish segument{,s,ed,action}                       segment{}
+Abolish hte                                          the
 Abolish teh                                          the
