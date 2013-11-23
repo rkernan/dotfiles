@@ -24,7 +24,13 @@ mkdir_if_none() {
 }
 
 pre_install() {
+	# initialize submodules
 	git submodule --quiet update --init --recursive
+	# neobundle
+	LWD=$PWD
+	cd $PWD/vim/bundle/neobundle
+	git checkout --quiet master
+	cd $LWD
 	# fonts
 	mkdir_if_none $HOME/.fonts
 	ln -sf $PWD/fonts/Meslo/MesloLGM-Regular.ttf $HOME/.fonts/MesloLGM-Regular.ttf
@@ -74,10 +80,23 @@ remove() {
 }
 
 update() {
-	LWD=$PWD
-	cd $PWD/vim/bundle/YouCompleteMe
-	./install.sh --clang-completer --omnisharp-completer
-	cd $LWD
+	# compile YouCompleteMe
+	if prompt "Compile YouCompleteMe?"; then
+		FLAGS=""
+		if prompt "  semantic completion for C-family languages?"; then
+			FLAGS="$FLAGS --clang-completer"
+			if prompt "    use system libclang?"; then
+				FLAGS="$FLAGS --system-libclang"
+			fi
+		fi
+		if prompt "  semantic completion for C#?"; then
+			FLAGS="$FLAGS --omnisharp-completer"
+		fi
+		LWD=$PWD
+		cd $PWD/vim/bundle/YouCompleteMe
+		./install.sh --clang-completer --omnisharp-completer
+		cd $LWD
+	fi
 }
 
 case $1 in
