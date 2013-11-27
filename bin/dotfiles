@@ -48,8 +48,8 @@ install() {
 	ln -sf $PWD/sh/profile     $HOME/.profile
 	ln -sf $PWD/tmux/tmux.conf $HOME/.tmux.conf
 	ln -sf $PWD/vim            $HOME/.vim
-	ln -sf $PWD/x11/xinitrc    $HOME/.xinitrc
-	ln -sf $PWD/x11/Xresources $HOME/.Xresources
+	ln -sf $PWD/xorg/xinitrc    $HOME/.xinitrc
+	ln -sf $PWD/xorg/Xresources $HOME/.Xresources
 	ln -sf $PWD/zsh            $HOME/.zsh
 	ln -sf $PWD/zsh/zshenv     $HOME/.zshenv
 	ln -sf $PWD/zsh/zshrc      $HOME/.zshrc
@@ -79,7 +79,7 @@ remove() {
 	return "$retval"
 }
 
-update() {
+config() {
 	# compile YouCompleteMe
 	if prompt "Compile YouCompleteMe?"; then
 		FLAGS=""
@@ -94,7 +94,7 @@ update() {
 		fi
 		LWD=$PWD
 		cd $PWD/vim/bundle/YouCompleteMe
-		./install.sh --clang-completer --omnisharp-completer
+		./install.sh $FLAGS
 		cd $LWD
 	fi
 }
@@ -108,13 +108,13 @@ install)
 remove)
 	remove
 	;;
-update)
-	update
+config)
+	config
 	;;
 *)
 	echo "Options:"
 	echo "  install - symlink dotfiles"
 	echo "  remove  - remove all dotfiles"
-	echo "  update  - update plugins"
+	echo "  config  - config plugins"
 	;;
 esac
