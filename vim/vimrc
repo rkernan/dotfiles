@@ -492,6 +492,9 @@ vnoremap < <gv
 " visually select last edited/pasted text
 nnoremap gV `[v`]
 
+" sudo write file
+cmap w!! w !sudo tee > /dev/null %
+
 " Set tab width using a nice prompt
 function! SetTab()
 	let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
