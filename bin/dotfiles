@@ -1,6 +1,5 @@
 #!/bin/bash
 
-# go to dotfiles dir
 cd $(readlink -f $(dirname $0))/..
 
 prompt() {
@@ -38,21 +37,23 @@ pre_install() {
 }
 
 install() {
-	pre_install
-	ln -sf $PWD/bin            $HOME/bin
-	ln -sf $PWD/ctags/ctags    $HOME/.ctags
-	ln -sf $PWD/git/gitconfig  $HOME/.gitconfig
-	ln -sf $PWD/git/gitignore  $HOME/.gitignore
-	ln -sf $PWD/i3             $HOME/.i3
-	ln -sf $PWD/sh/aliases     $HOME/.aliases
-	ln -sf $PWD/sh/profile     $HOME/.profile
-	ln -sf $PWD/tmux/tmux.conf $HOME/.tmux.conf
-	ln -sf $PWD/vim            $HOME/.vim
-	ln -sf $PWD/xorg/xinitrc    $HOME/.xinitrc
-	ln -sf $PWD/xorg/Xresources $HOME/.Xresources
-	ln -sf $PWD/zsh            $HOME/.zsh
-	ln -sf $PWD/zsh/zshenv     $HOME/.zshenv
-	ln -sf $PWD/zsh/zshrc      $HOME/.zshrc
+	if remove; then
+		pre_install
+		ln -sf $PWD/bin            $HOME/bin
+		ln -sf $PWD/ctags/ctags    $HOME/.ctags
+		ln -sf $PWD/git/gitconfig  $HOME/.gitconfig
+		ln -sf $PWD/git/gitignore  $HOME/.gitignore
+		ln -sf $PWD/i3             $HOME/.i3
+		ln -sf $PWD/sh/aliases     $HOME/.aliases
+		ln -sf $PWD/sh/profile     $HOME/.profile
+		ln -sf $PWD/tmux/tmux.conf $HOME/.tmux.conf
+		ln -sf $PWD/vim            $HOME/.vim
+		ln -sf $PWD/xorg/xinitrc    $HOME/.xinitrc
+		ln -sf $PWD/xorg/Xresources $HOME/.Xresources
+		ln -sf $PWD/zsh            $HOME/.zsh
+		ln -sf $PWD/zsh/zshenv     $HOME/.zshenv
+		ln -sf $PWD/zsh/zshrc      $HOME/.zshrc
+	fi
 }
 
 remove() {
@@ -100,21 +101,13 @@ config() {
 }
 
 case $1 in
-install)
-	if remove; then
-		install
-	fi
-	;;
-remove)
-	remove
-	;;
-config)
-	config
-	;;
-*)
-	echo "Options:"
-	echo "  install - symlink dotfiles"
-	echo "  remove  - remove all dotfiles"
-	echo "  config  - config plugins"
-	;;
+	install|remove|config)
+		$1
+		;;
+	*)
+		echo "Options:"
+		echo "  install - symlink dotfiles"
+		echo "  remove  - remove all dotfiles"
+		echo "  config  - config plugins"
+		exit 1
 esac
