@@ -44,14 +44,11 @@ install() {
 		ln -sf $PWD/git/gitconfig  $HOME/.gitconfig
 		ln -sf $PWD/git/gitignore  $HOME/.gitignore
 		ln -sf $PWD/i3             $HOME/.i3
-		ln -sf $PWD/sh/aliases     $HOME/.aliases
-		ln -sf $PWD/sh/profile     $HOME/.profile
 		ln -sf $PWD/tmux/tmux.conf $HOME/.tmux.conf
 		ln -sf $PWD/vim            $HOME/.vim
 		ln -sf $PWD/xorg/xinitrc    $HOME/.xinitrc
 		ln -sf $PWD/xorg/Xresources $HOME/.Xresources
 		ln -sf $PWD/zsh            $HOME/.zsh
-		ln -sf $PWD/zsh/zshenv     $HOME/.zshenv
 		ln -sf $PWD/zsh/zshrc      $HOME/.zshrc
 	fi
 }
@@ -63,15 +60,12 @@ remove() {
 		rm -rf $HOME/.gitconfig
 		rm -rf $HOME/.gitignore
 		rm -rf $HOME/.i3
-		rm -rf $HOME/.aliases
-		rm -rf $HOME/.profile
 		rm -rf $HOME/.tmux.conf
 		rm -rf $HOME/.vim
 		rm -rf $HOME/.vimrc
 		rm -rf $HOME/.xinitrc
 		rm -rf $HOME/.Xresources
 		rm -rf $HOME/.zsh
-		rm -rf $HOME/.zshenv
 		rm -rf $HOME/.zshrc
 		retval=0
 	else

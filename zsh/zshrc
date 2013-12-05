@@ -52,9 +52,11 @@ precmd() {
 }
 
 # Alias
-if [ -f "$HOME/.aliases" ]; then
-	source ~/.aliases
-fi
+alias ls="ls --color=auto --group-directories-first"
+alias ll="ls --color=auto --group-directories-first -l"
+alias la="ls --color=auto --group-directories-first -lA"
+
+alias grep="grep --color=auto"
 
 alias mv="nocorrect mv"
 alias cp="nocorrect cp"
@@ -72,3 +74,8 @@ pwd() {
 setopt prompt_subst
 PROMPT='%{$fg[blue]%}%c${vcs_info_msg_0_} %{$fg_bold[white]%}» %{$reset_color%}'
 RPROMPT=''
+
+# Path
+typeset -U path
+path=("$HOME/bin" $path)
+export PATH

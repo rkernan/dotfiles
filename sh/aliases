@@ -1,7 +1,0 @@
-#!/bin/sh
-
-alias ls="ls --color=auto --group-directories-first"
-alias ll="ls --color=auto --group-directories-first -l"
-alias la="ls --color=auto --group-directories-first -lA"
-
-alias grep="grep --color=auto"
