@@ -8,6 +8,7 @@
 	stat = status -s
 [core]
 	excludesfile = ~/.gitignore
+	editor = vim
 [branch]
 	autosetuprebase = always
 [pull]
