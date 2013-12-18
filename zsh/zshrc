@@ -4,6 +4,10 @@ colors
 # disable XON/XOFF flow control
 stty -ixon
 
+# ctrl-p and ctrl-n
+bindkey "^P" up-line-or-search
+bindkey "^N" down-line-or-search
+
 # Plugins
 source $HOME/.zsh/plugin/syntax-highlighting/zsh-syntax-highlighting.zsh
 ZSH_HIGHLIGHT_HIGHLIGHTERS=(main root brackets)
