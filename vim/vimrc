@@ -33,47 +33,44 @@ NeoBundle 'gist:kernan/7382226', {
 NeoBundle 'tomasr/molokai'
 NeoBundle 'bling/vim-airline', {'augroup': 'airline'}
 
+" vcs integration
+NeoBundle 'mhinz/vim-signify', {'augroup': 'signify'}
+
 " languages
 NeoBundle 'python.vim'
 NeoBundle 'STL-improved'
-NeoBundle 'Blackrush/vim-gocode'
+NeoBundle 'Blackrush/vim-gocode', {'external_commands': 'gocode'}
 NeoBundle 'elzr/vim-json'
-NeoBundle 'groenewege/vim-less'
-NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'othree/html5.vim'
-NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'tikhomirov/vim-glsl'
-NeoBundle 'tpope/vim-dispatch'
-NeoBundle 'tpope/vim-git'
-NeoBundle 'tpope/vim-markdown'
-NeoBundle 'tpope/vim-rails', {'augroup': 'railsPluginDetect'}
-NeoBundle 'vim-ruby/vim-ruby'
 
 " unite
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-session', {'depends': 'Shougo/unite.vim'}
-NeoBundle 'Shougo/unite-outline', {'depends': 'Shougo/unite.vim'}
 
 " other
 NeoBundle 'amilaperera/bufkill.vim'
 NeoBundle 'godlygeek/tabular'
 NeoBundleLazy 'gorodinskiy/vim-coloresque', {
-			\   'autoload': {
-			\       'filetypes': ['html', 'less', 'sass', 'scss', 'stylus', 'vim']
-			\   }
+			\    'autoload': {
+			\        'filetypes': ['html', 'less', 'sass', 'scss', 'stylus', 'vim']
+			\    }
 			\}
 NeoBundle 'kana/vim-textobj-entire', {'depends': 'kana/vim-textobj-user'}
-NeoBundleLazy 'mattn/emmet-vim', {'autoload': {'filetypes': ['css', 'html']}}
-NeoBundle 'mhinz/vim-signify', {'augroup': 'signify'}
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'SirVer/ultisnips'
-NeoBundle 'tmhedberg/matchit'
+NeoBundleLazy 'tmhedberg/matchit', {
+			\    'autoload': {
+			\        'filetypes':
+			\            ['ada', 'asp', 'csh', 'dtd', 'entity', 'essbase', 'fortran',
+			\             'html', 'jsp', 'latex', 'lua', 'pascal', 'sgml', 'shell',
+			\             'tcsh', 'vim', 'xml']
+			\    }
+			\}
 NeoBundle 'tpope/vim-abolish', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-endwise'
-NeoBundle 'tpope/vim-fugitive', {'augroup': 'fugitive', 'external_commands': 'git'}
 NeoBundle 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'Valloric/YouCompleteMe'
@@ -205,30 +202,38 @@ function! bundle.hooks.on_source(bundle)
 	set background=dark
 	colorscheme molokai
 
+	" color changes
 	highlight DiffAdd                   guibg=PaleGreen guifg=bg     gui=none
 	highlight DiffDelete                guibg=Tomato    guifg=bg     gui=none
 	highlight DiffChange                guibg=Khaki     guifg=bg     gui=none
 	highlight DiffText                  guibg=SkyBlue3  guifg=bg     gui=none
-	highlight SignifySignAdd            guibg=#232526   guifg=Green  gui=none
-	highlight SignifySignDelete         guibg=#232526   guifg=Red    gui=none
-	highlight SignifySignChange         guibg=#232526   guifg=Yellow gui=none
-	highlight SyntasticErrorSign        guibg=#232526   guifg=Red    gui=none
-	highlight SyntasticWarningSign      guibg=#232526   guifg=Yellow gui=none
-	highlight SyntasticStyleErrorSign   guibg=#232526   guifg=Red    gui=none
-	highlight SyntasticStyleWarningSign guibg=#232526   guifg=Yellow gui=none
-	" 256-color terminal
 	if &t_Co > 255
 		highlight DiffAdd                   ctermbg=120 ctermfg=bg  cterm=none
 		highlight DiffDelete                ctermbg=202 ctermfg=bg  cterm=none
 		highlight DiffChange                ctermbg=192 ctermfg=bg  cterm=none
 		highlight DiffText                  ctermbg=74  ctermfg=bg  cterm=none
+	endif
+
+	" Signify colors
+	highlight SignifySignAdd            guibg=#232526   guifg=Green  gui=none
+	highlight SignifySignDelete         guibg=#232526   guifg=Red    gui=none
+	highlight SignifySignChange         guibg=#232526   guifg=Yellow gui=none
+	if &t_Co > 255
 		highlight SignifySignAdd            ctermbg=235 ctermfg=28  cterm=none
 		highlight SignifySignDelete         ctermbg=235 ctermfg=196 cterm=none
 		highlight SignifySignChange         ctermbg=235 ctermfg=226 cterm=none
+
+	" Syntastic colors
+	highlight SyntasticErrorSign        guibg=#232526   guifg=Red    gui=none
+	highlight SyntasticWarningSign      guibg=#232526   guifg=Yellow gui=none
+	highlight SyntasticStyleErrorSign   guibg=#232526   guifg=Red    gui=none
+	highlight SyntasticStyleWarningSign guibg=#232526   guifg=Yellow gui=none
+	if &t_Co > 255
 		highlight SyntasticErrorSign        ctermbg=235 ctermfg=196 cterm=none
 		highlight SyntasticWarningSign      ctermbg=235 ctermfg=226 cterm=none
 		highlight SyntasticStyleErrorSign   ctermbg=235 ctermfg=196 cterm=none
 		highlight SyntasticStyleWarningSign ctermbg=235 ctermfg=226 cterm=none
+	endif
 	endif
 endfunction
 
@@ -257,8 +262,6 @@ function! bundle.hooks.on_source(bundle)
 	call airline#parts#define_raw('modified', '%{&modified ? " +" : ""}')
 	call airline#parts#define_accent('modified', 'red')
 	let g:airline_section_c = airline#section#create(['%f', 'modified'])
-
-	let g:airline#extensions#unite#enabled=0
 endfunction
 
 " BufKill
@@ -277,7 +280,7 @@ function! bundle.hooks.on_source(bundle)
 	let g:delimitMate_quotes="\" '"
 	let g:delimitMate_smart_quotes=1
 	let g:delimitMate_expand_cr=1
-	let g:delimitMate_expand_space=0
+	let g:delimitMate_expand_space=1
 	let g:delimitMate_excluded_regions="Comment"
 	if has('autocmd')
 		augroup vimrc
@@ -294,27 +297,9 @@ function! bundle.hooks.on_source(bundle)
 	let g:easytags_dynamic_files=1
 	call MkdirIfNone(expand('~/.vim/tags'))
 	let g:easytags_by_filetype=expand('~/.vim/tags')
-	let g:easytags_auto_highlight=0
+	let g:easytags_auto_highlight=1
 	let g:easytags_updatetime_warn=0
 	let g:easytags_include_members=0
-endfunction
-
-" Emmet
-let bundle=neobundle#get('emmet')
-function! bundle.hooks.on_source(bundle)
-	let g:use_emmet_complete_tag=1
-	let g:emmet_html5=1
-endfunction
-
-" Fugitive
-let bundle=neobundle#get('fugitive')
-function! bundle.hooks.on_source(bundle)
-	if has('autocmd')
-		augroup vimrc
-			" automatically delete fugitive buffers
-			autocmd BufReadPost fugitive://* setlocal bufhidden=delete
-		augroup END
-	endif
 endfunction
 
 " Gocode
@@ -422,11 +407,6 @@ function! bundle.hooks.on_source(bundle)
 	nnoremap <leader>/ :<c-u>Unite -buffer-name=search grep:.<cr>
 endfunction
 
-let bundle=neobundle#get('unite-outline')
-function! bundle.hooks.on_source(bundle)
-	nnoremap <leader>o :<c-u>Unite -buffer-name=outline -no-split -start-insert outline<cr>
-endfunction
-
 let bundle=neobundle#get('unite-session')
 function! bundle.hooks.on_source(bundle)
 	nnoremap <leader>s :<c-u>Unite -buffer-name=sessions -start-insert session<cr>
@@ -435,8 +415,16 @@ function! bundle.hooks.on_source(bundle)
 endfunction
 
 function! UniteBufferSettings()
-	nmap <buffer> <esc> <Plug>(unite_exit)
+	nmap <buffer> <esc> <Plug>(unite_all_exit)
+
+	imap <buffer> <tab>   <Plug>(unite_choose_action)
 	imap <buffer> <s-tab> <Plug>(unite_exit)
+
+	nmap <buffer> <c-n> <Plug>(unite_select_next_line)
+	imap <buffer> <c-n> <Plug>(unite_select_next_line)
+
+	nmap <buffer> <c-p> <Plug>(unite_select_previous_line)
+	imap <buffer> <c-p> <Plug>(unite_select_previous_line)
 endfunction
 
 if has('autocmd')
@@ -452,8 +440,9 @@ function! bundle.hooks.on_source(bundle)
 	let g:ycm_global_ycm_extra_conf=expand('~/.vim/ycm/ycm_extra_conf.py')
 	let g:ycm_confirm_extra_conf=1
 	let g:ycm_cache_omnifunc=1
-	let g:ycm_collect_identifiers_from_tags_files=1
+	let g:ycm_collect_identifiers_from_tags_files=0
 	let g:ycm_seed_identifiers_with_syntax=1
+	let g:ycm_key_detailed_diagnostics=''
 	let g:ycm_key_list_select_completion=['<tab>']
 	let g:ycm_key_list_previous_completion=['<s-tab>']
 	let g:ycm_extra_conf_c_flags='-xc -std=c11 -Wall -Wextra -Iinc -Iinclude'
