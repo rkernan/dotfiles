@@ -79,7 +79,14 @@ setopt prompt_subst
 PROMPT='%{$fg[blue]%}%c${vcs_info_msg_0_} %{$fg_bold[white]%}» %{$reset_color%}'
 RPROMPT=''
 
+# Editor
+export EDITOR=vim
+
 # Path
 typeset -U path
-path=("$HOME/bin" $path)
+path+=("$HOME/bin")
+# Go
+export GOPATH=$HOME/.go
+path+=("$GOPATH/bin")
+
 export PATH
