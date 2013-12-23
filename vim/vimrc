@@ -42,6 +42,7 @@ NeoBundle 'STL-improved'
 NeoBundle 'Blackrush/vim-gocode', {'external_commands': 'gocode'}
 NeoBundle 'elzr/vim-json'
 NeoBundle 'tikhomirov/vim-glsl'
+NeoBundle 'tpope/vim-markdown'
 
 " unite
 NeoBundle 'Shougo/unite.vim'
