@@ -74,6 +74,7 @@ NeoBundle 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
+NeoBundle 'Valloric/ListToggle'
 NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc', 'external_commands': 'ctags'}
 
@@ -301,6 +302,14 @@ function! bundle.hooks.on_source(bundle)
 	nmap \ut :GundoToggle<cr>
 endfunction
 
+" ListToggle
+let bundle=neobundle#get('ListToggle')
+function! bundle.hooks.on_source(bundle)
+	let g:lt_location_list_toggle_map='<leader>l'
+	let g:lt_quickfix_list_toggle_map='<leader>q'
+	let g:lt_height=10
+endfunction
+
 " NeoBundle AutoUpdate
 let bundle=neobundle#get('neobundle_autoupdate')
 function! bundle.hooks.on_source(bundle)
@@ -329,16 +338,16 @@ endfunction
 let bundle=neobundle#get('syntastic')
 function! bundle.hooks.on_source(bundle)
 	let g:syntastic_check_on_wq=0
-	let g:syntastic_auto_loc_list=1
-	let g:syntastic_loc_list_height=5
+	let g:syntastic_always_populate_loc_list=1
+	let g:syntastic_auto_loc_list=0
 	let g:syntastic_check_on_open=1
-	let g:syntastic_echo_current_error=0
+	let g:syntastic_echo_current_error=1
 	let g:syntastic_enable_signs=1
-	let g:syntastic_enable_highlighting=0
-	let g:syntastic_enable_baloons=1
+	let g:syntastic_enable_highlighting=1
+	let g:syntastic_enable_balloons=0
 	let g:syntastic_error_symbol='✕'
-	let g:syntastic_style_error_symbol='△'
-	let g:syntastic_warning_symbol='✠'
+	let g:syntastic_style_error_symbol='✠'
+	let g:syntastic_warning_symbol='△'
 	let g:syntastic_style_warning_symbol='≈'
 endfunction
 
@@ -347,9 +356,9 @@ let bundle=neobundle#get('ultisnips')
 function! bundle.hooks.on_source(bundle)
 	let g:UltiSnipsEditSplit='vertical'
 	let g:UltiSnipsSnippetDirectories=['snippets']
-	let g:UltiSnipsExpandTrigger='<c-h>'
-	let g:UltiSnipsJumpForwardTrigger='<c-n>'
-	let g:UltiSnipsJumpBackwardTrigger='<c-p>'
+	let g:UltiSnipsExpandTrigger='<c-j>'
+	let g:UltiSnipsJumpForwardTrigger='<c-j>'
+	let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 endfunction
 
 " Unimpaired
@@ -397,16 +406,14 @@ function! bundle.hooks.on_source(bundle)
 endfunction
 
 function! UniteBufferSettings()
+	inoremap <buffer><expr> <cr> unite#do_action('default')
 	nmap <buffer> <esc> <Plug>(unite_all_exit)
-
 	imap <buffer> <tab>   <Plug>(unite_choose_action)
 	imap <buffer> <s-tab> <Plug>(unite_exit)
-
-	nmap <buffer> <c-n> <Plug>(unite_select_next_line)
-	imap <buffer> <c-n> <Plug>(unite_select_next_line)
-
-	nmap <buffer> <c-p> <Plug>(unite_select_previous_line)
-	imap <buffer> <c-p> <Plug>(unite_select_previous_line)
+	nmap <buffer> <c-j> <Plug>(unite_select_next_line)
+	imap <buffer> <c-j> <Plug>(unite_select_next_line)
+	nmap <buffer> <c-k> <Plug>(unite_select_previous_line)
+	imap <buffer> <c-k> <Plug>(unite_select_previous_line)
 endfunction
 
 if has('autocmd')
