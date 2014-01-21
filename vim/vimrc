@@ -509,6 +509,7 @@ function! SummarizeTabs()
 endfunction
 
 command! -nargs=0 SetTab call SetTab()
+command! -nargs=0 SummarizeTabs call SummarizeTabs()
 
 " Remove trailing whitespace
 function! RemoveTrailingWhitespace()
