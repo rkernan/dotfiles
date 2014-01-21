@@ -190,6 +190,8 @@ if has('autocmd')
 	augroup vimrc
 		" automatically resize splits on window resize
 		autocmd VimResized * :wincmd =
+		" restore line position
+		autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 	augroup END
 endif
 
