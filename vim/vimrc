@@ -302,6 +302,12 @@ function! bundle.hooks.on_source(bundle)
 	nmap \ut :GundoToggle<cr>
 endfunction
 
+" Json
+let bundle=neobundle#get('json')
+function! bundle.hooks.on_source(bundle)
+	let g:vim_json_syntax_conceal=0
+endfunction
+
 " ListToggle
 let bundle=neobundle#get('ListToggle')
 function! bundle.hooks.on_source(bundle)
