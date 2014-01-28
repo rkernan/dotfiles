@@ -4,3 +4,6 @@
 [submodule "zsh/plugin/syntax-highlighting"]
 	path = zsh/plugin/syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "fonts/powerline"]
+	path = fonts/powerline
+	url = git://github.com/Lokaltog/powerline-fonts.git

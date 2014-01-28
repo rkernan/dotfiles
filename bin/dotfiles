@@ -30,51 +30,38 @@ pre_install() {
 	cd $PWD/vim/bundle/neobundle
 	git checkout --quiet master
 	cd $LWD
-	# fonts
+	# create directories
 	mkdir_if_none $HOME/.fonts
-	ln -sf $PWD/fonts/Meslo/MesloLGM-Regular.ttf $HOME/.fonts/MesloLGM-Regular.ttf
-	fc-cache -vf $HOME/.fonts > /dev/null
+	mkdir_if_none $HOME/.config
 }
 
 install() {
 	if remove; then
 		pre_install
-		ln -sf $PWD/bin            $HOME/bin
-		ln -sf $PWD/ctags/ctags    $HOME/.ctags
-		ln -sf $PWD/git/gitconfig  $HOME/.gitconfig
-		ln -sf $PWD/git/gitignore  $HOME/.gitignore
-		ln -sf $PWD/i3             $HOME/.i3
-		ln -sf $PWD/tmux/tmux.conf $HOME/.tmux.conf
-		ln -sf $PWD/vim            $HOME/.vim
+		ln -sf $PWD/bin             $HOME/bin
+		ln -sf $PWD/ctags/ctags     $HOME/.ctags
+		ln -sf $PWD/fontconfig      $HOME/.config/fontconfig
+		ln -sf $PWD/git/gitconfig   $HOME/.gitconfig
+		ln -sf $PWD/git/gitignore   $HOME/.gitignore
+		ln -sf $PWD/i3              $HOME/.i3
+		ln -sf $PWD/powerline       $HOME/.config/powerline
+		ln -sf $PWD/tmux/tmux.conf  $HOME/.tmux.conf
+		ln -sf $PWD/vim             $HOME/.vim
 		ln -sf $PWD/xorg/xinitrc    $HOME/.xinitrc
 		ln -sf $PWD/xorg/Xresources $HOME/.Xresources
-		ln -sf $PWD/zsh            $HOME/.zsh
-		ln -sf $PWD/zsh/zshrc      $HOME/.zshrc
+		ln -sf $PWD/zsh             $HOME/.zsh
+		ln -sf $PWD/zsh/zshrc       $HOME/.zshrc
+		# fonts
+		ln -sf $PWD/fonts/powerline/Meslo/Meslo\ LG\ M\ Regular\ for\ Powerline.otf $HOME/.fonts/MesloLGM-regular-powerline.otf
+		post_install
 	fi
 }
 
-remove() {
-	if prompt "WARNING: This will destroy any existing config files! Continue?"; then
-		rm -rf $HOME/bin
-		rm -rf $HOME/.ctags
-		rm -rf $HOME/.gitconfig
-		rm -rf $HOME/.gitignore
-		rm -rf $HOME/.i3
-		rm -rf $HOME/.tmux.conf
-		rm -rf $HOME/.vim
-		rm -rf $HOME/.vimrc
-		rm -rf $HOME/.xinitrc
-		rm -rf $HOME/.Xresources
-		rm -rf $HOME/.zsh
-		rm -rf $HOME/.zshrc
-		retval=0
-	else
-		retval=1
-	fi
-	return "$retval"
-}
-
-config() {
+post_install() {
+	# cache fonts
+	fc-cache -vf $HOME/.fonts > /dev/null
+	# install vim plugins
+	vim +qall
 	# compile YouCompleteMe
 	if prompt "Compile YouCompleteMe?"; then
 		FLAGS=""
@@ -94,14 +81,40 @@ config() {
 	fi
 }
 
+remove() {
+	if prompt "WARNING: This will destroy any existing config files! Continue?"; then
+		rm -rf $HOME/bin
+		rm -rf $HOME/.config/fontconfig
+		rm -rf $HOME/.config/powerline
+		rm -rf $HOME/.ctags
+		rm -rf $HOME/.gitconfig
+		rm -rf $HOME/.gitignore
+		rm -rf $HOME/.i3
+		rm -rf $HOME/.tmux.conf
+		rm -rf $HOME/.vim
+		rm -rf $HOME/.vimrc
+		rm -rf $HOME/.xinitrc
+		rm -rf $HOME/.Xresources
+		rm -rf $HOME/.zsh
+		rm -rf $HOME/.zshrc
+		retval=0
+	else
+		retval=1
+	fi
+	return "$retval"
+}
+
 case $1 in
-	install|remove|config)
+	install|remove)
 		$1
+		;;
+	config)
+		post_install
 		;;
 	*)
 		echo "Options:"
 		echo "  install - symlink dotfiles"
 		echo "  remove  - remove all dotfiles"
-		echo "  config  - config plugins"
+		echo "  config  - configure plugins"
 		exit 1
 esac

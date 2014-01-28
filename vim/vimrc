@@ -326,12 +326,6 @@ function! bundle.hooks.on_source(bundle)
 	let g:neobundle_autoupdate_time=172800
 endfunction
 
-" Powerline
-let bundle=neobundle#get('powerline')
-function! bundle.hooks.on_source(bundle)
-	let g:powerline_config_path=expand('~/.vim/powerline')
-endfunction
-
 " Signify
 let bundle=neobundle#get('signify')
 function! bundle.hooks.on_source(bundle)

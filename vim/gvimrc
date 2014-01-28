@@ -6,7 +6,7 @@ set guioptions-=i " hide scrollbars
 set guioptions-=r " hide scrollbars
 set guioptions-=L " hide scrollbars
 set guioptions-=l " hide scrollbars
-set guifont=Meslo\ LG\ M\ 8
+set guifont=Meslo\ LG\ M\ for\ Powerline\ 8
 
 " Toggle menu
 nmap <f1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>
