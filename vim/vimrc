@@ -37,8 +37,6 @@ NeoBundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim'}
 NeoBundle 'mhinz/vim-signify', {'augroup': 'signify'}
 
 " languages
-NeoBundle 'python.vim'
-NeoBundle 'STL-improved'
 NeoBundle 'Blackrush/vim-gocode', {'external_commands': 'gocode'}
 NeoBundle 'elzr/vim-json'
 NeoBundle 'tikhomirov/vim-glsl'
@@ -49,26 +47,10 @@ NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/unite-session', {'depends': 'Shougo/unite.vim'}
 
 " other
-NeoBundle 'amilaperera/bufkill.vim'
-NeoBundle 'godlygeek/tabular'
-NeoBundleLazy 'gorodinskiy/vim-coloresque', {
-			\    'autoload': {
-			\        'filetypes': ['html', 'less', 'sass', 'scss', 'stylus', 'vim']
-			\    }
-			\}
 NeoBundle 'kana/vim-textobj-entire', {'depends': 'kana/vim-textobj-user'}
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'sjl/gundo.vim'
 NeoBundle 'SirVer/ultisnips'
-NeoBundleLazy 'tmhedberg/matchit', {
-			\    'autoload': {
-			\        'filetypes':
-			\            ['ada', 'asp', 'csh', 'dtd', 'entity', 'essbase', 'fortran',
-			\             'html', 'jsp', 'latex', 'lua', 'pascal', 'sgml', 'shell',
-			\             'tcsh', 'vim', 'xml']
-			\    }
-			\}
 NeoBundle 'tpope/vim-abolish', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-endwise'
@@ -244,10 +226,13 @@ endfunction
 " -------
 " Plugins
 " -------
-" BufKill
-let bundle=neobundle#get('bufkill')
+let bundle = neobundle#get('commentary')
 function! bundle.hooks.on_source(bundle)
-	let g:BufKillCreateMappings=0
+	if has('autocmd')
+		augroup vimrc
+			autocmd FileType json setlocal commentstring=%s
+		augroup END
+	endif
 endfunction
 
 " DelimitMate
@@ -291,17 +276,6 @@ function! bundle.hooks.on_source(bundle)
 			autocmd FileType go autocmd BufWritePre <buffer> :keepjumps Fmt
 		augroup END
 	endif
-endfunction
-
-" Gundo
-let bundle=neobundle#get('gundo')
-function! bundle.hooks.on_source(bundle)
-	let g:gundo_width=30
-	let g:gundo_preview_height=10
-	let g:gundo_preview_bottom=1
-	let g:gundo_right=1
-	let g:gundo_help=0
-	nmap \ut :GundoToggle<cr>
 endfunction
 
 " Json
