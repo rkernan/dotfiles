@@ -53,6 +53,7 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'tpope/vim-abolish', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
+NeoBundle 'tpope/vim-dispatch'
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
