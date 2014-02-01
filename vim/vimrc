@@ -146,12 +146,7 @@ set softtabstop=4 " number of spaces a tab counts for while editing
 set noexpandtab   " do not expand tabs to spaces
 set wrap         " wrap displayed text
 set textwidth=80 " wrap to 80 columns
-set formatoptions =c " auto-wrap comments using textwidth
-set formatoptions+=q " allow comment formatting using 'gq'
-set formatoptions+=r " automatically insert comment leader on <Enter>
-set formatoptions+=n " format numbered lists
-set formatoptions+=j " remove comment leaders (where it makes sense)
-set autoindent  " copy indentation from previous line when starting a new one
+set formatoptions=cqrnj
 set smartindent " smart indent new lines
 set shiftround  " round indent to multiple of shiftwidth
 set cinoptions+=L-1 " indent of labels -> none
