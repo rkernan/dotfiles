@@ -25,11 +25,6 @@ mkdir_if_none() {
 pre_install() {
 	# initialize submodules
 	git submodule --quiet update --init --recursive
-	# neobundle
-	LWD=$PWD
-	cd $PWD/vim/bundle/neobundle
-	git checkout --quiet master
-	cd $LWD
 	# create directories
 	mkdir_if_none $HOME/.fonts
 	mkdir_if_none $HOME/.config
