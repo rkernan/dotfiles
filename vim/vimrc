@@ -345,7 +345,7 @@ endfunction
 let bundle=neobundle#get('ultisnips')
 function! bundle.hooks.on_source(bundle)
 	let g:UltiSnipsEditSplit='vertical'
-	let g:UltiSnipsSnippetDirectories=['snippets']
+	let g:UltiSnipsSnippetDirectories=['snips']
 	let g:UltiSnipsExpandTrigger='<c-j>'
 	let g:UltiSnipsJumpForwardTrigger='<c-j>'
 	let g:UltiSnipsJumpBackwardTrigger='<c-k>'
