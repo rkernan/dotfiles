@@ -465,14 +465,14 @@ cmap w!! w !sudo tee > /dev/null %
 
 " Set tab width using a nice prompt
 function! SetTab()
-	let l:tabstop = 1 * input('set tabstop = softtabstop = shiftwidth = ')
+	let l:tabstop = 1 * input('setlocal tabstop = softtabstop = shiftwidth = ')
 	if l:tabstop > 0
 		let &l:tw = l:tabstop
 		let &l:sts = l:tabstop
 		let &l:sw = l:tabstop
 	endif
-	let l:et = input('set expandtab = ')
-	if l:et == 'no' || l:et == 0
+	let l:et = input('setlocal expandtab = ')
+	if l:et == 0
 		setlocal noexpandtab
 	else
 		setlocal expandtab
