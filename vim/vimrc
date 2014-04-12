@@ -31,7 +31,7 @@ NeoBundle 'gist:kernan/7382226', {
 
 " appearance
 NeoBundle 'tomasr/molokai'
-NeoBundle 'Lokaltog/powerline', {'rtp': 'powerline/bindings/vim'}
+NeoBundle 'itchyny/lightline.vim'
 
 " vcs integration
 NeoBundle 'mhinz/vim-signify', {'augroup': 'signify'}
@@ -295,6 +295,104 @@ endfunction
 let bundle=neobundle#get('json')
 function! bundle.hooks.on_source(bundle)
 	let g:vim_json_syntax_conceal=0
+endfunction
+
+" lightline
+let bundle=neobundle#get('lightline')
+function! bundle.hooks.on_source(bundle)
+	let g:lightline = {
+		\   'colorscheme': 'wombat',
+		\   'mode_map': {
+		\     'n':      'N',
+		\     'i':      'I',
+		\     'R':      'R',
+		\     'v':      'V',
+		\     'V':      'V',
+		\     "\<c-v>": 'V',
+		\     'c':      'C',
+		\     's':      'S',
+		\     'S':      'S',
+		\     "\<c-s>": 'S',
+		\     '?':      '?',
+		\   },
+		\   'separator': {
+		\     'left': '',
+		\     'right': ''
+		\   },
+		\   'subseparator': {
+		\     'left': '›',
+		\     'right': '‹'
+		\   },
+		\   'component_function': {
+		\     'fileencoding': 'LightlineComponent_fileencoding',
+		\     'fileformat':   'LightlineComponent_fileformat',
+		\     'filename':     'LightlineComponent_filename',
+		\     'filetype':     'LightlineComponent_filetype',
+		\     'vcs':          'LightlineComponent_vcs'
+		\   },
+		\   'active': {
+		\     'left':  [['mode', 'paste'],
+		\               ['vcs', 'filename']],
+		\     'right': [['lineinfo'],
+		\               ['percent'],
+		\               ['fileformat', 'fileencoding', 'filetype']]
+		\   }
+		\ }
+	let g:lightline_hunks_symbols = ['+', '~', '-']
+endfunction
+
+function! LightlineComponent_fileencoding()
+	if winwidth(0) > 70
+		if exists('b:lightline_show_fileencoding') && b:lightline_show_fileencoding == 1
+			return strlen(&fenc) ? &fenc : ''
+		endif
+	endif
+	return ''
+endfunction
+
+function! LightlineComponent_fileformat()
+	if winwidth(0) > 70
+		if exists('b:lightline_show_fileformat') && b:lightline_show_fileformat == 1
+			return strlen(&fileformat) ? &fileformat : ''
+		endif
+	endif
+	return ''
+endfunction
+
+function! LightlineComponent_filename()
+	let l:filename = expand('%:t')
+	let l:filename = len(l:filename) ? l:filename : '[No Name]'
+	let l:readonly = &readonly ? '!! ' : ''
+	let l:modified = &modified ? ' +' : ''
+	return l:readonly . l:filename . l:modified
+endfunction
+
+function! LightlineComponent_filetype()
+	if winwidth(0) > 70
+		if exists('b:lightline_show_filetype') && b:lightline_show_filetype == 1
+			return strlen(&filetype) ? &filetype : ''
+		endif
+	else
+		return ''
+	endif
+endfunction
+
+function! LightlineComponent_vcs()
+	if g:loaded_signify == 1
+		" build string of hunks
+		let l:hunks = sy#repo#get_stats()
+		let l:hunks_str = ''
+		for i in [0, 1, 2]
+			if l:hunks[i] > 0
+				let l:hunks_str .= printf('%s%s', g:lightline_hunks_symbols[i], l:hunks[i])
+				if i < 2 && l:hunks[i+1] > 0
+					let l:hunks_str .= ' '
+				endif
+			endif
+		endfor
+		return l:hunks_str
+	endif
+	return ''
 endfunction
 
 " ListToggle

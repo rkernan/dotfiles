@@ -33,7 +33,8 @@ URxvt.color15:          #dddddd
 URxvt.saveLines: 10000
 URxvt.scrollBar: false
 URxvt.scrollBar_right: false
-URxvt.font: xft:Meslo LG M for Powerline:style=Regular:size=8
+/* URxvt.font: xft:Meslo LG M:style=Regular:size=8 */
+URxvt.font: xft:Meslo LG S:style=Regular:size=8
 URxvt.letterSpace: -1
 URxvt.perl-ext-common: default,matcher
 URxvt.url-launcher: /usr/bin/firefox
