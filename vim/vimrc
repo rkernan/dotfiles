@@ -372,9 +372,7 @@ function! LightlineComponent_filetype()
 		if exists('b:lightline_show_filetype') && b:lightline_show_filetype == 1
 			return strlen(&filetype) ? &filetype : ''
 		endif
-	else
-		return ''
-	endif
+	return ''
 endfunction
 
 function! LightlineComponent_vcs()
