@@ -1,0 +1,56 @@
+snippet #! "environment" b
+#!/usr/bin/env python
+endsnippet
+
+snippet imp "import .." b
+import ${0:module}
+endsnippet
+
+snippet from "from .. import .." b
+from ${1:package} import ${2:module}
+endsnippet
+
+snippet cl "class .." b
+class ${1:class}(${2:object}):
+	"""${3:docstring}"""
+	def __init__(self, ${4:args}):
+		$0
+endsnippet
+
+snippet def "def .." b
+def ${1:function}(${2:`indent('.') ? 'self' : ''`}):
+	"""${3:docstring}"""
+	$0
+endsnippet
+
+snippet wh "while .." b
+while ${1:condition}:
+	$0
+endsnippet
+
+snippet for "for .." b
+for ${1:var} in ${2:range}:
+	$0
+endsnippet
+
+snippet if "if .." b
+if ${1:condition}:
+	$0
+endsnippet
+
+snippet ife "if .. else" b
+if ${1:condition}:
+	$2
+else:
+	$3
+endsnippet
+
+snippet el "else" b
+else:
+	$0
+endsnippet
+
+snippet elif "elif .." b
+elif ${1:condition}:
+	$0
+endsnippet
