@@ -7,7 +7,7 @@ if has('vim_starting')
 	set runtimepath+=$HOME/.vim/bundle/neobundle
 endif
 
-let g:neobundle#enable_name_conversion=1
+let g:neobundle#enable_name_conversion = 1
 
 call neobundle#rc(expand('~/.vim/bundle'))
 
@@ -87,8 +87,8 @@ call MkdirIfNone(expand('~/.vim/undo'))
 filetype plugin indent on
 set omnifunc=syntaxcomplete#Complete
 
-let mapleader="\\"
-let maplocalleader="\\"
+let mapleader = "\\"
+let maplocalleader = "\\"
 
 set history=1000
 set undoreload=1000
@@ -179,9 +179,9 @@ endif
 " -----------
 syntax on
 
-let bundle=neobundle#get('molokai')
+let bundle = neobundle#get('molokai')
 function! bundle.hooks.on_source(bundle)
-	let g:rehash256=1
+	let g:rehash256 = 1
 	set background=dark
 	colorscheme molokai
 
@@ -233,21 +233,21 @@ function! bundle.hooks.on_source(bundle)
 endfunction
 
 " DelimitMate
-let bundle=neobundle#get('delimitMate')
+let bundle = neobundle#get('delimitMate')
 function! bundle.hooks.on_source(bundle)
-	let g:delimitMate_autoclose=1
-	let g:delimitMate_matchpairs="(:),[:],{:}"
-	let g:delimitMate_smart_matchpairs=1
-	let g:delimitMate_balance_matchpairs=1
-	let g:delimitMate_quotes="\" '"
-	let g:delimitMate_smart_quotes=1
-	let g:delimitMate_expand_cr=1
-	let g:delimitMate_expand_space=1
-	let g:delimitMate_excluded_regions="Comment"
+	let g:delimitMate_autoclose = 1
+	let g:delimitMate_matchpairs = "(:),[:],{:}"
+	let g:delimitMate_smart_matchpairs = 1
+	let g:delimitMate_balance_matchpairs = 1
+	let g:delimitMate_quotes = "\" '"
+	let g:delimitMate_smart_quotes = 1
+	let g:delimitMate_expand_cr = 1
+	let g:delimitMate_expand_space = 1
+	let g:delimitMate_excluded_regions = "Comment"
 	if has('autocmd')
 		augroup vimrc
 			" filetype specific quotes
-			autocmd FileType vim let b:delimitMate_quotes="'"
+			autocmd FileType vim let b:delimitMate_quotes = "'"
 		augroup END
 	endif
 endfunction
@@ -255,11 +255,11 @@ endfunction
 " EasyMotion
 let bundle=neobundle#get('easymotion')
 function! bundle.hooks.on_source(bundle)
-	let g:EasyMotion_enter_jump_first=1
-	let g:EasyMotion_smartcase=1
-	let g:EasyMotion_use_smartsign_us=1
-	let g:EasyMotion_startofline=0
-	let g:EasyMotion_move_highlight=0
+	let g:EasyMotion_enter_jump_first = 1
+	let g:EasyMotion_smartcase = 1
+	let g:EasyMotion_use_smartsign_us = 1
+	let g:EasyMotion_startofline = 0
+	let g:EasyMotion_move_highlight = 0
 	map em <plug>(easymotion-prefix)
 	" replace default search
 	map / <plug>(easymotion-sn)
@@ -269,19 +269,19 @@ function! bundle.hooks.on_source(bundle)
 endfunction
 
 " EasyTags
-let bundle=neobundle#get('easytags')
+let bundle = neobundle#get('easytags')
 function! bundle.hooks.on_source(bundle)
 	set tags=./tags;/
-	let g:easytags_dynamic_files=1
+	let g:easytags_dynamic_files = 1
 	call MkdirIfNone(expand('~/.vim/tags'))
-	let g:easytags_by_filetype=expand('~/.vim/tags')
-	let g:easytags_auto_highlight=1
-	let g:easytags_updatetime_warn=0
-	let g:easytags_include_members=0
+	let g:easytags_by_filetype = expand('~/.vim/tags')
+	let g:easytags_auto_highlight = 1
+	let g:easytags_updatetime_warn = 0
+	let g:easytags_include_members = 0
 endfunction
 
 " Gocode
-let bundle=neobundle#get('gocode')
+let bundle = neobundle#get('gocode')
 function! bundle.hooks.on_source(bundle)
 	if has('autocmd')
 		augroup vimrc
@@ -292,13 +292,13 @@ function! bundle.hooks.on_source(bundle)
 endfunction
 
 " Json
-let bundle=neobundle#get('json')
+let bundle = neobundle#get('json')
 function! bundle.hooks.on_source(bundle)
-	let g:vim_json_syntax_conceal=0
+	let g:vim_json_syntax_conceal = 0
 endfunction
 
 " lightline
-let bundle=neobundle#get('lightline')
+let bundle = neobundle#get('lightline')
 function! bundle.hooks.on_source(bundle)
 	let g:lightline = {
 		\   'colorscheme': 'wombat',
@@ -342,8 +342,8 @@ function! bundle.hooks.on_source(bundle)
 endfunction
 
 function! LightlineComponent_fileencoding()
-	if winwidth(0) > 70
-		if exists('b:lightline_show_fileencoding') && b:lightline_show_fileencoding == 1
+	if exists('b:lightline_show_fileencoding') && b:lightline_show_fileencoding == 1
+		if winwidth(0) > 70
 			return strlen(&fenc) ? &fenc : ''
 		endif
 	endif
@@ -351,8 +351,8 @@ function! LightlineComponent_fileencoding()
 endfunction
 
 function! LightlineComponent_fileformat()
-	if winwidth(0) > 70
-		if exists('b:lightline_show_fileformat') && b:lightline_show_fileformat == 1
+	if exists('b:lightline_show_fileformat') && b:lightline_show_fileformat == 1
+		if winwidth(0) > 70
 			return strlen(&fileformat) ? &fileformat : ''
 		endif
 	endif
@@ -368,10 +368,11 @@ function! LightlineComponent_filename()
 endfunction
 
 function! LightlineComponent_filetype()
-	if winwidth(0) > 70
-		if exists('b:lightline_show_filetype') && b:lightline_show_filetype == 1
+	if exists('b:lightline_show_filetype') && b:lightline_show_filetype == 1
+		if winwidth(0) > 70
 			return strlen(&filetype) ? &filetype : ''
 		endif
+	endif
 	return ''
 endfunction
 
@@ -394,61 +395,61 @@ function! LightlineComponent_vcs()
 endfunction
 
 " ListToggle
-let bundle=neobundle#get('ListToggle')
+let bundle = neobundle#get('ListToggle')
 function! bundle.hooks.on_source(bundle)
-	let g:lt_location_list_toggle_map='<leader>l'
-	let g:lt_quickfix_list_toggle_map='<leader>q'
-	let g:lt_height=10
+	let g:lt_location_list_toggle_map = '<leader>l'
+	let g:lt_quickfix_list_toggle_map = '<leader>q'
+	let g:lt_height = 10
 endfunction
 
 " NeoBundle AutoUpdate
-let bundle=neobundle#get('neobundle_autoupdate')
+let bundle = neobundle#get('neobundle_autoupdate')
 function! bundle.hooks.on_source(bundle)
 	call MkdirIfNone(expand('~/.vim/cache'))
-	let g:neobundle_autoupdate_dir=expand('~/.vim/cache')
-	let g:neobundle_autoupdate_time=172800
+	let g:neobundle_autoupdate_dir = expand('~/.vim/cache')
+	let g:neobundle_autoupdate_time = 172800
 endfunction
 
 " Signify
-let bundle=neobundle#get('signify')
+let bundle = neobundle#get('signify')
 function! bundle.hooks.on_source(bundle)
-	let g:signify_sign_overwrite=0
-	let g:signify_sign_add='+'
-	let g:signify_sign_change='~'
-	let g:signify_sign_delete='-'
-	let g:signify_sign_delete_first_line='^'
+	let g:signify_sign_overwrite = 0
+	let g:signify_sign_add = '+'
+	let g:signify_sign_change = '~'
+	let g:signify_sign_delete = '-'
+	let g:signify_sign_delete_first_line = '^'
 endfunction
 
 " Syntastic
-let bundle=neobundle#get('syntastic')
+let bundle = neobundle#get('syntastic')
 function! bundle.hooks.on_source(bundle)
-	let g:syntastic_check_on_wq=0
-	let g:syntastic_always_populate_loc_list=1
-	let g:syntastic_auto_loc_list=0
-	let g:syntastic_check_on_open=1
-	let g:syntastic_echo_current_error=1
-	let g:syntastic_enable_signs=0
-	let g:syntastic_enable_highlighting=1
-	let g:syntastic_enable_balloons=0
-	let g:syntastic_error_symbol='✕'
-	let g:syntastic_style_error_symbol='✠'
-	let g:syntastic_warning_symbol='△'
-	let g:syntastic_style_warning_symbol='≈'
-	let g:syntastic_python_checkers=['flake8']
+	let g:syntastic_check_on_wq = 0
+	let g:syntastic_always_populate_loc_list = 1
+	let g:syntastic_auto_loc_list = 0
+	let g:syntastic_check_on_open = 1
+	let g:syntastic_echo_current_error = 1
+	let g:syntastic_enable_signs = 0
+	let g:syntastic_enable_highlighting = 1
+	let g:syntastic_enable_balloons = 0
+	let g:syntastic_error_symbol = '✕'
+	let g:syntastic_style_error_symbol = '✠'
+	let g:syntastic_warning_symbol = '△'
+	let g:syntastic_style_warning_symbol = '≈'
+	let g:syntastic_python_checkers = ['flake8']
 endfunction
 
 " UltiSnips
-let bundle=neobundle#get('ultisnips')
+let bundle = neobundle#get('ultisnips')
 function! bundle.hooks.on_source(bundle)
-	let g:UltiSnipsEditSplit='vertical'
-	let g:UltiSnipsSnippetDirectories=['snips']
-	let g:UltiSnipsExpandTrigger='<c-j>'
-	let g:UltiSnipsJumpForwardTrigger='<c-j>'
-	let g:UltiSnipsJumpBackwardTrigger='<c-k>'
+	let g:UltiSnipsEditSplit = 'vertical'
+	let g:UltiSnipsSnippetDirectories = ['snips']
+	let g:UltiSnipsExpandTrigger = '<c-j>'
+	let g:UltiSnipsJumpForwardTrigger = '<c-j>'
+	let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 endfunction
 
 " Unimpaired
-let bundle=neobundle#get('unimpaired')
+let bundle = neobundle#get('unimpaired')
 function! bundle.hooks.on_source(bundle)
 	nmap mk [e
 	nmap mj ]e
@@ -457,22 +458,22 @@ function! bundle.hooks.on_source(bundle)
 endfunction
 
 " Unite
-let bundle=neobundle#get('unite')
+let bundle = neobundle#get('unite')
 function! bundle.hooks.on_source(bundle)
 	if executable('ack')
-		let g:unite_source_grep_command='ack'
-		let g:unite_source_grep_default_opts='--noheading --nocolor -H'
-		let g:unite_source_grep_recursive_opt=''
+		let g:unite_source_grep_command = 'ack'
+		let g:unite_source_grep_default_opts = '--noheading --nocolor -H'
+		let g:unite_source_grep_recursive_opt = ''
 	endif
 
-	let g:unite_prompt='» '
-	let g:unite_source_history_yank_enable=1
-	let g:unite_data_directory=expand('~/.vim/cache')
-	let g:unite_source_session_default_session_name='default'
-	let g:unite_source_session_path=expand('~/.vim/sessions')
-	let g:unite_split_rule='botright'
-	let g:unite_force_overwrite_statusline=0
-	let g:unite_winheight=20
+	let g:unite_prompt = '» '
+	let g:unite_source_history_yank_enable = 1
+	let g:unite_data_directory = expand('~/.vim/cache')
+	let g:unite_source_session_default_session_name = 'default'
+	let g:unite_source_session_path = expand('~/.vim/sessions')
+	let g:unite_split_rule = 'botright'
+	let g:unite_force_overwrite_statusline = 0
+	let g:unite_winheight = 20
 	call unite#filters#matcher_default#use(['matcher_fuzzy'])
 	call unite#filters#sorter_default#use(['sorter_rank'])
 	call unite#custom#source('file_rec,file_rec/async', 'max_candidates', 0)
@@ -510,19 +511,19 @@ if has('autocmd')
 endif
 
 " YouCompleteMe
-let bundle=neobundle#get('YouCompleteMe')
+let bundle = neobundle#get('YouCompleteMe')
 function! bundle.hooks.on_source(bundle)
-	let g:ycm_global_ycm_extra_conf=expand('~/.vim/ycm/ycm_extra_conf.py')
-	let g:ycm_confirm_extra_conf=1
-	let g:ycm_cache_omnifunc=1
-	let g:ycm_collect_identifiers_from_tags_files=0
-	let g:ycm_seed_identifiers_with_syntax=1
-	let g:ycm_key_detailed_diagnostics=''
-	let g:ycm_key_list_select_completion=['<tab>']
-	let g:ycm_key_list_previous_completion=['<s-tab>']
-	let g:ycm_extra_conf_c_flags='-xc -std=c11 -Wall -Wextra -Iinc -Iinclude'
-	let g:ycm_extra_conf_cpp_flags='-xc++ -std=c++11 -Wall -Wextra -Iinc -Iinclude'
-	let g:ycm_extra_conf_vim_data=[
+	let g:ycm_global_ycm_extra_conf = expand('~/.vim/ycm/ycm_extra_conf.py')
+	let g:ycm_confirm_extra_conf = 1
+	let g:ycm_cache_omnifunc = 1
+	let g:ycm_collect_identifiers_from_tags_files = 0
+	let g:ycm_seed_identifiers_with_syntax = 1
+	let g:ycm_key_detailed_diagnostics = ''
+	let g:ycm_key_list_select_completion = ['<tab>']
+	let g:ycm_key_list_previous_completion = ['<s-tab>']
+	let g:ycm_extra_conf_c_flags = '-xc -std=c11 -Wall -Wextra -Iinc -Iinclude'
+	let g:ycm_extra_conf_cpp_flags = '-xc++ -std=c++11 -Wall -Wextra -Iinc -Iinclude'
+	let g:ycm_extra_conf_vim_data = [
 				\   '&filetype',
 				\   'g:ycm_extra_conf_c_flags',
 				\   'g:ycm_extra_conf_cpp_flags'
