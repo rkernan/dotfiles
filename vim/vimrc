@@ -361,9 +361,10 @@ endfunction
 
 function! LightlineComponent_filename()
 	let l:filename = expand('%:t')
-	let l:filename = len(l:filename) ? l:filename : '[No Name]'
+	let l:filename = len(l:filename) ? l:filename : ''
 	let l:readonly = &readonly ? '!! ' : ''
-	let l:modified = &modified ? ' +' : ''
+	let l:modified = &modified ? '+' : ''
+	let l:modified = (len(l:modified) && len(l:filename) ? ' ' : '') . l:modified
 	return l:readonly . l:filename . l:modified
 endfunction
 
