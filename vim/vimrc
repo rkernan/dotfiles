@@ -14,20 +14,20 @@ call neobundle#rc(expand('~/.vim/bundle'))
 NeoBundleFetch 'Shougo/neobundle.vim', {'branch': 'master'}
 
 NeoBundle 'Shougo/vimproc', {
-			\   'build' : {
-			\       'unix'   : 'make -f make_unix.mak',
-			\       'mac'    : 'make -f make_mac.mak',
-			\       'cygwin' : 'make -f make_cygwin.mak',
-			\       'windows': 'make -f make_mingw32.mak'
-			\   }
-			\}
+	\   'build' : {
+	\     'unix'   : 'make -f make_unix.mak',
+	\     'mac'    : 'make -f make_mac.mak',
+	\     'cygwin' : 'make -f make_cygwin.mak',
+	\     'windows': 'make -f make_mingw32.mak'
+	\   }
+	\ }
 
 NeoBundle 'gist:kernan/7382226', {
-			\   'name': 'neobundle_autoupdate',
-			\   'script_type': 'plugin',
-			\   'augroup': 'neobundle_autoupdate',
-			\   'depends': ['Shougo/neobundle.vim', 'Shougo/unite.vim']
-			\}
+	\   'name': 'neobundle_autoupdate',
+	\   'script_type': 'plugin',
+	\   'augroup': 'neobundle_autoupdate',
+	\   'depends': ['Shougo/neobundle.vim', 'Shougo/unite.vim']
+	\ }
 
 " appearance
 NeoBundle 'tomasr/molokai'
@@ -37,8 +37,7 @@ NeoBundle 'itchyny/lightline.vim'
 NeoBundle 'mhinz/vim-signify', {'augroup': 'signify'}
 
 " languages
-NeoBundle 'Blackrush/vim-gocode', {'external_commands': 'gocode'}
-NeoBundle 'elzr/vim-json'
+NeoBundle 'leshill/vim-json'
 NeoBundle 'tikhomirov/vim-glsl'
 NeoBundle 'tpope/vim-markdown'
 
@@ -54,13 +53,15 @@ NeoBundle 'scrooloose/syntastic'
 NeoBundle 'SirVer/ultisnips'
 NeoBundle 'tpope/vim-abolish', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
-NeoBundle 'tpope/vim-dispatch'
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'Valloric/ListToggle'
 NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc', 'external_commands': 'ctags'}
+
+" load matchit.vim
+runtime! macros/matchit.vim
 
 if has('autocmd')
 	augroup vimrc
@@ -205,6 +206,7 @@ function! bundle.hooks.on_source(bundle)
 		highlight SignifySignAdd            ctermbg=235 ctermfg=28  cterm=none
 		highlight SignifySignDelete         ctermbg=235 ctermfg=196 cterm=none
 		highlight SignifySignChange         ctermbg=235 ctermfg=226 cterm=none
+	endif
 
 	" Syntastic colors
 	highlight SyntasticErrorSign        guibg=#232526   guifg=Red    gui=none
@@ -217,12 +219,12 @@ function! bundle.hooks.on_source(bundle)
 		highlight SyntasticStyleErrorSign   ctermbg=235 ctermfg=196 cterm=none
 		highlight SyntasticStyleWarningSign ctermbg=235 ctermfg=226 cterm=none
 	endif
-	endif
 endfunction
 
 " -------
 " Plugins
 " -------
+" commentary
 let bundle = neobundle#get('commentary')
 function! bundle.hooks.on_source(bundle)
 	if has('autocmd')
@@ -278,23 +280,6 @@ function! bundle.hooks.on_source(bundle)
 	let g:easytags_auto_highlight = 1
 	let g:easytags_updatetime_warn = 0
 	let g:easytags_include_members = 0
-endfunction
-
-" Gocode
-let bundle = neobundle#get('gocode')
-function! bundle.hooks.on_source(bundle)
-	if has('autocmd')
-		augroup vimrc
-			" FIXME temporary fix for Fmt not working on the first file
-			autocmd FileType go autocmd BufWritePre <buffer> :keepjumps Fmt
-		augroup END
-	endif
-endfunction
-
-" Json
-let bundle = neobundle#get('json')
-function! bundle.hooks.on_source(bundle)
-	let g:vim_json_syntax_conceal = 0
 endfunction
 
 " lightline
