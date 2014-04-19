@@ -84,7 +84,10 @@ export EDITOR=vim
 
 # Path
 typeset -U path
+# user bin
 path+=("$HOME/bin")
+# RVM
+path+=("$HOME/.rvm/bin")
 # Go
 export GOPATH=$HOME/.go
 path+=("$GOPATH/bin")
