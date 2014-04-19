@@ -9,7 +9,7 @@ endif
 
 let g:neobundle#enable_name_conversion = 1
 
-call neobundle#rc(expand('~/.vim/bundle'))
+call neobundle#begin(expand('~/.vim/bundle'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
@@ -59,6 +59,8 @@ NeoBundle 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'Valloric/ListToggle'
 NeoBundle 'Valloric/YouCompleteMe'
 NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc', 'external_commands': 'ctags'}
+
+call neobundle#end()
 
 " load matchit.vim
 runtime! macros/matchit.vim
