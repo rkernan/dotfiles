@@ -509,8 +509,8 @@ function! bundle.hooks.on_source(bundle)
 	let g:ycm_key_detailed_diagnostics = ''
 	let g:ycm_key_list_select_completion = ['<tab>']
 	let g:ycm_key_list_previous_completion = ['<s-tab>']
-	let g:ycm_extra_conf_c_flags = '-xc -std=c11 -Wall -Wextra -Iinc -Iinclude'
-	let g:ycm_extra_conf_cpp_flags = '-xc++ -std=c++11 -Wall -Wextra -Iinc -Iinclude'
+	let g:ycm_extra_conf_c_flags = '-xc -std=c11 -Wall -Wextra'
+	let g:ycm_extra_conf_cpp_flags = '-xc++ -std=c++11 -Wall -Wextra'
 	let g:ycm_extra_conf_vim_data = [
 				\   '&filetype',
 				\   'g:ycm_extra_conf_c_flags',
