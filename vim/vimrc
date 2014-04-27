@@ -226,6 +226,10 @@ endfunction
 " -------
 " Plugins
 " -------
+" netrw
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
+
 " commentary
 let bundle = neobundle#get('commentary')
 function! bundle.hooks.on_source(bundle)
