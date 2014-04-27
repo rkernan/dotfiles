@@ -2,7 +2,7 @@ import os
 
 include_dirs = ['inc', 'include']
 library_dirs = ['lib', 'ext']
-root_dir_files = ['.git', 'src']
+root_dir_files = ['.git', 'src', 'inc', 'test']
 
 
 def prepare_flags(flags):
