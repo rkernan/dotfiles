@@ -51,6 +51,7 @@ NeoBundle 'Lokaltog/vim-easymotion', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'SirVer/ultisnips'
+NeoBundle 'tommcdo/vim-exchange'
 NeoBundle 'tpope/vim-abolish', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-endwise'
