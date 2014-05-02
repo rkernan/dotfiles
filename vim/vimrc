@@ -59,7 +59,6 @@ NeoBundle 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'Valloric/ListToggle'
 NeoBundle 'Valloric/YouCompleteMe'
-NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc', 'external_commands': 'ctags'}
 
 call neobundle#end()
 
@@ -169,6 +168,8 @@ set hlsearch   " highlight all search results
 set gdefault   " substitute all matches on a line by default
 set scrolloff=3
 
+set tags=./tags;/
+
 if has('autocmd')
 	augroup vimrc
 		" automatically resize splits on window resize
@@ -275,18 +276,6 @@ function! bundle.hooks.on_source(bundle)
 	omap / <plug>(easymotion-tn)
 	map n <plug>(easymotion-next)
 	map N <plug>(easymotion-prev)
-endfunction
-
-" EasyTags
-let bundle = neobundle#get('easytags')
-function! bundle.hooks.on_source(bundle)
-	set tags=./tags;/
-	let g:easytags_dynamic_files = 1
-	call MkdirIfNone(expand('~/.vim/tags'))
-	let g:easytags_by_filetype = expand('~/.vim/tags')
-	let g:easytags_auto_highlight = 1
-	let g:easytags_updatetime_warn = 0
-	let g:easytags_include_members = 0
 endfunction
 
 " lightline
