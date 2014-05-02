@@ -48,6 +48,7 @@ NeoBundle 'Shougo/unite-session', {'depends': 'Shougo/unite.vim'}
 " other
 NeoBundle 'kana/vim-textobj-entire', {'depends': 'kana/vim-textobj-user'}
 NeoBundle 'Lokaltog/vim-easymotion', {'depends': 'tpope/vim-repeat'}
+NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'SirVer/ultisnips'
