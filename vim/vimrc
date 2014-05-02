@@ -11,7 +11,7 @@ let g:neobundle#enable_name_conversion = 1
 
 call neobundle#begin(expand('~/.vim/bundle'))
 
-NeoBundleFetch 'Shougo/neobundle.vim'
+NeoBundleFetch 'Shougo/neobundle.vim', 'master'
 
 NeoBundle 'Shougo/vimproc', {
 	\   'build' : {
