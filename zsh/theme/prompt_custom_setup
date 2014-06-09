@@ -1,11 +1,8 @@
-function +vi-git-untracked() {
-	if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
-		hook_com[unstaged]+='%F{red}%B✕%b%f'
-	fi
-}
-
 function prompt_custom_precmd {
 	vcs_info
+	if (( $+functions[git-info] )); then
+		git-info
+	fi
 }
 
 function prompt_custom_setup {
@@ -19,6 +16,7 @@ function prompt_custom_setup {
 	add-zsh-hook precmd prompt_custom_precmd
 
 	# setup editor-info parameters
+	zstyle ':prezto:module:editor:info:completing' format '%F{red}...%f'
 	zstyle ':prezto:module:editor:info:keymap:primary' format '%F{white}%B»%b%f'
 	zstyle ':prezto:module:editor:info:keymap:alternate' format '%F{red}%B«%b%f'
 
@@ -26,28 +24,21 @@ function prompt_custom_setup {
 	zstyle ':vcs_info:*' enable bzr git hg p4 svn
 	zstyle ':vcs_info:*' check-for-changes true
 	zstyle ':vcs_info:*' stagedstr '%F{green}%B✓%b%f'
-	zstyle ':vcs_info:*' unstagedstr '%F{yellow}%B✱%b%f'
+	zstyle ':vcs_info:*' unstagedstr '%F{yellow}%B✕%b%f'
 	zstyle ':vcs_info:*' formats ' %F{white}%B‹%%b%F{cyan}%b%c%u%F{white}%B›%%b%f'
-	zstyle ':vcs_info:*' actionformats ' %F{white}%B‹%%b%F{red}%B⚡%%b%F{cyan}%b%c%u%F{white}%B›%%b%f'
-	zstyle ':vcs_info:git+set-message:*' hooks git-untracked
+	zstyle ':vcs_info:*' actionformats ' %F{white}%B‹%F{red}⚡%%b%F{cyan}%b%c%u%F{white}%B›%%b%f'
 
 	# set prompt
 	PROMPT='%F{blue}%c${vcs_info_msg_0_} ${editor_info[keymap]} '
 	RPROMPT=''
+	SPROMPT='correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
 
 prompt_custom_setup "%@"
 
 cd() {
-	autoload -Uz colors
-	colors
-	builtin cd "$@"; print "$fg[green]$PWD$reset_color"
-}
-
-pwd() {
-	autoload -Uz colors
-	colors
-	printf "$fg[green]$PWD$reset_color\n"
+	builtin cd "$@"
+	builtin pwd
 }
 
 # vim:set filetype=zsh:
