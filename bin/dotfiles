@@ -33,18 +33,23 @@ pre_install() {
 install() {
 	if remove; then
 		pre_install
-		ln -sf $PWD/bin             $HOME/bin
-		ln -sf $PWD/ctags/ctags     $HOME/.ctags
-		ln -sf $PWD/fontconfig      $HOME/.config/fontconfig
-		ln -sf $PWD/git/gitconfig   $HOME/.gitconfig
-		ln -sf $PWD/git/gitignore   $HOME/.gitignore
-		ln -sf $PWD/i3              $HOME/.i3
-		ln -sf $PWD/tmux/tmux.conf  $HOME/.tmux.conf
-		ln -sf $PWD/vim             $HOME/.vim
+		# bin
+		ln -sf $PWD/bin $HOME/bin
+		# ctags
+		ln -sf $PWD/ctags/ctags $HOME/.ctags
+		# git
+		ln -sf $PWD/git/gitconfig $HOME/.gitconfig
+		ln -sf $PWD/git/gitignore $HOME/.gitignore
+		# tmux
+		ln -sf $PWD/tmux/tmux.conf $HOME/.tmux.conf
+		# vim
+		ln -sf $PWD/vim $HOME/.vim
+		# xorg
 		ln -sf $PWD/xorg/Xresources $HOME/.Xresources
 		ln -sf $PWD/zsh             $HOME/.zsh
 		ln -sf $PWD/zsh/zshrc       $HOME/.zshrc
 		# fonts
+		ln -sf $PWD/fontconfig $HOME/.config/fontconfig
 		ln -sf $PWD/fonts/MesloLGM-Regular.ttf $HOME/.fonts/MesloLGM-Regular.ttf
 		ln -sf $PWD/fonts/MesloLGS-Regular.ttf $HOME/.fonts/MesloLGS-Regular.ttf
 		post_install
@@ -82,7 +87,6 @@ remove() {
 		rm -rf $HOME/.ctags
 		rm -rf $HOME/.gitconfig
 		rm -rf $HOME/.gitignore
-		rm -rf $HOME/.i3
 		rm -rf $HOME/.tmux.conf
 		rm -rf $HOME/.vim
 		rm -rf $HOME/.vimrc
