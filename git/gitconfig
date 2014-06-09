@@ -1,27 +1,68 @@
 ; vim:set filetype=gitconfig:
+[core]
+	excludesfile = ~/.gitignore
+	editor = vim
 [user]
 	name = Robert Kernan
 	email = rkernan@gmail.com
 [color]
-	ui = auto
-[alias]
-	stat = status -s
-[core]
-	excludesfile = ~/.gitignore
-	editor = vim
-[branch]
-	autosetuprebase = always
-[pull]
-	rebase = true
+	branch = auto
+	diff = auto
+	status = auto
 [push]
 	default = upstream
+[pull]
+	default = current
 [diff]
+	memonicprefix = true
+[branch]
+	autosetuprebase = always
+[apply]
+	whitespace = nowarn
+[rerere]
+	enabled = true
+[rebase]
+	autosquash = true
+[diff]
+	summary = true
+	conflictstyle = diff2
 	tool = vimdiff
-	; tool = gvimdiff
+[merge]
+	summary = true
+	conflictstyle = diff3
+	tool = vimdiff
 [difftool]
 	prompt = false
-[merge]
-	tool = fugitive
-[mergetool "fugitive"]
-	cmd = vim -f -c \"Gdiff\" \"$MERGED\"
-	; cmd = gvim -f -c \"Gdiff\" \"$MERGED\"
+[mergetool]
+	prompt = false
+[alias]
+	# general
+	a = add
+	ap = add --patch
+	st = status -s
+	cl = clone
+	ci = commit
+	ca = commit --amend
+	amend = commit --amend
+	co = checkout
+	br = branch
+	# diff
+	d = diff
+	dc = diff --cached
+	dlc = diff --cached HEAD^
+	dt = difftool
+	mt = mergetool
+	# log
+	l = log --pretty=format:"%C(yellow)%h\\ %ad%Cred%d\\ %Creset%s%Cblue\\ [%cn]" --decorate --date=short
+	lnc = log --pretty=format:"%h\\ %s\\ [%cn]"
+	filelog = log -u
+	fl = log -u
+	# stash
+	sl = stach list
+	sa = stach apply
+	ss = stash save
+	cp = cherry-pick
+	# assume
+	assume = update-index --assume-unchanged
+	unassume = update-index --no-assume-unchanged
+	assumed = "!git ls-files -v | grep ^h | cut -c 3-"
