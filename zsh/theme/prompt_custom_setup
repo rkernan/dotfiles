@@ -49,3 +49,5 @@ pwd() {
 	colors
 	printf "$fg[green]$PWD$reset_color\n"
 }
+
+# vim:set filetype=zsh:

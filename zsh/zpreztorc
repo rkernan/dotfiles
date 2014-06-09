@@ -3,19 +3,19 @@ zstyle ':prezto:*:*' color 'yes'
 
 # Prezto modules
 zstyle ':prezto:load' pmodule \
-  'environment' \
-  'archive' \
-  'git' \
-  'terminal' \
-  'editor' \
-  'history' \
-  'directory' \
-  'spectrum' \
-  'utility' \
-  'completion' \
-  'prompt' \
-  'syntax-highlighting' \
-  'history-substring-search'
+	'environment' \
+	'archive' \
+	'git' \
+	'terminal' \
+	'editor' \
+	'history' \
+	'directory' \
+	'spectrum' \
+	'utility' \
+	'completion' \
+	'prompt' \
+	'syntax-highlighting' \
+	'history-substring-search'
 
 ########
 # Editor
@@ -34,15 +34,14 @@ zstyle ':prezto:module:git:status:ignore' submodules 'none'
 # Prompt
 ########
 zstyle ':prezto:module:prompt' theme 'custom'
-# zstyle ':prezto:module:prompt' theme 'minimal'
 
 #####################
 # Syntax Highlighting
 #####################
 zstyle ':prezto:module:syntax-highlighting' highlighters \
-  'main' \
-  'brackets' \
-  'cursor'
+	'main' \
+	'brackets' \
+	'cursor'
 
 ##########
 # Terminal
@@ -50,3 +49,5 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
 zstyle ':prezto:module:terminal' auto-title 'yes'
 zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
 zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
+
+# vim:set filetype=zsh:
