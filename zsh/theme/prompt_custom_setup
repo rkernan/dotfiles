@@ -21,7 +21,7 @@ function prompt_custom_setup {
 	zstyle ':prezto:module:editor:info:keymap:alternate' format '%F{red}%B«%b%f'
 
 	# setup vcs_info
-	zstyle ':vcs_info:*' enable bzr git hg p4 svn
+	zstyle ':vcs_info:*' enable bzr cdv cvs darcs fossil git tla hg mtn p4 svn svk
 	zstyle ':vcs_info:*' check-for-changes true
 	zstyle ':vcs_info:*' stagedstr '%F{green}%B✓%b%f'
 	zstyle ':vcs_info:*' unstagedstr '%F{yellow}%B✕%b%f'
