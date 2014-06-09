@@ -47,6 +47,7 @@ NeoBundle 'Shougo/unite-outline', {'depends': 'Shougo/unite.vim'}
 NeoBundle 'Shougo/unite-session', {'depends': 'Shougo/unite.vim'}
 
 " other
+NeoBundle 'derekwyatt/vim-fswitch'
 NeoBundle 'kana/vim-textobj-entire', {'depends': 'kana/vim-textobj-user'}
 NeoBundle 'Lokaltog/vim-easymotion', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'nelstrom/vim-visual-star-search'
@@ -265,7 +266,7 @@ function! bundle.hooks.on_source(bundle)
 endfunction
 
 " EasyMotion
-let bundle=neobundle#get('easymotion')
+let bundle = neobundle#get('easymotion')
 function! bundle.hooks.on_source(bundle)
 	let g:EasyMotion_enter_jump_first = 1
 	let g:EasyMotion_smartcase = 1
@@ -278,6 +279,20 @@ function! bundle.hooks.on_source(bundle)
 	omap / <plug>(easymotion-tn)
 	map n <plug>(easymotion-next)
 	map N <plug>(easymotion-prev)
+endfunction
+
+" FSwitch
+let bundle = neobundle#get('fswitch')
+function! bundle.hooks.on_source(bundle)
+	nmap <leader>of :FSHere<cr>
+	nmap <leader>ol :FSRight<cr>
+	nmap <leader>oL :FSSplitRight<cr>
+	nmap <leader>oh :FSLeft<cr>
+	nmap <leader>oH :FSSplitLeft<cr>
+	nmap <leader>ok :FSAbove<cr>
+	nmap <leader>oK :FSSplitAbove<cr>
+	nmap <leader>oj :FSBelow<cr>
+	nmap <leader>oK :FSSplitBelow<cr>
 endfunction
 
 " lightline
@@ -467,21 +482,21 @@ function! bundle.hooks.on_source(bundle)
 	call unite#filters#sorter_default#use(['sorter_rank'])
 	call unite#custom#source('file_rec,file_rec/async', 'max_candidates', 0)
 
-	nnoremap <leader>f :<c-u>Unite -buffer-name=files -start-insert file_rec/async<cr>
-	nnoremap <leader>b :<c-u>Unite -buffer-name=buffers -start-insert buffer<cr>
-	nnoremap <leader>/ :<c-u>Unite -buffer-name=search -no-quit grep<cr>
+	nnoremap <leader>f :Unite -buffer-name=files -start-insert file_rec/async<cr>
+	nnoremap <leader>b :Unite -buffer-name=buffers -start-insert buffer<cr>
+	nnoremap <leader>/ :Unite -buffer-name=search -no-quit grep<cr>
 endfunction
 
 let bundle = neobundle#get('unite-session')
 function! bundle.hooks.on_source(bundle)
-	nnoremap <leader>s :<c-u>Unite -buffer-name=sessions -start-insert session<cr>
+	nnoremap <leader>s :Unite -buffer-name=sessions -start-insert session<cr>
 	command! -nargs=? LoadSession UniteSessionLoad <args>
 	command! -nargs=? SaveSession UniteSessionSave <args>
 endfunction
 
 let bundle = neobundle#get('unite-outline')
 function! bundle.hooks.on_source(bundle)
-	nnoremap <leader>o :<c-u>Unite -buffer-name=outline -no-split outline<cr>
+	nnoremap <leader>o :Unite -buffer-name=outline -no-split outline<cr>
 endfunction
 
 function! UniteBufferSettings()
