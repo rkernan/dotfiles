@@ -1,0 +1,51 @@
+function +vi-git-untracked() {
+	if [[ -n $(git ls-files --exclude-standard --others 2> /dev/null) ]]; then
+		hook_com[unstaged]+='%F{red}%B✕%b%f'
+	fi
+}
+
+function prompt_custom_precmd {
+	vcs_info
+}
+
+function prompt_custom_setup {
+	prompt_opts=(percent subst)
+
+	# load required functions
+	autoload -Uz add-zsh-hook
+	autoload -Uz vcs_info
+
+	# add hook for calling vcs_info before each command
+	add-zsh-hook precmd prompt_custom_precmd
+
+	# setup editor-info parameters
+	zstyle ':prezto:module:editor:info:keymap:primary' format '%F{white}%B»%b%f'
+	zstyle ':prezto:module:editor:info:keymap:alternate' format '%F{red}%B«%b%f'
+
+	# setup vcs_info
+	zstyle ':vcs_info:*' enable bzr git hg p4 svn
+	zstyle ':vcs_info:*' check-for-changes true
+	zstyle ':vcs_info:*' stagedstr '%F{green}%B✓%b%f'
+	zstyle ':vcs_info:*' unstagedstr '%F{yellow}%B✱%b%f'
+	zstyle ':vcs_info:*' formats ' %F{white}%B‹%%b%F{cyan}%b%c%u%F{white}%B›%%b%f'
+	zstyle ':vcs_info:*' actionformats ' %F{white}%B‹%%b%F{red}%B⚡%%b%F{cyan}%b%c%u%F{white}%B›%%b%f'
+	zstyle ':vcs_info:git+set-message:*' hooks git-untracked
+
+	# set prompt
+	PROMPT='%F{blue}%c${vcs_info_msg_0_} ${editor_info[keymap]} '
+	RPROMPT=''
+}
+
+prompt_custom_setup "%@"
+
+cd() {
+	autoload -Uz colors
+	colors
+	builtin cd "$@"; print "$fg[green]$PWD$reset_color"
+}
+
+pwd() {
+	autoload -Uz colors
+	colors
+	printf "$fg[green]$PWD$reset_color\n"
+}

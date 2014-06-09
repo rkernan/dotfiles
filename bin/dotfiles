@@ -46,8 +46,13 @@ install() {
 		ln -sf $PWD/vim $HOME/.vim
 		# xorg
 		ln -sf $PWD/xorg/Xresources $HOME/.Xresources
-		ln -sf $PWD/zsh             $HOME/.zsh
-		ln -sf $PWD/zsh/zshrc       $HOME/.zshrc
+		# zsh
+		ln -sf $PWD/zsh/prezto    ${ZDOTDIR:-$HOME}/.zprezto
+		ln -sf $PWD/zsh/theme     ${ZDOTDIR:-$HOME}/.ztheme
+		ln -sf $PWD/zsh/zpreztorc ${ZDOTDIR:-$HOME}/.zpreztorc
+		ln -sf $PWD/zsh/zshenv    ${ZDOTDIR:-$HOME}/.zshenv
+		ln -sf $PWD/zsh/zshrc     ${ZDOTDIR:-$HOME}/.zshrc
+		ln -sf $PWD/zsh/prezto/runcoms/zlogin ${ZDOTDIR:-$HOME}/.zlogin
 		# fonts
 		ln -sf $PWD/fontconfig $HOME/.config/fontconfig
 		ln -sf $PWD/fonts/MesloLGM-Regular.ttf $HOME/.fonts/MesloLGM-Regular.ttf
@@ -91,8 +96,12 @@ remove() {
 		rm -rf $HOME/.vim
 		rm -rf $HOME/.vimrc
 		rm -rf $HOME/.Xresources
-		rm -rf $HOME/.zsh
-		rm -rf $HOME/.zshrc
+		rm -rf ${ZDOTDIR:-$HOME}/.zlogin
+		rm -rf ${ZDOTDIR:-$HOME}/.zprezto
+		rm -rf ${ZDOTDIR:-$HOME}/.zpreztorc
+		rm -rf ${ZDOTDIR:-$HOME}/.zshenv
+		rm -rf ${ZDOTDIR:-$HOME}/.zshrc
+		rm -rf ${ZDOTDIR:-$HOME}/.ztheme
 		retval=0
 	else
 		retval=1
