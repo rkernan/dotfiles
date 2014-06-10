@@ -15,15 +15,15 @@ def log(msg, prefix, stream = $stdout)
 end
 
 def log_ln(source, target)
-  log("Created symlink: #{source} -> #{target}", "+")
+  log("Creating symlink: #{source} -> #{target}", "+")
 end
 
 def log_rm_ln(source, target)
-  log("Removed symlink: #{source} -> #{target}", "-")
+  log("Removing symlink: #{source} -> #{target}", "-")
 end
 
 def log_mkdir(dir)
-  log("Create directory: #{dir}", "+")
+  log("Creating directory: #{dir}", "+")
 end
 
 def ask_yn(msg)
@@ -126,12 +126,12 @@ task :post_install => [:cache_fonts, :get_plugins, :compile_ycm]
 
 desc "run fc-cache"
 task :cache_fonts do
-  sh "fc-cache -vf #{HOME_DIR}/.fonts"
+  sh("fc-cache -vf #{HOME_DIR}/.fonts")
 end
 
 desc "download all Vim plugins"
 task :get_plugins do
-  sh "vim +qall"
+  sh("vim +qall")
 end
 
 desc "compile YouCompleteMe Vim plugin"
@@ -143,7 +143,7 @@ task :compile_ycm do
   flags = ""
   if ask_yn("Build semantic completion for C-family languages?")
     flags += " --clang-completer"
-    if ask_yn "Use system libclang?"
+    if ask_yn("Use system libclang?")
       flags += " --system-libclang"
     end
   end
