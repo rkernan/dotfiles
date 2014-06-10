@@ -85,14 +85,17 @@ def smart_symlink(source, target)
   FileUtils.symlink(source, target)
 end
 
+desc "install and configure dotfiles"
 task :default => [:install, :post_install]
 
+desc "symlink dotfiles to the user's home directory"
 task :install => :prepare do
   get_relative_paths(ROOT_DIR, BASEDIRS, EXCLUDES).each do |rel_path|
     smart_symlink(get_source(rel_path), get_target(rel_path))
   end
 end
 
+desc "prepare to symlink dotfiles"
 task :prepare do
   sh "git submodule update --init --recursive"
   # create directories
@@ -118,16 +121,20 @@ task :prepare do
   end
 end
 
+desc "all configuration that can only be run after install"
 task :post_install => [:cache_fonts, :get_plugins, :compile_ycm]
 
+desc "run fc-cache"
 task :cache_fonts do
   sh "fc-cache -vf #{HOME_DIR}/.fonts"
 end
 
+desc "download all Vim plugins"
 task :get_plugins do
   sh "vim +qall"
 end
 
+desc "compile YouCompleteMe Vim plugin"
 task :compile_ycm do
   if !ask_yn("Build YouCompleteMe?")
     next
@@ -149,6 +156,7 @@ task :compile_ycm do
   Dir.chdir(ROOT_DIR)
 end
 
+desc "remove all symlinked dotfiles"
 task :remove do
   get_relative_paths(ROOT_DIR, BASEDIRS, EXCLUDES).each do |rel_path|
     target = get_target(rel_path)
