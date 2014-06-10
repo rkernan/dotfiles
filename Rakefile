@@ -66,8 +66,12 @@ def smart_symlink(source, target)
   if File.exist?(target)
     if File.symlink?(target)
       link_source = File.readlink(target)
-      log_rm_ln(link_source, target) unless source == link_source
-      FileUtils.rm(target)
+      if source == link_source
+        return
+      else
+        log_rm_ln(link_source, target) unless source == link_source
+        FileUtils.rm(target)
+      end
     else
       if ask_rm_rf(target)
         log_rm_rf(target)
@@ -81,7 +85,7 @@ def smart_symlink(source, target)
   FileUtils.symlink(source, target)
 end
 
-task :default => :install
+task :default => [:install, :post_install]
 
 task :install => :prepare do
   get_relative_paths(ROOT_DIR, BASEDIRS, EXCLUDES).each do |rel_path|
@@ -114,6 +118,8 @@ task :prepare do
   end
 end
 
+task :post_install => [:cache_fonts, :get_plugins, :compile_ycm]
+
 task :cache_fonts do
   sh "fc-cache -vf #{HOME_DIR}/.fonts"
 end
@@ -123,6 +129,9 @@ task :get_plugins do
 end
 
 task :compile_ycm do
+  if !ask_yn("Build YouCompleteMe?")
+    next
+  end
   # generate flags
   flags = ""
   if ask_yn("Build semantic completion for C-family languages?")
