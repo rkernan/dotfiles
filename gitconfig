@@ -37,6 +37,7 @@
 [alias]
 	# general
 	a = add
+	aa = add --all
 	ap = add --patch
 	st = status -s
 	cl = clone
