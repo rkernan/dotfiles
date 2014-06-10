@@ -10,4 +10,4 @@ typeset -gU cdpath fpath mailpath path
 
 path=("$HOME/bin" $path)
 
-fpath+=("$HOME/.ztheme")
+fpath+=("$HOME/.share/zsh")
