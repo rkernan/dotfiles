@@ -14,7 +14,6 @@ zstyle ':prezto:load' pmodule \
 	'completion' \
 	'prompt' \
 	'syntax-highlighting' \
-	'history-substring-search'
 
 ########
 # Editor
@@ -34,8 +33,7 @@ zstyle ':prezto:module:prompt' theme 'custom'
 #####################
 zstyle ':prezto:module:syntax-highlighting' highlighters \
 	'main' \
-	'brackets' \
-	'cursor'
+	'brackets'
 
 ##########
 # Terminal
