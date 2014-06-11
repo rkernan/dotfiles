@@ -14,6 +14,10 @@ zstyle ':prezto:load' pmodule \
 	'completion' \
 	'prompt' \
 	'syntax-highlighting' \
+	'history-substring-search' \
+	'ssh' \
+	'ruby'
+
 ###########
 # Directory
 ###########
@@ -45,5 +49,10 @@ zstyle ':prezto:module:syntax-highlighting' highlighters \
 zstyle ':prezto:module:terminal' auto-title 'yes'
 zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
 zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
+
+#####
+# SSH
+#####
+zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'id_github'
 
 # vim:set filetype=zsh:
