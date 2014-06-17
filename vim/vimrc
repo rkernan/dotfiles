@@ -339,12 +339,22 @@ function! bundle.hooks.on_source(bundle)
 		\     'filetype':     'LightlineComponent_filetype',
 		\     'vcs':          'LightlineComponent_vcs'
 		\   },
+		\   'component_expand': {
+		\     'loclist': 'LightlineComponent_loclist'
+		\   },
+		\   'component_type': {
+		\     'loclist': 'error',
+		\   },
 		\   'active': {
 		\     'left':  [['mode', 'paste'],
-		\               ['vcs', 'filename']],
+		\               ['vcs', 'filename', 'loclist']],
 		\     'right': [['lineinfo'],
 		\               ['percent'],
 		\               ['fileformat', 'fileencoding', 'filetype']]
+		\   },
+		\   'tabline': {
+		\     'left':  [['tabs']],
+		\     'right': [[]]
 		\   }
 		\ }
 	let g:lightline_hunks_symbols = ['+', '~', '-']
@@ -404,6 +414,32 @@ function! LightlineComponent_vcs()
 	return ''
 endfunction
 
+function! LightlineComponent_loclist()
+	" get error/warning count
+	let l:loclist = getloclist(0)
+	let l:num_errors = 0
+	let l:num_warns = 0
+	for i in l:loclist
+		if i.type == 'E'
+			let l:num_errors += 1
+		else
+			let l:num_warns += 1
+		endif
+	endfor
+	" generate string
+	let l:loclist_str = ''
+	if l:num_errors > 0
+		let l:loclist_str .= 'E: ' . l:num_errors
+	endif
+	if l:num_warns > 0
+		if l:num_errors > 0
+			let l:loclist_str .= ' '
+		endif
+		let l:loclist_str .= 'W: ' . l:num_warns
+	endif
+	return l:loclist_str
+endfunction
+
 " ListToggle
 let bundle = neobundle#get('ListToggle')
 function! bundle.hooks.on_source(bundle)
@@ -435,11 +471,11 @@ let bundle = neobundle#get('syntastic')
 function! bundle.hooks.on_source(bundle)
 	let g:syntastic_check_on_wq = 0
 	let g:syntastic_always_populate_loc_list = 1
-	let g:syntastic_auto_loc_list = 0
+	let g:syntastic_auto_loc_list = 1
 	let g:syntastic_check_on_open = 1
 	let g:syntastic_echo_current_error = 1
 	let g:syntastic_enable_signs = 0
-	let g:syntastic_enable_highlighting = 1
+	let g:syntastic_enable_highlighting = 0
 	let g:syntastic_enable_balloons = 0
 	let g:syntastic_error_symbol = '✕'
 	let g:syntastic_style_error_symbol = '✠'
