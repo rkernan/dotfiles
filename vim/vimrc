@@ -295,15 +295,15 @@ endfunction
 " FSwitch
 let bundle = neobundle#get('fswitch')
 function! bundle.hooks.on_source(bundle)
-	nmap <leader>of :FSHere<cr>
-	nmap <leader>ol :FSRight<cr>
-	nmap <leader>oL :FSSplitRight<cr>
-	nmap <leader>oh :FSLeft<cr>
-	nmap <leader>oH :FSSplitLeft<cr>
-	nmap <leader>ok :FSAbove<cr>
-	nmap <leader>oK :FSSplitAbove<cr>
-	nmap <leader>oj :FSBelow<cr>
-	nmap <leader>oK :FSSplitBelow<cr>
+	nmap <leader>af :FSHere<cr>
+	nmap <leader>al :FSRight<cr>
+	nmap <leader>aL :FSSplitRight<cr>
+	nmap <leader>ah :FSLeft<cr>
+	nmap <leader>aH :FSSplitLeft<cr>
+	nmap <leader>ak :FSAbove<cr>
+	nmap <leader>aK :FSSplitAbove<cr>
+	nmap <leader>aj :FSBelow<cr>
+	nmap <leader>aJ :FSSplitBelow<cr>
 endfunction
 
 " lightline
