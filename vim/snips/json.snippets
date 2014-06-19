@@ -1,0 +1,19 @@
+snippet str "string" b
+"${1:key}": "${0:value}",
+endsnippet
+
+snippet num "number" b
+"${1:key}": ${0:value},
+endsnippet
+
+snippet arr "array" b
+[
+	${VISUAL}$0
+],
+endsnippet
+
+snippet obj "object" b
+{
+	${VISUAL}$0
+},
+endsnippet

@@ -1,11 +1,14 @@
 extends c
 
+priority 49
+
 snippet cl "class .." b
 class ${1:`!p snip.rv = snip.basename or "name"`} {
 public:
 	${1/(\w+).*/$1/}(${2:void});
 	virtual ~${1/(\w+).*/$1/}(void);
-private: $0
+private:
+	$0
 };
 endsnippet
 
@@ -15,14 +18,18 @@ ${3:void} ${1:class}::${2:method}(${4:void}) {
 }
 endsnippet
 
-snippet tp "template<typename ..>"
-template<typename ${1:type}>$0
+snippet tp "template<..>"
+template<${1:typename ${2:type}}>$0
 endsnippet
 
 snippet ns "namespace .."
 namespace${1/.+/ /m}${1:`!p snip.rv = (snip.basename or "name")`} {
 ${VISUAL}$0
 }
+endsnippet
+
+snippet enum "enum class .."
+enum class ${1:name} { $0 };
 endsnippet
 
 snippet map "std::map .."

@@ -1,25 +1,27 @@
-snippet def "#define ..."
+priority 50
+
+snippet def "#define .." b
 #define ${1}
 endsnippet
 
-snippet ifndef "#ifndef ... #define ... #endif"
+snippet ifndef "#ifndef .. #define .. #endif" b
 #ifndef ${1/([A-Za-z0-9_]+).*/$1/}
 #define ${1:SYMBOL} ${2:value}
 #endif
 endsnippet
 
-snippet #if "#if #endif" b
+snippet #if "#if .. #endif" b
 #if ${1:condition}
 ${VISUAL}$0
 #endif
 endsnippet
 
 snippet inc "#include local" b
-#include "${1:`!p snip.rv = snip.basename + '.h'`}"
+#include "${1:`!p snip.rv = snip.basename`.${2:h}}"
 endsnippet
 
-snippet Inc "#include <>" b
-#include <${1:.h}>
+snippet Inc "#include <..>" b
+#include <${1}>
 endsnippet
 
 snippet main "main" b
@@ -41,7 +43,7 @@ for (${4:int} ${2:i} = 0; $2 < ${1:count}; ${3:++$2}) {
 }
 endsnippet
 
-snippet enum "enumeration .."
+snippet enum "enum .."
 enum ${1:name} { $0 };
 endsnippet
 
@@ -76,17 +78,21 @@ if (${1:condition}) {
 }
 endsnippet
 
-snippet el "else"
-else {
-	${VISUAL}$0
-}
-endsnippet
-
-snippet ife "if .. else"
+snippet ife "if .. else .."
 if (${1:condition}) {
 	${VISUAL}$2
 } else {
-	$3
+	${VISUAL}$3
+}
+endsnippet
+
+snippet ifee "if .. else if .. else .."
+if ${1:condition}) {
+	${VISUAL}$2
+} else if (${3:condition}) {
+	${VISUAL}$4
+} else {
+	${VISUAL}$5
 }
 endsnippet
 
@@ -102,10 +108,6 @@ snippet st "struct"
 struct ${1:`!p snip.rv = (snip.basename or "name") + "_t"`} {
 	$0
 };
-endsnippet
-
-snippet prot "prototype"
-${2:void} ${1:function}(${3:void});
 endsnippet
 
 snippet fun "function"

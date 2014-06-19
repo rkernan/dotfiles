@@ -1,0 +1,78 @@
+priority 50
+
+snippet "^#!" "#!/usr/bin/env ruby" r
+#!/usr/bin/env ruby
+$0
+endsnippet
+
+snippet If ".. if .."
+${1:command} if ${0:expression}
+endsnippet
+
+snippet Unless ".. unless .."
+${1:command} unless ${0:expression}
+endsnippet
+
+snippet if "if .. end"
+if ${1:condition}:
+	${VISUAL}$0
+end
+endsnippet
+
+snippet ife "if .. else .. end"
+if ${1:condition}:
+	${VISUAL}$2
+else
+	${VISUAL}$3
+end
+endsnippet
+
+snippet ifee "if .. elsif .. else .. end"
+if ${1:condition}
+	${VISUAL}$2
+elsif ${3:condition}
+	${VISUAL}$4
+else
+	${VISUAL}$5
+end
+endsnippet
+
+snippet unless "unless .. end"
+unless ${1:condition}
+	${VISUAL}$2
+end
+endsnippet
+
+snippet unlesse "unless .. else .. end"
+unless ${1:condition}
+	${VISUAL}$2
+else
+	${VISUAL}$3
+end
+endsnippet
+
+snippet unlessee "unless .. else .. elsif .. end"
+unless ${1:condition}
+	${VISUAL}$2
+elsif ${3:condition}
+	${VISUAL}$4
+else
+	${VISUAL}$5
+end
+endsnippet
+
+snippet For "(..).each { .. }"
+(${1:${2:from}..${3:to}}).each { |${4:i}| ${5} }
+endsnippet
+
+snippet for "(..).each do .. end"
+(${1:${2:from}..${3:to}}).each do |${4:i}|
+	${VISUAL}$0
+end
+endsnippet
+
+snippet def "def function .." b
+def ${1:function_name}${2:(${3:*args})}
+	${VISUAL}${0}
+end
+endsnippet
