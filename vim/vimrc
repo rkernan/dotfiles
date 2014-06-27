@@ -13,15 +13,6 @@ call neobundle#begin(expand('~/.vim/bundle'))
 
 NeoBundleFetch 'Shougo/neobundle.vim'
 
-NeoBundle 'Shougo/vimproc', {
-	\   'build' : {
-	\     'unix'   : 'make -f make_unix.mak',
-	\     'mac'    : 'make -f make_mac.mak',
-	\     'cygwin' : 'make -f make_cygwin.mak',
-	\     'windows': 'make -f make_mingw32.mak'
-	\   }
-	\ }
-
 NeoBundle 'gist:kernan/7382226', {
 	\   'name': 'neobundle_autoupdate',
 	\   'script_type': 'plugin',
