@@ -318,19 +318,15 @@ function! bundle.hooks.on_source(bundle)
 endfunction
 
 function! LightlineComponent_fileencoding()
-	if exists('b:lightline_show_fileencoding') && b:lightline_show_fileencoding == 1
-		if winwidth(0) > 70
-			return strlen(&fenc) ? &fenc : ''
-		endif
+	if winwidth(0) > 70
+		return strlen(&fenc) ? &fenc : ''
 	endif
 	return ''
 endfunction
 
 function! LightlineComponent_fileformat()
-	if exists('b:lightline_show_fileformat') && b:lightline_show_fileformat == 1
-		if winwidth(0) > 70
-			return strlen(&fileformat) ? &fileformat : ''
-		endif
+	if winwidth(0) > 70
+		return strlen(&fileformat) ? &fileformat : ''
 	endif
 	return ''
 endfunction
@@ -345,10 +341,8 @@ function! LightlineComponent_filename()
 endfunction
 
 function! LightlineComponent_filetype()
-	if exists('b:lightline_show_filetype') && b:lightline_show_filetype == 1
-		if winwidth(0) > 70
-			return strlen(&filetype) ? &filetype : ''
-		endif
+	if winwidth(0) > 70
+		return strlen(&filetype) ? &filetype : ''
 	endif
 	return ''
 endfunction
