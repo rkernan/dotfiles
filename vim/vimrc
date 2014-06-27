@@ -21,7 +21,7 @@ NeoBundle 'gist:kernan/7382226', {
 	\ }
 
 " appearance
-NeoBundle 'tomasr/molokai'
+NeoBundle 'chriskempson/base16-vim'
 NeoBundle 'itchyny/lightline.vim'
 
 " vcs integration
@@ -177,45 +177,11 @@ endif
 " -----------
 syntax on
 
-let bundle = neobundle#get('molokai')
+let bundle = neobundle#get('base16')
 function! bundle.hooks.on_source(bundle)
-	let g:rehash256 = 1
+	let g:base16colorspace=256
 	set background=dark
-	colorscheme molokai
-
-	" color changes
-	highlight DiffAdd                   guibg=PaleGreen guifg=bg     gui=none
-	highlight DiffDelete                guibg=Tomato    guifg=bg     gui=none
-	highlight DiffChange                guibg=Khaki     guifg=bg     gui=none
-	highlight DiffText                  guibg=SkyBlue3  guifg=bg     gui=none
-	if &t_Co > 255
-		highlight DiffAdd                   ctermbg=120 ctermfg=bg  cterm=none
-		highlight DiffDelete                ctermbg=202 ctermfg=bg  cterm=none
-		highlight DiffChange                ctermbg=192 ctermfg=bg  cterm=none
-		highlight DiffText                  ctermbg=74  ctermfg=bg  cterm=none
-	endif
-
-	" Signify colors
-	highlight SignifySignAdd            guibg=#232526   guifg=Green  gui=none
-	highlight SignifySignDelete         guibg=#232526   guifg=Red    gui=none
-	highlight SignifySignChange         guibg=#232526   guifg=Yellow gui=none
-	if &t_Co > 255
-		highlight SignifySignAdd            ctermbg=235 ctermfg=28  cterm=none
-		highlight SignifySignDelete         ctermbg=235 ctermfg=196 cterm=none
-		highlight SignifySignChange         ctermbg=235 ctermfg=226 cterm=none
-	endif
-
-	" Syntastic colors
-	highlight SyntasticErrorSign        guibg=#232526   guifg=Red    gui=none
-	highlight SyntasticWarningSign      guibg=#232526   guifg=Yellow gui=none
-	highlight SyntasticStyleErrorSign   guibg=#232526   guifg=Red    gui=none
-	highlight SyntasticStyleWarningSign guibg=#232526   guifg=Yellow gui=none
-	if &t_Co > 255
-		highlight SyntasticErrorSign        ctermbg=235 ctermfg=196 cterm=none
-		highlight SyntasticWarningSign      ctermbg=235 ctermfg=226 cterm=none
-		highlight SyntasticStyleErrorSign   ctermbg=235 ctermfg=196 cterm=none
-		highlight SyntasticStyleWarningSign ctermbg=235 ctermfg=226 cterm=none
-	endif
+	colorscheme base16-monokai
 endfunction
 
 " -------

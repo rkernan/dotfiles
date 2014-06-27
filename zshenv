@@ -11,3 +11,5 @@ typeset -gU cdpath fpath mailpath path
 path=("$HOME/bin" $path)
 
 fpath+=("$HOME/.share/zsh")
+
+source "$HOME/.base16/shell/base16-monokai.dark.sh"
