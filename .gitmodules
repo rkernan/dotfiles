@@ -3,4 +3,4 @@
 	url = https://github.com/Shougo/neobundle.vim.git
 [submodule "prezto"]
 	path = zprezto
-	url = https://github.com/sorin-ionescu/prezto
+	url = https://github.com/sorin-ionescu/prezto.git
