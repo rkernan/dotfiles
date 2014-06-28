@@ -1,3 +1,5 @@
+scriptencoding utf-8
+
 " -----
 " Setup
 " -----
@@ -130,12 +132,8 @@ set norelativenumber " don't use relative numbers
 set laststatus=2 " always show the status bar
 set noshowmode   " don't show mode
 if has('multi_byte')
-	if has('win32') " FIXME Windows can't display some unicode characters.
-		set listchars=tab:>\ ,eol:¬,extends:»,precedes:«
-	else
-		set listchars=tab:?\ ,eol:¬,extends:»,precedes:«
-	endif
-	set showbreak=…
+	set listchars=tab:â–¸\ ,eol:Â¬,extends:Â»,precedes:Â«
+	set showbreak=â€¦
 else
 	set listchars=tab:>\ ,eol:$,extends:>,precedes:<
 	set showbreak=~
@@ -318,11 +316,7 @@ let g:lightline = {
 	\ }
 
 if has('multi_byte')
-	if has('win32') " FIXME Windows can't display some unicode characters.
-		let g:lightline.subseparator = {'left': '>', 'right': '<'}
-	else
-		let g:lightline.subseparator = {'left': '€', 'right': '€'}
-	endif
+	let g:lightline.subseparator = {'left': 'â€º', 'right': 'â€¹'}
 else
 	let g:lightline.subseparator = {'left': '>', 'right': '<'}
 endif
@@ -476,7 +470,7 @@ call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 if has('multi_byte')
 	call unite#custom#profile('default', 'context', {
-		\     'prompt': '» ',
+		\     'prompt': 'Â» ',
 		\     'silent': 1,
 		\     'direction': 'botright',
 		\     'prompt_direction': 'top'
