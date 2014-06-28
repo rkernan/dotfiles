@@ -132,7 +132,7 @@ set norelativenumber " don't use relative numbers
 set laststatus=2 " always show the status bar
 set noshowmode   " don't show mode
 if has('multi_byte')
-	if has('win32')
+	if has('win32') " FIXME Windows doesn't display some unicode characters correctly.
 		set listchars=tab:>\ ,eol:¬,extends:»,precedes:«
 	else
 		set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
@@ -320,7 +320,7 @@ let g:lightline = {
 	\ }
 
 if has('multi_byte')
-	if has('win32')
+	if has('win32') " FIXME Windows doesn't display some unicode characters correctly.
 		let g:lightline.subseparator = {'left': '>', 'right': '<'}
 	else
 		let g:lightline.subseparator = {'left': '›', 'right': '‹'}
