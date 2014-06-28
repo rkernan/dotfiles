@@ -132,7 +132,11 @@ set norelativenumber " don't use relative numbers
 set laststatus=2 " always show the status bar
 set noshowmode   " don't show mode
 if has('multi_byte')
-	set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
+	if has('win32')
+		set listchars=tab:>\ ,eol:¬,extends:»,precedes:«
+	else
+		set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
+	endif
 	set showbreak=…
 else
 	set listchars=tab:>\ ,eol:$,extends:>,precedes:<
@@ -316,7 +320,11 @@ let g:lightline = {
 	\ }
 
 if has('multi_byte')
-	let g:lightline.subseparator = {'left': '›', 'right': '‹'}
+	if has('win32')
+		let g:lightline.subseparator = {'left': '>', 'right': '<'}
+	else
+		let g:lightline.subseparator = {'left': '›', 'right': '‹'}
+	endif
 else
 	let g:lightline.subseparator = {'left': '>', 'right': '<'}
 endif
