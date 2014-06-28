@@ -131,7 +131,7 @@ end
 
 desc "download all Vim plugins"
 task :get_plugins do
-  sh("vim +qall")
+  sh("vim +PluginInstall! +PluginClean +qall")
 end
 
 desc "compile YouCompleteMe Vim plugin"

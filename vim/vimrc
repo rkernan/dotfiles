@@ -4,58 +4,55 @@
 if has('vim_starting')
 	set nocompatible
 	filetype off
-	set runtimepath+=$HOME/.vim/bundle/neobundle
+	set runtimepath+=$HOME/.vim/bundle/Vundle.vim
 endif
 
 let g:neobundle#enable_name_conversion = 1
 
-call neobundle#begin(expand('~/.vim/bundle'))
-
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-NeoBundle 'gist:kernan/7382226', {
-	\   'name': 'neobundle_autoupdate',
-	\   'script_type': 'plugin',
-	\   'augroup': 'neobundle_autoupdate',
-	\   'depends': ['Shougo/neobundle.vim', 'Shougo/unite.vim']
-	\ }
+call vundle#begin(expand('~/.vim/bundle'))
+Plugin 'gmarik/Vundle.vim'
 
 " appearance
-NeoBundle 'chriskempson/base16-vim'
-NeoBundle 'itchyny/lightline.vim'
+Plugin 'chriskempson/base16-vim'
+Plugin 'itchyny/lightline.vim'
 
 " vcs integration
-NeoBundle 'mhinz/vim-signify', {'augroup': 'signify'}
+Plugin 'mhinz/vim-signify'
 
 " languages
-NeoBundle 'leshill/vim-json'
-NeoBundle 'tikhomirov/vim-glsl'
-NeoBundle 'tpope/vim-markdown'
+Plugin 'leshill/vim-json'
+Plugin 'tikhomirov/vim-glsl'
+Plugin 'tpope/vim-markdown'
 
 " unite
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/unite-outline', {'depends': 'Shougo/unite.vim'}
-NeoBundle 'Shougo/unite-session', {'depends': 'Shougo/unite.vim'}
+Plugin 'Shougo/unite.vim'
+Plugin 'Shougo/unite-outline', {'depends': 'Shougo/unite.vim'}
+Plugin 'Shougo/unite-session', {'depends': 'Shougo/unite.vim'}
 
 " other
-NeoBundle 'derekwyatt/vim-fswitch'
-NeoBundle 'kana/vim-textobj-entire', {'depends': 'kana/vim-textobj-user'}
-NeoBundle 'Lokaltog/vim-easymotion', {'depends': 'tpope/vim-repeat'}
-NeoBundle 'nelstrom/vim-visual-star-search'
-NeoBundle 'Raimondi/delimitMate'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'SirVer/ultisnips'
-NeoBundle 'tommcdo/vim-exchange'
-NeoBundle 'tpope/vim-abolish', {'depends': 'tpope/vim-repeat'}
-NeoBundle 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
-NeoBundle 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
-NeoBundle 'Valloric/ListToggle'
-NeoBundle 'Valloric/YouCompleteMe'
-NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc'}
+Plugin 'derekwyatt/vim-fswitch'
+Plugin 'kana/vim-textobj-entire', {'depends': 'kana/vim-textobj-user'}
+Plugin 'Lokaltog/vim-easymotion', {'depends': 'tpope/vim-repeat'}
+Plugin 'nelstrom/vim-visual-star-search'
+Plugin 'Raimondi/delimitMate'
+Plugin 'scrooloose/syntastic'
+Plugin 'SirVer/ultisnips'
+Plugin 'tommcdo/vim-exchange'
+Plugin 'tpope/vim-abolish', {'depends': 'tpope/vim-repeat'}
+Plugin 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
+Plugin 'tpope/vim-endwise'
+Plugin 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
+Plugin 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
+Plugin 'Valloric/ListToggle'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'xolox/vim-easytags', {'depends': 'xolox/vim-misc'}
 
-call neobundle#end()
+" dependencies, TODO remove once implemented
+Plugin 'kana/vim-textobj-user'
+Plugin 'tpope/vim-repeat'
+Plugin 'xolox/vim-misc'
+
+call vundle#end()
 
 " load matchit.vim
 runtime! macros/matchit.vim
@@ -177,145 +174,136 @@ endif
 " -----------
 syntax on
 
-let bundle = neobundle#get('base16')
-function! bundle.hooks.on_source(bundle)
-	let g:base16colorspace=256
-	set background=dark
-	colorscheme base16-monokai
-endfunction
+let g:base16colorspace=256
+set background=dark
+colorscheme base16-monokai
 
 " -------
 " Plugins
 " -------
+"
 " netrw
+"
 let g:loaded_netrw = 1
 let g:loaded_netrwPlugin = 1
 
 " commentary
-let bundle = neobundle#get('commentary')
-function! bundle.hooks.on_source(bundle)
-	if has('autocmd')
-		augroup vimrc
-			autocmd FileType json setlocal commentstring=%s
-		augroup END
-	endif
-endfunction
+if has('autocmd')
+	augroup vimrc
+		autocmd FileType json setlocal commentstring=%s
+	augroup END
+endif
 
+"
 " DelimitMate
-let bundle = neobundle#get('delimitMate')
-function! bundle.hooks.on_source(bundle)
-	let g:delimitMate_autoclose = 1
-	let g:delimitMate_matchpairs = "(:),[:],{:}"
-	let g:delimitMate_smart_matchpairs = 1
-	let g:delimitMate_balance_matchpairs = 1
-	let g:delimitMate_quotes = "\" '"
-	let g:delimitMate_smart_quotes = 1
-	let g:delimitMate_expand_cr = 1
-	let g:delimitMate_expand_space = 1
-	let g:delimitMate_excluded_regions = "Comment"
-	if has('autocmd')
-		augroup vimrc
-			" filetype specific quotes
-			autocmd FileType vim let b:delimitMate_quotes = "'"
-		augroup END
-	endif
-endfunction
+"
+let g:delimitMate_autoclose = 1
+let g:delimitMate_matchpairs = "(:),[:],{:}"
+let g:delimitMate_smart_matchpairs = 1
+let g:delimitMate_balance_matchpairs = 1
+let g:delimitMate_quotes = "\" '"
+let g:delimitMate_smart_quotes = 1
+let g:delimitMate_expand_cr = 1
+let g:delimitMate_expand_space = 1
+let g:delimitMate_excluded_regions = "Comment"
+if has('autocmd')
+	augroup vimrc
+		" filetype specific quotes
+		autocmd FileType vim let b:delimitMate_quotes = "'"
+	augroup END
+endif
 
+"
 " EasyMotion
-let bundle = neobundle#get('easymotion')
-function! bundle.hooks.on_source(bundle)
-	let g:EasyMotion_enter_jump_first = 1
-	let g:EasyMotion_smartcase = 1
-	let g:EasyMotion_use_smartsign_us = 1
-	let g:EasyMotion_startofline = 0
-	let g:EasyMotion_move_highlight = 0
-	map em <plug>(easymotion-prefix)
-	" replace default search
-	map / <plug>(easymotion-sn)
-	omap / <plug>(easymotion-tn)
-	map n <plug>(easymotion-next)
-	map N <plug>(easymotion-prev)
-endfunction
+"
+let g:EasyMotion_enter_jump_first = 1
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_use_smartsign_us = 1
+let g:EasyMotion_startofline = 0
+let g:EasyMotion_move_highlight = 0
+map em <plug>(easymotion-prefix)
+" replace default search
+map / <plug>(easymotion-sn)
+omap / <plug>(easymotion-tn)
+map n <plug>(easymotion-next)
+map N <plug>(easymotion-prev)
 
+"
 " EasyTags
-let bundle = neobundle#get('easytags')
-function! bundle.hooks.on_source(bundle)
-	set tags=./tags;$HOME
-	let g:easytags_dynamic_files = 1
-	call MkdirIfNone(expand('~/.tags'))
-	let g:easytags_by_filetype = '~/.tags'
-	let g:easytags_updatetime_warn = 0
-	let g:easytags_events = ['BufRead', 'BufWritePost']
-	let g:easytags_always_enableds = 1
-endfunction
+"
+set tags=./tags;$HOME
+let g:easytags_dynamic_files = 1
+call MkdirIfNone(expand('~/.tags'))
+let g:easytags_by_filetype = '~/.tags'
+let g:easytags_updatetime_warn = 0
+let g:easytags_events = ['BufRead', 'BufWritePost']
+let g:easytags_always_enableds = 1
 
+"
 " FSwitch
-let bundle = neobundle#get('fswitch')
-function! bundle.hooks.on_source(bundle)
-	nmap <leader>af :FSHere<cr>
-	nmap <leader>al :FSRight<cr>
-	nmap <leader>aL :FSSplitRight<cr>
-	nmap <leader>ah :FSLeft<cr>
-	nmap <leader>aH :FSSplitLeft<cr>
-	nmap <leader>ak :FSAbove<cr>
-	nmap <leader>aK :FSSplitAbove<cr>
-	nmap <leader>aj :FSBelow<cr>
-	nmap <leader>aJ :FSSplitBelow<cr>
-endfunction
+"
+nmap <leader>af :FSHere<cr>
+nmap <leader>al :FSRight<cr>
+nmap <leader>aL :FSSplitRight<cr>
+nmap <leader>ah :FSLeft<cr>
+nmap <leader>aH :FSSplitLeft<cr>
+nmap <leader>ak :FSAbove<cr>
+nmap <leader>aK :FSSplitAbove<cr>
+nmap <leader>aj :FSBelow<cr>
+nmap <leader>aJ :FSSplitBelow<cr>
 
+"
 " lightline
-let bundle = neobundle#get('lightline')
-function! bundle.hooks.on_source(bundle)
-	let g:lightline = {
-		\   'colorscheme': 'wombat',
-		\   'mode_map': {
-		\     'n':      'N',
-		\     'i':      'I',
-		\     'R':      'R',
-		\     'v':      'V',
-		\     'V':      'V',
-		\     "\<c-v>": 'V',
-		\     'c':      'C',
-		\     's':      'S',
-		\     'S':      'S',
-		\     "\<c-s>": 'S',
-		\     '?':      '?',
-		\   },
-		\   'separator': {
-		\     'left': '',
-		\     'right': ''
-		\   },
-		\   'subseparator': {
-		\     'left': '›',
-		\     'right': '‹'
-		\   },
-		\   'component_function': {
-		\     'fileencoding': 'LightlineComponent_fileencoding',
-		\     'fileformat':   'LightlineComponent_fileformat',
-		\     'filename':     'LightlineComponent_filename',
-		\     'filetype':     'LightlineComponent_filetype',
-		\     'vcs':          'LightlineComponent_vcs'
-		\   },
-		\   'component_expand': {
-		\     'loclist': 'LightlineComponent_loclist'
-		\   },
-		\   'component_type': {
-		\     'loclist': 'error',
-		\   },
-		\   'active': {
-		\     'left':  [['mode', 'paste'],
-		\               ['vcs', 'filename', 'loclist']],
-		\     'right': [['lineinfo'],
-		\               ['percent'],
-		\               ['fileformat', 'fileencoding', 'filetype']]
-		\   },
-		\   'tabline': {
-		\     'left':  [['tabs']],
-		\     'right': [[]]
-		\   }
-		\ }
-	let g:lightline_hunks_symbols = ['+', '~', '-']
-endfunction
+"
+let g:lightline = {
+	\   'colorscheme': 'wombat',
+	\   'mode_map': {
+	\     'n':      'N',
+	\     'i':      'I',
+	\     'R':      'R',
+	\     'v':      'V',
+	\     'V':      'V',
+	\     "\<c-v>": 'V',
+	\     'c':      'C',
+	\     's':      'S',
+	\     'S':      'S',
+	\     "\<c-s>": 'S',
+	\     '?':      '?',
+	\   },
+	\   'separator': {
+	\     'left': '',
+	\     'right': ''
+	\   },
+	\   'subseparator': {
+	\     'left': '›',
+	\     'right': '‹'
+	\   },
+	\   'component_function': {
+	\     'fileencoding': 'LightlineComponent_fileencoding',
+	\     'fileformat':   'LightlineComponent_fileformat',
+	\     'filename':     'LightlineComponent_filename',
+	\     'filetype':     'LightlineComponent_filetype',
+	\     'vcs':          'LightlineComponent_vcs'
+	\   },
+	\   'component_expand': {
+	\     'loclist': 'LightlineComponent_loclist'
+	\   },
+	\   'component_type': {
+	\     'loclist': 'error',
+	\   },
+	\   'active': {
+	\     'left':  [['mode', 'paste'],
+	\               ['vcs', 'filename', 'loclist']],
+	\     'right': [['lineinfo'],
+	\               ['percent'],
+	\               ['fileformat', 'fileencoding', 'filetype']]
+	\   },
+	\   'tabline': {
+	\     'left':  [['tabs']],
+	\     'right': [[]]
+	\   }
+	\ }
+let g:lightline_hunks_symbols = ['+', '~', '-']
 
 function! LightlineComponent_fileencoding()
 	if winwidth(0) > 70
@@ -391,114 +379,101 @@ function! LightlineComponent_loclist()
 	return l:loclist_str
 endfunction
 
+"
 " ListToggle
-let bundle = neobundle#get('ListToggle')
-function! bundle.hooks.on_source(bundle)
-	let g:lt_location_list_toggle_map = '<leader>l'
-	let g:lt_quickfix_list_toggle_map = '<leader>q'
-	let g:lt_height = 10
-endfunction
+"
+let g:lt_location_list_toggle_map = '<leader>l'
+let g:lt_quickfix_list_toggle_map = '<leader>q'
+let g:lt_height = 10
 
-" NeoBundle AutoUpdate
-let bundle = neobundle#get('neobundle_autoupdate')
-function! bundle.hooks.on_source(bundle)
-	call MkdirIfNone(expand('~/.vim/cache'))
-	let g:neobundle_autoupdate_dir = expand('~/.vim/cache')
-	let g:neobundle_autoupdate_time = 172800
-endfunction
+"
+" Plugin AutoUpdate
+"
+call MkdirIfNone(expand('~/.vim/cache'))
+let g:neobundle_autoupdate_dir = expand('~/.vim/cache')
+let g:neobundle_autoupdate_time = 172800
 
+"
 " Signify
-let bundle = neobundle#get('signify')
-function! bundle.hooks.on_source(bundle)
-	let g:signify_sign_overwrite = 0
-	let g:signify_sign_add = '+'
-	let g:signify_sign_change = '~'
-	let g:signify_sign_delete = '-'
-	let g:signify_sign_delete_first_line = '^'
-endfunction
+"
+let g:signify_sign_overwrite = 0
+let g:signify_sign_add = '+'
+let g:signify_sign_change = '~'
+let g:signify_sign_delete = '-'
+let g:signify_sign_delete_first_line = '^'
 
+"
 " Syntastic
-let bundle = neobundle#get('syntastic')
-function! bundle.hooks.on_source(bundle)
-	let g:syntastic_check_on_wq = 0
-	let g:syntastic_always_populate_loc_list = 1
-	let g:syntastic_auto_loc_list = 1
-	let g:syntastic_check_on_open = 1
-	let g:syntastic_echo_current_error = 1
-	let g:syntastic_enable_signs = 0
-	let g:syntastic_enable_highlighting = 0
-	let g:syntastic_enable_balloons = 0
-	let g:syntastic_error_symbol = '✕'
-	let g:syntastic_style_error_symbol = '✠'
-	let g:syntastic_warning_symbol = '△'
-	let g:syntastic_style_warning_symbol = '≈'
-	if executable('flake8')
-		let g:syntastic_python_checkers = ['flake8']
-	endif
-endfunction
+"
+let g:syntastic_check_on_wq = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_echo_current_error = 1
+let g:syntastic_enable_signs = 0
+let g:syntastic_enable_highlighting = 0
+let g:syntastic_enable_balloons = 0
+let g:syntastic_error_symbol = '✕'
+let g:syntastic_style_error_symbol = '✠'
+let g:syntastic_warning_symbol = '△'
+let g:syntastic_style_warning_symbol = '≈'
+if executable('flake8')
+	let g:syntastic_python_checkers = ['flake8']
+endif
 
+"
 " UltiSnips
-let bundle = neobundle#get('ultisnips')
-function! bundle.hooks.on_source(bundle)
-	let g:UltiSnipsEditSplit = 'vertical'
-	let g:UltiSnipsSnippetDirectories = ['snips']
-	let g:UltiSnipsExpandTrigger = '<c-j>'
-	let g:UltiSnipsJumpForwardTrigger = '<c-j>'
-	let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
-endfunction
+"
+let g:UltiSnipsEditSplit = 'vertical'
+let g:UltiSnipsSnippetDirectories = ['snips']
+let g:UltiSnipsExpandTrigger = '<c-j>'
+let g:UltiSnipsJumpForwardTrigger = '<c-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 
+"
 " Unimpaired
-let bundle = neobundle#get('unimpaired')
-function! bundle.hooks.on_source(bundle)
-	nmap mk [e
-	nmap mj ]e
-	vmap mk [egv
-	vmap mj ]egv
-endfunction
+"
+nmap mk [e
+nmap mj ]e
+vmap mk [egv
+vmap mj ]egv
 
+"
 " Unite
-let bundle = neobundle#get('unite')
-function! bundle.hooks.on_source(bundle)
-	if executable('ack-grep')
-		let g:unite_source_grep_command = 'ack-grep'
-		let g:unite_source_grep_default_opts = '--noheading --nocolor -k -H'
-		let g:unite_source_grep_recursive_opt = ''
-	endif
+"
+if executable('ack-grep')
+	let g:unite_source_grep_command = 'ack-grep'
+	let g:unite_source_grep_default_opts = '--noheading --nocolor -k -H'
+	let g:unite_source_grep_recursive_opt = ''
+endif
 
-	let g:unite_data_directory = expand('~/.vim/cache')
-	let g:unite_source_session_default_session_name = 'default'
-	let g:unite_source_session_path = expand('~/.vim/sessions')
-	let g:unite_force_overwrite_statusline = 0
-	let g:unite_winheight = 20
-	call unite#filters#matcher_default#use(['matcher_fuzzy'])
-	call unite#filters#sorter_default#use(['sorter_rank'])
-	call unite#custom#profile('default', 'context', {
-		\     'prompt': '» ',
-		\     'silent': 1,
-		\     'direction': 'botright',
-		\     'prompt_direction': 'top'
-		\ })
-	call unite#custom#profile('files', 'context', {'start_insert': 1})
-	call unite#custom#profile('buffers', 'context', {'start_insert': 1})
-	call unite#custom#profile('search', 'context', {'no_quit': 1})
+let g:unite_data_directory = expand('~/.vim/cache')
+let g:unite_source_session_default_session_name = 'default'
+let g:unite_source_session_path = expand('~/.vim/sessions')
+let g:unite_force_overwrite_statusline = 0
+let g:unite_winheight = 20
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+call unite#custom#profile('default', 'context', {
+	\     'prompt': '» ',
+	\     'silent': 1,
+	\     'direction': 'botright',
+	\     'prompt_direction': 'top'
+	\ })
+call unite#custom#profile('files', 'context', {'start_insert': 1})
+call unite#custom#profile('buffers', 'context', {'start_insert': 1})
+call unite#custom#profile('search', 'context', {'no_quit': 1})
 
-	nnoremap <leader>f :Unite -buffer-name=files file_rec<cr>
-	nnoremap <leader>b :Unite -profile-name=files -buffer-name=buffers buffer<cr>
-	nnoremap <leader>/ :Unite -buffer-name=search grep<cr>
-endfunction
+nnoremap <leader>f :Unite -buffer-name=files file_rec<cr>
+nnoremap <leader>b :Unite -profile-name=files -buffer-name=buffers buffer<cr>
+nnoremap <leader>/ :Unite -buffer-name=search grep<cr>
 
-let bundle = neobundle#get('unite-session')
-function! bundle.hooks.on_source(bundle)
-	nnoremap <leader>s :Unite -buffer-name=sessions session<cr>
-	command! -nargs=? LoadSession UniteSessionLoad <args>
-	command! -nargs=? SaveSession UniteSessionSave <args>
-endfunction
+nnoremap <leader>s :Unite -buffer-name=sessions session<cr>
+command! -nargs=? LoadSession UniteSessionLoad <args>
+command! -nargs=? SaveSession UniteSessionSave <args>
 
-let bundle = neobundle#get('unite-outline')
-function! bundle.hooks.on_source(bundle)
-	call unite#custom#profile('outline', 'context', {'no_split': 1})
-	nnoremap <leader>o :Unite -buffer-name=outline outline<cr>
-endfunction
+call unite#custom#profile('outline', 'context', {'no_split': 1})
+nnoremap <leader>o :Unite -buffer-name=outline outline<cr>
 
 function! UniteBufferSettings()
 	imap <buffer> <tab>   <Plug>(unite_choose_action)
@@ -518,21 +493,20 @@ if has('autocmd')
 	augroup END
 endif
 
+"
 " YouCompleteMe
-let bundle = neobundle#get('YouCompleteMe')
-function! bundle.hooks.on_source(bundle)
-	let g:ycm_global_ycm_extra_conf = expand('~/.vim/ycm/ycm_extra_conf.py')
-	let g:ycm_confirm_extra_conf = 1
-	let g:ycm_cache_omnifunc = 1
-	let g:ycm_collect_identifiers_from_tags_files = 1
-	let g:ycm_extra_conf_c_flags = '-xc -std=c11 -Wall -Wextra'
-	let g:ycm_extra_conf_cpp_flags = '-xc++ -std=c++11 -Wall -Wextra'
-	let g:ycm_extra_conf_vim_data = [
-				\   '&filetype',
-				\   'g:ycm_extra_conf_c_flags',
-				\   'g:ycm_extra_conf_cpp_flags'
-				\]
-endfunction
+"
+let g:ycm_global_ycm_extra_conf = expand('~/.vim/ycm/ycm_extra_conf.py')
+let g:ycm_confirm_extra_conf = 1
+let g:ycm_cache_omnifunc = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_extra_conf_c_flags = '-xc -std=c11 -Wall -Wextra'
+let g:ycm_extra_conf_cpp_flags = '-xc++ -std=c++11 -Wall -Wextra'
+let g:ycm_extra_conf_vim_data = [
+			\   '&filetype',
+			\   'g:ycm_extra_conf_c_flags',
+			\   'g:ycm_extra_conf_cpp_flags'
+			\]
 
 if has('autocmd')
 	augroup vimrc
@@ -621,9 +595,3 @@ if has('autocmd')
 		autocmd BufWritePre * :call RemoveTrailingWhitespace()
 	augroup END
 endif
-
-" check for plugin updates
-NeoBundleCheck
-
-" apply loaded plugin settings
-call neobundle#call_hook('on_source')
