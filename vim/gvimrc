@@ -6,8 +6,12 @@ set guioptions-=i " hide scrollbars
 set guioptions-=r " hide scrollbars
 set guioptions-=L " hide scrollbars
 set guioptions-=l " hide scrollbars
-" set guifont=Meslo\ LG\ M\ 8
-set guifont=Meslo\ LG\ S\ 8
+
+if has('gui_win32')
+	set guifont=Meslo\ LG\ S:h8
+else
+	set guifont=Meslo\ LG\ S\ 8
+endif
 
 " Toggle menu
 nmap <f1> :if &go=~#'m'<Bar>set go-=m<Bar>else<Bar>set go+=m<Bar>endif<cr>

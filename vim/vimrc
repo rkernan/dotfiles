@@ -4,12 +4,16 @@
 if has('vim_starting')
 	set nocompatible
 	filetype off
-	set runtimepath+=$HOME/.vim/bundle/Vundle.vim
+	if has('win32')
+		set runtimepath+=$HOME/vimfiles/bundle/Vundle.vim
+		let g:bundle_path = '~/vimfiles/bundle'
+	else
+		set runtimepath+=$HOME/.vim/bundle/Vundle.vim
+		let g:bundle_path = '~/.vim/bundle'
+	endif
 endif
 
-let g:neobundle#enable_name_conversion = 1
-
-call vundle#begin(expand('~/.vim/bundle'))
+call vundle#begin(g:bundle_path)
 Plugin 'gmarik/Vundle.vim'
 
 " appearance
@@ -36,7 +40,9 @@ Plugin 'Lokaltog/vim-easymotion', {'depends': 'tpope/vim-repeat'}
 Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/syntastic'
-Plugin 'SirVer/ultisnips'
+if has('python')
+	Plugin 'SirVer/ultisnips'
+endif
 Plugin 'tommcdo/vim-exchange'
 Plugin 'tpope/vim-abolish', {'depends': 'tpope/vim-repeat'}
 Plugin 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
@@ -44,10 +50,12 @@ Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
 Plugin 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
 Plugin 'Valloric/ListToggle'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'xolox/vim-easytags', {'depends': 'xolox/vim-misc'}
+if has('unix')
+	Plugin 'Valloric/YouCompleteMe'
+	Plugin 'xolox/vim-easytags', {'depends': 'xolox/vim-misc'}
+endif
 
-" dependencies, TODO remove once implemented
+" Dependencies, TODO Remove once implemented in vundle.
 Plugin 'kana/vim-textobj-user'
 Plugin 'tpope/vim-repeat'
 Plugin 'xolox/vim-misc'
@@ -121,8 +129,17 @@ set number " show line numbers
 set norelativenumber " don't use relative numbers
 set laststatus=2 " always show the status bar
 set noshowmode   " don't show mode
-set listchars=tab:â–¸\ ,eol:Â¬,extends:Â»,precedes:Â«
-set showbreak=â€¦
+if has('multi_byte')
+	if has('win32') " FIXME Windows can't display some unicode characters.
+		set listchars=tab:>\ ,eol:¬,extends:»,precedes:«
+	else
+		set listchars=tab:?\ ,eol:¬,extends:»,precedes:«
+	endif
+	set showbreak=…
+else
+	set listchars=tab:>\ ,eol:$,extends:>,precedes:<
+	set showbreak=~
+endif
 set list " show hidden characters
 set synmaxcol=800 " max column for syntax highlighting
 set completeopt=menu,menuone,longest
@@ -274,10 +291,6 @@ let g:lightline = {
 	\     'left': '',
 	\     'right': ''
 	\   },
-	\   'subseparator': {
-	\     'left': 'â€º',
-	\     'right': 'â€¹'
-	\   },
 	\   'component_function': {
 	\     'fileencoding': 'LightlineComponent_fileencoding',
 	\     'fileformat':   'LightlineComponent_fileformat',
@@ -303,6 +316,17 @@ let g:lightline = {
 	\     'right': [[]]
 	\   }
 	\ }
+
+if has('multi_byte')
+	if has('win32') " FIXME Windows can't display some unicode characters.
+		let g:lightline.subseparator = {'left': '>', 'right': '<'}
+	else
+		let g:lightline.subseparator = {'left': '€', 'right': '€'}
+	endif
+else
+	let g:lightline.subseparator = {'left': '>', 'right': '<'}
+endif
+
 let g:lightline_hunks_symbols = ['+', '~', '-']
 
 function! LightlineComponent_fileencoding()
@@ -413,10 +437,6 @@ let g:syntastic_echo_current_error = 1
 let g:syntastic_enable_signs = 0
 let g:syntastic_enable_highlighting = 0
 let g:syntastic_enable_balloons = 0
-let g:syntastic_error_symbol = 'âœ•'
-let g:syntastic_style_error_symbol = 'âœ '
-let g:syntastic_warning_symbol = 'â–³'
-let g:syntastic_style_warning_symbol = 'â‰ˆ'
 if executable('flake8')
 	let g:syntastic_python_checkers = ['flake8']
 endif
@@ -454,12 +474,21 @@ let g:unite_force_overwrite_statusline = 0
 let g:unite_winheight = 20
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
-call unite#custom#profile('default', 'context', {
-	\     'prompt': 'Â» ',
-	\     'silent': 1,
-	\     'direction': 'botright',
-	\     'prompt_direction': 'top'
-	\ })
+if has('multi_byte')
+	call unite#custom#profile('default', 'context', {
+		\     'prompt': '» ',
+		\     'silent': 1,
+		\     'direction': 'botright',
+		\     'prompt_direction': 'top'
+		\ })
+else
+	call unite#custom#profile('default', 'context', {
+		\     'prompt': '>> ',
+		\     'silent': 1,
+		\     'direction': 'botright',
+		\     'prompt_direction': 'top'
+		\ })
+endif
 call unite#custom#profile('files', 'context', {'start_insert': 1})
 call unite#custom#profile('buffers', 'context', {'start_insert': 1})
 call unite#custom#profile('search', 'context', {'no_quit': 1})
