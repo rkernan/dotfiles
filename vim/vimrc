@@ -94,6 +94,7 @@ set omnifunc=syntaxcomplete#Complete
 
 let mapleader = "\\"
 let maplocalleader = "\\"
+map <space> <leader>
 
 set history=1000
 set undoreload=1000
