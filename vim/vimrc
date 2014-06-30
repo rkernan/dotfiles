@@ -546,12 +546,12 @@ let g:ycm_extra_conf_vim_data = [
 
 if has('autocmd')
 	augroup vimrc
-		autocmd FileType c      nnoremap <buffer> <c-]> :YcmCompleter GoTo<cr>
-		autocmd FileType cpp    nnoremap <buffer> <c-]> :YcmCompleter GoTo<cr>
-		autocmd FileType objc   nnoremap <buffer> <c-]> :YcmCompleter GoTo<cr>
-		autocmd FileType objcpp nnoremap <buffer> <c-]> :YcmCompleter GoTo<cr>
-		autocmd FileType cs     nnoremap <buffer> <c-]> :YcmCompleter GoTo<cr>
-		autocmd FileType python nnoremap <buffer> <c-]> :YcmCompleter GoTo<cr>
+		autocmd FileType c      nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
+		autocmd FileType cpp    nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
+		autocmd FileType objc   nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
+		autocmd FileType objcpp nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
+		autocmd FileType cs     nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
+		autocmd FileType python nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
 	augroup END
 endif
 
