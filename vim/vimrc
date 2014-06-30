@@ -1,23 +1,23 @@
-scriptencoding utf-8
-
 " -----
 " Setup
 " -----
+scriptencoding utf-8
+
+if has('win32')
+	let g:vimfiles_path = '~/vimfiles'
+else
+	let g:vimfiles_path = '~/.vim'
+endif
+
+let g:bundle_path = util#path_join(g:vimfiles_path, 'bundle')
+
 if has('vim_starting')
 	set nocompatible
 	filetype off
-	if has('win32')
-		set runtimepath+=$HOME/vimfiles/bundle/Vundle.vim
-		let g:bundle_path = '~/vimfiles/bundle'
-	else
-		set runtimepath+=$HOME/.vim/bundle/Vundle.vim
-		let g:bundle_path = '~/.vim/bundle'
-	endif
+	exec 'set runtimepath+=' . expand(util#path_join(g:bundle_path, 'Vundle.vim'))
 endif
 
 call vundle#begin(g:bundle_path)
-
-Plugin 'gmarik/Vundle.vim'
 
 " appearance
 Plugin 'chriskempson/base16-vim'
@@ -77,18 +77,7 @@ endif
 " --------
 " Settings
 " --------
-function! MkdirIfNone(dir)
-	if !isdirectory(a:dir)
-		if exists('*mkdir')
-			call mkdir(a:dir, 'p')
-			echo 'created directory: ' . a:dir
-		else
-			echo 'cannot make directory: ' . a:dir
-		endif
-	endif
-endfunction
-
-call MkdirIfNone(expand('~/.vim/undo'))
+call util#mkdir_if_none(util#path_join(g:vimfiles_path, 'undo'))
 
 filetype plugin indent on
 
@@ -253,8 +242,8 @@ map N <plug>(easymotion-prev)
 "
 set tags=./tags;$HOME
 let g:easytags_dynamic_files = 1
-call MkdirIfNone(expand('~/.tags'))
-let g:easytags_by_filetype = '~/.tags'
+let g:easytags_by_filetype = util#path_join(g:vimfiles_path, 'tags')
+call util#mkdir_if_none(g:easytags_by_filetype)
 let g:easytags_updatetime_warn = 0
 let g:easytags_events = ['BufRead', 'BufWritePost']
 let g:easytags_always_enableds = 1
@@ -414,13 +403,6 @@ let g:lt_quickfix_list_toggle_map = '<leader>q'
 let g:lt_height = 10
 
 "
-" Plugin AutoUpdate
-"
-call MkdirIfNone(expand('~/.vim/cache'))
-let g:neobundle_autoupdate_dir = expand('~/.vim/cache')
-let g:neobundle_autoupdate_time = 172800
-
-"
 " Signify
 "
 let g:signify_sign_overwrite = 0
@@ -470,7 +452,8 @@ if executable('ack-grep')
 	let g:unite_source_grep_recursive_opt = ''
 endif
 
-let g:unite_data_directory = expand('~/.vim/cache')
+let g:unite_data_directory = util#path_join(g:vimfiles_path, 'cache')
+call util#mkdir_if_none(g:unite_data_directory)
 let g:unite_source_session_default_session_name = 'default'
 let g:unite_source_session_path = expand('~/.vim/sessions')
 let g:unite_force_overwrite_statusline = 0
@@ -528,7 +511,7 @@ endif
 "
 " YouCompleteMe
 "
-let g:ycm_global_ycm_extra_conf = expand('~/.vim/ycm/ycm_extra_conf.py')
+let g:ycm_global_ycm_extra_conf = util#path_join(g:vimfiles_path, 'ycm/ycm_extra_conf.py')
 let g:ycm_confirm_extra_conf = 1
 let g:ycm_cache_omnifunc = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
