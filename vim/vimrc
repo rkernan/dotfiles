@@ -16,6 +16,7 @@ if has('vim_starting')
 endif
 
 call vundle#begin(g:bundle_path)
+
 Plugin 'gmarik/Vundle.vim'
 
 " appearance
@@ -90,7 +91,9 @@ endfunction
 call MkdirIfNone(expand('~/.vim/undo'))
 
 filetype plugin indent on
+
 set omnifunc=syntaxcomplete#Complete
+set completeopt=menu,menuone,longest
 
 let mapleader = "\\"
 let maplocalleader = "\\"
@@ -99,55 +102,53 @@ map <space> <leader>
 set history=1000
 set undoreload=1000
 set undodir=$HOME/.vim/undo
-set undofile   " enable undo files
-set nobackup   " disable backup files
-set noswapfile " disable swap files
+set undofile
+set nobackup
+set noswapfile
+
 set pastetoggle=<F2>
-set mouse=a " enable all mouse modes
+
+if has('mouse')
+	set mouse=a
+endif
+
 if has('unnamedplus')
-	" properly handle system clipboard in x11
 	set clipboard=unnamedplus,unnamed
 else
 	set clipboard+=unnamed
 endif
-set modeline
-set modelines=5
+
 set backspace=indent,eol,start
-set autoread " automatically read file changes
-set hidden " automatically manage hidden buffers
+
+set autoread
+set hidden
+
+set ttimeout
 set ttimeoutlen=100
-set timeoutlen=3000
+
 set noerrorbells novisualbell t_vb=
-set shortmess =a " use all abbreviations
-set shortmess+=t " truncate file message if too long
-set shortmess+=s " remove 'search hit TOP/BOTTOM' message
-set shortmess+=o " file-read message overwrites file-written message
-set shortmess+=O " file-read message overwrites any message
-set shortmess+=I " remove intro message
-set showcmd " show partial command on the last line
-set ttyfast " smoother redraw with multiple windows
-set lazyredraw " disable screen draw during macros
-set t_ut= " clear background, fixes background in tmux
-set number " show line numbers
-set norelativenumber " don't use relative numbers
-set laststatus=2 " always show the status bar
-set noshowmode   " don't show mode
+set shortmess=atsoOI
+set showcmd
+set scrolloff=3
+set ttyfast
+set lazyredraw
+set t_ut=
+set noshowmode
+set laststatus=2
+set number
+set norelativenumber
+
 if has('multi_byte')
-	if has('win32') " FIXME Windows doesn't display some unicode characters correctly.
-		set listchars=tab:>\ ,eol:¬,extends:»,precedes:«
-	else
-		set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
-	endif
+	set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
 	set showbreak=…
 else
 	set listchars=tab:>\ ,eol:$,extends:>,precedes:<
 	set showbreak=~
 endif
-set list " show hidden characters
-set synmaxcol=800 " max column for syntax highlighting
-set completeopt=menu,menuone,longest
-set cursorline " highlight the current cursor line
-set wildmenu " enable wildmenu
+
+set list
+
+set wildmenu
 set wildmode=longest:full,full
 set wildignore+=.hg,.git,.svn                    " version control files
 set wildignore+=*.aux,*.out,*.toc                " LaTeX build files
@@ -157,28 +158,24 @@ set wildignore+=*.luac                           " lua byte code
 set wildignore+=*.pyc                            " python byte code
 set wildignore+=*.sw                             " vim swap files
 set wildignore+=*.DS_Store                       " OSX something
-set tabstop=4     " number of spaces a tab appears as
-set shiftwidth=4  " number of spaces to use for each step of (auto)indent
-set softtabstop=4 " number of spaces a tab counts for while editing
-set noexpandtab   " do not expand tabs to spaces
-set wrap         " wrap displayed text
-set textwidth=80 " wrap to 80 columns
-set formatoptions=cqrnj
-set smartindent " smart indent new lines
-set shiftround  " round indent to multiple of shiftwidth
-set cinoptions+=L-1 " indent of labels -> none
-set cinoptions+=:0  " indent of cases -> none
-set cinoptions+=l1  " indent of block after case -> align with case statement
-set cinoptions+=g0  " indent of scope declarations -> none
-set cinoptions+=N-s " indent of statements inside namespace -> none
-set cinoptions+=j1  " indent Java anonymous classes correctly
-set magic      " use special characters in search patterns
-set ignorecase " ignore case of search term
-set smartcase  " stop ignoring case when search pattern includes upper-case characters
-set incsearch  " show matches as the command is being type
-set hlsearch   " highlight all search results
-set gdefault   " substitute all matches on a line by default
-set scrolloff=3
+
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+set noexpandtab
+set shiftround
+
+set wrap
+set textwidth=79
+set formatoptions=cqrn1j
+set smartindent
+
+set magic
+set ignorecase
+set smartcase
+set incsearch
+set hlsearch
+set gdefault
 
 if has('autocmd')
 	augroup vimrc
@@ -194,6 +191,7 @@ endif
 " -----------
 syntax on
 
+set cursorline
 let g:base16colorspace=256
 set background=dark
 colorscheme base16-monokai
@@ -207,7 +205,9 @@ colorscheme base16-monokai
 let g:loaded_netrw = 1
 let g:loaded_netrwPlugin = 1
 
+"
 " commentary
+"
 if has('autocmd')
 	augroup vimrc
 		autocmd FileType json setlocal commentstring=%s
@@ -566,6 +566,9 @@ inoremap <left>  <nop>
 inoremap <right> <nop>
 inoremap <up>    <nop>
 inoremap <down>  <nop>
+
+" yank to end of line
+nnoremap Y y$
 
 " treat line wraps as real lines
 nnoremap j gj
