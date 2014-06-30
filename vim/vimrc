@@ -325,11 +325,7 @@ let g:lightline = {
 	\ }
 
 if has('multi_byte')
-	if has('win32') " FIXME Windows doesn't display some unicode characters correctly.
-		let g:lightline.subseparator = {'left': '>', 'right': '<'}
-	else
-		let g:lightline.subseparator = {'left': '›', 'right': '‹'}
-	endif
+	let g:lightline.subseparator = {'left': '›', 'right': '‹'}
 else
 	let g:lightline.subseparator = {'left': '>', 'right': '<'}
 endif
