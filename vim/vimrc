@@ -19,6 +19,8 @@ endif
 
 call vundle#begin(g:bundle_path)
 
+Plugin 'gmarik/Vundle.vim'
+
 " appearance
 Plugin 'chriskempson/base16-vim'
 Plugin 'itchyny/lightline.vim'
