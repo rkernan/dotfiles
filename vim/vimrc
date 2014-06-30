@@ -262,15 +262,19 @@ let g:easytags_always_enableds = 1
 "
 " FSwitch
 "
-nmap <leader>af :FSHere<cr>
-nmap <leader>al :FSRight<cr>
-nmap <leader>aL :FSSplitRight<cr>
-nmap <leader>ah :FSLeft<cr>
-nmap <leader>aH :FSSplitLeft<cr>
-nmap <leader>ak :FSAbove<cr>
-nmap <leader>aK :FSSplitAbove<cr>
-nmap <leader>aj :FSBelow<cr>
-nmap <leader>aJ :FSSplitBelow<cr>
+if has('autocmd')
+	augroup vimrc
+		autocmd FileType c,cpp nmap <buffer> <leader>af :FSHere<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>al :FSRight<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aL :FSSplitRight<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>ah :FSLeft<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aH :FSSplitLeft<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>ak :FSAbove<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aK :FSSplitAbove<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aj :FSBelow<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aJ :FSSplitBelow<cr>
+	augroup END
+endif
 
 "
 " lightline
