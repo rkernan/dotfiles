@@ -39,15 +39,14 @@ Plugin 'Shougo/unite-outline', {'depends': 'Shougo/unite.vim'}
 Plugin 'Shougo/unite-session', {'depends': 'Shougo/unite.vim'}
 
 " other
+Plugin 'matchit.zip'
 Plugin 'derekwyatt/vim-fswitch'
 Plugin 'kana/vim-textobj-entire', {'depends': 'kana/vim-textobj-user'}
 Plugin 'Lokaltog/vim-easymotion', {'depends': 'tpope/vim-repeat'}
 Plugin 'nelstrom/vim-visual-star-search'
 Plugin 'Raimondi/delimitMate'
 Plugin 'scrooloose/syntastic'
-if has('python')
-	Plugin 'SirVer/ultisnips'
-endif
+Plugin 'SirVer/ultisnips'
 Plugin 'tommcdo/vim-exchange'
 Plugin 'tpope/vim-abolish', {'depends': 'tpope/vim-repeat'}
 Plugin 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
@@ -55,20 +54,15 @@ Plugin 'tpope/vim-endwise'
 Plugin 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
 Plugin 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
 Plugin 'Valloric/ListToggle'
-if has('unix')
-	Plugin 'Valloric/YouCompleteMe'
-	Plugin 'xolox/vim-easytags', {'depends': 'xolox/vim-misc'}
-endif
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'xolox/vim-easytags', {'depends': 'xolox/vim-misc'}
 
-" Dependencies, TODO Remove once implemented in vundle.
+" Dependencies. FIXME Once implemented in vundle.
 Plugin 'kana/vim-textobj-user'
 Plugin 'tpope/vim-repeat'
 Plugin 'xolox/vim-misc'
 
 call vundle#end()
-
-" load matchit.vim
-runtime! macros/matchit.vim
 
 if has('autocmd')
 	augroup vimrc
