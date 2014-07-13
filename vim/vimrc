@@ -242,7 +242,6 @@ let g:easytags_dynamic_files = 1
 let g:easytags_by_filetype = util#path_join(g:vimfiles_path, 'tags')
 call util#mkdir_if_none(g:easytags_by_filetype)
 let g:easytags_updatetime_warn = 0
-let g:easytags_events = ['BufRead', 'BufWritePost']
 let g:easytags_always_enableds = 1
 
 "
