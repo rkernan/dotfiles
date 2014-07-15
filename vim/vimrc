@@ -327,18 +327,6 @@ let g:loaded_netrw = 1
 let g:loaded_netrwPlugin = 1
 
 "
-" commentary
-"
-let bundle = neobundle#get('commentary')
-function! bundle.hooks.on_source(bundle)
-	if has('autocmd')
-		augroup vimrc
-			autocmd FileType json setlocal commentstring=%s
-		augroup END
-	endif
-endfunction
-
-"
 " DelimitMate
 "
 let bundle = neobundle#get('delimitMate')
@@ -347,7 +335,7 @@ function! bundle.hooks.on_source(bundle)
 	let g:delimitMate_matchpairs = "(:),[:],{:}"
 	let g:delimitMate_smart_matchpairs = 1
 	let g:delimitMate_balance_matchpairs = 1
-	let g:delimitMate_quotes = "\" '"
+	let g:delimitMate_quotes = "\" ' `"
 	let g:delimitMate_smart_quotes = 1
 	let g:delimitMate_expand_cr = 1
 	let g:delimitMate_expand_space = 1
@@ -462,14 +450,12 @@ endfunction
 "
 " UltiSnips
 "
-let bundle = neobundle#get('ultisnips')
-function! bundle.hooks.on_source(bundle)
-	let g:UltiSnipsEditSplit = 'vertical'
-	let g:UltiSnipsSnippetDirectories = ['snips']
-	let g:UltiSnipsExpandTrigger = '<c-j>'
-	let g:UltiSnipsJumpForwardTrigger = '<c-j>'
-	let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
-endfunction
+" FIXME Can't use on_source hook.
+let g:UltiSnipsEditSplit = 'vertical'
+let g:UltiSnipsSnippetDirectories = ['snips']
+let g:UltiSnipsExpandTrigger = '<c-j>'
+let g:UltiSnipsJumpForwardTrigger = '<c-j>'
+let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 
 "
 " Unimpaired
@@ -523,6 +509,13 @@ function! bundle.hooks.on_source(bundle)
 	nnoremap <leader>f :Unite -buffer-name=files file_rec<cr>
 	nnoremap <leader>b :Unite -profile-name=files -buffer-name=buffers buffer<cr>
 	nnoremap <leader>/ :Unite -buffer-name=search grep<cr>
+
+	if has('autocmd')
+		augroup vimrc
+			" apply unite buffer settings
+			autocmd FileType unite call UniteBufferSettings()
+		augroup END
+	endif
 endfunction
 
 let bundle = neobundle#get('unite-outline')
@@ -548,13 +541,6 @@ function! UniteBufferSettings()
 	imap <buffer> <c-p>   <Plug>(unite_select_previous_line)
 	nmap <buffer> <c-p>   <Plug>(unite_select_previous_line)
 endfunction
-
-if has('autocmd')
-	augroup vimrc
-		" apply unite buffer settings
-		autocmd FileType unite call UniteBufferSettings()
-	augroup END
-endif
 
 "
 " YouCompleteMe
