@@ -8,7 +8,7 @@ ROOT_DIR = File.expand_path(File.dirname(__FILE__))
 HOME_DIR = ENV['HOME']
 
 BASEDIRS = [".", "config", "fonts", "share"]
-EXCLUDES = (["Rakefile", "README.md"] + [BASEDIRS[1, BASEDIRS.size]]).flatten
+EXCLUDES = (["Rakefile", "README.md", "windows.bat"] + [BASEDIRS[1, BASEDIRS.size]]).flatten
 
 def log(msg, prefix, stream = $stdout)
   stream.puts("#{prefix} #{msg}")
@@ -131,7 +131,7 @@ end
 
 desc "download all Vim plugins"
 task :get_plugins do
-  sh("vim +PluginInstall! +PluginClean +qall")
+  sh("vim +NeoBundleInstall! +NeoBundleClean +qall")
 end
 
 desc "compile YouCompleteMe Vim plugin"
