@@ -329,24 +329,20 @@ let g:loaded_netrwPlugin = 1
 "
 " DelimitMate
 "
-let bundle = neobundle#get('delimitMate')
-function! bundle.hooks.on_source(bundle)
-	let g:delimitMate_autoclose = 1
-	let g:delimitMate_matchpairs = "(:),[:],{:}"
-	let g:delimitMate_smart_matchpairs = 1
-	let g:delimitMate_balance_matchpairs = 1
-	let g:delimitMate_quotes = "\" ' `"
-	let g:delimitMate_smart_quotes = 1
-	let g:delimitMate_expand_cr = 1
-	let g:delimitMate_expand_space = 1
-	let g:delimitMate_excluded_regions = "Comment"
-	if has('autocmd')
-		augroup vimrc
-			" filetype specific quotes
-			autocmd FileType vim let b:delimitMate_quotes = "'"
-		augroup END
-	endif
-endfunction
+let delimitMate_matchpairs = "(:),[:],{:}"
+let delimitMate_quotes = "\" ' `"
+let delimitMate_expand_cr = 1
+let delimitMate_jump_expansion = 1
+
+if has('autocmd')
+	augroup vimrc
+		" filetype specific pairs
+		" filetype specific quotes
+		autocmd FileType vim let b:delimitMate_quotes = "'"
+		" filetype specific nesting
+		autocmd FileType python let b:delimitMate_nesting_quotes = ['"']
+	augroup END
+endif
 
 "
 " EasyMotion
@@ -450,7 +446,6 @@ endfunction
 "
 " UltiSnips
 "
-" FIXME Can't use on_source hook.
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsSnippetDirectories = ['snips']
 let g:UltiSnipsExpandTrigger = '<c-j>'
