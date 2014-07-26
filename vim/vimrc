@@ -542,6 +542,9 @@ endfunction
 "
 let bundle = neobundle#get('YouCompleteMe')
 function! bundle.hooks.on_source(bundle)
+	let g:ycm_enable_diagnostic_signs = 0
+	let g:ycm_enable_diagnostic_highlighting = 0
+	let g:ycm_always_populate_location_list = 1
 	let g:ycm_global_ycm_extra_conf = util#path_join(g:vimfiles_path, 'ycm/ycm_extra_conf.py')
 	let g:ycm_confirm_extra_conf = 1
 	let g:ycm_cache_omnifunc = 1
