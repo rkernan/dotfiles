@@ -49,6 +49,10 @@ NeoBundle 'Shougo/unite.vim', {'depends': 'Shougo/vimproc.vim'}
 NeoBundle 'Shougo/unite-outline', {'depends': 'Shougo/unite.vim'}
 NeoBundle 'Shougo/unite-session', {'depends': 'Shougo/unite.vim'}
 
+" snippets
+NeoBundle 'SirVer/ultisnips'
+NeoBundle 'kernan/vim-snippets'
+
 " other
 NeoBundle 'matchit.zip'
 NeoBundleLazy 'derekwyatt/vim-fswitch', {'autoload': {'filetypes': ['c', 'cpp']}}
@@ -57,7 +61,6 @@ NeoBundle 'Lokaltog/vim-easymotion', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'scrooloose/syntastic'
-NeoBundle 'SirVer/ultisnips'
 NeoBundle 'tommcdo/vim-exchange'
 NeoBundle 'tpope/vim-abolish', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
@@ -605,7 +608,7 @@ cmap w!! w !sudo tee > /dev/null %
 function! SetTab()
 	let l:tabstop = 1 * input('setlocal tabstop = softtabstop = shiftwidth = ')
 	if l:tabstop > 0
-		let &l:tw = l:tabstop
+		let &l:ts = l:tabstop
 		let &l:sts = l:tabstop
 		let &l:sw = l:tabstop
 	endif
