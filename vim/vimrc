@@ -40,6 +40,7 @@ NeoBundle 'mhinz/vim-signify'
 
 " languages
 NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'groenewege/vim-less'
 NeoBundle 'leshill/vim-json'
 NeoBundle 'tikhomirov/vim-glsl'
 NeoBundle 'tpope/vim-markdown'
