@@ -34,8 +34,6 @@ NeoBundle 'Shougo/vimproc.vim', {
 " appearance
 NeoBundle 'chriskempson/base16-vim'
 NeoBundle 'itchyny/lightline.vim'
-" NeoBundle 'bling/vim-airline'
-" NeoBundle 'asenac/vim-airline-loclist'
 
 " " vcs integration
 NeoBundle 'mhinz/vim-signify'
@@ -59,7 +57,7 @@ NeoBundle 'kernan/vim-snippets'
 
 " other
 NeoBundle 'matchit.zip'
-NeoBundleLazy 'derekwyatt/vim-fswitch', {'autoload': {'filetypes': ['c', 'cpp']}}
+NeoBundle 'derekwyatt/vim-fswitch'
 NeoBundle 'kana/vim-textobj-entire', {'depends': 'kana/vim-textobj-user'}
 NeoBundle 'Lokaltog/vim-easymotion', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'nelstrom/vim-visual-star-search'
@@ -370,82 +368,67 @@ endif
 "
 " EasyMotion
 "
-let bundle = neobundle#get('easymotion')
-function! bundle.hooks.on_source(bundle)
-	let g:EasyMotion_enter_jump_first = 1
-	let g:EasyMotion_smartcase = 1
-	let g:EasyMotion_use_smartsign_us = 1
-	let g:EasyMotion_startofline = 0
-	let g:EasyMotion_move_highlight = 0
-	map em <plug>(easymotion-prefix)
-	" replace default search
-	map / <plug>(easymotion-sn)
-	omap / <plug>(easymotion-tn)
-	map n <plug>(easymotion-next)
-	map N <plug>(easymotion-prev)
-endfunction
+let g:EasyMotion_enter_jump_first = 1
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_use_smartsign_us = 1
+let g:EasyMotion_startofline = 0
+let g:EasyMotion_move_highlight = 0
+map em <plug>(easymotion-prefix)
+" replace default search
+map / <plug>(easymotion-sn)
+omap / <plug>(easymotion-tn)
+map n <plug>(easymotion-next)
+map N <plug>(easymotion-prev)
 
 "
 " EasyTags
 "
-let bundle = neobundle#get('easytags')
-function! bundle.hooks.on_source(bundle)
-	set tags=./tags;$HOME
-	let g:easytags_dynamic_files = 1
-	let g:easytags_by_filetype = util#path_join(g:vimfiles_path, 'tags')
-	call util#mkdir_if_none(g:easytags_by_filetype)
-	let g:easytags_include_members = 1
-	let g:easytags_updatetime_warn = 0
-	let g:easytags_always_enabled = 1
-	let g:easytags_auto_highlight = 0
-endfunction
+set tags=./tags;$HOME
+let g:easytags_dynamic_files = 1
+let g:easytags_by_filetype = util#path_join(g:vimfiles_path, 'tags')
+call util#mkdir_if_none(g:easytags_by_filetype)
+let g:easytags_include_members = 1
+let g:easytags_updatetime_warn = 0
+let g:easytags_always_enabled = 1
+let g:easytags_auto_highlight = 0
 
 "
 " FSwitch
 "
-let bundle = neobundle#get('fswitch')
-function! bundle.hooks.on_source(bundle)
-	if has('autocmd')
-		augroup vimrc
-			autocmd FileType c,cpp nmap <buffer> <leader>af :FSHere<cr>
-			autocmd FileType c,cpp nmap <buffer> <leader>al :FSRight<cr>
-			autocmd FileType c,cpp nmap <buffer> <leader>aL :FSSplitRight<cr>
-			autocmd FileType c,cpp nmap <buffer> <leader>ah :FSLeft<cr>
-			autocmd FileType c,cpp nmap <buffer> <leader>aH :FSSplitLeft<cr>
-			autocmd FileType c,cpp nmap <buffer> <leader>ak :FSAbove<cr>
-			autocmd FileType c,cpp nmap <buffer> <leader>aK :FSSplitAbove<cr>
-			autocmd FileType c,cpp nmap <buffer> <leader>aj :FSBelow<cr>
-			autocmd FileType c,cpp nmap <buffer> <leader>aJ :FSSplitBelow<cr>
-		augroup END
-	endif
-endfunction
+if has('autocmd')
+	augroup vimrc
+		autocmd FileType c,cpp nmap <buffer> <leader>af :FSHere<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>al :FSRight<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aL :FSSplitRight<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>ah :FSLeft<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aH :FSSplitLeft<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>ak :FSAbove<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aK :FSSplitAbove<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aj :FSBelow<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aJ :FSSplitBelow<cr>
+	augroup END
+endif
 
 "
 " ListToggle
 "
-let bundle = neobundle#get('ListToggle')
-function! bundle.hooks.on_source(bundle)
-	let g:lt_location_list_toggle_map = '<leader>l'
-	let g:lt_quickfix_list_toggle_map = '<leader>q'
-	let g:lt_height = 10
-endfunction
+let g:lt_location_list_toggle_map = '<leader>l'
+let g:lt_quickfix_list_toggle_map = '<leader>q'
+let g:lt_height = 10
 
 "
 " Signify
 "
-let bundle = neobundle#get('signify')
-function! bundle.hooks.on_source(bundle)
-	let g:signify_disable_by_default = 0
-	let g:signify_sign_overwrite = 0
-	let g:signify_sign_add = '+'
-	let g:signify_sign_change = '~'
-	let g:signify_sign_delete = '-'
-	if has('multi_byte')
-		let g:signify_sign_delete_first_line = '‾'
-	else
-		let g:signify_sign_delete_first_line = '^'
-	endif
-endfunction
+let g:signify_disable_by_default = 0
+let g:signify_sign_overwrite = 0
+let g:signify_sign_add = '+'
+let g:signify_sign_change = '~'
+let g:signify_sign_delete = '-'
+if has('multi_byte')
+	let g:signify_sign_delete_first_line = '‾'
+else
+	let g:signify_sign_delete_first_line = '^'
+endif
 
 "
 " Syntastic
@@ -485,65 +468,62 @@ endfunction
 "
 " Unite
 "
-let bundle = neobundle#get('unite')
-function! bundle.hooks.on_source(bundle)
-	if executable('ack-grep')
-		let g:unite_source_grep_command = 'ack-grep'
-		let g:unite_source_grep_default_opts = '--noheading --nocolor -k -H'
-		let g:unite_source_grep_recursive_opt = ''
-	endif
+if executable('ack-grep')
+	let g:unite_source_grep_command = 'ack-grep'
+	let g:unite_source_grep_default_opts = '--noheading --nocolor -k -H'
+	let g:unite_source_grep_recursive_opt = ''
+endif
 
-	let g:unite_data_directory = util#path_join(g:vimfiles_path, 'cache')
-	call util#mkdir_if_none(g:unite_data_directory)
-	let g:unite_source_session_default_session_name = 'default'
-	let g:unite_source_session_path = expand('~/.vim/sessions')
-	let g:unite_force_overwrite_statusline = 0
-	let g:unite_winheight = 20
-	call unite#filters#matcher_default#use(['matcher_fuzzy'])
-	call unite#filters#sorter_default#use(['sorter_rank'])
-	if has('multi_byte')
-		call unite#custom#profile('default', 'context', {
-			\     'prompt': '» ',
-			\     'silent': 1,
-			\     'direction': 'botright',
-			\     'prompt_direction': 'top'
-			\ })
-	else
-		call unite#custom#profile('default', 'context', {
-			\     'prompt': '>> ',
-			\     'silent': 1,
-			\     'direction': 'botright',
-			\     'prompt_direction': 'top'
-			\ })
-	endif
-	call unite#custom#profile('files', 'context', {'start_insert': 1})
-	call unite#custom#profile('buffers', 'context', {'start_insert': 1})
-	call unite#custom#profile('search', 'context', {'no_quit': 1})
+let g:unite_data_directory = util#path_join(g:vimfiles_path, 'cache')
+call util#mkdir_if_none(g:unite_data_directory)
+let g:unite_source_session_default_session_name = 'default'
+let g:unite_source_session_path = expand('~/.vim/sessions')
+let g:unite_force_overwrite_statusline = 0
+let g:unite_winheight = 20
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+if has('multi_byte')
+	call unite#custom#profile('default', 'context', {
+		\     'prompt': '» ',
+		\     'silent': 1,
+		\     'direction': 'botright',
+		\     'prompt_direction': 'top'
+		\ })
+else
+	call unite#custom#profile('default', 'context', {
+		\     'prompt': '>> ',
+		\     'silent': 1,
+		\     'direction': 'botright',
+		\     'prompt_direction': 'top'
+		\ })
+endif
+call unite#custom#profile('files', 'context', {'start_insert': 1})
+call unite#custom#profile('buffers', 'context', {'start_insert': 1})
+call unite#custom#profile('search', 'context', {'no_quit': 1})
 
-	nnoremap <leader>f :Unite -buffer-name=files file_rec<cr>
-	nnoremap <leader>b :Unite -profile-name=files -buffer-name=buffers buffer<cr>
-	nnoremap <leader>/ :Unite -buffer-name=search grep<cr>
+nnoremap <leader>f :Unite -buffer-name=files file_rec<cr>
+nnoremap <leader>b :Unite -profile-name=files -buffer-name=buffers buffer<cr>
+nnoremap <leader>/ :Unite -buffer-name=search grep<cr>
 
-	if has('autocmd')
-		augroup vimrc
-			" apply unite buffer settings
-			autocmd FileType unite call UniteBufferSettings()
-		augroup END
-	endif
-endfunction
+if has('autocmd')
+	augroup vimrc
+		" apply unite buffer settings
+		autocmd FileType unite call UniteBufferSettings()
+	augroup END
+endif
 
-let bundle = neobundle#get('unite-outline')
-function! bundle.hooks.on_source(bundle)
-	call unite#custom#profile('outline', 'context', {'no_split': 1})
-	nnoremap <leader>o :Unite -buffer-name=outline outline<cr>
-endfunction
+"
+" Unite Outline
+"
+call unite#custom#profile('outline', 'context', {'no_split': 1})
+nnoremap <leader>o :Unite -buffer-name=outline outline<cr>
 
-let bundle = neobundle#get('unite-session')
-function! bundle.hooks.on_source(bundle)
-	nnoremap <leader>s :Unite -buffer-name=sessions session<cr>
-	command! -nargs=? LoadSession UniteSessionLoad <args>
-	command! -nargs=? SaveSession UniteSessionSave <args>
-endfunction!
+"
+" Unite Session
+"
+nnoremap <leader>s :Unite -buffer-name=sessions session<cr>
+command! -nargs=? LoadSession UniteSessionLoad <args>
+command! -nargs=? SaveSession UniteSessionSave <args>
 
 function! UniteBufferSettings()
 	imap <buffer> <tab>   <Plug>(unite_choose_action)
