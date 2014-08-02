@@ -34,9 +34,12 @@ NeoBundle 'Shougo/vimproc.vim', {
 " appearance
 NeoBundle 'chriskempson/base16-vim'
 NeoBundle 'itchyny/lightline.vim'
+" NeoBundle 'bling/vim-airline'
+" NeoBundle 'asenac/vim-airline-loclist'
 
-" vcs integration
+" " vcs integration
 NeoBundle 'mhinz/vim-signify'
+NeoBundle 'vim-scripts/vcscommand.vim'
 
 " languages
 NeoBundle 'derekwyatt/vim-scala'
@@ -187,13 +190,20 @@ endif
 syntax on
 
 set cursorline
-let g:base16colorspace=256
+let g:base16colorspace = 256
 set background=dark
 colorscheme base16-monokai
 
 "
 " lightline
 "
+if has('autocmd')
+	augroup vimrc
+		" Fixes error line not updating
+		autocmd CursorMoved * call lightline#update()
+	augroup END
+endif
+
 let g:lightline = {
 	\   'colorscheme': 'wombat',
 	\   'mode_map': {
@@ -221,14 +231,16 @@ let g:lightline = {
 	\     'vcs':          'LightlineComponent_vcs'
 	\   },
 	\   'component_expand': {
-	\     'loclist': 'LightlineComponent_loclist'
+	\     'loclist_error': 'LightlineComponent_loclistError',
+	\     'loclist_warn': 'LightlineComponent_loclistWarn'
 	\   },
 	\   'component_type': {
-	\     'loclist': 'error',
+	\     'loclist_error': 'error',
+	\     'loclist_warn': 'warning'
 	\   },
 	\   'active': {
 	\     'left':  [['mode', 'paste'],
-	\               ['vcs', 'filename', 'loclist']],
+	\               ['vcs', 'filename', 'loclist_error', 'loclist_warn']],
 	\     'right': [['lineinfo'],
 	\               ['percent'],
 	\               ['fileformat', 'fileencoding', 'filetype']]
@@ -263,7 +275,11 @@ endfunction
 
 function! LightlineComponent_filename()
 	let l:filename = expand('%:t')
-	let l:filename = len(l:filename) ? l:filename : ''
+	if &ft == 'unite'
+		let l:filename = unite#get_status_string()
+	else
+		let l:filename = len(l:filename) ? l:filename : ''
+	endif
 	let l:readonly = &readonly ? '!! ' : ''
 	let l:modified = &modified ? '+' : ''
 	let l:modified = (len(l:modified) && len(l:filename) ? ' ' : '') . l:modified
@@ -295,16 +311,13 @@ function! LightlineComponent_vcs()
 	return ''
 endfunction
 
-function! LightlineComponent_loclist()
+function! LightlineComponent_loclistError()
 	" get error/warning count
 	let l:loclist = getloclist(0)
 	let l:num_errors = 0
-	let l:num_warns = 0
 	for i in l:loclist
 		if i.type == 'E'
 			let l:num_errors += 1
-		else
-			let l:num_warns += 1
 		endif
 	endfor
 	" generate string
@@ -312,10 +325,21 @@ function! LightlineComponent_loclist()
 	if l:num_errors > 0
 		let l:loclist_str .= 'E: ' . l:num_errors
 	endif
-	if l:num_warns > 0
-		if l:num_errors > 0
-			let l:loclist_str .= ' '
+	return l:loclist_str
+endfunction
+
+function! LightlineComponent_loclistWarn()
+	" get warning count
+	let l:loclist = getloclist(0)
+	let l:num_warns = 0
+	for i in l:loclist
+		if i.type == 'W'
+			let l:num_warns += 1
 		endif
+	endfor
+	" generate string
+	let l:loclist_str = ''
+	if l:num_warns > 0
 		let l:loclist_str .= 'W: ' . l:num_warns
 	endif
 	return l:loclist_str
@@ -324,11 +348,6 @@ endfunction
 " -------
 " Plugins
 " -------
-"
-" netrw (disable)
-"
-let g:loaded_netrw = 1
-let g:loaded_netrwPlugin = 1
 
 "
 " DelimitMate
@@ -412,42 +431,37 @@ function! bundle.hooks.on_source(bundle)
 endfunction
 
 "
-" Scala
-"
-let bundle = neobundle#get('scala')
-function! bundle.hooks.on_source(bundle)
-	let g:scala_sort_across_groups = 1
-endfunction
-
-"
 " Signify
 "
 let bundle = neobundle#get('signify')
 function! bundle.hooks.on_source(bundle)
+	let g:signify_disable_by_default = 0
 	let g:signify_sign_overwrite = 0
 	let g:signify_sign_add = '+'
 	let g:signify_sign_change = '~'
 	let g:signify_sign_delete = '-'
-	let g:signify_sign_delete_first_line = '^'
+	if has('multi_byte')
+		let g:signify_sign_delete_first_line = '‾'
+	else
+		let g:signify_sign_delete_first_line = '^'
+	endif
 endfunction
 
 "
 " Syntastic
 "
-let bundle = neobundle#get('syntastic')
-function! bundle.hooks.on_source(bundle)
-	let g:syntastic_check_on_wq = 0
-	let g:syntastic_always_populate_loc_list = 1
-	let g:syntastic_auto_loc_list = 1
-	let g:syntastic_check_on_open = 1
-	let g:syntastic_echo_current_error = 1
-	let g:syntastic_enable_signs = 0
-	let g:syntastic_enable_highlighting = 0
-	let g:syntastic_enable_balloons = 0
-	if executable('flake8')
-		let g:syntastic_python_checkers = ['flake8']
-	endif
-endfunction
+let g:syntastic_check_on_wq = 0
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_echo_current_error = 1
+let g:syntastic_enable_signs = 0
+let g:syntastic_enable_highlighting = 0
+let g:syntastic_enable_balloons = 0
+let g:syntastic_aggregate_errors = 1
+if executable('flake8')
+	let g:syntastic_python_checkers = ['flake8']
+endif
 
 "
 " UltiSnips
@@ -545,34 +559,28 @@ endfunction
 "
 " YouCompleteMe
 "
-let bundle = neobundle#get('YouCompleteMe')
-function! bundle.hooks.on_source(bundle)
-	let g:ycm_enable_diagnostic_signs = 0
-	let g:ycm_enable_diagnostic_highlighting = 0
-	let g:ycm_always_populate_location_list = 1
-	let g:ycm_global_ycm_extra_conf = util#path_join(g:vimfiles_path, 'ycm/ycm_extra_conf.py')
-	let g:ycm_confirm_extra_conf = 1
-	let g:ycm_cache_omnifunc = 1
-	let g:ycm_collect_identifiers_from_tags_files = 1
-	let g:ycm_extra_conf_c_flags = '-xc -std=c11 -Wall -Wextra'
-	let g:ycm_extra_conf_cpp_flags = '-xc++ -std=c++11 -Wall -Wextra'
-	let g:ycm_extra_conf_vim_data = [
-				\   '&filetype',
-				\   'g:ycm_extra_conf_c_flags',
-				\   'g:ycm_extra_conf_cpp_flags'
-				\]
+let g:ycm_global_ycm_extra_conf = util#path_join(g:vimfiles_path, 'ycm/ycm_extra_conf.py')
+let g:ycm_confirm_extra_conf = 1
+let g:ycm_cache_omnifunc = 1
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_extra_conf_c_flags = '-xc -std=c11 -Wall -Wextra'
+let g:ycm_extra_conf_cpp_flags = '-xc++ -std=c++11 -Wall -Wextra'
+let g:ycm_extra_conf_vim_data = [
+	\   '&filetype',
+	\   'g:ycm_extra_conf_c_flags',
+	\   'g:ycm_extra_conf_cpp_flags'
+	\]
 
-	if has('autocmd')
-		augroup vimrc
-			autocmd FileType c      nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
-			autocmd FileType cpp    nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
-			autocmd FileType objc   nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
-			autocmd FileType objcpp nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
-			autocmd FileType cs     nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
-			autocmd FileType python nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
-		augroup END
-	endif
-endfunction
+if has('autocmd')
+	augroup vimrc
+		autocmd FileType c      nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
+		autocmd FileType cpp    nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
+		autocmd FileType objc   nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
+		autocmd FileType objcpp nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
+		autocmd FileType cs     nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
+		autocmd FileType python nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
+	augroup END
+endif
 
 " --------
 " Mappings
