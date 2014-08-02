@@ -63,6 +63,7 @@ NeoBundle 'Lokaltog/vim-easymotion', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'nelstrom/vim-visual-star-search'
 NeoBundle 'Raimondi/delimitMate'
 NeoBundle 'scrooloose/syntastic'
+NeoBundle 'sjl/gundo.vim'
 NeoBundle 'tommcdo/vim-exchange'
 NeoBundle 'tpope/vim-abolish', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
@@ -273,10 +274,18 @@ endfunction
 
 function! LightlineComponent_filename()
 	let l:filename = expand('%:t')
+	let l:filename = ''
 	if &ft == 'unite'
 		let l:filename = unite#get_status_string()
+	elseif &ft == 'gundo'
+		let l:filename = 'undo tree'
 	else
-		let l:filename = len(l:filename) ? l:filename : ''
+		let l:filename = expand('%:t')
+		if l:filename == '__Gundo_Preview__'
+			let l:filename = 'undo diff'
+		else
+			let l:filename = len(l:filename) ? l:filename : ''
+		endif
 	endif
 	let l:readonly = &readonly ? '!! ' : ''
 	let l:modified = &modified ? '+' : ''
@@ -408,6 +417,15 @@ if has('autocmd')
 		autocmd FileType c,cpp nmap <buffer> <leader>aJ :FSSplitBelow<cr>
 	augroup END
 endif
+
+"
+" Gundo
+"
+let g:gundo_help = 0
+let g:gundo_preview_bottom = 1
+let g:gundo_width = 60
+let g:gundo_preview_height = 20
+command! -nargs=0 UndoTree silent GundoToggle
 
 "
 " ListToggle
