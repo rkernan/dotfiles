@@ -2,3 +2,4 @@ cache/*
 sessions/*
 tags/*
 undo/*
+.netrwhist
