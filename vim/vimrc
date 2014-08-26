@@ -35,7 +35,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 NeoBundle 'chriskempson/base16-vim'
 NeoBundle 'itchyny/lightline.vim'
 
-" " vcs integration
+" vcs integration
 NeoBundle 'mhinz/vim-signify'
 NeoBundle 'vim-scripts/vcscommand.vim'
 
@@ -460,9 +460,8 @@ let g:syntastic_enable_signs = 0
 let g:syntastic_enable_highlighting = 0
 let g:syntastic_enable_balloons = 0
 let g:syntastic_aggregate_errors = 1
-if executable('flake8')
-	let g:syntastic_python_checkers = ['flake8']
-endif
+let g:syntastic_python_checkers = ['pylint', 'flake8']
+let g:syntastic_tex_checkers = ['chktex']
 
 "
 " UltiSnips
