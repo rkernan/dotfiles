@@ -179,8 +179,8 @@ if has('autocmd')
 		" restore line position
 		autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 		" switch to/from relative line numbers
-		autocmd WinEnter,FocusGained * setlocal number relativenumber
-		autocmd WinLeave,FocusLost   * setlocal number norelativenumber
+		autocmd BufEnter,FocusGained * setlocal number relativenumber
+		autocmd BufLeave,FocusLost   * setlocal number norelativenumber
 		autocmd InsertEnter * setlocal number norelativenumber
 		autocmd InsertLeave * setlocal number relativenumber
 	augroup END
