@@ -120,9 +120,6 @@ set backspace=indent,eol,start
 set autoread
 set hidden
 
-set ttimeout
-set ttimeoutlen=100
-
 set noerrorbells novisualbell t_vb=
 set shortmess=atsoOI
 set showcmd
@@ -132,8 +129,6 @@ set lazyredraw
 set t_ut=
 set noshowmode
 set laststatus=2
-set number
-set norelativenumber
 
 if has('multi_byte')
 	set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
@@ -174,12 +169,20 @@ set incsearch
 set hlsearch
 set gdefault
 
+set number
+set relativenumber
+
 if has('autocmd')
 	augroup vimrc
 		" automatically resize splits on window resize
 		autocmd VimResized * :wincmd =
 		" restore line position
 		autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+		" switch to/from relative line numbers
+		autocmd WinEnter,FocusGained * setlocal number relativenumber
+		autocmd WinLeave,FocusLost   * setlocal number norelativenumber
+		autocmd InsertEnter * setlocal number norelativenumber
+		autocmd InsertLeave * setlocal number relativenumber
 	augroup END
 endif
 
