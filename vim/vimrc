@@ -33,7 +33,7 @@ NeoBundle 'Shougo/vimproc.vim', {
 
 " appearance
 NeoBundle 'chriskempson/base16-vim'
-NeoBundle 'itchyny/lightline.vim'
+NeoBundle 'kernan/vim-modestatus'
 
 " vcs integration
 NeoBundle 'mhinz/vim-signify'
@@ -193,165 +193,6 @@ let g:base16colorspace = 256
 set background=dark
 colorscheme base16-monokai
 
-"
-" lightline
-"
-if has('autocmd')
-	augroup vimrc
-		" Fixes error line not updating
-		autocmd CursorMoved * call lightline#update()
-	augroup END
-endif
-
-let g:lightline = {
-	\   'colorscheme': 'wombat',
-	\   'mode_map': {
-	\     'n':      'N',
-	\     'i':      'I',
-	\     'R':      'R',
-	\     'v':      'V',
-	\     'V':      'V',
-	\     "\<c-v>": 'V',
-	\     'c':      'C',
-	\     's':      'S',
-	\     'S':      'S',
-	\     "\<c-s>": 'S',
-	\     '?':      '?',
-	\   },
-	\   'separator': {
-	\     'left': '',
-	\     'right': ''
-	\   },
-	\   'component_function': {
-	\     'fileencoding': 'LightlineComponent_fileencoding',
-	\     'fileformat':   'LightlineComponent_fileformat',
-	\     'filename':     'LightlineComponent_filename',
-	\     'filetype':     'LightlineComponent_filetype',
-	\     'vcs':          'LightlineComponent_vcs'
-	\   },
-	\   'component_expand': {
-	\     'loclist_error': 'LightlineComponent_loclistError',
-	\     'loclist_warn': 'LightlineComponent_loclistWarn'
-	\   },
-	\   'component_type': {
-	\     'loclist_error': 'error',
-	\     'loclist_warn': 'warning'
-	\   },
-	\   'active': {
-	\     'left':  [['mode', 'paste'],
-	\               ['vcs', 'filename', 'loclist_error', 'loclist_warn']],
-	\     'right': [['lineinfo'],
-	\               ['percent'],
-	\               ['fileformat', 'fileencoding', 'filetype']]
-	\   },
-	\   'tabline': {
-	\     'left':  [['tabs']],
-	\     'right': [[]]
-	\   }
-	\ }
-
-if has('multi_byte')
-	let g:lightline.subseparator = {'left': '›', 'right': '‹'}
-else
-	let g:lightline.subseparator = {'left': '>', 'right': '<'}
-endif
-
-let g:lightline_hunks_symbols = ['+', '~', '-']
-
-function! LightlineComponent_fileencoding()
-	if winwidth(0) > 70
-		return strlen(&fenc) ? &fenc : ''
-	endif
-	return ''
-endfunction
-
-function! LightlineComponent_fileformat()
-	if winwidth(0) > 70
-		return strlen(&fileformat) ? &fileformat : ''
-	endif
-	return ''
-endfunction
-
-function! LightlineComponent_filename()
-	let l:filename = expand('%:t')
-	let l:filename = ''
-	if &ft == 'unite'
-		let l:filename = unite#get_status_string()
-	elseif &ft == 'gundo'
-		let l:filename = 'undo tree'
-	else
-		let l:filename = expand('%:t')
-		if l:filename == '__Gundo_Preview__'
-			let l:filename = 'undo diff'
-		else
-			let l:filename = len(l:filename) ? l:filename : ''
-		endif
-	endif
-	let l:readonly = &readonly ? '!! ' : ''
-	let l:modified = &modified ? '+' : ''
-	let l:modified = (len(l:modified) && len(l:filename) ? ' ' : '') . l:modified
-	return l:readonly . l:filename . l:modified
-endfunction
-
-function! LightlineComponent_filetype()
-	if winwidth(0) > 70
-		return strlen(&filetype) ? &filetype : ''
-	endif
-	return ''
-endfunction
-
-function! LightlineComponent_vcs()
-	if g:loaded_signify == 1
-		" build string of hunks
-		let l:hunks = sy#repo#get_stats()
-		let l:hunks_str = ''
-		for i in [0, 1, 2]
-			if l:hunks[i] > 0
-				let l:hunks_str .= printf('%s%s', g:lightline_hunks_symbols[i], l:hunks[i])
-				if i < 2 && l:hunks[i+1] > 0
-					let l:hunks_str .= ' '
-				endif
-			endif
-		endfor
-		return l:hunks_str
-	endif
-	return ''
-endfunction
-
-function! LightlineComponent_loclistError()
-	" get error/warning count
-	let l:loclist = getloclist(0)
-	let l:num_errors = 0
-	for i in l:loclist
-		if i.type == 'E'
-			let l:num_errors += 1
-		endif
-	endfor
-	" generate string
-	let l:loclist_str = ''
-	if l:num_errors > 0
-		let l:loclist_str .= 'E: ' . l:num_errors
-	endif
-	return l:loclist_str
-endfunction
-
-function! LightlineComponent_loclistWarn()
-	" get warning count
-	let l:loclist = getloclist(0)
-	let l:num_warns = 0
-	for i in l:loclist
-		if i.type == 'W'
-			let l:num_warns += 1
-		endif
-	endfor
-	" generate string
-	let l:loclist_str = ''
-	if l:num_warns > 0
-		let l:loclist_str .= 'W: ' . l:num_warns
-	endif
-	return l:loclist_str
-endfunction
-
 " -------
 " Plugins
 " -------
@@ -433,6 +274,14 @@ command! -nargs=0 UndoTree silent GundoToggle
 let g:lt_location_list_toggle_map = '<leader>l'
 let g:lt_quickfix_list_toggle_map = '<leader>q'
 let g:lt_height = 10
+
+"
+" Modestatus
+"
+let g:modestatus#filename_replace = {
+	\   '__Gundo__': 'Undo Tree',
+	\   '__Gundo_Preview__': 'Undo Preview'
+	\ }
 
 "
 " Signify
