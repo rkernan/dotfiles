@@ -323,6 +323,12 @@ let g:modestatus#statusline = {
 		\   'right': []
 		\ }}
 
+if has('multi_byte')
+	let g:modestatus_mode_format = '‹%s›'
+else
+	let g:modestatus_mode_format = '<%s>'
+endif
+
 call modestatus#extensions#enable('core')
 call modestatus#extensions#enable('loclist')
 
@@ -368,7 +374,7 @@ call modestatus#options#add('filename', {
 call modestatus#options#add('mode', {
 	\ 'active': {
 	\   'color': 'ylw_bold',
-	\   'format': '‹%s›'
+	\   'format': g:modestatus_mode_format
 	\ }})
 call modestatus#options#add('modified', {
 	\ 'active': {
