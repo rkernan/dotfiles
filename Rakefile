@@ -151,7 +151,7 @@ task :compile_ycm do
     flags += " --omnisharp-completer"
   end
   # buld
-  Dir.chdir("#{ROOT_DIR}/vim/bundle/YouCompleteMe")
+  Dir.chdir("#{ROOT_DIR}/vim/bundle/youcompleteme")
   sh("./install.sh #{flags}")
   Dir.chdir(ROOT_DIR)
 end

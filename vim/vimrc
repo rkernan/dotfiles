@@ -42,28 +42,28 @@ NeoBundle 'mhinz/vim-signify'
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'elzr/vim-json'
 NeoBundle 'groenewege/vim-less'
-NeoBundle 'OrangeT/vim-csharp'
+NeoBundle 'oranget/vim-csharp'
 NeoBundle 'octol/vim-cpp-enhanced-highlight'
 NeoBundle 'tikhomirov/vim-glsl'
 NeoBundle 'tpope/vim-git'
 NeoBundle 'tpope/vim-markdown'
 
 " unite
-NeoBundle 'Shougo/unite.vim', {'depends': 'Shougo/vimproc.vim'}
-NeoBundle 'Shougo/unite-outline', {'depends': 'Shougo/unite.vim'}
-NeoBundle 'Shougo/unite-session', {'depends': 'Shougo/unite.vim'}
+NeoBundle 'shougo/unite.vim', {'depends': 'shougo/vimproc.vim'}
+NeoBundle 'shougo/unite-outline', {'depends': 'shougo/unite.vim'}
+NeoBundle 'shougo/unite-session', {'depends': 'shougo/unite.vim'}
 
 " snippets
-NeoBundle 'SirVer/ultisnips'
+NeoBundle 'sirver/ultisnips'
 NeoBundle 'kernan/vim-snippets'
 
 " other
 NeoBundle 'matchit.zip'
 NeoBundle 'derekwyatt/vim-fswitch'
 NeoBundle 'kana/vim-textobj-entire', {'depends': 'kana/vim-textobj-user'}
-NeoBundle 'Lokaltog/vim-easymotion', {'depends': 'tpope/vim-repeat'}
+NeoBundle 'lokaltog/vim-easymotion', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'nelstrom/vim-visual-star-search'
-NeoBundle 'Raimondi/delimitMate'
+NeoBundle 'raimondi/delimitmate'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'sjl/gundo.vim'
 NeoBundle 'tommcdo/vim-exchange'
@@ -72,8 +72,8 @@ NeoBundle 'tpope/vim-commentary', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
-NeoBundle 'Valloric/ListToggle'
-NeoBundle 'Valloric/YouCompleteMe'
+NeoBundle 'valloric/listtoggle'
+NeoBundle 'valloric/youcompleteme'
 NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc', 'external_commands': 'ctags'}
 
 call neobundle#end()
