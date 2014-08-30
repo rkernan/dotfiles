@@ -169,8 +169,8 @@ set incsearch
 set hlsearch
 set gdefault
 
-set concealcursor=nv
-set conceallevel=0
+set concealcursor=nc
+set conceallevel=2
 
 set number
 set relativenumber
