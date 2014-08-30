@@ -37,13 +37,15 @@ NeoBundle 'kernan/vim-modestatus'
 
 " vcs integration
 NeoBundle 'mhinz/vim-signify'
-NeoBundle 'vim-scripts/vcscommand.vim'
 
 " languages
 NeoBundle 'derekwyatt/vim-scala'
+NeoBundle 'elzr/vim-json'
 NeoBundle 'groenewege/vim-less'
-NeoBundle 'leshill/vim-json'
+NeoBundle 'OrangeT/vim-csharp'
+NeoBundle 'octol/vim-cpp-enhanced-highlight'
 NeoBundle 'tikhomirov/vim-glsl'
+NeoBundle 'tpope/vim-git'
 NeoBundle 'tpope/vim-markdown'
 
 " unite
