@@ -398,12 +398,12 @@ call modestatus#options#add('filetype', {
 	\ }})
 call modestatus#options#add('encoding', {
 	\ 'active': {
-	\   'format': '[%s',
-	\   'separator': ':'
+	\   'format': '[%s:',
+	\   'nosep': 1
 	\ },
 	\ 'inactive': {
-	\   'format': '[%s',
-	\   'separator': ':'
+	\   'format': '[%s:',
+	\   'nosep': 1
 	\ }})
 call modestatus#options#add('fileformat', {
 	\ 'active': {
@@ -416,14 +416,18 @@ call modestatus#options#add('loclist_errors', {
 	\ 'active': {
 	\   'color': 'error',
 	\   'format': ' %s ',
-	\   'separator': ''
-	\ }})
+	\   'nosep': 1
+	\ },
+	\ 'inactive': {'nosep': 1}
+	\ })
 call modestatus#options#add('loclist_warnings', {
 	\ 'active': {
 	\   'color': 'warning',
 	\   'format': ' %s ',
-	\   'separator': ''
-	\ }})
+	\   'nosep': 1
+	\ },
+	\ 'inactive': {'nosep': 1}
+	\ })
 
 "
 " Signify
