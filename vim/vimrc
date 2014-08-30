@@ -308,7 +308,8 @@ let g:modestatus#statusline = {
 		\     'modified',
 		\     'readonly',
 		\     'filetype',
-		\     'encoding_and_format',
+		\     'encoding',
+		\     'format',
 		\     'loclist_errors',
 		\     'loclist_warnings'
 		\   ],
