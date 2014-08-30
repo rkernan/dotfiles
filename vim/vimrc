@@ -315,6 +315,38 @@ let g:modestatus#statusline = {
 		\   'right': []
 		\ }}
 
+call modestatus#extensions#enable('core')
+call modestatus#extensions#enable('loclist')
+
+let g:modestatus#extensions#core#filename_override = {
+	\   '[No Name]': '',
+	\   '__Gundo__': 'Undo Tree',
+	\   '__Gundo_Preview__': 'Undo Preview'
+	\ }
+
+let g:modestatus#extensions#core#filetype_override = {
+	\   'qf': 'Quick Fix'
+	\ }
+
+call modestatus#highlight#copymod('Statusline', 'User1', {
+	\ 'term': 'bold',
+	\ 'cterm': 'bold',
+	\ 'gui': 'bold'})
+call modestatus#highlight#copymod('Statusline', 'User2', {
+	\ 'term': 'bold',
+	\ 'cterm': 'bold', 'ctermfg': 'Yellow',
+	\ 'gui': 'bold', 'guifg': 'Yellow'})
+call modestatus#highlight#copymod('Statusline', 'User3', {
+	\ 'term': 'bold',
+	\ 'cterm': 'bold', 'ctermfg': 'Red',
+	\ 'gui': 'bold', 'guifg': 'Red'})
+call modestatus#highlight#copymod('Statusline', 'User8', {
+	\ 'ctermfg': 'White', 'ctermbg': '124',
+	\ 'guifg': 'White', 'guibg': '#af0000'})
+call modestatus#highlight#copymod('Statusline', 'User9', {
+	\ 'ctermfg': 'Black', 'ctermbg': '178',
+	\ 'guifg': 'Black', 'guibg': '#dfaf00'})
+
 call modestatus#colors#add('bold', 1)
 call modestatus#colors#add('ylw_bold', 2)
 call modestatus#colors#add('red_bold', 3)
@@ -377,36 +409,6 @@ call modestatus#options#add('loclist_warnings', {
 	\   'format': ' %s ',
 	\   'separator': ''
 	\ }})
-
-call modestatus#highlight#copymod('Statusline', 'User1', {
-	\ 'term': 'bold',
-	\ 'cterm': 'bold',
-	\ 'gui': 'bold'})
-call modestatus#highlight#copymod('Statusline', 'User2', {
-	\ 'term': 'bold',
-	\ 'cterm': 'bold', 'ctermfg': 'Yellow',
-	\ 'gui': 'bold', 'guifg': 'Yellow'})
-call modestatus#highlight#copymod('Statusline', 'User3', {
-	\ 'term': 'bold',
-	\ 'cterm': 'bold', 'ctermfg': 'Red',
-	\ 'gui': 'bold', 'guifg': 'Red'})
-call modestatus#highlight#copymod('Statusline', 'User8', {
-	\ 'ctermfg': 'White', 'ctermbg': '124',
-	\ 'guifg': 'White', 'guibg': '#af0000'})
-call modestatus#highlight#copymod('Statusline', 'User9', {
-	\ 'ctermfg': 'Black', 'ctermbg': '178',
-	\ 'guifg': 'Black', 'guibg': '#dfaf00'})
-
-
-let g:modestatus#extensions#core#filename_override = {
-	\   '[No Name]': '',
-	\   '__Gundo__': 'Undo Tree',
-	\   '__Gundo_Preview__': 'Undo Preview'
-	\ }
-
-let g:modestatus#extensions#core#filetype_override = {
-	\   'qf': 'Quick Fix'
-	\ }
 
 "
 " Signify
