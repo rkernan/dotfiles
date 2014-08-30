@@ -169,6 +169,9 @@ set incsearch
 set hlsearch
 set gdefault
 
+set concealcursor=nv
+set conceallevel=0
+
 set number
 set relativenumber
 
@@ -281,9 +284,128 @@ let g:lt_height = 10
 "
 " Modestatus
 "
-let g:modestatus#filename_replace = {
+let g:modestatus#statusline = {
+		\ 'active': {
+		\   'left': [
+		\     'line_percent',
+		\     'position',
+		\     'mode',
+		\     'filename',
+		\     'modified',
+		\     'readonly',
+		\     'paste',
+		\     'filetype',
+		\     'encoding',
+		\     'fileformat',
+		\     'loclist_errors',
+		\     'loclist_warnings',
+		\   ],
+		\   'right': []
+		\ },
+		\ 'inactive': {
+		\   'left': [
+		\     'filename',
+		\     'modified',
+		\     'readonly',
+		\     'filetype',
+		\     'encoding_and_format',
+		\     'loclist_errors',
+		\     'loclist_warnings'
+		\   ],
+		\   'right': []
+		\ }}
+
+call modestatus#colors#add('bold', 1)
+call modestatus#colors#add('ylw_bold', 2)
+call modestatus#colors#add('red_bold', 3)
+call modestatus#colors#add('error', 8)
+call modestatus#colors#add('warning', 9)
+
+call modestatus#options#add('filename', {
+	\ 'active': {
+	\   'color': 'bold'
+	\ }})
+call modestatus#options#add('mode', {
+	\ 'active': {
+	\   'color': 'ylw_bold',
+	\   'format': '‹%s›'
+	\ }})
+call modestatus#options#add('modified', {
+	\ 'active': {
+	\   'color': 'red_bold'
+	\ }})
+call modestatus#options#add('readonly', {
+	\ 'active': {
+	\   'color': 'red_bold'
+	\ }})
+call modestatus#options#add('paste', {
+	\ 'active': {
+	\   'color': 'red_bold'
+	\ }})
+call modestatus#options#add('filetype', {
+	\ 'active': {
+	\   'format': '[%s]'
+	\ },
+	\ 'inactive': {
+	\   'format': '[%s]'
+	\ }})
+call modestatus#options#add('encoding', {
+	\ 'active': {
+	\   'format': '[%s',
+	\   'separator': ':'
+	\ },
+	\ 'inactive': {
+	\   'format': '[%s',
+	\   'separator': ':'
+	\ }})
+call modestatus#options#add('fileformat', {
+	\ 'active': {
+	\   'format': '%s]'
+	\ },
+	\ 'inactive': {
+	\   'format': '%s]'
+	\ }})
+call modestatus#options#add('loclist_errors', {
+	\ 'active': {
+	\   'color': 'error',
+	\   'format': ' %s ',
+	\   'separator': ''
+	\ }})
+call modestatus#options#add('loclist_warnings', {
+	\ 'active': {
+	\   'color': 'warning',
+	\   'format': ' %s ',
+	\   'separator': ''
+	\ }})
+
+call modestatus#highlight#copymod('Statusline', 'User1', {
+	\ 'term': 'bold',
+	\ 'cterm': 'bold',
+	\ 'gui': 'bold'})
+call modestatus#highlight#copymod('Statusline', 'User2', {
+	\ 'term': 'bold',
+	\ 'cterm': 'bold', 'ctermfg': 'Yellow',
+	\ 'gui': 'bold', 'guifg': 'Yellow'})
+call modestatus#highlight#copymod('Statusline', 'User3', {
+	\ 'term': 'bold',
+	\ 'cterm': 'bold', 'ctermfg': 'Red',
+	\ 'gui': 'bold', 'guifg': 'Red'})
+call modestatus#highlight#copymod('Statusline', 'User8', {
+	\ 'ctermfg': 'White', 'ctermbg': '124',
+	\ 'guifg': 'White', 'guibg': '#af0000'})
+call modestatus#highlight#copymod('Statusline', 'User9', {
+	\ 'ctermfg': 'Black', 'ctermbg': '178',
+	\ 'guifg': 'Black', 'guibg': '#dfaf00'})
+
+
+let g:modestatus#extensions#core#filename_override = {
+	\   '[No Name]': '',
 	\   '__Gundo__': 'Undo Tree',
 	\   '__Gundo_Preview__': 'Undo Preview'
+	\ }
+
+let g:modestatus#extensions#core#filetype_override = {
+	\   'qf': 'Quick Fix'
 	\ }
 
 "
