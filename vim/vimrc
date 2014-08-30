@@ -73,9 +73,10 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'valloric/listtoggle'
+if has('unix')
 NeoBundle 'valloric/youcompleteme'
+endif
 NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc', 'external_commands': 'ctags'}
-
 if has('win32')
 	NeoBundle 'xolox/vim-shell'
 endif
@@ -136,7 +137,7 @@ set t_ut=
 set noshowmode
 set laststatus=2
 
-if has('multi_byte')
+if has('multi_byte') && !has('win32')
 	set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
 	set showbreak=…
 else
@@ -323,7 +324,7 @@ let g:modestatus#statusline = {
 		\   'right': []
 		\ }}
 
-if has('multi_byte')
+if has('multi_byte') && !has('win32')
 	let g:modestatus_mode_format = '‹%s›'
 else
 	let g:modestatus_mode_format = '<%s>'
@@ -432,7 +433,7 @@ let g:signify_sign_overwrite = 0
 let g:signify_sign_add = '+'
 let g:signify_sign_change = '~'
 let g:signify_sign_delete = '-'
-if has('multi_byte')
+if has('multi_byte') && !has('win32')
 	let g:signify_sign_delete_first_line = '‾'
 else
 	let g:signify_sign_delete_first_line = '^'
@@ -489,7 +490,7 @@ let g:unite_force_overwrite_statusline = 0
 let g:unite_winheight = 20
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
-if has('multi_byte')
+if has('multi_byte') && !has('win32')
 	call unite#custom#profile('default', 'context', {
 		\     'prompt': '» ',
 		\     'silent': 1,
