@@ -309,7 +309,7 @@ let g:modestatus#statusline = {
 		\     'readonly',
 		\     'filetype',
 		\     'encoding',
-		\     'format',
+		\     'fileformat',
 		\     'loclist_errors',
 		\     'loclist_warnings'
 		\   ],
