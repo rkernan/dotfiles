@@ -520,7 +520,7 @@ nnoremap <leader>/ :Unite -buffer-name=search grep<cr>
 if has('autocmd')
 	augroup vimrc
 		" apply unite buffer settings
-		autocmd FileType unite call UniteBufferSettings()
+		autocmd FileType unite call s:unite_settings()
 	augroup END
 endif
 
@@ -537,7 +537,7 @@ nnoremap <leader>s :Unite -buffer-name=sessions session<cr>
 command! -nargs=? LoadSession UniteSessionLoad <args>
 command! -nargs=? SaveSession UniteSessionSave <args>
 
-function! UniteBufferSettings()
+function! s:unite_settings()
 	imap <buffer> <tab>   <Plug>(unite_choose_action)
 	nmap <buffer> <tab>   <Plug>(unite_choose_action)
 	imap <buffer> <s-tab> <Plug>(unite_exit)
@@ -608,7 +608,7 @@ nnoremap gV `[v`]
 cmap w!! w !sudo tee > /dev/null %
 
 " Set tab width using a nice prompt
-function! SetTab()
+function! s:set_tabs()
 	let l:tabstop = 1 * input('setlocal tabstop = softtabstop = shiftwidth = ')
 	if l:tabstop > 0
 		let &l:ts = l:tabstop
@@ -623,22 +623,22 @@ function! SetTab()
 	end
 	echo
 	echo "\r"
-	call SummarizeTabs()
+	call s:summarize_tabs()
 endfunction
 
 " Summarize current tab info
-function! SummarizeTabs()
+function! s:summarize_tabs()
 	try
 		echom 'tabstop=' . &l:ts . ' softtabstop=' . &l:sts . ' shiftwidth=' . &l:sw .
 					\' ' . ((&l:et) ? 'expandtab' : 'noexpandtab')
 	endtry
 endfunction
 
-command! -nargs=0 SetTab call SetTab()
-command! -nargs=0 SummarizeTabs call SummarizeTabs()
+command! -nargs=0 SetTabs call s:set_tabs()
+command! -nargs=0 SummarizeTabs call s:summarize_tabs()
 
 " Remove trailing whitespace
-function! RemoveTrailingWhitespace()
+function! s:remove_trailing_whitespace()
 	if exists('b:no_strip_whitespace') && b:no_strip_whitespace == 1
 		return
 	endif
@@ -650,6 +650,6 @@ endfunction
 
 if has('autocmd')
 	augroup vimrc
-		autocmd BufWritePre * :call RemoveTrailingWhitespace()
+		autocmd BufWritePre * call s:remove_trailing_whitespace()
 	augroup END
 endif
