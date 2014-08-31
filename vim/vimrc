@@ -73,10 +73,12 @@ NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tpope/vim-surround', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'tpope/vim-unimpaired', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'valloric/listtoggle'
-if has('unix')
-NeoBundle 'valloric/youcompleteme'
-endif
 NeoBundle 'xolox/vim-easytags', {'depends': 'xolox/vim-misc', 'external_commands': 'ctags'}
+
+if has('unix')
+	NeoBundle 'valloric/youcompleteme'
+endif
+
 if has('win32')
 	NeoBundle 'xolox/vim-shell'
 endif
@@ -236,8 +238,8 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_move_highlight = 0
-map em <plug>(easymotion-prefix)
 " replace default search
+map m <plug>(easymotion-prefix)
 map / <plug>(easymotion-sn)
 omap / <plug>(easymotion-tn)
 map n <plug>(easymotion-next)
@@ -292,6 +294,9 @@ let g:lt_height = 10
 "
 " Modestatus
 "
+call modestatus#extensions#enable('core')
+call modestatus#extensions#enable('loclist')
+
 let g:modestatus#statusline = {
 		\ 'active': {
 		\   'left': [
@@ -308,7 +313,8 @@ let g:modestatus#statusline = {
 		\     'loclist_errors',
 		\     'loclist_warnings',
 		\   ],
-		\   'right': []
+		\   'right': [
+		\   ]
 		\ },
 		\ 'inactive': {
 		\   'left': [
@@ -321,7 +327,8 @@ let g:modestatus#statusline = {
 		\     'loclist_errors',
 		\     'loclist_warnings'
 		\   ],
-		\   'right': []
+		\   'right': [
+		\   ]
 		\ }}
 
 if has('multi_byte') && !has('win32')
@@ -330,9 +337,6 @@ else
 	let g:modestatus_mode_format = '<%s>'
 endif
 
-call modestatus#extensions#enable('core')
-call modestatus#extensions#enable('loclist')
-
 let g:modestatus#extensions#core#filename_override = {
 	\   '[No Name]': '',
 	\   '__Gundo__': 'Undo Tree',
@@ -340,7 +344,7 @@ let g:modestatus#extensions#core#filename_override = {
 	\ }
 
 let g:modestatus#extensions#core#filetype_override = {
-	\   'qf': 'Quick Fix'
+	\   'qf': ''
 	\ }
 
 call modestatus#highlight#copymod('Statusline', 'User1', {
@@ -465,17 +469,6 @@ let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsExpandTrigger = '<c-j>'
 let g:UltiSnipsJumpForwardTrigger = '<c-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
-
-"
-" Unimpaired
-"
-let bundle = neobundle#get('unimpaired')
-function! bundle.hooks.on_source(bundle)
-	nmap mk [e
-	nmap mj ]e
-	vmap mk [egv
-	vmap mj ]egv
-endfunction
 
 "
 " Unite
@@ -638,7 +631,7 @@ command! -nargs=0 SetTabs call s:set_tabs()
 command! -nargs=0 SummarizeTabs call s:summarize_tabs()
 
 " Remove trailing whitespace
-function! s:remove_trailing_whitespace()
+function! s:strip_trailing_whitespace()
 	if exists('b:no_strip_whitespace') && b:no_strip_whitespace == 1
 		return
 	endif
@@ -648,8 +641,4 @@ function! s:remove_trailing_whitespace()
 	exe 'normal `z'
 endfunction
 
-if has('autocmd')
-	augroup vimrc
-		autocmd BufWritePre * call s:remove_trailing_whitespace()
-	augroup END
-endif
+command! -nargs=0 StripTrailingWhitespace call s:strip_trailing_whitespace()
