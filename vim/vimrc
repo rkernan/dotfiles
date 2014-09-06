@@ -347,24 +347,34 @@ let g:modestatus#extensions#core#filetype_override = {
 	\   'qf': ''
 	\ }
 
-call modestatus#highlight#copymod('Statusline', 'User1', {
-	\ 'term': 'bold',
-	\ 'cterm': 'bold',
-	\ 'gui': 'bold'})
-call modestatus#highlight#copymod('Statusline', 'User2', {
-	\ 'term': 'bold',
-	\ 'cterm': 'bold', 'ctermfg': 'Yellow',
-	\ 'gui': 'bold', 'guifg': 'Yellow'})
-call modestatus#highlight#copymod('Statusline', 'User3', {
-	\ 'term': 'bold',
-	\ 'cterm': 'bold', 'ctermfg': 'Red',
-	\ 'gui': 'bold', 'guifg': 'Red'})
-call modestatus#highlight#copymod('Statusline', 'User8', {
-	\ 'ctermfg': 'White', 'ctermbg': '124',
-	\ 'guifg': 'White', 'guibg': '#af0000'})
-call modestatus#highlight#copymod('Statusline', 'User9', {
-	\ 'ctermfg': 'Black', 'ctermbg': '178',
-	\ 'guifg': 'Black', 'guibg': '#dfaf00'})
+function! StatuslineHighlight()
+	call modestatus#highlight#copymod('Statusline', 'User1', {
+		\ 'term': 'bold',
+		\ 'cterm': 'bold',
+		\ 'gui': 'bold'})
+	call modestatus#highlight#copymod('Statusline', 'User2', {
+		\ 'term': 'bold',
+		\ 'cterm': 'bold', 'ctermfg': 'Yellow',
+		\ 'gui': 'bold', 'guifg': 'Yellow'})
+	call modestatus#highlight#copymod('Statusline', 'User3', {
+		\ 'term': 'bold',
+		\ 'cterm': 'bold', 'ctermfg': 'Red',
+		\ 'gui': 'bold', 'guifg': 'Red'})
+	call modestatus#highlight#copymod('Statusline', 'User8', {
+		\ 'ctermfg': 'White', 'ctermbg': '124',
+		\ 'guifg': 'White', 'guibg': '#af0000'})
+	call modestatus#highlight#copymod('Statusline', 'User9', {
+		\ 'ctermfg': 'Black', 'ctermbg': '178',
+		\ 'guifg': 'Black', 'guibg': '#dfaf00'})
+endfunction
+
+if has('autocmd')
+	augroup vimrc
+		autocmd VimEnter,ColorScheme * call StatuslineHighlight()
+	augroup END
+else
+	call StatuslineHighlight()
+endif
 
 call modestatus#colors#add('bold', 1)
 call modestatus#colors#add('ylw_bold', 2)
