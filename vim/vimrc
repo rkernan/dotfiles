@@ -238,12 +238,7 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_move_highlight = 0
-" replace default search
 map m <plug>(easymotion-prefix)
-map / <plug>(easymotion-sn)
-omap / <plug>(easymotion-tn)
-map n <plug>(easymotion-next)
-map N <plug>(easymotion-prev)
 
 "
 " EasyTags
