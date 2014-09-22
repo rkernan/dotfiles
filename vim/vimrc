@@ -208,84 +208,6 @@ let g:base16colorspace = 256
 set background=dark
 colorscheme base16-monokai
 
-" -------
-" Plugins
-" -------
-
-"
-" DelimitMate
-"
-let delimitMate_matchpairs = "(:),[:],{:}"
-let delimitMate_quotes = "\" ' `"
-let delimitMate_expand_cr = 1
-let delimitMate_jump_expansion = 1
-
-if has('autocmd')
-	augroup vimrc
-		" filetype specific pairs
-		" filetype specific quotes
-		autocmd FileType vim let b:delimitMate_quotes = "'"
-		" filetype specific nesting
-		autocmd FileType python let b:delimitMate_nesting_quotes = ['"']
-	augroup END
-endif
-
-"
-" EasyMotion
-"
-let g:EasyMotion_enter_jump_first = 1
-let g:EasyMotion_smartcase = 1
-let g:EasyMotion_use_smartsign_us = 1
-let g:EasyMotion_startofline = 0
-let g:EasyMotion_move_highlight = 0
-map m <plug>(easymotion-prefix)
-
-"
-" EasyTags
-"
-set tags=./tags;$HOME
-let g:easytags_by_filetype = util#path_join(g:vimfiles_path, 'tags')
-call util#mkdir_if_none(g:easytags_by_filetype)
-let g:easytags_dynamic_files = 1
-let g:easytags_include_members = 1
-let g:easytags_updatetime_warn = 0
-let g:easytags_always_enabled = 1
-let g:easytags_auto_highlight = 0
-let g:easytags_async = 1
-
-"
-" FSwitch
-"
-if has('autocmd')
-	augroup vimrc
-		autocmd FileType c,cpp nmap <buffer> <leader>af :FSHere<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>al :FSRight<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>aL :FSSplitRight<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>ah :FSLeft<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>aH :FSSplitLeft<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>ak :FSAbove<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>aK :FSSplitAbove<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>aj :FSBelow<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>aJ :FSSplitBelow<cr>
-	augroup END
-endif
-
-"
-" Gundo
-"
-let g:gundo_help = 0
-let g:gundo_preview_bottom = 1
-let g:gundo_width = 60
-let g:gundo_preview_height = 20
-command! -nargs=0 UndoTree silent GundoToggle
-
-"
-" ListToggle
-"
-let g:lt_location_list_toggle_map = '<leader>l'
-let g:lt_quickfix_list_toggle_map = '<leader>q'
-let g:lt_height = 10
-
 "
 " Modestatus
 "
@@ -437,6 +359,94 @@ call modestatus#options#add('loclist_warnings', {
 	\ },
 	\ 'inactive': {'nosep': 1}
 	\ })
+
+" ---------
+" Languages
+" ---------
+
+"
+" C++
+"
+let g:cpp_class_scope_highlight = 1
+let g:cpp_experimental_template_highlight = 0
+
+" -------
+" Plugins
+" -------
+
+"
+" DelimitMate
+"
+let delimitMate_matchpairs = "(:),[:],{:}"
+let delimitMate_quotes = "\" ' `"
+let delimitMate_expand_cr = 1
+let delimitMate_jump_expansion = 1
+
+if has('autocmd')
+	augroup vimrc
+		" filetype specific pairs
+		" filetype specific quotes
+		autocmd FileType vim let b:delimitMate_quotes = "'"
+		" filetype specific nesting
+		autocmd FileType python let b:delimitMate_nesting_quotes = ['"']
+	augroup END
+endif
+
+"
+" EasyMotion
+"
+let g:EasyMotion_enter_jump_first = 1
+let g:EasyMotion_smartcase = 1
+let g:EasyMotion_use_smartsign_us = 1
+let g:EasyMotion_startofline = 0
+let g:EasyMotion_move_highlight = 0
+map m <plug>(easymotion-prefix)
+
+"
+" EasyTags
+"
+set tags=./tags;$HOME
+let g:easytags_by_filetype = util#path_join(g:vimfiles_path, 'tags')
+call util#mkdir_if_none(g:easytags_by_filetype)
+let g:easytags_dynamic_files = 1
+let g:easytags_include_members = 1
+let g:easytags_updatetime_warn = 0
+let g:easytags_always_enabled = 1
+let g:easytags_auto_highlight = 0
+let g:easytags_async = 1
+
+"
+" FSwitch
+"
+if has('autocmd')
+	augroup vimrc
+		autocmd FileType c,cpp nmap <buffer> <leader>af :FSHere<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>al :FSRight<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aL :FSSplitRight<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>ah :FSLeft<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aH :FSSplitLeft<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>ak :FSAbove<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aK :FSSplitAbove<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aj :FSBelow<cr>
+		autocmd FileType c,cpp nmap <buffer> <leader>aJ :FSSplitBelow<cr>
+	augroup END
+endif
+
+"
+" Gundo
+"
+let g:gundo_help = 0
+let g:gundo_preview_bottom = 1
+let g:gundo_width = 60
+let g:gundo_preview_height = 20
+command! -nargs=0 UndoTree silent GundoToggle
+
+"
+" ListToggle
+"
+let g:lt_location_list_toggle_map = '<leader>l'
+let g:lt_quickfix_list_toggle_map = '<leader>q'
+let g:lt_height = 10
 
 "
 " Signify
