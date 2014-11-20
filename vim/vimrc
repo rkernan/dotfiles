@@ -60,6 +60,7 @@ NeoBundle 'kernan/vim-snippets'
 " other
 NeoBundle 'matchit.zip'
 NeoBundle 'derekwyatt/vim-fswitch'
+NeoBundle 'godlygeek/tabular'
 NeoBundle 'kana/vim-textobj-entire', {'depends': 'kana/vim-textobj-user'}
 NeoBundle 'lokaltog/vim-easymotion', {'depends': 'tpope/vim-repeat'}
 NeoBundle 'nelstrom/vim-visual-star-search'
