@@ -622,7 +622,9 @@ cmap w!! w !sudo tee > /dev/null %
 
 " Set tab width using a nice prompt
 function! s:set_tabs()
+	echohl Question
 	let l:tabstop = 1 * input('setlocal tabstop = softtabstop = shiftwidth = ')
+	echohl None
 	if l:tabstop > 0
 		let &l:ts = l:tabstop
 		let &l:sts = l:tabstop
