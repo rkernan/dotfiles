@@ -41,6 +41,7 @@ NeoBundle 'mhinz/vim-signify'
 " languages
 NeoBundle 'derekwyatt/vim-scala'
 NeoBundle 'elzr/vim-json'
+NeoBundle 'fatih/vim-go'
 NeoBundle 'groenewege/vim-less'
 NeoBundle 'oranget/vim-csharp'
 NeoBundle 'octol/vim-cpp-enhanced-highlight'
@@ -370,6 +371,11 @@ call modestatus#options#add('loclist_warnings', {
 "
 let g:cpp_class_scope_highlight = 1
 let g:cpp_experimental_template_highlight = 0
+
+"
+" Go
+"
+let g:go_fmt_command = 'goimports'
 
 " -------
 " Plugins
