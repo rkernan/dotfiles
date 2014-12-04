@@ -1,5 +1,18 @@
 import os
 
+default_flags = [
+    '-I',
+    '.',
+    '-isystem',
+    '/usr/include',
+    '-isystem',
+    '/usr/local/include',
+    '-isystem',
+    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/../include/c++/v1',
+    '-isystem',
+    '/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/include'
+    ]
+
 include_dirs = ['inc', 'include']
 library_dirs = ['lib', 'ext', 'external', 'third_party']
 root_dir_files = ['.git', 'src', 'inc', 'test']
@@ -52,16 +65,19 @@ def find_include_dirs(path, recurse=False):
 
 
 def FlagsForFile(filename, **kwargs):
-    flags = list()
+    flags = default_flags
     try:
         client_data = kwargs['client_data']
         filetype = client_data['&filetype']
         if filetype == 'c':
-            flags.extend(
-                prepare_flags(client_data['g:ycm_extra_conf_c_flags']))
+            flags.append('-xc')
+            flags.extend(prepare_flags(client_data['g:ycm_extra_conf_c_flags']))
         elif filetype == 'cpp':
-            flags.extend(
-                prepare_flags(client_data['g:ycm_extra_conf_cpp_flags']))
+            flags.append('-xc++')
+            flags.extend(prepare_flags(client_data['g:ycm_extra_conf_cpp_flags']))
+        elif filetype == 'objc':
+            flags.append('-ObjC')
+            flags.extend(prepare_flags(client_data['g:ycm_extra_conf_objc_flags']))
     except KeyError:
         pass
     root_dir = find_root_dir()

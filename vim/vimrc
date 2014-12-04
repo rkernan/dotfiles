@@ -574,8 +574,9 @@ let g:ycm_global_ycm_extra_conf = util#path_join(g:vimfiles_path, 'ycm/ycm_extra
 let g:ycm_confirm_extra_conf = 1
 let g:ycm_cache_omnifunc = 1
 let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_extra_conf_c_flags = '-xc -std=c11 -Wall -Wextra'
-let g:ycm_extra_conf_cpp_flags = '-xc++ -std=c++11 -Wall -Wextra'
+let g:ycm_extra_conf_c_flags    = '-std=c11 -Wall -Wextra -pedantic'
+let g:ycm_extra_conf_cpp_flags  = '-std=c++11 -Wall -Wextra -pedantic'
+let g:ycm_extra_conf_objc_flags = '-Wall -Wextra -pedantic'
 let g:ycm_extra_conf_vim_data = [
 	\   '&filetype',
 	\   'g:ycm_extra_conf_c_flags',
