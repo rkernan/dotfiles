@@ -2,57 +2,31 @@
 zstyle ':prezto:*:*' color 'yes'
 
 # Prezto modules
-zstyle ':prezto:load' pmodule \
-	'environment' \
-	'archive' \
-	'terminal' \
-	'editor' \
-	'history' \
-	'directory' \
-	'spectrum' \
-	'utility' \
-	'completion' \
-	'prompt' \
-	'syntax-highlighting' \
+zstyle ':prezto:load' pmodule  \
+	'environment'              \
+	'editor'                   \
+	'utility'                  \
+	'spectrum'                 \
+	'prompt'                   \
+	'completion'               \
+	'syntax-highlighting'      \
+	'history'                  \
 	'history-substring-search' \
-	'ssh' \
+	'directory'                \
+	'archive'                  \
+	'terminal'                 \
+	'ssh'                      \
+	'node'                     \
+	'python'                   \
 	'ruby'
 
-###########
-# Directory
-###########
-unsetopt auto_cd
-
-########
-# Editor
-########
 zstyle ':prezto:module:editor' key-bindings 'vi'
-
-# Auto convert .... to ../..
-zstyle ':prezto:module:editor' dot-expansion 'yes'
-
-#######
-# Prompt
-########
 zstyle ':prezto:module:prompt' theme 'custom'
-
-#####################
-# Syntax Highlighting
-#####################
-zstyle ':prezto:module:syntax-highlighting' highlighters \
-	'main' \
-	'brackets'
-
-##########
-# Terminal
-##########
+zstyle ':prezto:module:syntax-highlighting' highlighters 'main' 'brackets'
 zstyle ':prezto:module:terminal' auto-title 'yes'
 zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
 zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
-
-#####
-# SSH
-#####
+zstyle ':prezto:module:history-substring-search' color 'yes'
 zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'id_github'
 
 # vim:set filetype=zsh:
