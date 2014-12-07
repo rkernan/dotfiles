@@ -56,7 +56,7 @@ Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-commentary', {'on': '<plug>Commentary'}
+Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
