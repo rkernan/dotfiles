@@ -4,3 +4,4 @@ fi
 
 bindkey "^P" up-line-or-search
 bindkey "^N" down-line-or-search
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

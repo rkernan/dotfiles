@@ -122,7 +122,7 @@ task :prepare do
 end
 
 desc "all configuration that can only be run after install"
-task :post_install => [:cache_fonts, :get_plugins, :compile_ycm]
+task :post_install => [:cache_fonts, :get_vim_plugins]
 
 desc "run fc-cache"
 task :cache_fonts do
@@ -130,30 +130,8 @@ task :cache_fonts do
 end
 
 desc "download all Vim plugins"
-task :get_plugins do
-  sh("vim +NeoBundleInstall! +NeoBundleClean +qall")
-end
-
-desc "compile YouCompleteMe Vim plugin"
-task :compile_ycm do
-  if !ask_yn("Build YouCompleteMe?")
-    next
-  end
-  # generate flags
-  flags = ""
-  if ask_yn("Build semantic completion for C-family languages?")
-    flags += " --clang-completer"
-    if ask_yn("Use system libclang?")
-      flags += " --system-libclang"
-    end
-  end
-  if ask_yn("Build semantic completion for C#?")
-    flags += " --omnisharp-completer"
-  end
-  # buld
-  Dir.chdir("#{ROOT_DIR}/vim/bundle/youcompleteme")
-  sh("./install.sh #{flags}")
-  Dir.chdir(ROOT_DIR)
+task :get_vim_plugins do
+  sh("vim +PlugUpgrade +PlugUpdate! +PlugClean +qall")
 end
 
 desc "remove all symlinked dotfiles"
