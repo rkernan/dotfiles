@@ -45,14 +45,14 @@ Plug 'kernan/vim-snippets'
 
 " other
 Plug 'derekwyatt/vim-fswitch', {'for': ['c', 'cpp']}
-Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align', {'on': ['<Plug>EasyAlign', 'EasyAlign']}
 Plug 'junegunn/vader.vim', {'on': 'Vader', 'for': 'vader'}
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-user'
 Plug 'lokaltog/vim-easymotion'
+Plug 'mbbill/undotree', {'on': ['UndotreeShow', 'UndotreeHide', 'UndotreeToggle']}
 Plug 'raimondi/delimitmate'
 Plug 'scrooloose/syntastic'
-Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
@@ -245,8 +245,8 @@ endif
 
 let g:modestatus#extensions#core#filename_override = {
 	\   '[No Name]': '',
-	\   '__Gundo__': 'Undo Tree',
-	\   '__Gundo_Preview__': 'Undo Preview'
+	\   'undotree_2': 'Undo Tree',
+	\   'diffpanel_3': 'Undo Preview'
 	\ }
 
 let g:modestatus#extensions#core#filetype_override = {
@@ -394,11 +394,11 @@ let g:EasyMotion_smartcase = 1
 let g:EasyMotion_use_smartsign_us = 1
 let g:EasyMotion_startofline = 0
 let g:EasyMotion_move_highlight = 0
-map m <plug>(easymotion-prefix)
-map / <plug>(easymotion-sn)
-omap / <plug>(easymotion-tn)
-map n <plug>(easymotion-next)
-map N <plug>(easymotion-prev)
+map m  <Plug>(easymotion-prefix)
+map /  <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+map n  <Plug>(easymotion-next)
+map N  <Plug>(easymotion-prev)
 
 "
 " EasyTags
@@ -429,15 +429,6 @@ if has('autocmd')
 		autocmd FileType c,cpp nmap <buffer> <leader>aJ :FSSplitBelow<cr>
 	augroup END
 endif
-
-"
-" Gundo
-"
-let g:gundo_help = 0
-let g:gundo_preview_bottom = 1
-let g:gundo_width = 60
-let g:gundo_preview_height = 20
-command! -nargs=0 UndoTree silent GundoToggle
 
 "
 " ListToggle
@@ -474,6 +465,15 @@ let g:syntastic_enable_balloons = 0
 let g:syntastic_aggregate_errors = 1
 let g:syntastic_python_checkers = ['pylint', 'flake8']
 let g:syntastic_tex_checkers = ['chktex']
+
+"
+" UndoTree
+"
+let g:undotree_WindowLayout = 2
+let g:undotree_SplitWidth = 40
+let g:undotree_DiffpanelHeight = 15
+let g:undotree_DiffAutoOpen = 0
+command! -nargs=0 UndoTree silent UndotreeToggle
 
 "
 " UltiSnips
