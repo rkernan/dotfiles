@@ -44,13 +44,12 @@ Plug 'sirver/ultisnips'
 Plug 'kernan/vim-snippets'
 
 " other
-Plug 'matchit.zip'
-Plug 'derekwyatt/vim-fswitch'
+Plug 'derekwyatt/vim-fswitch', {'for': ['c', 'cpp']}
 Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vader.vim', {'on': 'Vader', 'for': 'vader'}
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-user'
 Plug 'lokaltog/vim-easymotion'
-Plug 'nelstrom/vim-visual-star-search'
 Plug 'raimondi/delimitmate'
 Plug 'scrooloose/syntastic'
 Plug 'sjl/gundo.vim', {'on': 'GundoToggle'}
