@@ -157,7 +157,7 @@ set noexpandtab
 set shiftround
 
 set wrap
-set textwidth=79
+set textwidth=80
 set formatoptions=cqrn1j
 set smartindent
 
@@ -168,7 +168,7 @@ set incsearch
 set hlsearch
 set gdefault
 
-set concealcursor=nc
+set concealcursor=c
 set conceallevel=2
 
 set number
