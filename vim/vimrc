@@ -172,6 +172,7 @@ set conceallevel=2
 
 set number
 set relativenumber
+set cursorline
 
 if has('autocmd')
 	augroup vimrc
@@ -184,6 +185,9 @@ if has('autocmd')
 		autocmd BufLeave,FocusLost   * setlocal number norelativenumber
 		autocmd InsertEnter * setlocal number norelativenumber
 		autocmd InsertLeave * setlocal number relativenumber
+		" enable/disable cursor line depending on window focus
+		autocmd BufEnter,FocusGained * setlocal number cursorline
+		autocmd BufLeave,FocusLost   * setlocal number nocursorline
 	augroup END
 endif
 
@@ -192,7 +196,6 @@ endif
 " -----
 syntax on
 
-set cursorline
 let g:base16colorspace = 256
 set background=dark
 colorscheme base16-monokai
