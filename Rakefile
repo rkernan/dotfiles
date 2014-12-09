@@ -131,7 +131,7 @@ end
 
 desc "download all Vim plugins"
 task :get_vim_plugins do
-  sh("vim +PlugUpgrade +PlugUpdate! +PlugClean +qall")
+  sh("vim +PlugUpdate! +qall")
 end
 
 desc "remove all symlinked dotfiles"
