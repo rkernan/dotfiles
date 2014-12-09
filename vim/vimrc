@@ -11,7 +11,7 @@ endif
 
 let g:bundle_path = util#path_join(g:vimfiles_path, 'bundle')
 
-let g:plug_window=''
+let g:plug_window='vertical new'
 
 call plug#begin(g:bundle_path)
 
