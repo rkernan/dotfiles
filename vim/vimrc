@@ -200,154 +200,124 @@ colorscheme base16-monokai
 "
 " Modestatus
 "
+" TODO(2014-12-09) Apply colors on a per-colorscheme basis.
+hi StatusLine         guifg=#a59f85 guibg=#49483e gui=none ctermfg=20     ctermbg=19  cterm=none
+hi StatusLineNC       guifg=#75715e guibg=#383830 gui=none ctermfg=08     ctermbg=18  cterm=none
+hi ModestatusMode     guifg=Yellow  guibg=#49483e gui=bold ctermfg=Yellow ctermbg=19  cterm=bold
+hi ModestatusFilename guifg=#a59f85 guibg=#49483e gui=bold ctermfg=20     ctermbg=19  cterm=bold
+hi ModestatusModified guifg=Red     guibg=#49483e gui=bold ctermfg=Red    ctermbg=19  cterm=bold
+hi ModestatusError    guifg=White   guibg=#af0000 gui=none ctermfg=White  ctermbg=124 cterm=none
+hi ModestatusWarning  guifg=Black   guibg=#dfaf00 gui=none ctermfg=Black  ctermbg=178 cterm=none
+
 call modestatus#extensions#enable('core')
 call modestatus#extensions#enable('loclist')
 
 let g:modestatus#statusline = {
-		\ 'active': {
-		\   'left': [
-		\     'line_percent',
-		\     'position',
-		\     'mode',
-		\     'filename',
-		\     'modified',
-		\     'readonly',
-		\     'paste',
-		\     'filetype',
-		\     'encoding',
-		\     'fileformat',
-		\     'loclist_errors',
-		\     'loclist_warnings',
-		\   ],
-		\   'right': [
-		\   ]
-		\ },
-		\ 'inactive': {
-		\   'left': [
-		\     'filename',
-		\     'modified',
-		\     'readonly',
-		\     'filetype',
-		\     'encoding',
-		\     'fileformat',
-		\     'loclist_errors',
-		\     'loclist_warnings'
-		\   ],
-		\   'right': [
-		\   ]
-		\ }}
-
-if has('multi_byte') && !has('win32')
-	let g:modestatus_mode_format = '‹%s›'
-else
-	let g:modestatus_mode_format = '<%s>'
-endif
+	\ 'active': {
+	\     'left': [
+	\         'line_percent',
+	\         'position',
+	\         'mode',
+	\         'filename',
+	\         'modified',
+	\         'readonly',
+	\         'paste',
+	\         'filetype',
+	\         'encoding',
+	\         'fileformat',
+	\         'loclist_errors',
+	\         'loclist_warnings'
+	\     ],
+	\     'right': [
+	\     ]
+	\ },
+	\ 'inactive': {
+	\     'left': [
+	\         'filename',
+	\         'modified',
+	\         'readonly',
+	\         'filetype',
+	\         'encoding',
+	\         'fileformat',
+	\         'loclist_errors',
+	\         'loclist_warnings'
+	\     ],
+	\     'right': [
+	\     ]
+	\ }}
 
 let g:modestatus#extensions#core#filename_override = {
-	\   '[No Name]': '',
-	\   'undotree_2': 'Undo Tree',
-	\   'diffpanel_3': 'Undo Preview'
+	\     '[No Name]': ''
 	\ }
 
 let g:modestatus#extensions#core#filetype_override = {
-	\   'qf': ''
+	\     'qf': '',
+	\     'diff': '',
+	\     'undotree': 'Undo Tree'
 	\ }
-
-function! StatuslineHighlight()
-	call modestatus#highlight#copymod('Statusline', 'User1', {
-		\ 'term': 'bold',
-		\ 'cterm': 'bold',
-		\ 'gui': 'bold'})
-	call modestatus#highlight#copymod('Statusline', 'User2', {
-		\ 'term': 'bold',
-		\ 'cterm': 'bold', 'ctermfg': 'Yellow',
-		\ 'gui': 'bold', 'guifg': 'Yellow'})
-	call modestatus#highlight#copymod('Statusline', 'User3', {
-		\ 'term': 'bold',
-		\ 'cterm': 'bold', 'ctermfg': 'Red',
-		\ 'gui': 'bold', 'guifg': 'Red'})
-	call modestatus#highlight#copymod('Statusline', 'User8', {
-		\ 'ctermfg': 'White', 'ctermbg': '124',
-		\ 'guifg': 'White', 'guibg': '#af0000'})
-	call modestatus#highlight#copymod('Statusline', 'User9', {
-		\ 'ctermfg': 'Black', 'ctermbg': '178',
-		\ 'guifg': 'Black', 'guibg': '#dfaf00'})
-endfunction
-
-if has('autocmd')
-	augroup vimrc
-		autocmd VimEnter,ColorScheme * call StatuslineHighlight()
-	augroup END
-else
-	call StatuslineHighlight()
-endif
-
-call modestatus#colors#add('bold', 1)
-call modestatus#colors#add('ylw_bold', 2)
-call modestatus#colors#add('red_bold', 3)
-call modestatus#colors#add('error', 8)
-call modestatus#colors#add('warning', 9)
 
 call modestatus#options#add('filename', {
 	\ 'active': {
-	\   'color': 'bold'
+	\     'color': 'ModestatusFilename'
 	\ }})
 call modestatus#options#add('mode', {
 	\ 'active': {
-	\   'color': 'ylw_bold',
-	\   'format': g:modestatus_mode_format
+	\     'color': 'ModestatusMode',
+	\     'format': '‹%s›'
 	\ }})
 call modestatus#options#add('modified', {
 	\ 'active': {
-	\   'color': 'red_bold'
+	\     'color': 'ModestatusModified'
 	\ }})
 call modestatus#options#add('readonly', {
 	\ 'active': {
-	\   'color': 'red_bold'
+	\     'color': 'ModestatusModified'
 	\ }})
 call modestatus#options#add('paste', {
 	\ 'active': {
-	\   'color': 'red_bold'
+	\     'color': 'ModestatusModified'
 	\ }})
 call modestatus#options#add('filetype', {
 	\ 'active': {
-	\   'format': '[%s]'
+	\     'format': '[%s]'
 	\ },
 	\ 'inactive': {
-	\   'format': '[%s]'
+	\     'format': '[%s]'
 	\ }})
 call modestatus#options#add('encoding', {
 	\ 'active': {
-	\   'format': '[%s:',
-	\   'nosep': 1
+	\     'format': '[%s:',
+	\     'separator': ''
 	\ },
 	\ 'inactive': {
-	\   'format': '[%s:',
-	\   'nosep': 1
+	\     'format': '[%s:',
+	\     'separator': ''
 	\ }})
 call modestatus#options#add('fileformat', {
 	\ 'active': {
-	\   'format': '%s]'
+	\     'format': '%s]'
 	\ },
 	\ 'inactive': {
-	\   'format': '%s]'
+	\     'format': '%s]'
 	\ }})
 call modestatus#options#add('loclist_errors', {
 	\ 'active': {
-	\   'color': 'error',
-	\   'format': ' %s ',
-	\   'nosep': 1
+	\     'color': 'ModestatusError',
+	\     'format': ' %s ',
+	\     'separator': ''
 	\ },
-	\ 'inactive': {'nosep': 1}
-	\ })
+	\ 'inactive': {
+	\     'separator': ''
+	\ }})
 call modestatus#options#add('loclist_warnings', {
 	\ 'active': {
-	\   'color': 'warning',
-	\   'format': ' %s ',
-	\   'nosep': 1
+	\     'color': 'ModestatusWarning',
+	\     'format': ' %s ',
+	\     'separator': ''
 	\ },
-	\ 'inactive': {'nosep': 1}
-	\ })
+	\ 'inactive': {
+	\     'separator': ''
+	\ }})
 
 " ---------
 " Languages
