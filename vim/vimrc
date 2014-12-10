@@ -589,17 +589,17 @@ cmap w!! w !sudo tee > /dev/null %
 function! s:set_tabs()
 	echohl Question
 	let l:tabstop = 1 * input('setlocal tabstop = softtabstop = shiftwidth = ')
+	let l:et = input('setlocal expandtab = (y/n)')
 	echohl None
 	if l:tabstop > 0
 		let &l:ts = l:tabstop
 		let &l:sts = l:tabstop
 		let &l:sw = l:tabstop
 	endif
-	let l:et = input('setlocal expandtab = ')
-	if l:et == 0
-		setlocal noexpandtab
-	else
+	if l:et == "y"
 		setlocal expandtab
+	else
+		setlocal noexpandtab
 	end
 	echo
 	echo "\r"
