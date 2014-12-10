@@ -1,12 +1,14 @@
 export EDITOR='vim'
 export VISUAL='vim'
-export PAGE='less'
+export PAGER='less'
 
 export GOPATH="$HOME/projects/go"
 
 if [[ -z "$LANG" ]]; then
 	export LANG='en_US.UTF-8'
 fi
+
+alias path='echo -e ${PATH//:/\\n}'
 
 typeset -gU cdpath fpath mailpath path
 
