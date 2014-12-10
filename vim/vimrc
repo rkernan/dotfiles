@@ -270,6 +270,12 @@ let g:modestatus#extensions#core#filetype_override = {
 	\     'undotree': 'Undo Tree'
 	\ }
 
+if has('multi_byte') && !has('win32')
+	let g:modestatus_mode_format = '‹%s›'
+else
+	let g:modestatus_mode_format = '<%s>'
+endif
+
 call modestatus#options#add('line_percent', {
     \ 'common': {
     \     'min_winwidth': 30
@@ -285,7 +291,7 @@ call modestatus#options#add('filename', {
 call modestatus#options#add('mode', {
     \ 'active': {
     \     'color': 'ModestatusMode',
-    \     'format': '‹%s›'
+    \     'format': g:modestatus_mode_format
     \ }})
 call modestatus#options#add('modified', {
     \ 'active': {
