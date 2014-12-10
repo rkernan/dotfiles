@@ -65,7 +65,19 @@ Plug 'xolox/vim-easytags'
 Plug 'xolox/vim-misc'
 
 if has('unix')
-	Plug 'valloric/youcompleteme', {'do': './install.sh --clang-completer --system-libclang'}
+	function! BuildYCM(info)
+		if a:info.status == 'installed' || a:info.force
+			let flags = ''
+			echohl Question
+			let flags .= input('clang completer? (y/n)') == "y" ? ' --clang-completer' : ''
+			let flags .= input('use system libclang? (y/n)') == "y" ? ' --system-libclang' : ''
+			let flags .= input('omnisharp completer? (y/n)') == "y" ? ' --omnisharp-completer' : ''
+			echohl None
+			execute "!./install.sh" . flags
+		endif
+	endfunction
+
+	Plug 'valloric/youcompleteme', {'do': function('BuildYCM')}
 endif
 
 if has('win32')
