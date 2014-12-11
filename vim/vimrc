@@ -43,27 +43,7 @@ Plug 'shougo/unite-session'
 Plug 'sirver/ultisnips'
 Plug 'kernan/vim-snippets'
 
-" other
-Plug 'derekwyatt/vim-fswitch', {'for': ['c', 'cpp']}
-Plug 'junegunn/vim-easy-align', {'on': ['<Plug>EasyAlign', 'EasyAlign']}
-Plug 'junegunn/vader.vim', {'on': 'Vader', 'for': 'vader'}
-Plug 'kana/vim-textobj-entire'
-Plug 'kana/vim-textobj-user'
-Plug 'lokaltog/vim-easymotion'
-Plug 'mbbill/undotree', {'on': ['UndotreeShow', 'UndotreeHide', 'UndotreeToggle']}
-Plug 'raimondi/delimitmate'
-Plug 'scrooloose/syntastic'
-Plug 'tommcdo/vim-exchange'
-Plug 'tpope/vim-abolish'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-unimpaired'
-Plug 'valloric/listtoggle'
-Plug 'xolox/vim-easytags'
-Plug 'xolox/vim-misc'
-
+" completion/errors
 if has('unix')
 	function! BuildYCM(info)
 		if a:info.status == 'installed' || a:info.force
@@ -79,10 +59,26 @@ if has('unix')
 
 	Plug 'valloric/youcompleteme', {'do': function('BuildYCM')}
 endif
+Plug 'c9s/vimomni.vim'
+Plug 'scrooloose/syntastic'
 
-if has('win32')
-	Plug 'xolox/vim-shell'
-endif
+" other
+Plug 'derekwyatt/vim-fswitch', {'for': ['c', 'cpp']}
+Plug 'junegunn/vim-easy-align', {'on': ['<Plug>EasyAlign', 'EasyAlign']}
+Plug 'junegunn/vader.vim', {'on': 'Vader', 'for': 'vader'}
+Plug 'kana/vim-textobj-entire'
+Plug 'kana/vim-textobj-user'
+Plug 'lokaltog/vim-easymotion'
+Plug 'mbbill/undotree', {'on': ['UndotreeShow', 'UndotreeHide', 'UndotreeToggle']}
+Plug 'raimondi/delimitmate'
+Plug 'tommcdo/vim-exchange'
+Plug 'tpope/vim-abolish'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'valloric/listtoggle'
 
 call plug#end()
 
@@ -387,19 +383,6 @@ map /  <Plug>(easymotion-sn)
 omap / <Plug>(easymotion-tn)
 map n  <Plug>(easymotion-next)
 map N  <Plug>(easymotion-prev)
-
-"
-" EasyTags
-"
-set tags=./tags;$HOME
-let g:easytags_by_filetype = util#path_join(g:vimfiles_path, 'tags')
-call util#mkdir_if_none(g:easytags_by_filetype)
-let g:easytags_dynamic_files = 1
-let g:easytags_include_members = 1
-let g:easytags_updatetime_warn = 0
-let g:easytags_always_enabled = 1
-let g:easytags_auto_highlight = 0
-let g:easytags_async = 1
 
 "
 " FSwitch
