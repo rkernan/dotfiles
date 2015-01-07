@@ -146,6 +146,7 @@ endif
 
 if has('win32')
 	set nolist
+	set fileformats=dos
 else
 	set list
 endif
