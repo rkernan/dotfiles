@@ -144,7 +144,11 @@ else
 	set showbreak=~
 endif
 
-set list
+if has('win32')
+	set nolist
+else
+	set list
+endif
 
 set wildmenu
 set wildmode=longest:full,full
