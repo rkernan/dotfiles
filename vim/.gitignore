@@ -1,4 +1,5 @@
 bundle/*
+bundle_local/*
 cache/*
 sessions/*
 tags/*

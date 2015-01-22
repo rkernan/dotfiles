@@ -25,6 +25,7 @@ Plug 'mhinz/vim-signify'
 " languages
 Plug 'derekwyatt/vim-scala'
 Plug 'elzr/vim-json'
+Plug 'exu/pgsql.vim'
 Plug 'fatih/vim-go'
 Plug 'groenewege/vim-less'
 Plug 'oranget/vim-csharp'
@@ -58,6 +59,8 @@ if has('unix')
 	endfunction
 
 	Plug 'valloric/youcompleteme', {'do': function('BuildYCM')}
+elseif has('win32')
+	let &runtimepath=&runtimepath . ',' . util#path_join(g:vimfiles_path, 'bundle_local/youcompleteme')
 endif
 Plug 'c9s/vimomni.vim'
 Plug 'scrooloose/syntastic'
