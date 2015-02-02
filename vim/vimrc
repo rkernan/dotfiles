@@ -35,7 +35,9 @@ Plug 'tpope/vim-git'
 Plug 'tpope/vim-markdown'
 
 " unite
-Plug 'shougo/vimproc.vim', {'do': 'make'}
+if has('unix')
+	Plug 'shougo/vimproc.vim', {'do': 'make'}
+endif
 Plug 'shougo/unite.vim'
 Plug 'shougo/unite-outline'
 Plug 'shougo/unite-session'
