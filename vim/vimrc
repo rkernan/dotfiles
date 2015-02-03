@@ -40,7 +40,7 @@ function! BuildVimproc(info)
 		if has('unix')
 			execute "!make"
 		elseif has('win32')
-			execute "!tools\\update-dll-mingw"
+			execute "!mingw32-make -f make_mingw64.mak"
 		endif
 endfunction
 
