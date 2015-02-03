@@ -35,9 +35,16 @@ Plug 'tpope/vim-git'
 Plug 'tpope/vim-markdown'
 
 " unite
-if has('unix')
-	Plug 'shougo/vimproc.vim', {'do': 'make'}
-endif
+function! BuildVimproc(info)
+	if a:info.status == 'installed' || a:info.force
+		if has('unix')
+			execute "!make"
+		elseif has('win32')
+			execute "!tools\\update-dll-mingw"
+		endif
+endfunction
+
+Plug 'shougo/vimproc.vim', {'do': function('BuildVimproc')}
 Plug 'shougo/unite.vim'
 Plug 'shougo/unite-outline'
 Plug 'shougo/unite-session'
@@ -62,7 +69,8 @@ if has('unix')
 
 	Plug 'valloric/youcompleteme', {'do': function('BuildYCM')}
 elseif has('win32')
-	let &runtimepath=&runtimepath . ',' . util#path_join(g:vimfiles_path, 'bundle_local/youcompleteme')
+	" TODO(2015-02-03) Replace with personal YCM fork
+	Plug 'valloric/youcompleteme', {'frozen': 1}
 endif
 Plug 'c9s/vimomni.vim'
 Plug 'scrooloose/syntastic'
