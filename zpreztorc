@@ -27,6 +27,9 @@ zstyle ':prezto:module:terminal' auto-title 'yes'
 zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
 zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
 zstyle ':prezto:module:history-substring-search' color 'yes'
-zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'id_github'
+
+if [ ! -n "$SSH_CLIENT" ]; then
+	zstyle ':prezto:module:ssh:load' identities 'id_rsa' 'id_github'
+fi
 
 # vim:set filetype=zsh:
