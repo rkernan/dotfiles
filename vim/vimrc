@@ -181,11 +181,14 @@ endif
 set textwidth=79
 set formatoptions+=j
 
-set shortmess=atc
+set shortmess=atcI
 
 set lazyredraw
 
 set visualbell
+
+set splitbelow
+set splitright
 
 if has('autocmd')
 	augroup vimrc
