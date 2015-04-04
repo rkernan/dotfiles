@@ -7,11 +7,11 @@ endfunction
 
 function! util#mkdir_if_none(dir)
 	if !isdirectory(expand(a:dir))
-		if exists('*mkdir')
-			call mkdir(expand(a:dir), 'p')
-			echo 'created directory: ' . a:dir
+		if has('win32')
+			silent call system('mkdir ' . a:dir)
 		else
-			echo 'cannot make directory: ' . a:dir
+			silent call system('mkdir -p ' . a:dir)
 		endif
+		echo 'created directory: ' . a:dir
 	endif
 endfunction
