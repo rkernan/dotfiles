@@ -23,16 +23,7 @@ Plug 'kernan/vim-modestatus'
 Plug 'mhinz/vim-signify'
 
 " languages
-Plug 'derekwyatt/vim-scala'
-Plug 'elzr/vim-json'
-Plug 'exu/pgsql.vim'
-Plug 'fatih/vim-go'
-Plug 'groenewege/vim-less'
-Plug 'oranget/vim-csharp'
-Plug 'octol/vim-cpp-enhanced-highlight'
-Plug 'tikhomirov/vim-glsl'
-Plug 'tpope/vim-git'
-Plug 'tpope/vim-markdown'
+Plug 'sheerun/vim-polyglot'
 
 " unite
 function! BuildVimproc(info)
