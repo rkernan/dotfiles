@@ -33,6 +33,7 @@ function! BuildVimproc(info)
 		elseif has('win32')
 			execute "!mingw32-make -f make_mingw64.mak"
 		endif
+	endif
 endfunction
 
 Plug 'shougo/vimproc.vim', {'do': function('BuildVimproc')}
