@@ -181,7 +181,7 @@ endif
 set textwidth=79
 set formatoptions+=j
 
-set shortmess=atcI
+set shortmess=atI
 
 set lazyredraw
 
