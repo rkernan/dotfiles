@@ -181,6 +181,7 @@ endif
 
 set textwidth=79
 set formatoptions+=j
+set formatoptions-=t
 
 set shortmess=atc
 
