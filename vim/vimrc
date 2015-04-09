@@ -618,16 +618,3 @@ endfunction
 
 command! -nargs=0 SetTabs call s:set_tabs()
 command! -nargs=0 SummarizeTabs call s:summarize_tabs()
-
-" Remove trailing whitespace
-function! s:strip_trailing_whitespace()
-	if exists('b:no_strip_whitespace') && b:no_strip_whitespace == 1
-		return
-	endif
-
-	exe 'normal mz'
-	%s/\s\+$//ge
-	exe 'normal `z'
-endfunction
-
-command! -nargs=0 StripTrailingWhitespace call s:strip_trailing_whitespace()
