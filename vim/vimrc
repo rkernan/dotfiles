@@ -455,20 +455,29 @@ let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 "
 " Unite
 "
-if executable('ack-grep')
-	let g:unite_source_grep_command = 'ack-grep'
+if executable('ack')
+	let g:unite_source_grep_command = 'ack'
 	let g:unite_source_grep_default_opts = '--noheading --nocolor -k -H'
 	let g:unite_source_grep_recursive_opt = ''
 endif
 
+if has('win32')
+	let g:unite_source_rec_async_command = 'files -A'
+endif
+
+hi link uniteStatusNormal  StatusLine
+hi link uniteStatusMessage StatusLine
+hi link uniteStatusLineNR  StatusLine
+hi uniteStatusHead             guifg=#f92672 guibg=#49483e gui=bold ctermfg=1  ctermbg=19 cterm=bold
+hi uniteStatusSourceNames      guifg=#f4bf75 guibg=#49483e gui=none ctermfg=3  ctermbg=19 cterm=none
+hi uniteStatusSourceCandidates guifg=#fd971f guibg=#49483e gui=none ctermfg=16 ctermbg=19 cterm=none
+
 let g:unite_data_directory = util#path_join(g:vimfiles_path, 'cache')
 call util#mkdir_if_none(g:unite_data_directory)
-let g:unite_source_session_default_session_name = 'default'
-let g:unite_source_session_path = expand('~/.vim/sessions')
-let g:unite_force_overwrite_statusline = 0
-let g:unite_winheight = 20
+
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
+
 if has('multi_byte') && !has('win32')
 	call unite#custom#profile('default', 'context', {
 		\     'prompt': '» ',
@@ -484,20 +493,14 @@ else
 		\     'prompt_direction': 'top'
 		\ })
 endif
+
 call unite#custom#profile('files', 'context', {'start_insert': 1})
 call unite#custom#profile('buffers', 'context', {'start_insert': 1})
-call unite#custom#profile('search', 'context', {'no_quit': 1})
+call unite#custom#profile('search', 'context', {'no_quit': 2})
 
 nnoremap <leader>f :Unite -buffer-name=files file_rec<cr>
 nnoremap <leader>b :Unite -profile-name=files -buffer-name=buffers buffer<cr>
 nnoremap <leader>/ :Unite -buffer-name=search grep<cr>
-
-if has('autocmd')
-	augroup vimrc
-		" apply unite buffer settings
-		autocmd FileType unite call s:unite_settings()
-	augroup END
-endif
 
 "
 " Unite Outline
@@ -511,17 +514,6 @@ nnoremap <leader>o :Unite -buffer-name=outline outline<cr>
 nnoremap <leader>s :Unite -buffer-name=sessions session<cr>
 command! -nargs=? LoadSession UniteSessionLoad <args>
 command! -nargs=? SaveSession UniteSessionSave <args>
-
-function! s:unite_settings()
-	imap <buffer> <tab>   <Plug>(unite_choose_action)
-	nmap <buffer> <tab>   <Plug>(unite_choose_action)
-	imap <buffer> <s-tab> <Plug>(unite_exit)
-	nmap <buffer> <s-tab> <Plug>(unite_exit)
-	imap <buffer> <c-n>   <Plug>(unite_select_next_line)
-	nmap <buffer> <c-n>   <Plug>(unite_select_next_line)
-	imap <buffer> <c-p>   <Plug>(unite_select_previous_line)
-	nmap <buffer> <c-p>   <Plug>(unite_select_previous_line)
-endfunction
 
 "
 " YouCompleteMe
