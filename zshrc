@@ -4,3 +4,8 @@ fi
 
 bindkey "^P" up-line-or-search
 bindkey "^N" down-line-or-search
+
+# apply the prompt in a tty
+if [[ $TERM == "linux" ]]; then
+	prompt custom
+fi
