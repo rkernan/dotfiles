@@ -9,7 +9,6 @@ zstyle ':prezto:load' pmodule  \
 	'spectrum'                 \
 	'prompt'                   \
 	'completion'               \
-	'syntax-highlighting'      \
 	'history'                  \
 	'history-substring-search' \
 	'directory'                \
@@ -22,7 +21,6 @@ zstyle ':prezto:load' pmodule  \
 
 zstyle ':prezto:module:editor' key-bindings 'vi'
 zstyle ':prezto:module:prompt' theme 'custom'
-zstyle ':prezto:module:syntax-highlighting' highlighters 'main' 'brackets'
 zstyle ':prezto:module:terminal' auto-title 'yes'
 zstyle ':prezto:module:terminal:window-title' format '%n@%m: %s'
 zstyle ':prezto:module:terminal:tab-title' format '%m: %s'
