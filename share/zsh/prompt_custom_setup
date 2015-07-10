@@ -29,7 +29,7 @@ function prompt_custom_setup {
 	zstyle ':vcs_info:*' actionformats ' %F{white}%B‹%F{red}⚡%%b%F{cyan}%b%c%u%F{white}%B›%%b%f'
 
 	# set prompt
-	PROMPT='%F{blue}%c${vcs_info_msg_0_} ${editor_info[keymap]} '
+	PROMPT='%F{blue}%c${vcs_info_msg_0_} %(?..%F{red}%?%f )${editor_info[keymap]} '
 	RPROMPT=''
 	SPROMPT='correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
