@@ -1,11 +1,9 @@
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-	source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
-fi
-
-bindkey "^P" up-line-or-search
-bindkey "^N" down-line-or-search
-
-# apply the prompt in a tty
-if [[ $TERM == "linux" ]]; then
-	prompt custom
-fi
+zstyle ':config:editor' key-bindings 'vi'
+source "$HOME/.zsh/editor.zsh"
+source "$HOME/.zsh/prompt.zsh"
+source "$HOME/.zsh/alias.zsh"
+source "$HOME/.zsh/history.zsh"
+source "$HOME/.zsh/completions.zsh"
+source "$HOME/.zsh/pyenv.zsh"
+source "$HOME/.zsh/ndenv.zsh"
+source "$HOME/.zsh/rbenv.zsh"
