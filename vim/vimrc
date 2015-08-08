@@ -137,6 +137,9 @@ else
 	set clipboard+=unnamed
 endif
 
+set fileformat=unix
+set fileformats=unix,dos
+
 set history=1000
 
 set undolevels=1000
