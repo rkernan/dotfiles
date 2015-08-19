@@ -29,9 +29,19 @@ Plug 'sheerun/vim-polyglot'
 function! BuildVimproc(info)
 	if a:info.status == 'installed' || a:info.force
 		if has('unix')
-			execute "!make"
+			execute '!make'
 		elseif has('win32')
-			execute "!mingw32-make -f make_mingw64.mak"
+			let l:windows_build_cmds = [
+				\ '!mingw32-make -f make_mingw32.mak',
+				\ '!mingw32-make -f make_mingw64.mak',
+				\ '!nmake -f make_msvc.mak nodebug=1']
+			echohl Question
+			for c in l:windows_build_cmds
+				echomsg '(' . index(l:windows_build_cmds, c) . ')' . c
+			endfor
+			let choice = input('Choose a make command: ')
+			echohl None
+			execute l:windows_build_cmds[choice]
 		endif
 	endif
 endfunction
@@ -55,7 +65,7 @@ if has('unix')
 			let flags .= input('use system libclang? (y/n)') == "y" ? ' --system-libclang' : ''
 			let flags .= input('omnisharp completer? (y/n)') == "y" ? ' --omnisharp-completer' : ''
 			echohl None
-			execute "!./install.sh" . flags
+			execute '!./install.sh' . flags
 		endif
 	endfunction
 
@@ -609,7 +619,7 @@ endfunction
 " Summarize current tab info
 function! s:summarize_tabs()
 	try
-		echom 'tabstop=' . &l:ts . ' softtabstop=' . &l:sts . ' shiftwidth=' . &l:sw .
+		echomsg 'tabstop=' . &l:ts . ' softtabstop=' . &l:sts . ' shiftwidth=' . &l:sw .
 					\' ' . ((&l:et) ? 'expandtab' : 'noexpandtab')
 	endtry
 endfunction
