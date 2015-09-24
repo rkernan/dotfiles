@@ -80,6 +80,7 @@ Plug 'junegunn/vader.vim', {'on': 'Vader', 'for': 'vader'}
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-user'
 Plug 'mbbill/undotree', {'on': ['UndotreeShow', 'UndotreeHide', 'UndotreeToggle']}
+Plug 'mtth/scratch.vim'
 Plug 'raimondi/delimitmate'
 Plug 'tommcdo/vim-exchange'
 Plug 'tpope/vim-abolish'
@@ -291,6 +292,7 @@ let g:modestatus#extensions#core#filename_override = {
 	\ }
 
 let g:modestatus#extensions#core#filetype_override = {
+	\     'scratch': '',
 	\     'qf': '',
 	\     'undotree': 'Undo Tree'
 	\ }
