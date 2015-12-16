@@ -580,6 +580,8 @@ nnoremap Y y$
 " treat line wraps as real lines
 nnoremap j gj
 nnoremap k gk
+nnoremap gj j
+nnoremap gk k
 
 " indent and un-indent
 vnoremap > >gv
