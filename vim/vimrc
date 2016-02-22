@@ -56,21 +56,28 @@ Plug 'sirver/ultisnips'
 Plug 'kernan/vim-snippets'
 
 " completion/errors
-if has('unix')
-	function! BuildYCM(info)
-		if a:info.status == 'installed' || a:info.force
-			let flags = ''
-			echohl Question
-			let flags .= input('clang completer? (y/n)') == "y" ? ' --clang-completer' : ''
-			let flags .= input('use system libclang? (y/n)') == "y" ? ' --system-libclang' : ''
-			let flags .= input('omnisharp completer? (y/n)') == "y" ? ' --omnisharp-completer' : ''
-			echohl None
-			execute '!./install.sh' . flags
-		endif
-	endfunction
+function! BuildYCM(info)
+	if a:info.status == 'installed' || a:info.force
+		let flags = ''
+		echohl Question
+		let flags .= input('C-Family language support? (y/n)') == "y" ? ' --clang-completer' : ''
+		let flags .= input('Use system libclang? (y/n)') == "y" ? ' --system-libclang' : ''
+		let flags .= input('C# support? (y/n)') == "y" ? ' --omnisharp-completer' : ''
+		let flags .= input('Go support? (y/n)') == "y" ? ' --gocode-completer' : ''
+		let flags .= input('Javascript support? (y/n)') == "y" ? ' --tern-completer' : ''
+		let flags .= input('Rust support? (y/n)') == "y" ? ' --racer-completer' : ''
+		echohl None
 
-	Plug 'valloric/youcompleteme', {'do': function('BuildYCM')}
-endif
+		let install = './install.py'
+		if has('win32')
+			let install = 'install.py'
+		endif
+
+		execute '!' . install . flags
+	endif
+endfunction
+
+Plug 'valloric/youcompleteme', {'do': function('BuildYCM')}
 Plug 'scrooloose/syntastic'
 
 " other
