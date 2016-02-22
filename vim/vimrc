@@ -76,7 +76,6 @@ Plug 'valloric/youcompleteme', {'do': function('BuildYCM')}
 Plug 'scrooloose/syntastic'
 
 " other
-Plug 'derekwyatt/vim-fswitch', {'for': ['c', 'cpp']}
 Plug 'junegunn/vim-easy-align', {'on': ['<Plug>EasyAlign', 'EasyAlign']}
 Plug 'junegunn/vader.vim', {'on': 'Vader', 'for': 'vader'}
 Plug 'kana/vim-textobj-entire'
@@ -404,23 +403,6 @@ if has('autocmd')
 endif
 
 "
-" FSwitch
-"
-if has('autocmd')
-	augroup vimrc
-		autocmd FileType c,cpp nmap <buffer> <leader>af :FSHere<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>al :FSRight<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>aL :FSSplitRight<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>ah :FSLeft<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>aH :FSSplitLeft<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>ak :FSAbove<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>aK :FSSplitAbove<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>aj :FSBelow<cr>
-		autocmd FileType c,cpp nmap <buffer> <leader>aJ :FSSplitBelow<cr>
-	augroup END
-endif
-
-"
 " ListToggle
 "
 let g:lt_location_list_toggle_map = '<leader>l'
@@ -541,17 +523,6 @@ let g:ycm_extra_conf_vim_data = [
 	\   'g:ycm_extra_conf_c_flags',
 	\   'g:ycm_extra_conf_cpp_flags'
 	\]
-
-if has('autocmd')
-	augroup vimrc
-		autocmd FileType c      nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
-		autocmd FileType cpp    nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
-		autocmd FileType objc   nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
-		autocmd FileType objcpp nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
-		autocmd FileType cs     nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
-		autocmd FileType python nmap <buffer> <c-]> :YcmCompleter GoTo<cr>
-	augroup END
-endif
 
 " --------
 " Mappings
