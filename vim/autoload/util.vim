@@ -7,11 +7,11 @@ endfunction
 
 function! util#mkdir_if_none(dir)
 	if !isdirectory(expand(a:dir))
+		let cmd = 'mkdir -p '
 		if has('win32')
-			silent call system('mkdir ' . a:dir)
-		else
-			silent call system('mkdir -p ' . a:dir)
+			let cmd = 'mkdir '
 		endif
-		echo 'created directory: ' . a:dir
+
+		execute '!' . cmd . '"' . expand(a:dir) . '"'
 	endif
 endfunction
