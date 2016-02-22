@@ -49,11 +49,6 @@ endfunction
 Plug 'shougo/vimproc.vim', {'do': function('BuildVimproc')}
 Plug 'shougo/unite.vim'
 Plug 'shougo/unite-outline'
-Plug 'shougo/unite-session'
-
-" snippets
-Plug 'sirver/ultisnips'
-Plug 'kernan/vim-snippets'
 
 " completion/errors
 function! BuildYCM(info)
@@ -530,13 +525,6 @@ nnoremap <leader>/ :Unite -buffer-name=search grep<cr>
 "
 call unite#custom#profile('outline', 'context', {'no_split': 1})
 nnoremap <leader>o :Unite -buffer-name=outline outline<cr>
-
-"
-" Unite Session
-"
-nnoremap <leader>s :Unite -buffer-name=sessions session<cr>
-command! -nargs=? LoadSession UniteSessionLoad <args>
-command! -nargs=? SaveSession UniteSessionSave <args>
 
 "
 " YouCompleteMe
