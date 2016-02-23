@@ -1,15 +1,8 @@
-<<<<<<< HEAD
 """
 A general solution for YCM C-family language configuration. Larger projects
 will most likely need a specialized file.
 """
 
-||||||| merged common ancestors
-=======
-from __future__ import absolute_import
-from __future__ import print_function
-
->>>>>>> origin/master
 import os
 
 default_flags = [
