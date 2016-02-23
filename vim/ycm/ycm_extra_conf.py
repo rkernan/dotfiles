@@ -1,3 +1,8 @@
+"""
+A general solution for YCM C-family language configuration. Larger projects
+will most likely need a specialized file.
+"""
+
 import os
 
 default_flags = [
@@ -82,10 +87,4 @@ def FlagsForFile(filename, **kwargs):
         pass
     root_dir = find_root_dir()
     flags.extend(prepare_includes(find_include_dirs(root_dir, True)))
-    return {'flags': flags, 'do_cache': True}
-
-
-if __name__ == '__main__':
-    print(find_root_dir())
-    print(find_include_dirs(find_root_dir(), True))
-    print(prepare_includes(find_include_dirs(find_root_dir(), True)))
+    return { 'flags': flags, 'do_cache': True }

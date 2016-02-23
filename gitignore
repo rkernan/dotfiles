@@ -9,10 +9,6 @@ tags
 # Vim swap files
 .*.sw?
 
-# YouCompleteMe config
-.ycm_extra_conf.py
-.ycm_extra_conf.pyc
-
 # Random
 .DS_Store
 
