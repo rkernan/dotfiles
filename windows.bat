@@ -1,5 +1,4 @@
-RMDIR /S /Q "%USERPROFILE%\vimfiles"
-XCOPY /E /I /H "vim" "%USERPROFILE%\vimfiles"
+MKLINK /j "%USERPROFILE%\vimfiles" "vim"
 DEL "%userprofile%\.gitconfig"
 COPY "gitconfig" "%USERPROFILE%\.gitconfig."
 DEL "%USERPROFILE%\.gitignore"
