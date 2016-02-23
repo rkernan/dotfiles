@@ -48,22 +48,20 @@ Plug 'sheerun/vim-polyglot'
 
 " unite
 function! BuildVimproc(info)
-	if a:info.status == 'installed' || a:info.force
-		if has('unix')
-			execute '!make'
-		elseif has('win32')
-			let l:windows_build_cmds = [
-				\ '!mingw32-make -f make_mingw32.mak',
-				\ '!mingw32-make -f make_mingw64.mak',
-				\ '!nmake -f make_msvc.mak nodebug=1']
-			echohl Question
-			for c in l:windows_build_cmds
-				echomsg '(' . index(l:windows_build_cmds, c) . ')' . c
-			endfor
-			let choice = input('Choose a make command: ')
-			echohl None
-			execute l:windows_build_cmds[choice]
-		endif
+	if has('win32')
+		let l:windows_build_cmds = [
+			\ '!mingw32-make -f make_mingw32.mak',
+			\ '!mingw32-make -f make_mingw64.mak',
+			\ '!nmake -f make_msvc.mak nodebug=1']
+		echohl Question
+		for c in l:windows_build_cmds
+			echomsg '(' . index(l:windows_build_cmds, c) . ')' . c
+		endfor
+		let choice = input('Choose a make command: ')
+		echohl None
+		execute l:windows_build_cmds[choice]
+	else
+		execute '!make'
 	endif
 endfunction
 
@@ -73,26 +71,24 @@ Plug 'shougo/unite-outline'
 
 " completion/errors
 function! BuildYCM(info)
-	if a:info.status == 'installed' || a:info.force
-		let flags = ''
-		echohl Question
-		let flags .= input('C-Family language support? (y/n)') == "y" ? ' --clang-completer' : ''
-		let flags .= input('Use system libclang? (y/n)') == "y" ? ' --system-libclang' : ''
-		let flags .= input('C# support? (y/n)') == "y" ? ' --omnisharp-completer' : ''
-		let flags .= input('Go support? (y/n)') == "y" ? ' --gocode-completer' : ''
-		let flags .= input('Javascript support? (y/n)') == "y" ? ' --tern-completer' : ''
-		let flags .= input('Rust support? (y/n)') == "y" ? ' --racer-completer' : ''
-		echohl None
+	let flags = ''
+	echohl Question
+	let flags .= input('C-Family language support? (y/n)') == "y" ? ' --clang-completer' : ''
+	let flags .= input('Use system libclang? (y/n)') == "y" ? ' --system-libclang' : ''
+	let flags .= input('C# support? (y/n)') == "y" ? ' --omnisharp-completer' : ''
+	let flags .= input('Go support? (y/n)') == "y" ? ' --gocode-completer' : ''
+	let flags .= input('Javascript support? (y/n)') == "y" ? ' --tern-completer' : ''
+	let flags .= input('Rust support? (y/n)') == "y" ? ' --racer-completer' : ''
+	echohl None
 
-		let install = './install.py'
-		if has('win32')
-			echohl Question
-			let msvc_ver = input('MSVC Version? Supports 11 (Visual Studio 2012), 12 (2013),  and 14 (2015). ')
-			echohl None
-			execute '!install.py --msvc ' . msvc_ver . flags
-		else
-			execute '!./install.py' . flags
-		endif
+	let install = './install.py'
+	if has('win32')
+		echohl Question
+		let msvc_ver = input('MSVC Version? Supports 11 (Visual Studio 2012), 12 (2013),  and 14 (2015). ')
+		echohl None
+		execute '!install.py --msvc ' . msvc_ver . flags
+	else
+		execute '!./install.py' . flags
 	endif
 endfunction
 
