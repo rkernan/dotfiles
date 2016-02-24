@@ -25,9 +25,9 @@ endif
 scriptencoding utf-8
 
 if has('win32')
-	let g:vimfiles_path = '~/vimfiles'
+	let g:vimfiles_path = expand('~\vimfiles')
 else
-	let g:vimfiles_path = '~/.vim'
+	let g:vimfiles_path = expand('~/.vim')
 endif
 
 let g:bundle_path = util#path_join(g:vimfiles_path, 'plugins')
@@ -173,11 +173,14 @@ set fileformats=unix,dos
 
 set history=1000
 
-set undolevels=1000
-set undoreload=1000
-call util#mkdir_if_none(util#path_join(g:vimfiles_path, 'undo'))
-set undofile
-set undodir=$HOME/.vim/undo
+if has('persistent_undo')
+	set undolevels=1000
+	set undoreload=1000
+	set undofile
+	let g:undodir = util#path_join(g:vimfiles_path, 'undo')
+	call util#mkdir_if_none(g:undodir)
+	let &undodir=g:undodir
+endif
 
 set nobackup
 set noswapfile
