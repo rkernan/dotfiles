@@ -30,7 +30,7 @@ else
 	let g:vimfiles_path = '~/.vim'
 endif
 
-let g:bundle_path = util#path_join(g:vimfiles_path, 'bundle')
+let g:bundle_path = util#path_join(g:vimfiles_path, 'plugins')
 
 let g:plug_window='vertical new'
 
