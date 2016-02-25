@@ -87,44 +87,39 @@ endif
 " --------
 " Settings
 " --------
-filetype plugin indent on
-
 let mapleader = "\\"
 map <space> <leader>
+
+if has('autocmd')
+	filetype plugin indent on
+endif
+
+if has('syntax')
+	syntax enable
+endif
+
+set ttimeout
+set ttimeoutlen=100
 
 set backspace=indent,eol,start
 
 set autoindent
 set smarttab
 
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
-set noexpandtab
-
-set nrformats-=octal
-
-set ttimeout
-set ttimeoutlen=100
-
-set magic
-set ignorecase
 set smartcase
 set incsearch
 set hlsearch
-set gdefault
-
-set laststatus=2
-set noshowmode
-set showcmd
-
-set scrolloff=1
-set sidescrolloff=5
-
-set display+=lastline
 
 if has('multi_byte')
 	set encoding=utf-8
+endif
+
+if has('multi_byte') && !has('win32')
+	set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
+	set showbreak=…
+else
+	set listchars=tab:>\ ,eol:$,extends:>,precedes:<
+	set showbreak=~
 endif
 
 if has('unnamedplus')
@@ -133,22 +128,14 @@ else
 	set clipboard+=unnamed
 endif
 
-set fileformat=unix
-set fileformats=unix,dos
-
-set history=1000
-
 if has('persistent_undo')
-	set undolevels=1000
-	set undoreload=1000
 	set undofile
 	let g:undodir = util#path_join(g:vimfiles_path, 'undo')
 	call util#mkdir_if_none(g:undodir)
 	let &undodir=g:undodir
 endif
 
-set nobackup
-set noswapfile
+set completeopt=menu,menuone,noselect
 
 set wildmenu
 set wildmode=longest:full,full
@@ -161,43 +148,39 @@ set wildignore+=*.pyc                            " python byte code
 set wildignore+=*.sw                             " vim swap files
 set wildignore+=*.DS_Store                       " OSX something
 
-if has('multi_byte') && !has('win32')
-	set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
-	set showbreak=…
-else
-	set listchars=tab:>\ ,eol:$,extends:>,precedes:<
-	set showbreak=~
-endif
+set nrformats-=octal
+set formatoptions+=j
+set fileformats+=mac
 
 set number
 set relativenumber
-set cursorline
 
-set hidden
-
-set completeopt=menu,menuone
+set scrolloff=1
+set sidescrolloff=5
 
 if has('mouse')
 	set mouse=a
 endif
 
-set textwidth=79
-set formatoptions+=j
-set formatoptions-=t
+set display+=lastline
+set laststatus=2
+set noshowmode
 
+set autoread
+set hidden
+set cursorline
 set shortmess=atI
-
 set lazyredraw
-
-set visualbell
-
 set splitbelow
 set splitright
+set belloff=all
 
 if has('autocmd')
 	augroup vimrc
 		" automatically resize splits on window resize
 		autocmd VimResized * :wincmd =
+		" redraw immediately when entering vim
+		autocmd VimEnter * redraw!
 		" restore line position
 		autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 		" switch to/from relative line numbers
@@ -221,8 +204,6 @@ endif
 " -----
 " Theme
 " -----
-syntax on
-
 let g:base16colorspace = 256
 set background=dark
 colorscheme base16-monokai
