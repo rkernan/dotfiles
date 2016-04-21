@@ -27,6 +27,11 @@ Plug 'sheerun/vim-polyglot'
 
 " unite
 function! BuildVimproc(info)
+	if has('win32')
+		execute 'tools\\update-ddl-mingw'
+	else
+		execute '!make'
+	endif
 	execute '!make'
 endfunction
 
