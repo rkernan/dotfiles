@@ -140,6 +140,14 @@ if has('persistent_undo')
 	let &undodir=g:undodir
 endif
 
+let g:backupdir = util#path_join(g:vimfiles_path, 'backup//')
+call util#mkdir_if_none(g:backupdir)
+let &backupdir=g:backupdir
+
+let g:swapdir = util#path_join(g:vimfiles_path, 'swap//')
+call util#mkdir_if_none(g:swapdir)
+let &directory=g:swapdir
+
 set completeopt=menu,menuone,noselect
 
 set wildmenu
