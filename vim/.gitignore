@@ -1,6 +1,7 @@
 plugins/*
 cache/*
 sessions/*
+swap/*
 tags/*
 undo/*
 .netrwhist
