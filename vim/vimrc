@@ -233,6 +233,7 @@ hi ModestatusWarning  guifg=Black   guibg=#dfaf00 gui=none ctermfg=Black  ctermb
 
 call modestatus#extensions#enable('core')
 call modestatus#extensions#enable('loclist')
+call modestatus#extensions#enable('signify')
 
 let g:modestatus#statusline = {
 	\ 'active': {
@@ -247,11 +248,11 @@ let g:modestatus#statusline = {
 	\         'filetype',
 	\         'encoding',
 	\         'fileformat',
+	\         'signify_hunks',
 	\         'loclist_errors',
 	\         'loclist_warnings'
 	\     ],
-	\     'right': [
-	\     ]
+	\     'right': []
 	\ },
 	\ 'inactive': {
 	\     'left': [
@@ -261,11 +262,11 @@ let g:modestatus#statusline = {
 	\         'filetype',
 	\         'encoding',
 	\         'fileformat',
+	\         'signify_hunks',
 	\         'loclist_errors',
 	\         'loclist_warnings'
 	\     ],
-	\     'right': [
-	\     ]
+	\     'right': []
 	\ }}
 
 let g:modestatus#extensions#core#filename_override = {
@@ -289,62 +290,66 @@ call modestatus#options#add('line_percent', {
 	\     'min_winwidth': 30
 	\ }})
 call modestatus#options#add('position', {
-    \ 'common': {
-    \     'min_winwidth': 30
-    \ }})
+	\ 'common': {
+	\     'min_winwidth': 30
+	\ }})
 call modestatus#options#add('filename', {
-    \ 'active': {
-    \     'color': 'ModestatusFilename',
-    \ }})
+	\ 'active': {
+	\     'color': 'ModestatusFilename',
+	\ }})
 call modestatus#options#add('mode', {
-    \ 'active': {
-    \     'color': 'ModestatusMode',
-    \     'format': g:modestatus_mode_format
-    \ }})
+	\ 'active': {
+	\     'color': 'ModestatusMode',
+	\     'format': g:modestatus_mode_format
+	\ }})
 call modestatus#options#add('modified', {
-    \ 'active': {
-    \     'color': 'ModestatusModified'
-    \ }})
+	\ 'active': {
+	\     'color': 'ModestatusModified'
+	\ }})
 call modestatus#options#add('readonly', {
-    \ 'active': {
-    \     'color': 'ModestatusModified'
-    \ }})
+	\ 'active': {
+	\     'color': 'ModestatusModified'
+	\ }})
 call modestatus#options#add('paste', {
-    \ 'active': {
-    \     'color': 'ModestatusModified'
-    \ }})
+	\ 'active': {
+	\     'color': 'ModestatusModified'
+	\ }})
 call modestatus#options#add('filetype', {
-    \ 'common': {
-    \     'format': '[%s]',
-    \     'min_winwidth': 50
-    \ }})
+	\ 'common': {
+	\     'format': '[%s]',
+	\     'min_winwidth': 50
+	\ }})
 call modestatus#options#add('encoding', {
-    \ 'common': {
-    \     'format': '[%s:',
-    \     'separator': '',
-    \     'min_winwidth': 70
-    \ }})
+	\ 'common': {
+	\     'format': '[%s:',
+	\     'separator': '',
+	\     'min_winwidth': 70
+	\ }})
 call modestatus#options#add('fileformat', {
-    \ 'common': {
-    \     'format': '%s]',
-    \     'min_winwidth': 70
-    \ }})
+	\ 'common': {
+	\     'format': '%s]',
+	\     'min_winwidth': 70
+	\ }})
+call modestatus#options#add('signify_hunks', {
+	\ 'common': {
+	\     'format': '[%s]'
+	\ }})
 call modestatus#options#add('loclist_errors', {
-    \ 'common': {
-    \     'separator': ''
-    \ },
-    \ 'active': {
-    \     'color': 'ModestatusError',
-    \     'format': ' %s ',
-    \ }})
+	\ 'common': {
+	\     'separator': ''
+	\ },
+	\ 'active': {
+	\     'color': 'ModestatusError',
+	\     'format': ' %s ',
+	\ }})
 call modestatus#options#add('loclist_warnings', {
-    \ 'common': {
-    \     'separator': ''
-    \ },
-    \ 'active': {
-    \     'color': 'ModestatusWarning',
-    \     'format': ' %s ',
-    \ }})
+	\ 'common': {
+	\     'separator': ''
+	\ },
+	\ 'active': {
+	\     'color': 'ModestatusWarning',
+	\     'format': ' %s ',
+	\ }})
 
 " ---------
 " Languages
