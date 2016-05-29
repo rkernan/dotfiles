@@ -78,7 +78,6 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'valloric/listtoggle'
 
 call plug#end()
 
@@ -408,21 +407,12 @@ let g:signify_sign_delete_first_line = '^'
 "
 " Syntastic
 "
-let g:syntastic_check_on_wq = 0
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
+let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
-let g:syntastic_echo_current_error = 1
-let g:syntastic_enable_signs = 0
-let g:syntastic_enable_highlighting = 0
-let g:syntastic_enable_balloons = 0
-let g:syntastic_aggregate_errors = 1
-if has('win32')
-	let g:syntastic_mode_map = {
-		\ 'mode': 'passive',
-		\ 'active_filetypes': [],
-		\ 'passive_filetypes': []}
-endif
+let g:syntastic_check_on_wq = 0
+hi link SyntasticErrorSign ModestatusError
+hi link SyntasticWarningSign ModestatusWarning
 
 "
 " UndoTree
@@ -497,9 +487,7 @@ nnoremap <leader>o :Unite -buffer-name=outline outline<cr>
 "
 " YouCompleteMe
 "
-let g:ycm_confirm_extra_conf = 1
-let g:ycm_cache_omnifunc = 1
-let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_open_loclist_on_ycm_diags = 0
 " general c-family language config
 let g:ycm_global_ycm_extra_conf = util#path_join(g:vimfiles_path, 'ycm/ycm_extra_conf.py')
 let g:ycm_extra_conf_c_flags    = '-std=c11 -Wall -Wextra -pedantic'
@@ -589,8 +577,7 @@ endfunction
 " Summarize current tab info
 function! s:summarize_tabs()
 	try
-		echomsg 'tabstop=' . &l:ts . ' softtabstop=' . &l:sts . ' shiftwidth=' . &l:sw .
-					\' ' . ((&l:et) ? 'expandtab' : 'noexpandtab')
+		echomsg 'tabstop=' . &l:ts . ' softtabstop=' . &l:sts . ' shiftwidth=' . &l:sw . ' ' . ((&l:et) ? 'expandtab' : 'noexpandtab')
 	endtry
 endfunction
 
