@@ -262,7 +262,6 @@ let g:modestatus#statusline = {'active': {'left': [
 	\         'fileformat',
 	\         'loclist_errors',
 	\         'loclist_warnings'], 'right': []}}
-let g:modestatus#extensions#core#filename_override = {'[No Name]': ''}
 
 call modestatus#options#add('line_percent', {'common': {'min_winwidth': 30}})
 call modestatus#options#add('position', {'common': {'min_winwidth': 30}})
