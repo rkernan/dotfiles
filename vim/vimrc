@@ -9,11 +9,9 @@ else
 	let g:vimfiles_path = expand('~/.vim')
 endif
 
-let g:bundle_path = util#path_join(g:vimfiles_path, 'plugins')
-
 let g:plug_window='vertical new'
 
-call plug#begin(g:bundle_path)
+call plug#begin(util#path_join(g:vimfiles_path, 'plugins'))
 
 " appearance
 Plug 'chriskempson/base16-vim'
@@ -81,15 +79,17 @@ Plug 'tpope/vim-unimpaired'
 
 call plug#end()
 
+" --------
+" Settings
+" --------
+
+" clear autocmd
 if has('autocmd')
 	augroup vimrc
 		autocmd!
 	augroup END
 endif
 
-" --------
-" Settings
-" --------
 let mapleader = "\\"
 map <space> <leader>
 
@@ -222,133 +222,61 @@ colorscheme base16-monokai
 "
 " Modestatus
 "
-hi StatusLine         guifg=#a59f85 guibg=#49483e gui=none ctermfg=20     ctermbg=19  cterm=none
-hi StatusLineNC       guifg=#75715e guibg=#383830 gui=none ctermfg=08     ctermbg=18  cterm=none
-hi ModestatusMode     guifg=Yellow  guibg=#49483e gui=bold ctermfg=Yellow ctermbg=19  cterm=bold
-hi ModestatusFilename guifg=#a59f85 guibg=#49483e gui=bold ctermfg=20     ctermbg=19  cterm=bold
-hi ModestatusModified guifg=Red     guibg=#49483e gui=bold ctermfg=Red    ctermbg=19  cterm=bold
-hi ModestatusError    guifg=White   guibg=#af0000 gui=none ctermfg=White  ctermbg=124 cterm=none
-hi ModestatusWarning  guifg=Black   guibg=#dfaf00 gui=none ctermfg=Black  ctermbg=178 cterm=none
+hi StatusLine           guifg=#a59f85 guibg=#49483e gui=none ctermfg=20     ctermbg=19  cterm=none
+hi StatusLineNC         guifg=#75715e guibg=#383830 gui=none ctermfg=08     ctermbg=18  cterm=none
+hi ModestatusMode       guifg=Yellow  guibg=#49483e gui=bold ctermfg=Yellow ctermbg=19  cterm=bold
+hi ModestatusFilename   guifg=#a59f85 guibg=#49483e gui=bold ctermfg=20     ctermbg=19  cterm=bold
+hi ModestatusModified   guifg=Red     guibg=#49483e gui=bold ctermfg=Red    ctermbg=19  cterm=bold
+hi ModestatusModifiedNC guifg=Red     guibg=#383830 gui=bold ctermfg=Red    ctermbg=18  cterm=bold
+hi ModestatusReadonly   guifg=Red     guibg=#49483e gui=none ctermfg=Red    ctermbg=19  cterm=none
+hi ModestatusReadonlyNC guifg=Red     guibg=#383830 gui=none ctermfg=Red    ctermbg=18  cterm=none
+hi link ModestatusPaste ModestatusReadonly
+hi ModestatusError      guifg=White   guibg=#af0000 gui=none ctermfg=White  ctermbg=124 cterm=none
+hi ModestatusWarning    guifg=Black   guibg=#dfaf00 gui=none ctermfg=Black  ctermbg=178 cterm=none
 
 call modestatus#extensions#enable('core')
 call modestatus#extensions#enable('loclist')
 call modestatus#extensions#enable('signify')
 
-let g:modestatus#statusline = {
-	\ 'active': {
-	\     'left': [
+let g:modestatus#disable_filetypes = ['unite', 'qf', 'undotree']
+let g:modestatus#statusline = {'active': {'left': [
 	\         'line_percent',
 	\         'position',
 	\         'mode',
 	\         'filename',
 	\         'modified',
+	\         'signify_hunks',
 	\         'readonly',
 	\         'paste',
 	\         'filetype',
 	\         'encoding',
 	\         'fileformat',
-	\         'signify_hunks',
 	\         'loclist_errors',
-	\         'loclist_warnings'
-	\     ],
-	\     'right': []
-	\ },
-	\ 'inactive': {
-	\     'left': [
+	\         'loclist_warnings'], 'right': []},
+	\ 'inactive': {'left': [
 	\         'filename',
 	\         'modified',
 	\         'readonly',
 	\         'filetype',
 	\         'encoding',
 	\         'fileformat',
-	\         'signify_hunks',
 	\         'loclist_errors',
-	\         'loclist_warnings'
-	\     ],
-	\     'right': []
-	\ }}
+	\         'loclist_warnings'], 'right': []}}
+let g:modestatus#extensions#core#filename_override = {'[No Name]': ''}
 
-let g:modestatus#extensions#core#filename_override = {
-	\     '[No Name]': ''
-	\ }
-
-let g:modestatus#extensions#core#filetype_override = {
-	\     'scratch': '',
-	\     'qf': '',
-	\     'undotree': 'Undo Tree'
-	\ }
-
-if has('multi_byte') && !has('win32')
-	let g:modestatus_mode_format = '‹%s›'
-else
-	let g:modestatus_mode_format = '<%s>'
-endif
-
-call modestatus#options#add('line_percent', {
-	\ 'common': {
-	\     'min_winwidth': 30
-	\ }})
-call modestatus#options#add('position', {
-	\ 'common': {
-	\     'min_winwidth': 30
-	\ }})
-call modestatus#options#add('filename', {
-	\ 'active': {
-	\     'color': 'ModestatusFilename',
-	\ }})
-call modestatus#options#add('mode', {
-	\ 'active': {
-	\     'color': 'ModestatusMode',
-	\     'format': g:modestatus_mode_format
-	\ }})
-call modestatus#options#add('modified', {
-	\ 'active': {
-	\     'color': 'ModestatusModified'
-	\ }})
-call modestatus#options#add('readonly', {
-	\ 'active': {
-	\     'color': 'ModestatusModified'
-	\ }})
-call modestatus#options#add('paste', {
-	\ 'active': {
-	\     'color': 'ModestatusModified'
-	\ }})
-call modestatus#options#add('filetype', {
-	\ 'common': {
-	\     'format': '[%s]',
-	\     'min_winwidth': 50
-	\ }})
-call modestatus#options#add('encoding', {
-	\ 'common': {
-	\     'format': '[%s:',
-	\     'separator': '',
-	\     'min_winwidth': 70
-	\ }})
-call modestatus#options#add('fileformat', {
-	\ 'common': {
-	\     'format': '%s]',
-	\     'min_winwidth': 70
-	\ }})
-call modestatus#options#add('signify_hunks', {
-	\ 'common': {
-	\     'format': '[%s]'
-	\ }})
-call modestatus#options#add('loclist_errors', {
-	\ 'common': {
-	\     'separator': ''
-	\ },
-	\ 'active': {
-	\     'color': 'ModestatusError',
-	\     'format': ' %s ',
-	\ }})
-call modestatus#options#add('loclist_warnings', {
-	\ 'common': {
-	\     'separator': ''
-	\ },
-	\ 'active': {
-	\     'color': 'ModestatusWarning',
-	\     'format': ' %s ',
-	\ }})
+call modestatus#options#add('line_percent', {'common': {'min_winwidth': 30}})
+call modestatus#options#add('position', {'common': {'min_winwidth': 30}})
+call modestatus#options#add('filename', {'active': {'color': 'ModestatusFilename'}})
+call modestatus#options#add('mode', {'active': {'color': 'ModestatusMode', 'format': (has('multi_byte') ? "\u2039%s\u203A" : '<%s>')}})
+call modestatus#options#add('modified', {'active': {'color': 'ModestatusModified'}, 'inactive': {'color': 'ModestatusModifiedNC'}})
+call modestatus#options#add('signify_hunks', {'common': {'format': '(%s)'}})
+call modestatus#options#add('readonly', {'active': {'color': 'ModestatusReadonly'}, 'inactive': {'color': 'ModestatusReadonlyNC'}})
+call modestatus#options#add('paste', {'active': {'color': 'ModestatusPaste'}})
+call modestatus#options#add('filetype', {'common': {'format': '[%s]', 'min_winwidth': 50}})
+call modestatus#options#add('encoding', {'common': {'format': '[%s:', 'separator': '', 'min_winwidth': 70}})
+call modestatus#options#add('fileformat', {'common': {'format': '%s]', 'min_winwidth': 70}})
+call modestatus#options#add('loclist_errors', {'common': {'separator': '', 'color': 'ModestatusError', 'format': ' %s '}})
+call modestatus#options#add('loclist_warnings', {'common': {'separator': '', 'color': 'ModestatusWarning', 'format': ' %s '}})
 
 " ---------
 " Languages
@@ -408,7 +336,6 @@ let g:signify_sign_delete_first_line = '^'
 " Syntastic
 "
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 hi link SyntasticErrorSign ModestatusError
@@ -435,12 +362,6 @@ let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
 "
 " Unite
 "
-if executable('ack')
-	let g:unite_source_grep_command = 'ack'
-	let g:unite_source_grep_default_opts = '--noheading --nocolor -k -H'
-	let g:unite_source_grep_recursive_opt = ''
-endif
-
 hi link uniteStatusNormal  StatusLine
 hi link uniteStatusMessage StatusLine
 hi link uniteStatusLineNR  StatusLine
@@ -454,22 +375,8 @@ call util#mkdir_if_none(g:unite_data_directory)
 call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 
-if has('multi_byte') && !has('win32')
-	call unite#custom#profile('default', 'context', {
-		\     'prompt': '» ',
-		\     'silent': 1,
-		\     'direction': 'botright',
-		\     'prompt_direction': 'top'
-		\ })
-else
-	call unite#custom#profile('default', 'context', {
-		\     'prompt': '>> ',
-		\     'silent': 1,
-		\     'direction': 'botright',
-		\     'prompt_direction': 'top'
-		\ })
-endif
-
+call unite#custom#profile('default', 'context', {'prompt': (has('multi_byte') ?  "\u00BB " : '>> '), 
+			\ 'silent': 1, 'direction': 'botright', 'prompt_direction': 'top'})
 call unite#custom#profile('files', 'context', {'start_insert': 1})
 call unite#custom#profile('buffers', 'context', {'start_insert': 1})
 call unite#custom#profile('search', 'context', {'no_quit': 2})
@@ -493,11 +400,7 @@ let g:ycm_global_ycm_extra_conf = util#path_join(g:vimfiles_path, 'ycm/ycm_extra
 let g:ycm_extra_conf_c_flags    = '-std=c11 -Wall -Wextra -pedantic'
 let g:ycm_extra_conf_cpp_flags  = '-std=c++11 -Wall -Wextra -pedantic'
 let g:ycm_extra_conf_objc_flags = '-Wall -Wextra -pedantic'
-let g:ycm_extra_conf_vim_data = [
-	\   '&filetype',
-	\   'g:ycm_extra_conf_c_flags',
-	\   'g:ycm_extra_conf_cpp_flags'
-	\]
+let g:ycm_extra_conf_vim_data = ['&filetype', 'g:ycm_extra_conf_c_flags', 'g:ycm_extra_conf_cpp_flags']
 
 " --------
 " Mappings
@@ -544,8 +447,6 @@ function! s:VSetSearch()
 	let temp = @@
 	norm! gvy
 	let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
-	" Use this line instead of the above to match matches spanning across lines
-	"let @/ = '\V' . substitute(escape(@@, '\'), '\_s\+', '\\_s\\+', 'g')
 	call histadd('/', substitute(@/, '[?/]', '\="\\%d".char2nr(submatch(0))', 'g'))
 	let @@ = temp
 endfunction
