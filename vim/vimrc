@@ -256,6 +256,7 @@ let g:modestatus#statusline = {'active': {'left': [
 	\ 'inactive': {'left': [
 	\         'filename',
 	\         'modified',
+	\         'signify_hunks',
 	\         'readonly',
 	\         'filetype',
 	\         'encoding',
