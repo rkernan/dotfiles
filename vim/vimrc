@@ -117,11 +117,11 @@ if has('multi_byte')
 	set encoding=utf-8
 endif
 
-if has('multi_byte') && !has('win32')
-	set listchars=tab:▸\ ,eol:¬,extends:»,precedes:«
-	set showbreak=…
+if has('multi_byte')
+	set listchars=nbsp:¬,eol:$,tab:»·,extends:»,precedes:«,trail:·
+	set showbreak=~ " FIXME can't use unicode character in windows
 else
-	set listchars=tab:>\ ,eol:$,extends:>,precedes:<
+	set listchars=nbsp:%,eol:$,tab:>-,extends:>,precedes:<,trail:-
 	set showbreak=~
 endif
 
