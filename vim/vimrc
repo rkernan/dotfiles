@@ -118,11 +118,9 @@ if has('multi_byte')
 endif
 
 if has('multi_byte')
-	set listchars=nbsp:¬,eol:$,tab:»·,extends:»,precedes:«,trail:·
-	set showbreak=~ " FIXME can't use unicode character in windows
+	set listchars=eol:¬,tab:»\ ,trail:·
 else
-	set listchars=nbsp:%,eol:$,tab:>-,extends:>,precedes:<,trail:-
-	set showbreak=~
+	set listchars=eol:$,tab:>\ ,trail:-
 endif
 
 if has('unnamedplus')
