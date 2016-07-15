@@ -10,4 +10,4 @@ typeset -gU cdpath fpath mailpath path
 
 path=("$HOME/bin" $path)
 
-source "$HOME/.base16/shell/base16-monokai.dark.sh"
+source "$HOME/.base16/shell/scripts/base16-monokai.sh"
