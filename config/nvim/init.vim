@@ -65,6 +65,9 @@ augroup vimrc
 	" enable/disable cursor line depending on window focus
 	autocmd BufEnter,FocusGained * setlocal number cursorline
 	autocmd BufLeave,FocusLost   * setlocal number nocursorline
+	" always show the sign column
+	autocmd BufEnter * sign define dummy
+	autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 augroup END
 
 " -----
