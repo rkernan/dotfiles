@@ -63,14 +63,10 @@ Plug 'valloric/youcompleteme', {'do': function('BuildYCM')}
 Plug 'scrooloose/syntastic'
 
 " other
-Plug 'junegunn/vim-easy-align', {'on': ['<Plug>EasyAlign', 'EasyAlign']}
 Plug 'junegunn/vader.vim', {'on': 'Vader', 'for': 'vader'}
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-user'
-Plug 'mbbill/undotree', {'on': ['UndotreeShow', 'UndotreeHide', 'UndotreeToggle']}
 Plug 'raimondi/delimitmate'
-Plug 'tommcdo/vim-exchange'
-Plug 'tpope/vim-abolish'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
@@ -341,16 +337,6 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 hi link SyntasticErrorSign ModestatusError
 hi link SyntasticWarningSign ModestatusWarning
-
-"
-" UndoTree
-"
-let g:undotree_WindowLayout = 2
-let g:undotree_SplitWidth = 40
-let g:undotree_DiffpanelHeight = 15
-let g:undotree_DiffAutoOpen = 0
-let g:undotree_HighlightChangedText = 0
-command! -nargs=0 UndoTree silent UndotreeToggle
 
 "
 " UltiSnips
