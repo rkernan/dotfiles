@@ -1,4 +1,10 @@
-export EDITOR='vim'
+if (( $+commands[nvim] )) ; then
+	export EDITOR='nvim'
+else if (( $+commands[vim] )) ; then
+	export EDITOR='vim'
+else
+	export EDITOR='vi'
+fi
 export VISUAL='vim'
 export PAGER='less'
 
