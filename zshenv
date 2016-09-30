@@ -5,7 +5,7 @@ else if (( $+commands[vim] )) ; then
 else
 	export EDITOR='vi'
 fi
-export VISUAL='vim'
+export VISUAL=$EDITOR
 export PAGER='less'
 
 if [[ -z "$LANG" ]]; then
