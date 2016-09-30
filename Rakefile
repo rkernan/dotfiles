@@ -124,19 +124,12 @@ desc "all configuration that can only be run after install"
 sh("which fc-cache") do |ok, res|
   if ok
     task :post_install => [:cache_fonts, :get_vim_plugins]
-  else
-    task :post_install => [:get_vim_plugins]
   end
 end
 
 desc "run fc-cache"
 task :cache_fonts do
   sh("fc-cache -vf #{HOME_DIR}/.fonts")
-end
-
-desc "download all Vim plugins"
-task :get_vim_plugins do
-  sh("vim +PlugUpdate +qall")
 end
 
 desc "remove all symlinked dotfiles"
