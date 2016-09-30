@@ -1,4 +1,3 @@
-require 'highline/import'
 require 'pathname'
 
 @verbose_log = (verbose == true) || (Rake.application.options.trace == true)
