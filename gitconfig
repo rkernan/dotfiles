@@ -14,7 +14,9 @@
 	diff = auto
 	status = auto
 [push]
-	default = matching
+	default = current
+[pull]
+	default = current
 [branch]
 	autosetuprebase = always
 [rerere]
