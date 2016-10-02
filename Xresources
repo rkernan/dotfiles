@@ -1,7 +1,7 @@
 ! --------------------
 ! Color Scheme
 ! --------------------
-#include "config/base16/xresources/base16-monokai.dark.xresources"
+#include "config/base16-xresources/base16-monokai.dark.xresources"
 
 ! --------------------
 ! urxvt terminal
