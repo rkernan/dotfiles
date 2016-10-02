@@ -25,7 +25,7 @@ alias sftp='noglob sftp'
 alias dirs='dirs -v'
 alias df='df -kh'
 alias du='df -kh'
-alias history-stat='history 0 | awk ''{print $2}'' | sort | uniq -c | sort -n -r | head'
+alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 alias ls='ls --group-directories-first --color=auto'
 alias l='ls -1A'
 alias ll='ls -lh'
