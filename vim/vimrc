@@ -13,56 +13,13 @@ let g:plug_window='vertical new'
 
 call plug#begin(util#path_join(g:vimfiles_path, 'plugins'))
 
-" appearance
 Plug 'chriskempson/base16-vim'
 Plug 'kernan/vim-modestatus'
-
-" vcs integration
 Plug 'mhinz/vim-signify'
-
-" languages
 Plug 'sheerun/vim-polyglot'
-
-" unite
-function! BuildVimproc(info)
-	if has('win32')
-		execute '!tools\\update-dll-mingw'
-	else
-		execute '!make'
-	endif
-endfunction
-
-Plug 'shougo/vimproc.vim', {'do': function('BuildVimproc')}
-Plug 'shougo/unite.vim'
-Plug 'shougo/unite-outline'
-
-" completion/errors
-function! BuildYCM(info)
-	let flags = ''
-	echohl Question
-	let flags .= input('C-Family language support? (y/n)') == "y" ? ' --clang-completer' : ''
-	let flags .= input('Use system libclang? (y/n)') == "y" ? ' --system-libclang' : ''
-	let flags .= input('C# support? (y/n)') == "y" ? ' --omnisharp-completer' : ''
-	let flags .= input('Go support? (y/n)') == "y" ? ' --gocode-completer' : ''
-	let flags .= input('Javascript support? (y/n)') == "y" ? ' --tern-completer' : ''
-	let flags .= input('Rust support? (y/n)') == "y" ? ' --racer-completer' : ''
-	echohl None
-
-	let install = './install.py'
-	if has('win32')
-		echohl Question
-		let msvc_ver = input('MSVC Version? Supports 11 (Visual Studio 2012), 12 (2013),  and 14 (2015). ')
-		echohl None
-		execute '!install.py --msvc ' . msvc_ver . flags
-	else
-		execute '!./install.py' . flags
-	endif
-endfunction
-
-Plug 'valloric/youcompleteme', {'do': function('BuildYCM')}
-Plug 'scrooloose/syntastic'
-
-" other
+Plug 'shougo/denite.nvim'
+Plug 'w0rp/ale'
+Plug 'shougo/neocomplete.vim'
 Plug 'junegunn/vader.vim', {'on': 'Vader', 'for': 'vader'}
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-user'
@@ -295,6 +252,15 @@ let g:go_fmt_command = 'goimports'
 " -------
 
 "
+" Ale
+"
+let g:ale_sign_column_always = 1
+hi link ALEErrorSign ModestatusError
+hi link ALEWarningSign ModestatusWarning
+nmap <C-n> <Plug>(ale_previous_wrap)
+nmap <C-p> <Plug>(ale_next_wrap)
+
+"
 " DelimitMate
 "
 let delimitMate_matchpairs = "(:),[:],{:}"
@@ -313,11 +279,59 @@ if has('autocmd')
 endif
 
 "
+" Denite
+"
+
+" mappings
+call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
+
+" file_rec command
+if executable('ag')
+	call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '-g', ''])
+endif
+
+" grep command
+if executable('ag')
+	call denite#custom#var('grep', 'command', ['ag'])
+	call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
+	call denite#custom#var('grep', 'recursive_opts', [])
+	call denite#custom#var('grep', 'pattern_opt', [])
+	call denite#custom#var('grep', 'separator', ['--'])
+	call denite#custom#var('grep', 'final_opts', [])
+endif
+
+" files settings
+call denite#custom#option('files', 'statusline', 0)
+call denite#custom#option('files', 'empty', 0)
+call denite#custom#option('files', 'auto_resize', 1)
+
+" buffers settings
+call denite#custom#option('buffers', 'statusline', 0)
+call denite#custom#option('buffers', 'empty', 0)
+call denite#custom#option('buffers', 'auto_resize', 1)
+
+" grep settings
+call denite#custom#option('grep', 'statusline', 0)
+call denite#custom#option('grep', 'empty', 0)
+call denite#custom#option('grep', 'auto_resize', 1)
+
+" mappings
+nnoremap <leader>f :Denite -buffer-name=files file_rec<cr>
+nnoremap <leader>b :Denite -buffer-name=buffers buffer<cr>
+nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
+
+"
 " ListToggle
 "
 let g:lt_location_list_toggle_map = '<leader>l'
 let g:lt_quickfix_list_toggle_map = '<leader>q'
 let g:lt_height = 10
+
+"
+" Neocomplete
+"
+" TODO
 
 "
 " Signify
@@ -330,64 +344,12 @@ let g:signify_sign_delete = '-'
 let g:signify_sign_delete_first_line = '^'
 
 "
-" Syntastic
-"
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-hi link SyntasticErrorSign ModestatusError
-hi link SyntasticWarningSign ModestatusWarning
-
-"
 " UltiSnips
 "
 let g:UltiSnipsEditSplit = 'vertical'
 let g:UltiSnipsExpandTrigger = '<c-j>'
 let g:UltiSnipsJumpForwardTrigger = '<c-j>'
 let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
-
-"
-" Unite
-"
-hi link uniteStatusNormal  StatusLine
-hi link uniteStatusMessage StatusLine
-hi link uniteStatusLineNR  StatusLine
-hi uniteStatusHead             guifg=#f92672 guibg=#49483e gui=bold ctermfg=1  ctermbg=19 cterm=bold
-hi uniteStatusSourceNames      guifg=#f4bf75 guibg=#49483e gui=none ctermfg=3  ctermbg=19 cterm=none
-hi uniteStatusSourceCandidates guifg=#fd971f guibg=#49483e gui=none ctermfg=16 ctermbg=19 cterm=none
-
-let g:unite_data_directory = util#path_join(g:vimfiles_path, 'cache')
-call util#mkdir_if_none(g:unite_data_directory)
-
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-
-call unite#custom#profile('default', 'context', {'prompt': (has('multi_byte') ?  "\u00BB " : '>> '), 
-			\ 'silent': 1, 'direction': 'botright', 'prompt_direction': 'top'})
-call unite#custom#profile('files', 'context', {'start_insert': 1})
-call unite#custom#profile('buffers', 'context', {'start_insert': 1})
-call unite#custom#profile('search', 'context', {'no_quit': 2})
-
-nnoremap <leader>f :Unite -buffer-name=files file_rec<cr>
-nnoremap <leader>b :Unite -profile-name=files -buffer-name=buffers buffer<cr>
-nnoremap <leader>/ :Unite -buffer-name=search grep<cr>
-
-"
-" Unite Outline
-"
-call unite#custom#profile('outline', 'context', {'no_split': 1})
-nnoremap <leader>o :Unite -buffer-name=outline outline<cr>
-
-"
-" YouCompleteMe
-"
-let g:ycm_open_loclist_on_ycm_diags = 0
-" general c-family language config
-let g:ycm_global_ycm_extra_conf = util#path_join(g:vimfiles_path, 'ycm/ycm_extra_conf.py')
-let g:ycm_extra_conf_c_flags    = '-std=c11 -Wall -Wextra -pedantic'
-let g:ycm_extra_conf_cpp_flags  = '-std=c++11 -Wall -Wextra -pedantic'
-let g:ycm_extra_conf_objc_flags = '-Wall -Wextra -pedantic'
-let g:ycm_extra_conf_vim_data = ['&filetype', 'g:ycm_extra_conf_c_flags', 'g:ycm_extra_conf_cpp_flags']
 
 " --------
 " Mappings
