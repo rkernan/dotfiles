@@ -113,7 +113,7 @@ set wildignore+=*.DS_Store                       " OSX something
 
 set nrformats-=octal
 set formatoptions+=j
-set fileformats+=mac
+set fileformats=unix,dos,mac
 
 set number
 set relativenumber
