@@ -177,7 +177,7 @@ colorscheme base16-monokai
 " Modestatus
 "
 hi StatusLine           guifg=#a59f85 guibg=#49483e gui=none ctermfg=20     ctermbg=19  cterm=none
-hi StatusLineNC         guifg=#75715e guibg=#383830 gui=none ctermfg=08     ctermbg=18  cterm=none
+hi StatusLineNC         guifg=#75715e guibg=#49483e gui=none ctermfg=08     ctermbg=19  cterm=none
 hi ModestatusMode       guifg=Yellow  guibg=#49483e gui=bold ctermfg=Yellow ctermbg=19  cterm=bold
 hi ModestatusFilename   guifg=#a59f85 guibg=#49483e gui=bold ctermfg=20     ctermbg=19  cterm=bold
 hi ModestatusModified   guifg=Red     guibg=#49483e gui=bold ctermfg=Red    ctermbg=19  cterm=bold
