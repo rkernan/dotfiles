@@ -13,23 +13,32 @@ let g:plug_window='vertical new'
 
 call plug#begin(util#path_join(g:vimfiles_path, 'plugins'))
 
+" appearance
 Plug 'chriskempson/base16-vim'
 Plug 'kernan/vim-modestatus'
-Plug 'mhinz/vim-signify'
+" languages
 Plug 'sheerun/vim-polyglot'
-Plug 'shougo/denite.nvim'
+" syntax checking
 Plug 'w0rp/ale'
+" code completion
 Plug 'shougo/neocomplete.vim'
+Plug 'davidhalter/jedi-vim'
+Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
+" vcs integration
+Plug 'mhinz/vim-signify'
+" testing
 Plug 'junegunn/vader.vim', {'on': 'Vader', 'for': 'vader'}
+" other
+Plug 'shougo/denite.nvim'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-user'
+Plug 'milkypostman/vim-togglelist'
 Plug 'raimondi/delimitmate'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'milkypostman/vim-togglelist'
 
 call plug#end()
 
@@ -184,7 +193,7 @@ hi ModestatusFilename   guifg=#a59f85 guibg=#49483e gui=bold ctermfg=20     cter
 hi ModestatusModified   guifg=Red     guibg=#49483e gui=bold ctermfg=Red    ctermbg=19  cterm=bold
 hi ModestatusModifiedNC guifg=Red     guibg=#383830 gui=bold ctermfg=Red    ctermbg=18  cterm=bold
 hi ModestatusReadonly   guifg=Red     guibg=#49483e gui=none ctermfg=Red    ctermbg=19  cterm=none
-hi ModestatusReadonlyNC guifg=Red     guibg=#383830 gui=none ctermfg=Red    ctermbg=18  cterm=none
+hi ModestatusReadonlyNC guifg=Red     guibg=#49483e gui=none ctermfg=Red    ctermbg=19  cterm=none
 hi link ModestatusPaste ModestatusReadonly
 hi ModestatusError      guifg=White   guibg=#af0000 gui=none ctermfg=White  ctermbg=124 cterm=none
 hi ModestatusWarning    guifg=Black   guibg=#dfaf00 gui=none ctermfg=Black  ctermbg=178 cterm=none
@@ -346,7 +355,41 @@ let g:lt_height = 10
 "
 " Neocomplete
 "
-" TODO
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+let g:neocomplete#max_list = 15
+let g:neocomplete#sources#syntax#min_keyword_length = 1
+if !exists('g:neocomplete#force_omni_input_patterns')
+	let g:neocomplete#force_omni_input_patterns = {}
+endif
+augroup omnicomplete
+	autocmd!
+	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup END
+
+" tab completion
+inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
+inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<s-tab>"
+inoremap <expr><esc> pumvisible() ? "\<C-y>\<esc>" : "\<esc>"
+
+" python completion (via jedi-vim)
+augroup omnicomplete
+	autocmd FileType python setlocal omnifunc=jedi#completions
+augroup END
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#smart_auto_mappings = 0
+let g:neocomplete#force_omni_input_patterns['python'] = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+
+" javascript completion (via tern_for_vim)
+augroup omnicomplete
+	autocmd FileType javascript setlocal omnifunc=tern#Complete
+augroup END
+let g:neocomplete#force_omni_input_patterns['javascript'] = '[^. \t]\.\w*'
 
 "
 " Signify
