@@ -29,6 +29,7 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'milkypostman/vim-togglelist'
 
 call plug#end()
 
@@ -193,7 +194,7 @@ call modestatus#extensions#enable('loclist')
 call modestatus#extensions#enable('signify')
 call modestatus#extensions#enable('denite')
 
-let g:modestatus#disable_filetypes = ['qf']
+let g:modestatus#disable_filetypes = []
 let g:modestatus#statusline = {
 	\ 'active': {
 	\     'left': [
