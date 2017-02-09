@@ -191,9 +191,12 @@ hi ModestatusWarning    guifg=Black   guibg=#dfaf00 gui=none ctermfg=Black  cter
 call modestatus#extensions#enable('core')
 call modestatus#extensions#enable('loclist')
 call modestatus#extensions#enable('signify')
+call modestatus#extensions#enable('denite')
 
 let g:modestatus#disable_filetypes = ['qf']
-let g:modestatus#statusline = {'active': {'left': [
+let g:modestatus#statusline = {
+	\ 'active': {
+	\     'left': [
 	\         'line_percent',
 	\         'position',
 	\         'mode',
@@ -206,8 +209,9 @@ let g:modestatus#statusline = {'active': {'left': [
 	\         'encoding',
 	\         'fileformat',
 	\         'loclist_errors',
-	\         'loclist_warnings'], 'right': []},
-	\ 'inactive': {'left': [
+	\         'loclist_warnings']},
+	\ 'inactive': {
+	\     'left': [
 	\         'filename',
 	\         'modified',
 	\         'signify_hunks',
@@ -216,7 +220,17 @@ let g:modestatus#statusline = {'active': {'left': [
 	\         'encoding',
 	\         'fileformat',
 	\         'loclist_errors',
-	\         'loclist_warnings'], 'right': []}}
+	\         'loclist_warnings']}}
+
+let g:modestatus#statusline_override = {'denite': {
+  	\ 'active': {
+  	\     'left': [
+  	\         'denite_line_percent',
+  	\         'denite_line',
+  	\         'denite_mode',
+  	\         'denite_sources',
+  	\         'denite_path',
+  	\         'filetype']}}}
 
 call modestatus#options#add('line_percent', {'common': {'min_winwidth': 30}})
 call modestatus#options#add('position', {'common': {'min_winwidth': 30}})
@@ -231,6 +245,12 @@ call modestatus#options#add('encoding', {'common': {'format': '[%s:', 'separator
 call modestatus#options#add('fileformat', {'common': {'format': '%s]', 'min_winwidth': 70}})
 call modestatus#options#add('loclist_errors', {'common': {'separator': '', 'color': 'ModestatusError', 'format': ' %s '}})
 call modestatus#options#add('loclist_warnings', {'common': {'separator': '', 'color': 'ModestatusWarning', 'format': ' %s '}})
+" denite part options
+call modestatus#options#add('denite_line_percent', {'common': {'min_winwidth': 30}})
+call modestatus#options#add('denite_line', {'common': {'min_winwidth': 30}})
+call modestatus#options#add('denite_sources', {'active': {'color': 'ModestatusFilename'}})
+call modestatus#options#add('denite_path', {'common': {'min_winwidth': 50}})
+call modestatus#options#add('denite_mode', {'active': {'color': 'ModestatusMode', 'format': (has('multi_byte') ? "\u2039%s\u203A" : '<%s>')}})
 
 " ---------
 " Languages
@@ -296,8 +316,9 @@ nnoremap <leader>/ :Denite grep<cr>
 " settings
 call denite#custom#option('default', 'auto_resize', 1)
 call denite#custom#option('default', 'empty', 0)
-call denite#custom#option('default', 'highlight_matched_range', 'None')
 call denite#custom#option('default', 'statusline', 0)
+call denite#custom#option('default', 'highlight_mode_normal', 'CursorLine')
+call denite#custom#option('default', 'highlight_mode_insert', 'CursorLine')
 
 " file_rec command
 if executable('ag')
