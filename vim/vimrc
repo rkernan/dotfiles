@@ -314,21 +314,16 @@ endif
 " Denite
 "
 
-" mappings
-call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>')
-call denite#custom#map('normal', '<Esc>', '<denite:quit>')
-call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
-nnoremap <leader>f :Denite file_rec<cr>
-nnoremap <leader>b :Denite buffer<cr>
-nnoremap <leader>/ :Denite grep<cr>
-
 " settings
 call denite#custom#option('default', 'auto_resize', 1)
-call denite#custom#option('default', 'empty', 0)
 call denite#custom#option('default', 'statusline', 0)
 call denite#custom#option('default', 'highlight_mode_normal', 'CursorLine')
 call denite#custom#option('default', 'highlight_mode_insert', 'CursorLine')
+call denite#custom#option('grep', 'mode', 'normal')
+call denite#custom#option('grep', 'auto_resize', 1)
+call denite#custom#option('grep', 'statusline', 0)
+call denite#custom#option('grep', 'highlight_mode_normal', 'CursorLine')
+call denite#custom#option('grep', 'highlight_mode_insert', 'CursorLine')
 
 " file_rec command
 if executable('ag')
@@ -345,11 +340,20 @@ if executable('ag')
 	call denite#custom#var('grep', 'final_opts', [])
 endif
 
+" mappings
+call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>')
+call denite#custom#map('normal', '<Esc>', '<denite:quit>')
+call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
+call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
+nnoremap <leader>f :Denite file_rec<cr>
+nnoremap <leader>b :Denite buffer<cr>
+nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
+
 "
 " ListToggle
 "
 let g:lt_location_list_toggle_map = '<leader>l'
-let g:lt_quickfix_list_toggle_map = '<leader>q'
+let g:lt_tquickfix_list_toggle_map = '<leader>q'
 let g:lt_height = 10
 
 "
