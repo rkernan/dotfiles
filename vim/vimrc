@@ -191,7 +191,7 @@ hi StatusLineNC         guifg=#75715e guibg=#49483e gui=none ctermfg=08     cter
 hi ModestatusMode       guifg=Yellow  guibg=#49483e gui=bold ctermfg=Yellow ctermbg=19  cterm=bold
 hi ModestatusFilename   guifg=#a59f85 guibg=#49483e gui=bold ctermfg=20     ctermbg=19  cterm=bold
 hi ModestatusModified   guifg=Red     guibg=#49483e gui=bold ctermfg=Red    ctermbg=19  cterm=bold
-hi ModestatusModifiedNC guifg=Red     guibg=#383830 gui=bold ctermfg=Red    ctermbg=18  cterm=bold
+hi ModestatusModifiedNC guifg=Red     guibg=#49483e gui=bold ctermfg=Red    ctermbg=19  cterm=bold
 hi ModestatusReadonly   guifg=Red     guibg=#49483e gui=none ctermfg=Red    ctermbg=19  cterm=none
 hi ModestatusReadonlyNC guifg=Red     guibg=#49483e gui=none ctermfg=Red    ctermbg=19  cterm=none
 hi link ModestatusPaste ModestatusReadonly
