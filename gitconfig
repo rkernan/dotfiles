@@ -3,7 +3,6 @@
 	email = rkernan@gmail.com
 [core]
 	whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
-	editor = nvim
 	excludesfile = ~/.gitignore
 [rerere]
 	enabled = 1
@@ -23,12 +22,6 @@
 	enabled = true
 [rebase]
 	autosquash = true
-[difftool]
-	prompt = true
-[diff]
-	tool = nvimdiff
-[diff "nvimdiff"]
-	cmd = "nvim -d"
 [difftool]
 	prompt = false
 [alias]
