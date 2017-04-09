@@ -47,22 +47,15 @@ call plug#end()
 " --------
 
 " clear autocmd
-if has('autocmd')
-	augroup vimrc
-		autocmd!
-	augroup END
-endif
+augroup vimrc
+	autocmd!
+augroup END
 
 let mapleader = "\\"
 map <space> <leader>
 
-if has('autocmd')
-	filetype plugin indent on
-endif
-
-if has('syntax')
-	syntax enable
-endif
+filetype plugin indent on
+syntax enable
 
 set ttimeout
 set ttimeoutlen=100
@@ -147,34 +140,32 @@ set splitbelow
 set splitright
 set belloff=all
 
-if has('autocmd')
-	augroup vimrc
-		" automatically resize splits on window resize
-		autocmd VimResized * :wincmd =
-		" redraw immediately when entering vim
-		autocmd VimEnter * redraw!
-		" restore line position
-		autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
-		" switch to/from relative line numbers
-		autocmd BufEnter,FocusGained * setlocal number relativenumber
-		autocmd BufLeave,FocusLost   * setlocal number norelativenumber
-		autocmd InsertEnter * setlocal number norelativenumber
-		autocmd InsertLeave * setlocal number relativenumber
-		" enable/disable cursor line depending on window focus
-		autocmd BufEnter,FocusGained * setlocal number cursorline
-		autocmd BufLeave,FocusLost   * setlocal number nocursorline
-		" use syntaxcomplete#Complete when no other completers are set
-		if exists('+omnifunc')
-			autocmd FileType *
-				\ if &omnifunc == '' |
-				\   setlocal omnifunc=syntaxcomplete#Complete |
-				\ endif
-		endif
-		" always show the sign column
-		autocmd BufEnter * sign define dummy
-		autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
-	augroup END
-endif
+augroup vimrc
+	" automatically resize splits on window resize
+	autocmd VimResized * :wincmd =
+	" redraw immediately when entering vim
+	autocmd VimEnter * redraw!
+	" restore line position
+	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+	" switch to/from relative line numbers
+	autocmd BufEnter,FocusGained * setlocal number relativenumber
+	autocmd BufLeave,FocusLost   * setlocal number norelativenumber
+	autocmd InsertEnter * setlocal number norelativenumber
+	autocmd InsertLeave * setlocal number relativenumber
+	" enable/disable cursor line depending on window focus
+	autocmd BufEnter,FocusGained * setlocal number cursorline
+	autocmd BufLeave,FocusLost   * setlocal number nocursorline
+	" use syntaxcomplete#Complete when no other completers are set
+	if exists('+omnifunc')
+		autocmd FileType *
+			\ if &omnifunc == '' |
+			\   setlocal omnifunc=syntaxcomplete#Complete |
+			\ endif
+	endif
+	" always show the sign column
+	autocmd BufEnter * sign define dummy
+	autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
+augroup END
 
 " -----
 " Theme
@@ -298,13 +289,12 @@ let g:go_fmt_command = 'goimports'
 "
 " ALE
 "
-let g:ale_sign_error = '>>'
-let g:ale_sign_warning = '>>'
+let g:ale_sign_error = 'E '
+let g:ale_sign_warning = 'W '
 let g:ale_sign_column_always = 1
+let g:ale_lint_on_text_change = 'never'
 hi link ALEErrorSign ModestatusError
 hi link ALEWarningSign ModestatusWarning
-nmap <C-n> <Plug>(ale_previous_wrap)
-nmap <C-p> <Plug>(ale_next_wrap)
 
 "
 " DelimitMate
@@ -314,15 +304,13 @@ let delimitMate_quotes = "\" ' `"
 let delimitMate_expand_cr = 1
 let delimitMate_jump_expansion = 1
 
-if has('autocmd')
-	augroup vimrc
-		" filetype specific pairs
-		" filetype specific quotes
-		autocmd FileType vim let b:delimitMate_quotes = "'"
-		" filetype specific nesting
-		autocmd FileType python let b:delimitMate_nesting_quotes = ['"']
-	augroup END
-endif
+augroup vimrc
+	" filetype specific pairs
+	" filetype specific quotes
+	autocmd FileType vim let b:delimitMate_quotes = "'"
+	" filetype specific nesting
+	autocmd FileType python let b:delimitMate_nesting_quotes = ['"']
+augroup END
 
 "
 " Denite
@@ -364,13 +352,6 @@ nnoremap <leader>b :Denite buffer<cr>
 nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
 
 "
-" ListToggle
-"
-let g:lt_location_list_toggle_map = '<leader>l'
-let g:lt_tquickfix_list_toggle_map = '<leader>q'
-let g:lt_height = 10
-
-"
 " Neocomplete
 "
 let g:neocomplete#enable_at_startup = 1
@@ -380,6 +361,7 @@ let g:neocomplete#sources#syntax#min_keyword_length = 1
 if !exists('g:neocomplete#force_omni_input_patterns')
 	let g:neocomplete#force_omni_input_patterns = {}
 endif
+
 augroup omnicomplete
 	autocmd!
 	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
@@ -412,20 +394,17 @@ let g:neocomplete#force_omni_input_patterns['javascript'] = '[^. \t]\.\w*'
 "
 " Signify
 "
-let g:signify_disable_by_default = 0
-let g:signify_sign_overwrite = 0
 let g:signify_sign_add = '+'
 let g:signify_sign_change = '~'
 let g:signify_sign_delete = '-'
 let g:signify_sign_delete_first_line = '^'
 
 "
-" UltiSnips
+" ToggleList
 "
-let g:UltiSnipsEditSplit = 'vertical'
-let g:UltiSnipsExpandTrigger = '<c-j>'
-let g:UltiSnipsJumpForwardTrigger = '<c-j>'
-let g:UltiSnipsJumpBackwardTrigger = '<c-k>'
+let g:lt_location_list_toggle_map = '<leader>l'
+let g:lt_tquickfix_list_toggle_map = '<leader>q'
+let g:lt_height = 10
 
 " --------
 " Mappings
