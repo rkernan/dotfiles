@@ -186,17 +186,23 @@ colorscheme base16-monokai
 "
 " Modestatus
 "
-hi StatusLine           guifg=#a59f85 guibg=#49483e gui=none ctermfg=20     ctermbg=19  cterm=none
-hi StatusLineNC         guifg=#75715e guibg=#49483e gui=none ctermfg=08     ctermbg=19  cterm=none
-hi ModestatusMode       guifg=Yellow  guibg=#49483e gui=bold ctermfg=Yellow ctermbg=19  cterm=bold
-hi ModestatusFilename   guifg=#a59f85 guibg=#49483e gui=bold ctermfg=20     ctermbg=19  cterm=bold
-hi ModestatusModified   guifg=Red     guibg=#49483e gui=bold ctermfg=Red    ctermbg=19  cterm=bold
-hi ModestatusModifiedNC guifg=Red     guibg=#49483e gui=bold ctermfg=Red    ctermbg=19  cterm=bold
-hi ModestatusReadonly   guifg=Red     guibg=#49483e gui=none ctermfg=Red    ctermbg=19  cterm=none
-hi ModestatusReadonlyNC guifg=Red     guibg=#49483e gui=none ctermfg=Red    ctermbg=19  cterm=none
+hi StatusLine guifg=#a59f85 guibg=#49483e gui=none ctermfg=20 ctermbg=19 cterm=none
+hi StatusLineNC guifg=#75715e guibg=#49483e gui=none ctermfg=08 ctermbg=19 cterm=none
+hi ModestatusMode guifg=Yellow guibg=#49483e gui=bold ctermfg=Yellow ctermbg=19 cterm=bold
+hi ModestatusFilename guifg=#a59f85 guibg=#49483e gui=bold ctermfg=20 ctermbg=19 cterm=bold
+hi ModestatusModified guifg=Red guibg=#49483e gui=bold ctermfg=Red ctermbg=19 cterm=bold
+hi link ModestatusModifiedNC ModestatusModified
+hi ModestatusReadonly guifg=Red guibg=#49483e gui=none ctermfg=Red ctermbg=19 cterm=none
+hi link ModestatusReadonlyNC ModestatusReadonly
 hi link ModestatusPaste ModestatusReadonly
-hi ModestatusError      guifg=White   guibg=#af0000 gui=none ctermfg=White  ctermbg=124 cterm=none
-hi ModestatusWarning    guifg=Black   guibg=#dfaf00 gui=none ctermfg=Black  ctermbg=178 cterm=none
+hi ModestatusError guifg=White guibg=#af0000 gui=none ctermfg=White ctermbg=124 cterm=none
+hi ModestatusWarning guifg=Black guibg=#dfaf00 gui=none ctermfg=Black ctermbg=178 cterm=none
+hi ModestatusSignifyAdded guifg=#a6e22e guibg=#49483e gui=none ctermfg=2 ctermbg=19 cterm=none
+hi link ModestatusSignifyAddedNC ModestatusSignifyAdded
+hi ModestatusSignifyModified guifg=#66d9ef guibg=#49483e gui=none ctermfg=4 ctermbg=19 cterm=none
+hi link ModestatusSignifyModifiedNC ModestatusSignifyModified
+hi ModestatusSignifyRemoved guifg=#f92672 guibg=#49483e gui=none ctermfg=1 ctermbg=19 cterm=none
+hi link ModestatusSignifyRemovedNC ModestatusSignifyRemoved
 
 call modestatus#extensions#enable('core')
 call modestatus#extensions#enable('loclist')
@@ -212,23 +218,27 @@ let g:modestatus#statusline = {
 	\         'mode',
 	\         'filename',
 	\         'modified',
-	\         'signify_hunks',
 	\         'readonly',
 	\         'paste',
 	\         'filetype',
 	\         'encoding',
 	\         'fileformat',
+	\         'signify_hunk_added',
+	\         'signify_hunk_modified',
+	\         'signify_hunk_removed',
 	\         'loclist_errors',
 	\         'loclist_warnings']},
 	\ 'inactive': {
 	\     'left': [
 	\         'filename',
 	\         'modified',
-	\         'signify_hunks',
 	\         'readonly',
 	\         'filetype',
 	\         'encoding',
 	\         'fileformat',
+	\         'signify_hunk_added',
+	\         'signify_hunk_modified',
+	\         'signify_hunk_removed',
 	\         'loclist_errors',
 	\         'loclist_warnings']}}
 
@@ -247,14 +257,18 @@ call modestatus#options#add('position', {'common': {'min_winwidth': 30}})
 call modestatus#options#add('filename', {'active': {'color': 'ModestatusFilename'}})
 call modestatus#options#add('mode', {'active': {'color': 'ModestatusMode', 'format': (has('multi_byte') ? "\u2039%s\u203A" : '<%s>')}})
 call modestatus#options#add('modified', {'active': {'color': 'ModestatusModified'}, 'inactive': {'color': 'ModestatusModifiedNC'}})
-call modestatus#options#add('signify_hunks', {'common': {'format': '(%s)'}})
 call modestatus#options#add('readonly', {'active': {'color': 'ModestatusReadonly'}, 'inactive': {'color': 'ModestatusReadonlyNC'}})
 call modestatus#options#add('paste', {'active': {'color': 'ModestatusPaste'}})
 call modestatus#options#add('filetype', {'common': {'format': '[%s]', 'min_winwidth': 50}})
 call modestatus#options#add('encoding', {'common': {'format': '[%s:', 'separator': '', 'min_winwidth': 70}})
 call modestatus#options#add('fileformat', {'common': {'format': '%s]', 'min_winwidth': 70}})
-call modestatus#options#add('loclist_errors', {'common': {'separator': '', 'color': 'ModestatusError', 'format': ' %s '}})
-call modestatus#options#add('loclist_warnings', {'common': {'separator': '', 'color': 'ModestatusWarning', 'format': ' %s '}})
+" signify part options
+call modestatus#options#add('signify_hunk_added', {'active': {'color': 'ModestatusSignifyAdded'}, 'inactive': {'color': 'ModestatusSignifyAddedNC'}})
+call modestatus#options#add('signify_hunk_modified', {'active': {'color': 'ModestatusSignifyModified'}, 'inactive': {'color': 'ModestatusSignifyModifiedNC'}})
+call modestatus#options#add('signify_hunk_removed', {'active': {'color': 'ModestatusSignifyRemoved'}, 'inactive': {'color': 'ModestatusSignifyRemovedNC'}})
+" loglist part options
+call modestatus#options#add('loclist_errors', {'common': {'color': 'ModestatusError'}})
+call modestatus#options#add('loclist_warnings', {'common': {'color': 'ModestatusWarning'}})
 " denite part options
 call modestatus#options#add('denite_line_percent', {'common': {'min_winwidth': 30}})
 call modestatus#options#add('denite_line', {'common': {'min_winwidth': 30}})
