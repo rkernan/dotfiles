@@ -200,7 +200,6 @@ call modestatus#extensions#enable('loclist')
 call modestatus#extensions#enable('signify')
 call modestatus#extensions#enable('denite')
 
-let g:modestatus#disable_filetypes = []
 let g:modestatus#statusline = {
 	\ 'active': {
 	\     'left': [
@@ -233,15 +232,9 @@ let g:modestatus#statusline = {
 	\         'loclist_errors',
 	\         'loclist_warnings']}}
 
-let g:modestatus#statusline_override = {'denite': {
-  	\ 'active': {
-  	\     'left': [
-  	\         'denite_line_percent',
-  	\         'denite_line',
-  	\         'denite_mode',
-  	\         'denite_sources',
-  	\         'denite_path',
-  	\         'filetype']}}}
+let g:modestatus#statusline_override = {
+	\ 'denite': {'active': {'left': ['denite_line_percent', 'denite_line', 'denite_mode', 'denite_sources', 'denite_path']}},
+	\ 'qf': {'active': {'left': ['line_percent', 'position', 'buftype']}, 'inactive': {'left': ['buftype']}}}
 
 call modestatus#options#add('line_percent', {'common': {'min_winwidth': 30}})
 call modestatus#options#add('position', {'common': {'min_winwidth': 30}})
@@ -251,6 +244,7 @@ call modestatus#options#add('modified', {'active': {'color': 'ModestatusModified
 call modestatus#options#add('readonly', {'active': {'color': 'ModestatusReadonly'}, 'inactive': {'color': 'ModestatusReadonlyNC'}})
 call modestatus#options#add('paste', {'active': {'color': 'ModestatusPaste'}})
 call modestatus#options#add('filetype', {'common': {'format': '[%s]', 'min_winwidth': 50}})
+call modestatus#options#add('buftype', {'active': {'color': 'ModestatusFilename'}})
 call modestatus#options#add('encoding', {'common': {'format': '[%s:', 'separator': '', 'min_winwidth': 70}})
 call modestatus#options#add('fileformat', {'common': {'format': '%s]', 'min_winwidth': 70}})
 " signify part options
