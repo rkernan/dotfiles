@@ -22,8 +22,8 @@ Plug 'sheerun/vim-polyglot'
 Plug 'w0rp/ale'
 " code completion
 Plug 'shougo/neocomplete.vim'
-Plug 'davidhalter/jedi-vim'
-Plug 'ternjs/tern_for_vim', {'do': 'npm install'}
+Plug 'davidhalter/jedi-vim', {'for': 'python'}
+Plug 'ternjs/tern_for_vim', {'do': 'npm install', 'for': 'javascript'}
 " vcs integration
 Plug 'mhinz/vim-signify'
 " testing
@@ -140,6 +140,8 @@ set splitbelow
 set splitright
 set belloff=all
 
+set omnifunc=syntaxcomplete#Complete
+
 augroup vimrc
 	" automatically resize splits on window resize
 	autocmd VimResized * :wincmd =
@@ -156,12 +158,6 @@ augroup vimrc
 	autocmd BufEnter,FocusGained * setlocal number cursorline
 	autocmd BufLeave,FocusLost   * setlocal number nocursorline
 	" use syntaxcomplete#Complete when no other completers are set
-	if exists('+omnifunc')
-		autocmd FileType *
-			\ if &omnifunc == '' |
-			\   setlocal omnifunc=syntaxcomplete#Complete |
-			\ endif
-	endif
 	" always show the sign column
 	autocmd BufEnter * sign define dummy
 	autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
@@ -298,14 +294,6 @@ let delimitMate_quotes = "\" ' `"
 let delimitMate_expand_cr = 1
 let delimitMate_jump_expansion = 1
 
-augroup vimrc
-	" filetype specific pairs
-	" filetype specific quotes
-	autocmd FileType vim let b:delimitMate_quotes = "'"
-	" filetype specific nesting
-	autocmd FileType python let b:delimitMate_nesting_quotes = ['"']
-augroup END
-
 "
 " Denite
 "
@@ -356,34 +344,10 @@ if !exists('g:neocomplete#force_omni_input_patterns')
 	let g:neocomplete#force_omni_input_patterns = {}
 endif
 
-augroup omnicomplete
-	autocmd!
-	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-	autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-	autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-augroup END
-
 " tab completion
 inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
 inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<s-tab>"
 inoremap <expr><esc> pumvisible() ? "\<C-y>\<esc>" : "\<esc>"
-
-" python completion (via jedi-vim)
-augroup omnicomplete
-	autocmd FileType python setlocal omnifunc=jedi#completions
-augroup END
-let g:jedi#completions_enabled = 0
-let g:jedi#auto_vim_configuration = 0
-let g:jedi#smart_auto_mappings = 0
-let g:neocomplete#force_omni_input_patterns['python'] = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-
-" javascript completion (via tern_for_vim)
-augroup omnicomplete
-	autocmd FileType javascript setlocal omnifunc=tern#Complete
-augroup END
-let g:neocomplete#force_omni_input_patterns['javascript'] = '[^. \t]\.\w*'
 
 "
 " Signify
