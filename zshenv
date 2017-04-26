@@ -1,4 +1,7 @@
-export EDITOR='nvim'
+export EDITOR='vim'
+if which nvim > /dev/null 2>&1; then
+	export EDITOR='nvim'
+fi
 export VISUAL=$EDITOR
 export PAGER='less'
 
