@@ -1,4 +1,4 @@
-plugins/*
+bundle/*
 cache/*
 sessions/*
 swap/*

@@ -11,7 +11,7 @@ endif
 
 let g:plug_window='vertical new'
 
-call plug#begin(util#path_join(g:vimfiles_path, 'plugins'))
+call plug#begin(util#path_join(g:vimfiles_path, 'bundle'))
 
 " appearance
 Plug 'chriskempson/base16-vim'
