@@ -279,10 +279,10 @@ let g:go_fmt_command = 'goimports'
 "
 " ALE
 "
+let g:ale_sign_column_always = 1
 let g:ale_sign_error = 'E '
 let g:ale_sign_warning = 'W '
-let g:ale_sign_column_always = 1
-let g:ale_lint_on_text_change = 'never'
+let g:ale_echo_msg_format = '[%linter%] %s'
 hi link ALEErrorSign ModestatusError
 hi link ALEWarningSign ModestatusWarning
 
@@ -338,8 +338,6 @@ nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
 "
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#max_list = 15
-let g:neocomplete#sources#syntax#min_keyword_length = 1
 if !exists('g:neocomplete#force_omni_input_patterns')
 	let g:neocomplete#force_omni_input_patterns = {}
 endif
