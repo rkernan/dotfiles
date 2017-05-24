@@ -29,11 +29,11 @@ Plug 'mhinz/vim-signify'
 " testing
 Plug 'junegunn/vader.vim', {'on': 'Vader', 'for': 'vader'}
 " other
-Plug 'shougo/denite.nvim'
+Plug 'jiangmiao/auto-pairs'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-user'
 Plug 'milkypostman/vim-togglelist'
-Plug 'raimondi/delimitmate'
+Plug 'shougo/denite.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
@@ -65,6 +65,7 @@ set backspace=indent,eol,start
 set autoindent
 set smarttab
 
+set ignorecase
 set smartcase
 set incsearch
 set hlsearch
@@ -285,14 +286,6 @@ let g:ale_sign_warning = 'W '
 let g:ale_echo_msg_format = '[%linter%] %s'
 hi link ALEErrorSign ModestatusError
 hi link ALEWarningSign ModestatusWarning
-
-"
-" DelimitMate
-"
-let delimitMate_matchpairs = "(:),[:],{:}"
-let delimitMate_quotes = "\" ' `"
-let delimitMate_expand_cr = 1
-let delimitMate_jump_expansion = 1
 
 "
 " Denite
