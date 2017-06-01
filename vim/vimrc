@@ -28,6 +28,12 @@ Plug 'ternjs/tern_for_vim', {'do': 'npm install', 'for': 'javascript'}
 Plug 'mhinz/vim-signify'
 " testing
 Plug 'junegunn/vader.vim', {'on': 'Vader', 'for': 'vader'}
+" searching
+Plug 'easymotion/vim-easymotion'
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-easymotion.vim'
+Plug 'haya14busa/incsearch-fuzzy.vim'
+Plug 'haya14busa/vim-asterisk'
 " other
 Plug 'jiangmiao/auto-pairs'
 Plug 'kana/vim-textobj-entire'
@@ -51,8 +57,7 @@ augroup vimrc
 	autocmd!
 augroup END
 
-let mapleader = "\\"
-map <space> <leader>
+let mapleader = "\<space>"
 
 filetype plugin indent on
 syntax enable
@@ -68,7 +73,6 @@ set smarttab
 set ignorecase
 set smartcase
 set incsearch
-set hlsearch
 
 if has('multi_byte')
 	set encoding=utf-8
@@ -327,6 +331,57 @@ nnoremap <leader>b :Denite buffer<cr>
 nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
 
 "
+" Incsearch, Asterisk, and EasyMotion
+"
+map / <Plug>(incsearch-forward)
+map ? <Plug>(incsearch-backward)
+map g/ <Plug>(incsearch-stay)
+
+" auto nohlsearch
+set hlsearch
+let g:incsearch#auto_nohlsearch = 1
+map n <Plug>(incsearch-nohl-n)
+map N <Plug>(incsearch-nohl-N)
+map * <Plug>(incsearch-nohl)<Plug>(asterisk-*)
+map g* <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
+map # <Plug>(incsearch-nohl)<Plug>(asterisk-#)
+map g# <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
+map z* <Plug>(incsearch-nohl0)<Plug>(asterisk-z*)
+map gz* <Plug>(incsearch-nohl0)<Plug>(asterisk-gz*)
+map z# <Plug>(incsearch-nohl0)<Plug>(asterisk-z#)
+map gz# <Plug>(incsearch-nohl0)<Plug>(asterisk-gz#)
+
+" fuzzy search
+map z/ <Plug>(incsearch-fuzzy-/)
+map z? <Plug>(incsearch-fuzzy-?)
+map zg/ <Plug>(incsearch-fuzzy-stay)
+
+" search motion (via easymotion)
+function! s:config_easymotion(...)
+	return extend(copy({
+		\   'modules': [incsearch#config#easymotion#module()],
+		\   'keymap': {"\<CR>": '<Over>(easymotion)'},
+		\   'is_expr': 0,
+		\   'is_stay': 1
+		\ }), get(a:, 1, {}))
+endfunction
+
+noremap <expr> <leader><leader>/ incsearch#go(<SID>config_easymotion())
+
+" fuzzy motion (via easymotion)
+function! s:config_easyfuzzymotion(...)
+	return extend(copy({
+		\   'converters': [incsearch#config#fuzzy#converter()],
+		\   'modules': [incsearch#config#easymotion#module()],
+		\   'keymap': {"\<CR>": '<Over>(easymotion)'},
+		\   'is_expr': 0,
+		\   'is_stay': 1
+		\ }), get(a:, 1, {}))
+endfunction
+
+noremap <expr> <leader><leader>z/ incsearch#go(<SID>config_easyfuzzymotion())
+
+"
 " Neocomplete
 "
 let g:neocomplete#enable_at_startup = 1
@@ -395,17 +450,13 @@ nnoremap <silent> p p`]
 " sudo write file
 cmap w!! w !sudo tee > /dev/null %
 
-" Visual mode search
-function! s:VSetSearch()
-	let temp = @@
-	norm! gvy
-	let @/ = '\V' . substitute(escape(@@, '\'), '\n', '\\n', 'g')
-	call histadd('/', substitute(@/, '[?/]', '\="\\%d".char2nr(submatch(0))', 'g'))
-	let @@ = temp
+" Macro over visual range
+function! s:execute_macro_over_visual_range()
+	echo "@".getcmdline()
+	execute ":'<,'> normal @".nr2char(getchar())
 endfunction
 
-vnoremap * :<C-u>call <SID>VSetSearch()<CR>/<CR>
-vnoremap # :<C-u>call <SID>VSetSearch()<CR>?<CR>
+xnoremap @ :<C-u>call <SID>execute_macro_over_visual_range()<CR>
 
 " Set tab width using a nice prompt
 function! s:set_tabs()
