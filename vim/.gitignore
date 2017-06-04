@@ -1,7 +1,2 @@
-bundle/*
-cache/*
-sessions/*
-swap/*
-tags/*
-undo/*
 .netrwhist
+plugged/*

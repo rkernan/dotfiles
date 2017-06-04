@@ -1,5 +1,5 @@
-function! s:scratch_edit(options, cmd, size)
-	silent execute a:size a:cmd
+function! s:scratch_edit(options, cmd, height)
+	silent execute a:height a:cmd
 	setlocal buftype=nofile
 	setlocal bufhidden=wipe
 	setlocal nobuflisted
