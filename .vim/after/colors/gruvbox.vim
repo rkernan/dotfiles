@@ -5,8 +5,8 @@ function! s:get_gruvbox_color(group)
 endfunction
 
 function! s:hl(group, fg, bg, emphasis)
-	" TODO cterm colors
-	execute 'highlight ' . a:group . ' guifg=' . a:fg[0] . ' guibg=' . a:bg[0] . ' gui=' . a:emphasis
+	execute 'highlight ' . a:group . ' guifg=' . a:fg[0] . ' guibg=' . a:bg[0] . ' gui=' . a:emphasis .
+		\                        ' ctermfg=' . a:fg[1] . ' ctermbg=' . a:bg[1] . ' cterm=' . a:emphasis
 endfunction
 
 let s:bg0 = s:get_gruvbox_color('GruvboxBg0')
@@ -48,9 +48,7 @@ highlight link SignifyLineDeleteFirstLine SignifyLineDelete
 
 " Modestatus colors
 call s:hl('StatusLine', s:status_fg, s:status_bg, 'NONE')
-highlight link Modestatus StatusLine
 call s:hl('StatusLineNC', s:status_nc_fg, s:status_nc_bg, 'NONE')
-highlight link Modestatus_nc StatusLineNC
 call s:hl('ModestatusBold', s:status_fg, s:status_bg, 'bold')
 call s:hl('ModestatusYellow', s:yellow, s:status_bg, 'NONE')
 call s:hl('ModestatusYellowBold', s:yellow, s:status_bg, 'bold')
