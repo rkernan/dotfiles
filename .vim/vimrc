@@ -151,7 +151,9 @@ augroup vimrc
 augroup END
 
 set background=dark
+let g:gruvbox_italic=0 " FIXME font doesn't handle italics well
 colorscheme gruvbox
+"
 
 " yank to end of line
 nnoremap Y y$
