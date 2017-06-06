@@ -1,6 +1,4 @@
-MKLINK /j "%USERPROFILE%\vimfiles" "vim"
+MKLINK /j "%USERPROFILE%\vimfiles" ".vim"
 DEL "%userprofile%\.gitconfig"
-COPY "gitconfig" "%USERPROFILE%\.gitconfig."
-DEL "%USERPROFILE%\.gitignore"
-COPY "gitignore" "%USERPROFILE%\.gitignore."
+COPY ".gitconfig" "%USERPROFILE%\.gitconfig."
 PAUSE

@@ -1,3 +1,8 @@
+if exists('g:loaded_scratch')
+	finish
+endif
+let g:loaded_scratch = 1
+
 function! s:scratch_edit(options, cmd, height)
 	silent execute a:height a:cmd
 	setlocal buftype=nofile

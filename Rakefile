@@ -6,7 +6,7 @@ RakeFileUtils.verbose_flag = false unless @verbose_log
 ROOT_DIR = File.expand_path(File.dirname(__FILE__))
 HOME_DIR = ENV['HOME']
 
-BASEDIRS = [".", "config", "fonts", "share"]
+BASEDIRS = [".", "fonts"]
 EXCLUDES = (["Rakefile", "README.md", "windows.bat"] + [BASEDIRS[1, BASEDIRS.size]]).flatten
 
 def log(msg, prefix, stream = $stdout)
@@ -58,7 +58,7 @@ def get_source(rel_path)
 end
 
 def get_target(rel_path)
-  return File.join(HOME_DIR, ".#{rel_path}")
+  return File.join(HOME_DIR, rel_path)
 end
 
 def smart_symlink(source, target)

@@ -1,8 +1,8 @@
 call plug#begin()
 
 " appearance
-Plug 'chriskempson/base16-vim'
 Plug 'kernan/vim-modestatus'
+Plug 'morhetz/gruvbox'
 " languages
 Plug 'sheerun/vim-polyglot'
 " syntax checking
@@ -13,8 +13,6 @@ Plug 'davidhalter/jedi-vim', {'for': 'python'}
 Plug 'ternjs/tern_for_vim', {'do': 'npm install', 'for': 'javascript'}
 " vcs integration
 Plug 'mhinz/vim-signify'
-" testing
-Plug 'junegunn/vader.vim', {'on': 'Vader', 'for': 'vader'}
 " searching
 Plug 'easymotion/vim-easymotion'
 Plug 'haya14busa/incsearch.vim'
@@ -59,6 +57,8 @@ set incsearch
 if has('multi_byte')
 	set encoding=utf-8
 endif
+
+set fillchars=
 
 if has('multi_byte')
 	set listchars=eol:¬,tab:»\ ,trail:·
@@ -131,6 +131,8 @@ set belloff=all
 
 set omnifunc=syntaxcomplete#Complete
 
+set signcolumn=yes
+
 augroup vimrc
 	" automatically resize splits on window resize
 	autocmd VimResized * :wincmd =
@@ -146,64 +148,10 @@ augroup vimrc
 	" enable/disable cursor line depending on window focus
 	autocmd BufEnter,FocusGained * setlocal number cursorline
 	autocmd BufLeave,FocusLost   * setlocal number nocursorline
-	" always show the sign column
-	autocmd BufEnter * sign define dummy
-	autocmd BufEnter * execute 'sign place 9999 line=1 name=dummy buffer=' . bufnr('')
 augroup END
 
-let g:base16colorspace = 256
 set background=dark
-colorscheme base16-monokai
-
-" Statusline (via Modestatus)
-function! s:setup_statusline_colorscheme()
-	hi StatusLine guifg=#a59f85 guibg=#49483e gui=none ctermfg=20 ctermbg=19 cterm=none
-	hi StatusLineNC guifg=#75715e guibg=#49483e gui=none ctermfg=08 ctermbg=19 cterm=none
-	hi ModestatusMode guifg=Yellow guibg=#49483e gui=none ctermfg=Yellow ctermbg=19 cterm=none
-	hi ModestatusRed guifg=Red guibg=#49483e gui=none ctermfg=Red ctermbg=19 cterm=none
-	hi ModestatusHunksAdded guifg=#a6e22e guibg=#49483e gui=none ctermfg=2 ctermbg=19 cterm=none
-	hi ModestatusHunksModified guifg=#66d9ef guibg=#49483e gui=none ctermfg=4 ctermbg=19 cterm=none
-	hi ModestatusHunksRemoved guifg=#f92672 guibg=#49483e gui=none ctermfg=1 ctermbg=19 cterm=none
-	hi ModestatusLoclistWarnings guifg=Yellow guibg=#49483e gui=none ctermfg=Yellow ctermbg=19 cterm=none
-	hi ModestatusLoclistErrors guifg=Red guibg=#49483e gui=none ctermfg=Red ctermbg=19 cterm=none
-endfunction
-
-call s:setup_statusline_colorscheme()
-
-let g:modestatus#statusline = ['line_percent', 'line', 'column', 'mode', 'filename', 'modified', 'readonly', 'hunks_added', 'hunks_modified', 'hunks_removed', 'filetype', 'encoding', 'bomb', 'fileformat', 'loclist_errors', 'loclist_warnings']
-let g:modestatus#statusline_override_denite = ['denite_line_percent', 'denite_line', 'denite_line_max', 'denite_mode', 'denite_sources', 'denite_path', 'filetype']
-let g:modestatus#statusline_override_qf = ['line_percent_always', 'line_always', 'line_max_always', 'filetype']
-
-let g:modestatus#parts#core#readonly_symbol = has('multi_byte') ? '🔒' : 'RO'
-
-call modestatus#options#add('bomb', 'format', '-%s')
-call modestatus#options#add('bomb', 'separator', '')
-call modestatus#options#add('denite_line', 'separator', '/')
-call modestatus#options#add('denite_mode', 'color', 'ModestatusMode')
-call modestatus#options#add('denite_mode', 'format', has('multi_byte') ? '‹%s›' : '<%s>')
-call modestatus#options#add('encoding', 'format', '[%s')
-call modestatus#options#add('encoding', 'separator', '')
-call modestatus#options#add('fileformat', 'format', ':%s]')
-call modestatus#options#add('hunks_added', 'color', 'ModestatusHunksAdded')
-call modestatus#options#add('hunks_modified', 'color', 'ModestatusHunksModified')
-call modestatus#options#add('hunks_removed', 'color', 'ModestatusHunksRemoved')
-call modestatus#options#add('line', 'separator', ',')
-call modestatus#options#add('line_always', 'separator', '/')
-call modestatus#options#add('loclist_errors', 'color', 'ModestatusLoclistErrors')
-call modestatus#options#add('loclist_errors', 'format', '•%s')
-call modestatus#options#add('loclist_warnings', 'color', 'ModestatusLoclistWarnings')
-call modestatus#options#add('loclist_warnings', 'format', '•%s')
-call modestatus#options#add('mode', 'format', has('multi_byte') ? '‹%s›' : '<%s>')
-call modestatus#options#add('mode', 'color', 'ModestatusMode')
-call modestatus#options#add('modified', 'color', 'ModestatusRed')
-call modestatus#options#add('readonly', 'color', 'ModestatusRed')
-
-augroup vimrc
-	autocmd ColorScheme * call s:setup_statusline_colorscheme()
-	" overrides
-	autocmd FileType denite setlocal statusline=%!modestatus#statusline(winnr(),'denite')
-	autocmd FileType qf setlocal statusline=%!modestatus#statusline(winnr(),'qf')
-augroup END
+colorscheme gruvbox
 
 " yank to end of line
 nnoremap Y y$
@@ -237,11 +185,15 @@ endfunction
 
 xnoremap @ :<C-u>call <SID>execute_macro_over_visual_range()<CR>
 
-" ALE settings
+"
+" ALE
+"
 let g:ale_sign_error = 'E '
 let g:ale_sign_warning = 'W '
 
-" Denite settings
+"
+" Denite
+"
 call denite#custom#option('default', 'auto_resize', 1)
 call denite#custom#option('default', 'statusline', 0)
 call denite#custom#option('default', 'highlight_mode_normal', 'CursorLine')
@@ -276,7 +228,9 @@ nnoremap <leader>f :Denite file_rec<cr>
 nnoremap <leader>b :Denite buffer<cr>
 nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
 
+"
 " EasyMotion, Incsearch, Asterisk
+"
 map / <Plug>(incsearch-forward)
 map ? <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
@@ -319,7 +273,44 @@ function! s:config_easyfuzzymotion(...)
 endfunction
 noremap <expr> <leader><leader>z/ incsearch#go(<SID>config_easyfuzzymotion())
 
+"
+" Modestatus
+"
+let g:modestatus#statusline = ['mode', 'modified', 'readonly', 'filename', 'hunks_added', 'hunks_modified', 'hunks_removed', 'filetype', 'encoding', 'fileformat', 'loclist_errors', 'loclist_warnings', '%=', 'line', ',', 'column', 'line_percent']
+
+let g:modestatus#statusline_override_denite = ['denite_mode', 'denite_path', 'denite_sources', '%=', 'line', '/', 'line_max', 'line_percent']
+let g:modestatus#statusline_override_qf = ['mode', 'filetype', '%=', 'line', '/', 'line_max', 'line_percent']
+
+augroup vimrc
+	" overrides
+	autocmd FileType denite setlocal statusline=%!modestatus#statusline(winnr(),'denite')
+	autocmd FileType qf setlocal statusline=%!modestatus#statusline(winnr(),'qf')
+augroup END
+
+call modestatus#options#add('mode', 'color', 'ModestatusYellowBold')
+call modestatus#options#add('mode', 'format', has('multi_byte') ? '‹%s›' : '<%s>')
+call modestatus#options#add('filename', 'color', ['ModestatusBold', 'ModestatusNC'])
+call modestatus#options#add('modified', 'color', ['ModestatusRedBold', 'ModestatusRedBoldNC'])
+call modestatus#options#add('readonly', 'color', ['ModestatusRedBold', 'ModestatusRedBoldNC'])
+call modestatus#options#add('hunks_added', 'color', ['ModestatusGreen', 'ModestatusGreenNC'])
+call modestatus#options#add('hunks_modified', 'color', ['ModestatusAqua', 'ModestatusAquaNC'])
+call modestatus#options#add('hunks_removed', 'color', ['ModestatusRed', 'ModestatusRedNC'])
+call modestatus#options#add('encoding', 'format', '[%s')
+call modestatus#options#add('encoding', 'separator', ':')
+call modestatus#options#add('fileformat', 'format', '%s]')
+call modestatus#options#add('loclist_errors', 'color', ['ModestatusRed', 'ModestatusRedNC'])
+call modestatus#options#add('loclist_errors', 'format', '•%s')
+call modestatus#options#add('loclist_warnings', 'color', ['ModestatusYellow', 'ModestatusYellowNC'])
+call modestatus#options#add('loclist_warnings', 'format', '•%s')
+call modestatus#options#add('line', 'separator', '')
+
+call modestatus#options#add('denite_mode', 'color', 'ModestatusYellowBold')
+call modestatus#options#add('denite_mode', 'format', has('multi_byte') ? '‹%s›' : '<%s>')
+call modestatus#options#add('denite_sources', 'color', ['ModestatusBold', 'ModestatusNC'])
+
+"
 " Neocomplete
+"
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 if !exists('g:neocomplete#force_omni_input_patterns')
@@ -330,6 +321,8 @@ inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
 inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<s-tab>"
 inoremap <expr><esc> pumvisible() ? "\<C-y>\<esc>" : "\<esc>"
 
+"
 " Signify
+"
 let g:signify_sign_change = '~'
 let g:signify_sign_delete = '-'

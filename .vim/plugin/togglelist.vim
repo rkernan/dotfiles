@@ -1,3 +1,8 @@
+if exists('g:loaded_togglelist')
+	finish
+endif
+let g:loaded_togglelist = 1
+
 function! s:num_buffers()
 	return len(filter(range(1, bufnr('$')), 'buflisted(v:val)'))
 endfunction

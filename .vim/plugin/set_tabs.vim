@@ -1,4 +1,8 @@
-" Set tab width using a nice prompt
+if exists('g:loaded_set_tabs')
+	finish
+endif
+let g:loaded_set_tabs = 1
+
 function! s:set_tabs()
 	echohl Question
 	let l:tabstop = 1 * input('setlocal tabstop = softtabstop = shiftwidth = ')
@@ -19,7 +23,6 @@ function! s:set_tabs()
 	call s:summarize_tabs()
 endfunction
 
-" Summarize current tab info
 function! s:summarize_tabs()
 	try
 		echomsg 'tabstop=' . &l:ts . ' softtabstop=' . &l:sts . ' shiftwidth=' . &l:sw . ' ' . ((&l:et) ? 'expandtab' : 'noexpandtab')
