@@ -24,7 +24,7 @@ function! s:quickfix_toggle()
 	let prev_num_buffers = s:num_buffers()
 	cclose
 	if prev_num_buffers == s:num_buffers()
-		copen
+		botright copen
 		wincmd p
 	endif
 endfunction
