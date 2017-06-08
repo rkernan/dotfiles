@@ -271,10 +271,10 @@ map zg/ <Plug>(incsearch-fuzzy-stay)
 "
 " Modestatus
 "
-let g:modestatus#statusline = ['mode', 'modified', 'readonly', 'filename', 'hunks_added', 'hunks_modified', 'hunks_removed', 'filetype', 'expandtab', 'shiftwidth', 'encoding', 'fileformat', 'loclist_errors', 'loclist_warnings', '%=', 'line', ',', 'column', 'line_percent']
+let g:modestatus#statusline = ['mode', 'hunks_added', 'hunks_modified', 'hunks_removed', 'filename', 'modified', 'readonly', 'loclist_errors', 'loclist_warnings', 'filetype', '%=', 'expandtab', 'shiftwidth', 'encoding', 'fileformat', 'line', 'column', 'line_percent']
 
-let g:modestatus#statusline_override_denite = ['denite_mode', 'denite_path', 'denite_sources', '%=', 'line', '/', 'line_max', 'line_percent']
-let g:modestatus#statusline_override_qf = ['mode', 'filetype', '%=', 'line', '/', 'line_max', 'line_percent']
+let g:modestatus#statusline_override_denite = ['denite_mode', 'denite_sources', 'denite_path', '%=', 'line', 'line_max', 'line_percent']
+let g:modestatus#statusline_override_qf = ['mode', 'filetype', '%=', 'line', 'line_max', 'line_percent']
 
 augroup vimrc
 	" overrides
@@ -284,22 +284,24 @@ augroup END
 
 call modestatus#options#add('mode', 'color', 'ModestatusYellowBold')
 call modestatus#options#add('mode', 'format', has('multi_byte') ? '‹%s›' : '<%s>')
-call modestatus#options#add('filename', 'color', ['ModestatusBold', 'ModestatusNC'])
-call modestatus#options#add('modified', 'color', ['ModestatusRedBold', 'ModestatusRedBoldNC'])
-call modestatus#options#add('readonly', 'color', ['ModestatusRed', 'ModestatusRedNC'])
 call modestatus#options#add('hunks_added', 'color', ['ModestatusGreen', 'ModestatusGreenNC'])
 call modestatus#options#add('hunks_modified', 'color', ['ModestatusAqua', 'ModestatusAquaNC'])
 call modestatus#options#add('hunks_removed', 'color', ['ModestatusRed', 'ModestatusRedNC'])
+call modestatus#options#add('filename', 'color', ['ModestatusBold', 'ModestatusNC'])
+call modestatus#options#add('modified', 'color', ['ModestatusRedBold', 'ModestatusRedBoldNC'])
+call modestatus#options#add('readonly', 'color', ['ModestatusRed', 'ModestatusRedNC'])
+call modestatus#options#add('loclist_errors', 'color', ['ModestatusRed', 'ModestatusRedNC'])
+call modestatus#options#add('loclist_errors', 'format', '•%s')
+call modestatus#options#add('loclist_warnings', 'color', ['ModestatusYellow', 'ModestatusYellowNC'])
+call modestatus#options#add('loclist_warnings', 'format', '•%s')
 call modestatus#options#add('expandtab', 'format', '[%s')
 call modestatus#options#add('shiftwidth', 'format', '%s]')
 call modestatus#options#add('encoding', 'format', '[%s')
 call modestatus#options#add('encoding', 'separator', ':')
 call modestatus#options#add('fileformat', 'format', '%s]')
-call modestatus#options#add('loclist_errors', 'color', ['ModestatusRed', 'ModestatusRedNC'])
-call modestatus#options#add('loclist_errors', 'format', '•%s')
-call modestatus#options#add('loclist_warnings', 'color', ['ModestatusYellow', 'ModestatusYellowNC'])
-call modestatus#options#add('loclist_warnings', 'format', '•%s')
 call modestatus#options#add('line', 'separator', '')
+call modestatus#options#add('column', 'format', ',%s')
+call modestatus#options#add('line_max', 'format', '/%s')
 
 call modestatus#options#add('denite_mode', 'color', 'ModestatusYellowBold')
 call modestatus#options#add('denite_mode', 'format', has('multi_byte') ? '‹%s›' : '<%s>')
