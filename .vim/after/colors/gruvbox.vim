@@ -24,10 +24,10 @@ let s:green = s:get_gruvbox_color('GruvboxGreen')
 let s:yellow = s:get_gruvbox_color('GruvboxYellow')
 let s:aqua = s:get_gruvbox_color('GruvboxAqua')
 
-let s:status_fg = s:fg3
-let s:status_bg = s:bg3
-let s:status_nc_fg = s:fg4
-let s:status_nc_bg = s:bg2
+let s:status_fg = s:fg4
+let s:status_bg = s:bg1
+let s:status_nc_fg = s:bg4
+let s:status_nc_bg = s:bg1
 
 " ALE colors
 highlight link ALEErrorSign        GruvboxRedSign
