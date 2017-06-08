@@ -271,7 +271,7 @@ map zg/ <Plug>(incsearch-fuzzy-stay)
 "
 " Modestatus
 "
-let g:modestatus#statusline = ['mode', 'hunks_added', 'hunks_modified', 'hunks_removed', 'filename', 'modified', 'readonly', 'loclist_errors', 'loclist_warnings', 'filetype', '%=', 'expandtab', 'shiftwidth', 'encoding', 'fileformat', 'line', 'column', 'line_percent']
+let g:modestatus#statusline = ['mode', 'hunks_added', 'hunks_modified', 'hunks_removed', 'filename', 'modified', 'readonly', 'filetype', 'loclist_errors', 'loclist_warnings', '%=', 'expandtab', 'shiftwidth', 'encoding', 'fileformat', 'line', 'column', 'line_percent']
 
 let g:modestatus#statusline_override_denite = ['denite_mode', 'denite_sources', 'denite_path', '%=', 'line', 'line_max', 'line_percent']
 let g:modestatus#statusline_override_qf = ['mode', 'filetype', '%=', 'line', 'line_max', 'line_percent']
