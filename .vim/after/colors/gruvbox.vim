@@ -23,9 +23,11 @@ let s:red = s:get_gruvbox_color('GruvboxRed')
 let s:green = s:get_gruvbox_color('GruvboxGreen')
 let s:yellow = s:get_gruvbox_color('GruvboxYellow')
 let s:aqua = s:get_gruvbox_color('GruvboxAqua')
+let s:blue = s:get_gruvbox_color('GruvboxBlue')
+let s:orange = s:get_gruvbox_color('GruvboxOrange')
 
 let s:status_fg = s:fg4
-let s:status_bg = s:bg1
+let s:status_bg = s:bg2
 let s:status_nc_fg = s:bg4
 let s:status_nc_bg = s:bg1
 
@@ -47,17 +49,27 @@ highlight link SignifyLineChangeDelete    SignifyLineChange
 highlight link SignifyLineDeleteFirstLine SignifyLineDelete
 
 " Modestatus colors
-call s:hl('StatusLine', s:status_fg, s:status_bg, 'NONE')
-call s:hl('StatusLineNC', s:status_nc_fg, s:status_nc_bg, 'NONE')
-call s:hl('ModestatusBold', s:status_fg, s:status_bg, 'bold')
-call s:hl('ModestatusYellow', s:yellow, s:status_bg, 'NONE')
-call s:hl('ModestatusYellowBold', s:yellow, s:status_bg, 'bold')
-call s:hl('ModestatusYellowNC', s:yellow, s:status_nc_bg, 'NONE')
-call s:hl('ModestatusGreen', s:green, s:status_bg, 'NONE')
-call s:hl('ModestatusGreenNC', s:green, s:status_nc_bg, 'NONE')
-call s:hl('ModestatusRed', s:red, s:status_bg, 'NONE')
-call s:hl('ModestatusRedBold', s:red, s:status_bg, 'bold')
-call s:hl('ModestatusRedNC', s:red, s:status_nc_bg, 'NONE')
-call s:hl('ModestatusRedBoldNC', s:red, s:status_nc_bg, 'bold')
-call s:hl('ModestatusAqua', s:aqua, s:status_bg, 'NONE')
-call s:hl('ModestatusAquaNC', s:aqua, s:status_nc_bg, 'NONE')
+call s:hl('StatusLine', s:fg4, s:bg2, 'none')
+call s:hl('ModestatusBold', s:fg4, s:bg2, 'bold')
+call s:hl('ModestatusRed', s:red, s:bg2, 'none')
+call s:hl('ModestatusRedBold', s:red, s:bg2, 'bold')
+call s:hl('Modestatus2', s:fg3, s:bg3, 'none')
+call s:hl('Modestatus2Red', s:red, s:bg3, 'none')
+call s:hl('Modestatus2Green', s:green, s:bg3, 'none')
+call s:hl('Modestatus2Aqua', s:aqua, s:bg3, 'none')
+
+call s:hl('StatusLineNC', s:bg4, s:bg1, 'none')
+call s:hl('ModestatusNCRed', s:red, s:bg1, 'none')
+call s:hl('ModestatusNCRedBold', s:red, s:bg1, 'bold')
+call s:hl('ModestatusNCYellow', s:yellow, s:bg1, 'none')
+call s:hl('Modestatus2NC', s:fg4, s:bg2, 'none')
+call s:hl('Modestatus2NCRed', s:red, s:bg2, 'none')
+call s:hl('Modestatus2NCGreen', s:green, s:bg2, 'none')
+call s:hl('Modestatus2NCAqua', s:aqua, s:bg2, 'none')
+
+call s:hl('ModestatusModeNormal', s:bg0, s:fg4, 'none')
+call s:hl('ModestatusModeInsert', s:bg0, s:blue, 'none')
+call s:hl('ModestatusModeReplace', s:bg0, s:aqua, 'none')
+call s:hl('ModestatusModeVisual', s:bg0, s:orange, 'none')
+call s:hl('ModestatusModeVisualLine', s:bg0, s:orange, 'none')
+call s:hl('ModestatusModeVisualBlock', s:bg0, s:orange, 'none')
