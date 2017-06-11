@@ -287,11 +287,13 @@ let g:modestatus#statusline = [
 	\ ]
 
 let g:modestatus#statusline_override_denite = [['denite_mode'], 'denite_sources', 'denite_path', 'filetype', '%=', ['line', 'line_max', 'line_percent']]
+let g:modestatus#statusline_override_fugitiveblame = ['filetype', '%=', ['line', 'line_max', 'line_percent']]
 let g:modestatus#statusline_override_qf = [['mode'], 'buftype', 'filetype', '%=', ['line', 'line_max', 'line_percent']]
 
 augroup vimrc
 	" overrides
 	autocmd FileType denite call modestatus#setlocal('denite')
+	autocmd FileType fugitiveblame call modestatus#setlocal('fugitiveblame')
 	autocmd FileType qf call modestatus#setlocal('qf')
 augroup END
 
