@@ -18,10 +18,15 @@ Plug 'tpope/vim-fugitive'
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'haya14busa/vim-asterisk'
+" text objects
+Plug 'kana/vim-textobj-user' " dependency
+Plug 'glts/vim-textobj-comment'
+Plug 'kana/vim-textobj-entire'
+Plug 'kana/vim-textobj-indent'
+Plug 'kana/vim-textobj-line'
+Plug 'sgur/vim-textobj-parameter'
 " other
 Plug 'jiangmiao/auto-pairs'
-Plug 'kana/vim-textobj-entire'
-Plug 'kana/vim-textobj-user'
 Plug 'shougo/denite.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
