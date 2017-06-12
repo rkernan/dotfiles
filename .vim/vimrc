@@ -27,6 +27,7 @@ Plug 'kana/vim-textobj-line'
 Plug 'sgur/vim-textobj-parameter'
 " other
 Plug 'jiangmiao/auto-pairs'
+Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
 Plug 'shougo/denite.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
@@ -344,3 +345,8 @@ inoremap <expr><esc> pumvisible() ? "\<C-y>\<esc>" : "\<esc>"
 "
 let g:signify_sign_change = '~'
 let g:signify_sign_delete = '-'
+
+"
+" Undotree
+"
+let g:undotree_WindowLayout = 2
