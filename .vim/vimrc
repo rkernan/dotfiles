@@ -31,6 +31,7 @@ Plug 'mbbill/undotree', {'on': ['UndotreeFocus', 'UndotreeHide', 'UndotreeShow',
 Plug 'shougo/denite.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
@@ -189,9 +190,6 @@ nnoremap gV `[v`]
 vnoremap <silent> y y`]
 vnoremap <silent> p p`]
 nnoremap <silent> p p`]
-
-" sudo write file
-cmap w!! w !sudo tee > /dev/null %
 
 " Macro over visual range
 function! s:execute_macro_over_visual_range()
