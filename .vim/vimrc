@@ -369,6 +369,12 @@ inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<s-tab>"
 inoremap <expr><esc> pumvisible() ? "\<C-y>\<esc>" : "\<esc>"
 
 "
+" Netrw - DISABLE
+"
+let g:loaded_netrw = 1
+let g:loaded_netrwPlugin = 1
+
+"
 " Signify
 "
 let g:signify_sign_change = '~'
