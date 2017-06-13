@@ -27,7 +27,7 @@ Plug 'kana/vim-textobj-line'
 Plug 'sgur/vim-textobj-parameter'
 " other
 Plug 'jiangmiao/auto-pairs'
-Plug 'mbbill/undotree', {'on': 'UndotreeToggle'}
+Plug 'mbbill/undotree', {'on': ['UndotreeFocus', 'UndotreeHide', 'UndotreeShow', 'UndotreeToggle']}
 Plug 'shougo/denite.nvim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
@@ -276,16 +276,23 @@ map z? <Plug>(incsearch-fuzzy-?)
 map zg/ <Plug>(incsearch-fuzzy-stay)
 
 "
+" jedi-vim - disable autocompletions, neocomplete does this
+"
+let g:jedi#completions_enabled = 0
+let g:jedi#auto_vim_configuration = 0
+let g:jedi#smart_auto_mappings = 0
+
+"
 " Modestatus
 "
 let g:modestatus#statusline = [
-	\   ['mode'],
-	\   ['git_branch', 'hunks_added', 'hunks_modified', 'hunks_removed'],
-	\   'filename', 'modified', 'readonly', 'filetype', 'loclist_errors', 'loclist_warnings',
-	\   '%=',
-	\   'expandtab', 'shiftwidth', 'encoding', 'bomb', 'fileformat',
-	\   ['line', 'column', 'line_percent']
-	\ ]
+	\		['mode'],
+	\		['fugitive_branch', 'signify_added', 'signify_modified', 'signify_removed'],
+	\		'filename', 'modified', 'readonly', 'filetype', 'ale_errors', 'ale_warnings', 'ale_style_errors', 'ale_style_warnings',
+	\		'%=',
+	\		'expandtab', 'shiftwidth', 'encoding', 'bomb', 'fileformat',
+	\		['line', 'column', 'line_percent']
+	\	]
 
 let g:modestatus#statusline_override_denite = [['denite_mode'], 'denite_sources', 'denite_path', 'filetype', '%=', ['line', 'line_max', 'line_percent']]
 let g:modestatus#statusline_override_fugitiveblame = ['filetype', '%=', ['line', 'line_max', 'line_percent']]
@@ -299,17 +306,21 @@ augroup vimrc
 augroup END
 
 call modestatus#options#add('mode', 'color', 'ModestatusMode')
-call modestatus#options#add('git_branch', 'color', ['Modestatus2', 'Modestatus2NC'])
-call modestatus#options#add('hunks_added', 'color', ['Modestatus2Green', 'Modestatus2NCGreen'])
-call modestatus#options#add('hunks_modified', 'color', ['Modestatus2Aqua', 'Modestatus2NCAqua'])
-call modestatus#options#add('hunks_removed', 'color', ['Modestatus2Red', 'Modestatus2NCRed'])
+call modestatus#options#add('fugitive_branch', 'color', ['Modestatus2', 'Modestatus2NC'])
+call modestatus#options#add('signify_added', 'color', ['Modestatus2Green', 'Modestatus2NCGreen'])
+call modestatus#options#add('signify_modified', 'color', ['Modestatus2Aqua', 'Modestatus2NCAqua'])
+call modestatus#options#add('signify_removed', 'color', ['Modestatus2Red', 'Modestatus2NCRed'])
 call modestatus#options#add('filename', 'color', ['ModestatusBold', 'ModestatusNC'])
 call modestatus#options#add('modified', 'color', ['ModestatusRedBold', 'ModestatusNCRedBold'])
 call modestatus#options#add('readonly', 'color', ['ModestatusRed', 'ModestatusNCRed'])
-call modestatus#options#add('loclist_errors', 'color', ['ModestatusRed', 'ModestatusNCRed'])
-call modestatus#options#add('loclist_errors', 'format', '•%s')
-call modestatus#options#add('loclist_warnings', 'color', ['ModestatusYellow', 'ModestatusNCYellow'])
-call modestatus#options#add('loclist_warnings', 'format', '•%s')
+call modestatus#options#add('ale_errors', 'color', ['ModestatusRed', 'ModestatusNCRed'])
+call modestatus#options#add('ale_errors', 'format', '•%s')
+call modestatus#options#add('ale_warnings', 'color', ['ModestatusYellow', 'ModestatusNCYellow'])
+call modestatus#options#add('ale_warnings', 'format', '•%s')
+call modestatus#options#add('ale_style_errors', 'color', ['ModestatusPurple', 'ModestatusNCPurple'])
+call modestatus#options#add('ale_style_errors', 'format', '•%s')
+call modestatus#options#add('ale_style_warnings', 'color', ['ModestatusAqua', 'ModestatusNCAqua'])
+call modestatus#options#add('ale_style_warnings', 'format', '•%s')
 call modestatus#options#add('expandtab', 'format', '[%s')
 call modestatus#options#add('shiftwidth', 'format', '%s]')
 call modestatus#options#add('encoding', 'format', '[%s')
@@ -332,9 +343,28 @@ call modestatus#options#add('denite_sources', 'color', ['ModestatusBold', 'Modes
 "
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
+
+if !exists('g:neocomplete#sources#omni#input_patterns')
+	let g:neocomplete#sources#omni#input_patterns = {}
+endif
+let g:neocomplete#sources#omni#input_patterns['php'] = '[^. \t]->\h\w*\|\h\w*::'
+let g:neocomplete#sources#omni#input_patterns['c'] = '[^.[:digit:] *\t]\%(\.\|->\)'
+let g:neocomplete#sources#omni#input_patterns['cpp'] = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
+
 if !exists('g:neocomplete#force_omni_input_patterns')
 	let g:neocomplete#force_omni_input_patterns = {}
 endif
+let g:neocomplete#force_omni_input_patterns['javascript'] = '[^. \t]\.\w*'
+let g:neocomplete#force_omni_input_patterns['python'] = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+
+augroup vimrc
+	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+	autocmd FileType javascript setlocal omnifunc=tern#Complete
+	autocmd FileType python setlocal omnifunc=jedi#completions
+	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+augroup END
+
 " tab completion
 inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
 inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<s-tab>"
@@ -350,3 +380,4 @@ let g:signify_sign_delete = '-'
 " Undotree
 "
 let g:undotree_WindowLayout = 2
+let g:undotree_DiffAutoOpen = 0
