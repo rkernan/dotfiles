@@ -203,7 +203,6 @@ xnoremap @ :<C-u>call <SID>execute_macro_over_visual_range()<CR>
 " Theme
 "
 set background=dark
-let g:gruvbox_italic=0 " FIXME font doesn't handle italics well
 colorscheme gruvbox
 
 "
