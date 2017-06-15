@@ -23,7 +23,6 @@ Plug 'kana/vim-textobj-user' " dependency
 Plug 'glts/vim-textobj-comment'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-indent'
-Plug 'kana/vim-textobj-line'
 Plug 'sgur/vim-textobj-parameter'
 " other
 Plug 'jiangmiao/auto-pairs'
@@ -174,11 +173,6 @@ nnoremap k gk
 nnoremap gj j
 nnoremap gk k
 
-nnoremap H ^
-nnoremap L g_
-nnoremap J 5j
-nnoremap K 5k
-
 " indent and un-indent
 vnoremap > >gv
 vnoremap < <gv
@@ -191,7 +185,10 @@ vnoremap <silent> y y`]
 vnoremap <silent> p p`]
 nnoremap <silent> p p`]
 
-" Macro over visual range
+" toggle folds with <cr>
+nnoremap <cr> za
+
+" execute macro over visual range
 function! s:execute_macro_over_visual_range()
 	echo "@".getcmdline()
 	execute ":'<,'> normal @" . nr2char(getchar())
@@ -210,6 +207,14 @@ colorscheme gruvbox
 "
 let g:ale_sign_error = 'E '
 let g:ale_sign_warning = 'W '
+
+"
+" Auto-pairs
+"
+let g:AutoPairsMultilineClose = 0
+augroup vimrc
+	autocmd FileType vim let b:AutoPairs = {'(': ')', '[': ']', '{': '}', "'": "'", '`': '`'}
+augroup END
 
 "
 " Denite
@@ -249,7 +254,7 @@ nnoremap <leader>b :Denite buffer<cr>
 nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
 
 "
-" Incsearch, Asterisk
+" Incsearch, Incsearch-fuzzy, Asterisk
 "
 map / <Plug>(incsearch-forward)
 map ? <Plug>(incsearch-backward)
@@ -267,6 +272,9 @@ map z* <Plug>(incsearch-nohl0)<Plug>(asterisk-z*)
 map gz* <Plug>(incsearch-nohl0)<Plug>(asterisk-gz*)
 map z# <Plug>(incsearch-nohl0)<Plug>(asterisk-z#)
 map gz# <Plug>(incsearch-nohl0)<Plug>(asterisk-gz#)
+" auto nohlsearch after substitute
+noremap <Plug>(my_:) :
+map <buffer> : <Plug>(incsearch-nohl)<Plug>(my_:)
 " fuzzy search
 map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
