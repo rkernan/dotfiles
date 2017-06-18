@@ -229,18 +229,24 @@ call denite#custom#option('grep', 'statusline', 0)
 call denite#custom#option('grep', 'highlight_mode_normal', 'CursorLine')
 call denite#custom#option('grep', 'highlight_mode_insert', 'CursorLine')
 
+" build ag ignores from wildignore
+let s:ag_ignore = []
+for pattern in split(&wildignore, ',')
+	let s:ag_ignore += ['--ignore', pattern]
+endfor
+
 " file_rec command
 if executable('ag')
-	call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
+	call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden'] + s:ag_ignore + ['-g', ''])
 endif
 
 " grep command
 if executable('ag')
-	call denite#custom#var('grep', 'command', ['ag'])
+	call denite#custom#var('grep', 'command', ['ag', '--hidden'] + s:ag_ignore)
 	call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
 	call denite#custom#var('grep', 'recursive_opts', [])
 	call denite#custom#var('grep', 'pattern_opt', [])
-	call denite#custom#var('grep', 'separator', ['--'])
+	call denite#custom#var('grep', 'separator', [])
 	call denite#custom#var('grep', 'final_opts', [])
 endif
 
