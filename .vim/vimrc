@@ -278,9 +278,7 @@ map z* <Plug>(incsearch-nohl0)<Plug>(asterisk-z*)
 map gz* <Plug>(incsearch-nohl0)<Plug>(asterisk-gz*)
 map z# <Plug>(incsearch-nohl0)<Plug>(asterisk-z#)
 map gz# <Plug>(incsearch-nohl0)<Plug>(asterisk-gz#)
-" auto nohlsearch after substitute
-noremap <Plug>(my_:) :
-map <buffer> : <Plug>(incsearch-nohl)<Plug>(my_:)
+" FIXME auto nohlsearch after substitute
 " fuzzy search
 map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
