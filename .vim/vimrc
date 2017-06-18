@@ -1,7 +1,7 @@
 call plug#begin()
 
 " appearance
-Plug 'kernan/vim-modestatus'
+Plug 'rkernan/vim-modestatus'
 Plug 'morhetz/gruvbox'
 " languages
 Plug 'sheerun/vim-polyglot'
