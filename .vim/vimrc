@@ -261,6 +261,13 @@ nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
 "
 " Incsearch, Incsearch-fuzzy, Asterisk
 "
+" HACK - don't break basic search if plugin is not installed
+noremap <Plug>(incsearch-forward) /
+noremap <Plug>(incsearch-backward) ?
+noremap <Plug>(incsearch-nohl-n) n
+noremap <Plug>(incsearch-nohl-N) N
+noremap <Plug>(incsearch-nohl) <nop>
+" replace search
 map / <Plug>(incsearch-forward)
 map ? <Plug>(incsearch-backward)
 map g/ <Plug>(incsearch-stay)
@@ -277,7 +284,9 @@ map z* <Plug>(incsearch-nohl0)<Plug>(asterisk-z*)
 map gz* <Plug>(incsearch-nohl0)<Plug>(asterisk-gz*)
 map z# <Plug>(incsearch-nohl0)<Plug>(asterisk-z#)
 map gz# <Plug>(incsearch-nohl0)<Plug>(asterisk-gz#)
-" FIXME auto nohlsearch after substitute
+" auto nohlsearch in substitute
+noremap <Plug>(my_:) :
+map <buffer> : <Plug>(incsearch-nohl)<Plug>(my_:)
 " fuzzy search
 map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
