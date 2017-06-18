@@ -20,10 +20,9 @@ Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'haya14busa/vim-asterisk'
 " text objects
 Plug 'kana/vim-textobj-user' " dependency
-Plug 'glts/vim-textobj-comment'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-indent'
-Plug 'sgur/vim-textobj-parameter'
+Plug 'wellle/targets.vim'
 " other
 Plug 'jiangmiao/auto-pairs'
 Plug 'mbbill/undotree', {'on': ['UndotreeFocus', 'UndotreeHide', 'UndotreeShow', 'UndotreeToggle']}
@@ -390,6 +389,14 @@ let g:loaded_netrwPlugin = 1
 "
 let g:signify_sign_change = '~'
 let g:signify_sign_delete = '-'
+
+"
+" Targets
+"
+let g:targets_pairs = '() {} [] <>'
+let g:targets_argTrigger = ','
+let g:targets_argOpening = '[({[]'
+let g:targets_argClosing = '[]})]'
 
 "
 " Undotree
