@@ -184,9 +184,6 @@ vnoremap <silent> y y`]
 vnoremap <silent> p p`]
 nnoremap <silent> p p`]
 
-" toggle folds with <cr>
-nnoremap <cr> za
-
 " execute macro over visual range
 function! s:execute_macro_over_visual_range()
 	echo "@".getcmdline()
