@@ -137,7 +137,9 @@ set belloff=all
 
 set omnifunc=syntaxcomplete#Complete
 
-set signcolumn=yes
+if version >= 800
+	set signcolumn=yes
+endif
 
 augroup vimrc
 	" automatically resize splits on window resize
