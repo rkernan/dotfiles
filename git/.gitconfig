@@ -1,0 +1,50 @@
+# local/private config
+[include]
+	path = ~/.config/.gitconfig.sec
+
+[user]
+	name = Robert Kernan
+
+[core]
+	editor = vim
+	excludesfile = ~/.gitignore
+
+[alias]
+	a = add
+	ai = add --interactive
+	aa = add --all
+	ap = add --patch
+	amend = commit --amend
+	ci = commit
+	co = checkout
+	lg = log --graph --abbrev-commit --decorate --date=relative --all
+	uncommit = reset --soft HEAD~
+	unstage = reset HEAD --
+
+[color]
+	ui = auto
+	branch = auto
+	diff = auto
+	status = auto
+[diff]
+	tool = vimdiff
+
+[difftool]
+	prompt = false
+
+[pull]
+	rebase = true
+
+[push]
+	default = simple
+
+[merge]
+	tool = vimdiff
+	conflictstyle = diff3
+
+[mergetool]
+	prompt = false
+	keepBackup = false
+
+[rebase]
+	autosquash = true
