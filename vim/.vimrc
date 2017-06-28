@@ -253,8 +253,10 @@ call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>')
 call denite#custom#map('normal', '<Esc>', '<denite:quit>')
 call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
 call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
-nnoremap <leader>f :Denite file_rec<cr>
+
 nnoremap <leader>b :Denite buffer<cr>
+nnoremap <leader>f :Denite file_rec<cr>
+nnoremap <leader>o :Denite outline<cr>
 nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
 
 "
