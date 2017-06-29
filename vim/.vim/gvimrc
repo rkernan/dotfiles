@@ -8,9 +8,9 @@ set guioptions-=L " hide scrollbars
 set guioptions-=l " hide scrollbars
 
 if has('gui_win32')
-	set guifont=Hack:h8
+	set guifont=Hack:h9
 else
-	set guifont=Hack\ 8
+	set guifont=Hack\ 9
 endif
 
 " Toggle menu
