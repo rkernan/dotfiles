@@ -36,35 +36,41 @@ Plug 'tpope/vim-unimpaired'
 
 call plug#end()
 
-" clear autocmd
-augroup vimrc
-	autocmd!
-augroup END
-
-let mapleader = "\<space>"
-
 filetype plugin indent on
 syntax enable
 
-set ttimeout
-set ttimeoutlen=100
+set background=dark
+colorscheme gruvbox
 
-set backspace=indent,eol,start
+let mapleader = "\<space>"
 
-set autoindent
-set smarttab
-set cinoptions=N-s,g0
-
-set ignorecase
-set smartcase
-set incsearch
+" persistent undo, backup, swap
+let vimfiles = substitute(split(&rtp, ',')[0], '[\/]\+$', '', '') . '/'
+if has('win32')
+	let vimfiles = substitute(vimfiles, '/', '\', 'g')
+endif
+if has('persistent_undo')
+	set undofile
+	let &undodir = vimfiles . 'undo'
+endif
+let &directory = vimfiles . 'swap//'
 
 if has('multi_byte')
 	set encoding=utf-8
 endif
 
-set fillchars=
+set ttimeout
+set ttimeoutlen=100
 
+set autoindent
+set smarttab
+
+set ignorecase
+set smartcase
+set incsearch
+
+set backspace=indent,eol,start
+set fillchars=
 if has('multi_byte')
 	set listchars=eol:¬,tab:»\ ,trail:·
 else
@@ -77,27 +83,10 @@ else
 	set clipboard+=unnamed
 endif
 
-if has('persistent_undo')
-	set undofile
-	if has('win32')
-		set undodir=~/vimfiles/.undo//
-	else
-		set undodir=~/.vim/.undo//
-	endif
-endif
-
-if has('win32')
-	set backupdir=~/vimfiles/.backup//
-	set directory=~/vimfiles/.swap//
-else
-	set backupdir=~/.vim/.backup//
-	set directory=~/.vim/.swap//
-endif
-
 set completeopt=menu,menuone,noselect
 
 set wildmenu
-set wildmode=longest:full,full
+set wildmode=longest:full
 set wildignore+=.hg,.git,.svn                    " version control files
 set wildignore+=*.aux,*.out,*.toc                " LaTeX build files
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
@@ -107,59 +96,41 @@ set wildignore+=*.pyc                            " python byte code
 set wildignore+=*.sw                             " vim swap files
 set wildignore+=*.DS_Store                       " OSX something
 
-set nrformats-=octal
-set formatoptions+=j
-set fileformats=unix,dos,mac
+set scrolloff=1
+set sidescrolloff=3
+
+set cursorline
+" auto-enable based on window focus
+autocmd BufEnter,FocusGained * setlocal number cursorline
+autocmd BufLeave,FocusLost   * setlocal number nocursorline
 
 set number
 set relativenumber
-
-set scrolloff=1
-set sidescrolloff=5
+" auto-switch to/from relative line numbers based on mode
+autocmd InsertLeave * setlocal relativenumber
+autocmd InsertEnter * setlocal norelativenumber
+" auto-switch to/from relative line numbers based on window focus
+autocmd BufEnter,FocusGained * setlocal number relativenumber
+autocmd BufLeave,FocusLost * setlocal number norelativenumber
 
 if has('mouse')
 	set mouse=a
 endif
 
-set display+=lastline
-set laststatus=2
-set noshowmode
-
 set autoread
 set hidden
-set cursorline
 set shortmess=atI
 set lazyredraw
 set splitbelow
 set splitright
 set belloff=all
 
-set omnifunc=syntaxcomplete#Complete
-
 if version >= 800
 	set signcolumn=yes
 endif
-
-augroup vimrc
-	" automatically resize splits on window resize
-	autocmd VimResized * :wincmd =
-	" redraw immediately when entering vim
-	autocmd VimEnter * redraw!
-	" restore line position
-	autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exec "normal! g`\"" | endif
-	" switch to/from relative line numbers
-	autocmd BufEnter,FocusGained * setlocal number relativenumber
-	autocmd BufLeave,FocusLost   * setlocal number norelativenumber
-	autocmd InsertEnter * setlocal number norelativenumber
-	autocmd InsertLeave * setlocal number relativenumber
-	" enable/disable cursor line depending on window focus
-	autocmd BufEnter,FocusGained * setlocal number cursorline
-	autocmd BufLeave,FocusLost   * setlocal number nocursorline
-augroup END
-
-"
-" Mappings
-"
+set display+=lastline
+set laststatus=2
+set noshowmode
 
 " disable ex mode
 nnoremap Q <nop>
@@ -193,29 +164,15 @@ endfunction
 
 xnoremap @ :<C-u>call <SID>execute_macro_over_visual_range()<CR>
 
-"
-" Theme
-"
-set background=dark
-colorscheme gruvbox
-
-"
-" ALE
-"
+" Plugin - ALE
 let g:ale_sign_error = 'E '
 let g:ale_sign_warning = 'W '
 
-"
-" Auto-pairs
-"
+" Plugin - Auto-pairs
 let g:AutoPairsMultilineClose = 0
-augroup vimrc
-	autocmd FileType vim let b:AutoPairs = {'(': ')', '[': ']', '{': '}', "'": "'", '`': '`'}
-augroup END
+autocmd FileType vim let b:AutoPairs = {'(': ')', '[': ']', '{': '}', "'": "'", '`': '`'}
 
-"
-" Denite
-"
+" Plugin - Denite
 call denite#custom#option('default', 'auto_resize', 1)
 call denite#custom#option('default', 'statusline', 0)
 call denite#custom#option('default', 'highlight_mode_normal', 'CursorLine')
@@ -225,18 +182,15 @@ call denite#custom#option('grep', 'auto_resize', 1)
 call denite#custom#option('grep', 'statusline', 0)
 call denite#custom#option('grep', 'highlight_mode_normal', 'CursorLine')
 call denite#custom#option('grep', 'highlight_mode_insert', 'CursorLine')
-
 " build ag ignores from wildignore
 let s:ag_ignore = []
 for pattern in split(&wildignore, ',')
 	let s:ag_ignore += ['--ignore', pattern]
 endfor
-
 " file_rec command
 if executable('ag')
 	call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden'] + s:ag_ignore + ['-g', ''])
 endif
-
 " grep command
 if executable('ag')
 	call denite#custom#var('grep', 'command', ['ag', '--hidden'] + s:ag_ignore)
@@ -246,22 +200,19 @@ if executable('ag')
 	call denite#custom#var('grep', 'separator', [])
 	call denite#custom#var('grep', 'final_opts', [])
 endif
-
 " mappings
 call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>')
 call denite#custom#map('normal', '<Esc>', '<denite:quit>')
 call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
 call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
-
+" triggers
 nnoremap <leader>b :Denite buffer<cr>
 nnoremap <leader>f :Denite file_rec<cr>
 nnoremap <leader>o :Denite outline<cr>
 nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
 
-"
-" Incsearch, Incsearch-fuzzy, Asterisk
-"
-" HACK - don't break basic search if plugin is not installed
+" Plugin - Incsearch, Incsearch-Fuzzy, Asterisk
+" don't break basic search if plugin is not installed
 noremap <Plug>(incsearch-forward) /
 noremap <Plug>(incsearch-backward) ?
 noremap <Plug>(incsearch-nohl-n) n
@@ -292,16 +243,12 @@ map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
 map zg/ <Plug>(incsearch-fuzzy-stay)
 
-"
-" jedi-vim - disable autocompletions, neocomplete does this
-"
+" Plugin - jedi-vim - Disable, Neocomplete handles actual completion
 let g:jedi#completions_enabled = 0
 let g:jedi#auto_vim_configuration = 0
 let g:jedi#smart_auto_mappings = 0
 
-"
-" Modestatus
-"
+" Pugin - Modestatus
 let g:modestatus#statusline = [
 	\		['mode'],
 	\		['fugitive_branch', 'signify_added', 'signify_modified', 'signify_removed'],
@@ -310,18 +257,14 @@ let g:modestatus#statusline = [
 	\		'expandtab', 'shiftwidth', 'encoding', 'bomb', 'fileformat',
 	\		['line', 'column', 'line_percent']
 	\	]
-
 let g:modestatus#statusline_override_denite = [['denite_mode'], 'denite_sources', 'denite_path', 'filetype', '%=', ['line', 'line_max', 'line_percent']]
 let g:modestatus#statusline_override_fugitiveblame = ['filetype', '%=', ['line', 'line_max', 'line_percent']]
 let g:modestatus#statusline_override_qf = [['mode'], 'buftype', 'filetype', '%=', ['line', 'line_max', 'line_percent']]
-
-augroup vimrc
-	" overrides
-	autocmd FileType denite call modestatus#setlocal('denite')
-	autocmd FileType fugitiveblame call modestatus#setlocal('fugitiveblame')
-	autocmd FileType qf call modestatus#setlocal('qf')
-augroup END
-
+" overrides
+autocmd FileType denite call modestatus#setlocal('denite')
+autocmd FileType fugitiveblame call modestatus#setlocal('fugitiveblame')
+autocmd FileType qf call modestatus#setlocal('qf')
+" settings
 call modestatus#options#add('mode', 'color', 'ModestatusMode')
 call modestatus#options#add('fugitive_branch', 'color', ['Modestatus2', 'Modestatus2NC'])
 call modestatus#options#add('signify_added', 'color', ['Modestatus2Green', 'Modestatus2NCGreen'])
@@ -355,53 +298,36 @@ call modestatus#options#add('line_percent', 'color', ['Modestatus2', 'Modestatus
 call modestatus#options#add('denite_mode', 'color', 'ModestatusMode')
 call modestatus#options#add('denite_sources', 'color', ['ModestatusBold', 'ModestatusNC'])
 
-"
-" Neocomplete
-"
+" Plugin - Neocomplete
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
-
 if !exists('g:neocomplete#sources#omni#input_patterns')
 	let g:neocomplete#sources#omni#input_patterns = {}
 endif
 let g:neocomplete#sources#omni#input_patterns['php'] = '[^. \t]->\h\w*\|\h\w*::'
 let g:neocomplete#sources#omni#input_patterns['c'] = '[^.[:digit:] *\t]\%(\.\|->\)'
 let g:neocomplete#sources#omni#input_patterns['cpp'] = '[^.[:digit:] *\t]\%(\.\|->\)\|\h\w*::'
-
 if !exists('g:neocomplete#force_omni_input_patterns')
 	let g:neocomplete#force_omni_input_patterns = {}
 endif
 let g:neocomplete#force_omni_input_patterns['javascript'] = '[^. \t]\.\w*'
 let g:neocomplete#force_omni_input_patterns['python'] = '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-
-augroup vimrc
-	autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-	autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-	autocmd FileType javascript setlocal omnifunc=tern#Complete
-	autocmd FileType python setlocal omnifunc=jedi#completions
-	autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
-augroup END
-
+" filetype completion funcs
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=tern#Complete
+autocmd FileType python setlocal omnifunc=jedi#completions
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 " tab completion
 inoremap <expr><tab> pumvisible() ? "\<C-n>" : "\<tab>"
 inoremap <expr><s-tab> pumvisible() ? "\<C-p>" : "\<s-tab>"
 inoremap <expr><esc> pumvisible() ? "\<C-y>\<esc>" : "\<esc>"
 
-"
-" Netrw - DISABLE
-"
-let g:loaded_netrw = 1
-let g:loaded_netrwPlugin = 1
-
-"
-" Signify
-"
+" Plugin - Signify
 let g:signify_sign_change = '~'
 let g:signify_sign_delete = '-'
 
-"
-" Targets
-"
+" Plugin - Targets
 let g:targets_pairs = '() {} [] <>'
 let g:targets_argTrigger = ','
 let g:targets_argOpening = '[({[]'

@@ -5,6 +5,7 @@ function stow {
 }
 
 stow git
+stow nvim
 stow tmux
 stow vim
 stow zsh
