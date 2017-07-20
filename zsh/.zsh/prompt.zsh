@@ -27,9 +27,7 @@ zstyle ':vcs_info:*' formats ' %F{white}%B‹%%b%F{cyan}%b%c%u%F{white}%B›%%b%
 zstyle ':vcs_info:*' actionformats ' %F{white}%B‹%F{red}⚡%%b%F{cyan}%b%c%u%F{white}%B›%%b%f'
 
 # set prompt
-PROMPT='%F{blue}%c${vcs_info_msg_0_} %(?..%F{red}%? )${editor_info[keymap]}%f '
-RPROMPT=''
-SPROMPT="correct %F{red}%R%f to %F{green}%r%f [nyae]? "
+PROMPT='%F{green}%c${vcs_info_msg_0_} %(?..%F{red}%? )${editor_info[keymap]}%f '
 
 cd() {
 	builtin cd "$@"
