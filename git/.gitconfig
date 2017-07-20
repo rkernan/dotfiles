@@ -1,12 +1,12 @@
 # local/private config
 [include]
-	path = ~/.config/.gitconfig.sec
+	path = ~/.config/gitconfig.sec
 
 [user]
 	name = Robert Kernan
 
 [core]
-	editor = vim
+	editor = $EDITOR
 	excludesfile = ~/.gitignore
 
 [alias]
@@ -26,25 +26,31 @@
 	branch = auto
 	diff = auto
 	status = auto
+
 [diff]
 	tool = vimdiff
 
 [difftool]
 	prompt = false
 
-[pull]
-	rebase = true
-
-[push]
-	default = simple
+[difftool "vimdiff"]
+	cmd = $EDITOR -d $LOCAL $REMOTE
 
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
 
 [mergetool]
-	prompt = false
-	keepBackup = false
+	prompt = true
+
+[mergetool "vimdiff"]
+	cmd = $EDITOR -d $BASE $LOCAL $REMOTE $MERGED
+
+[pull]
+	rebase = true
+
+[push]
+	default = simple
 
 [rebase]
 	autosquash = true
