@@ -22,11 +22,15 @@ alias rsync='noglob rsync'
 alias scp='noglob scp'
 alias sftp='noglob sftp'
 
+# shortcuts
 alias dirs='dirs -v'
 alias df='df -kh'
+alias e='$EDITOR'
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 alias ls='ls --group-directories-first --color=auto'
 alias l='ls -1A'
 alias ll='ls -lh'
 alias la='ll -A'
+alias p='$PAGER'
 alias path='echo -e ${PATH//:/\\n}'
+
