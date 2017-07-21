@@ -21,12 +21,6 @@
 	uncommit = reset --soft HEAD~
 	unstage = reset HEAD --
 
-[color]
-	ui = auto
-	branch = auto
-	diff = auto
-	status = auto
-
 [diff]
 	tool = vimdiff
 
