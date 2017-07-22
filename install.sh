@@ -6,6 +6,7 @@ function stow {
 
 stow git
 stow nvim
+stow termite
 stow tmux
 stow vim
 stow zsh
