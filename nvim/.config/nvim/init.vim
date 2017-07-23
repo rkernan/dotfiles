@@ -91,6 +91,13 @@ autocmd InsertEnter * setlocal norelativenumber
 autocmd BufEnter,FocusGained * setlocal number relativenumber
 autocmd BufLeave,FocusLost * setlocal number norelativenumber
 
+" restore line position on restart
+autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
+
+" resize windows automatically
+autocmd VimResized * wincmd =
+
+
 " disable ex mode
 nnoremap Q <nop>
 
