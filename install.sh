@@ -4,6 +4,7 @@ function stow {
   command stow -t $HOME -v $1
 }
 
+stow awesome
 stow git
 stow nvim
 stow termite
