@@ -3,11 +3,11 @@ call plug#begin()
 " appearance
 Plug 'rkernan/vim-modestatus'
 Plug 'morhetz/gruvbox'
+" completion
+Plug 'roxma/nvim-completion-manager'
 " languages
 Plug 'sheerun/vim-polyglot'
-" vcs integration
-Plug 'mhinz/vim-signify'
-Plug 'tpope/vim-fugitive'
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 " searching
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
@@ -17,9 +17,12 @@ Plug 'kana/vim-textobj-user' " dependency
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-indent'
 Plug 'wellle/targets.vim'
+" vcs integration
+Plug 'mhinz/vim-signify'
+Plug 'tpope/vim-fugitive'
 " other
 Plug 'jiangmiao/auto-pairs'
-Plug 'shougo/denite.nvim'
+Plug 'shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
@@ -66,7 +69,7 @@ set scrolloff=1
 set sidescrolloff=3
 
 set hidden
-set shortmess=atWIF
+set shortmess=actWIF
 set lazyredraw
 set splitbelow
 set splitright
@@ -194,6 +197,13 @@ map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
 map zg/ <Plug>(incsearch-fuzzy-stay)
 
+" Plugin - LanguageClient
+let g:LanguageClient_autoStart = 1
+let g:LanguageClient_serverCommands = {}
+nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
+
 " Plugin - Modestatus
 let g:modestatus#statusline = [
 	\		['mode'],
@@ -235,6 +245,10 @@ silent! call modestatus#options#add('line_max', 'color', ['Modestatus2', 'Modest
 silent! call modestatus#options#add('line_percent', 'color', ['Modestatus2', 'Modestatus2NC'])
 silent! call modestatus#options#add('denite_mode', 'color', 'ModestatusMode')
 silent! call modestatus#options#add('denite_sources', 'color', ['ModestatusBold', 'ModestatusNC'])
+
+" Plugin - Nvim Completion Manager
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Plugin - Signify
 let g:signify_sign_change = '~'
