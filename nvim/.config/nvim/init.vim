@@ -97,6 +97,7 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "norm
 " resize windows automatically
 autocmd VimResized * wincmd =
 
+set mouse=a
 
 " disable ex mode
 nnoremap Q <nop>
