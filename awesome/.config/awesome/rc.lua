@@ -39,7 +39,6 @@ editor_cmd = terminal .. " -e " .. editor
 
 -- Theme
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-beautiful.useless_gap = 2
 
 local function set_wallpaper(s)
     -- Wallpaper
@@ -65,7 +64,6 @@ end
 
 run_once("nm-applet")
 run_once("volumeicon")
-run_once("xfce4-power-manager")
 -- TODO battery icon
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -82,10 +80,20 @@ menubar.utils.terminal = terminal
 launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
       menu = awful.menu({
             items = {
-               { "Awesome", {
+               {
+                  "System", {
+                     { "Suspend", function () awful.spawn("systemctl suspend") end },
+                     { "Hibernate", function () awful.spawn("systemctl hibernate") end },
+                     { "Reboot", function () awful.spawn("systemctl reboot") end },
+                     { "Poweroff", function () awful.spawn("systemctl poweroff") end }
+                  }
+               },
+               {
+                  "Awesome", {
                      { "Hotkeys", function () return false, hotkeys_popup.show_help end },
                      { "Quit", function () awesome.quit() end }
-                  }},
+                  }
+               },
                { "Terminal", terminal },
                { "Browser", "google-chrome-stable" },
                { "Passwords", "keepass" }
