@@ -64,7 +64,7 @@ end
 
 run_once("nm-applet")
 run_once("volumeicon")
--- TODO battery icon
+run_once("cbatticon")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
@@ -91,6 +91,8 @@ launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
                {
                   "Awesome", {
                      { "Hotkeys", function () return false, hotkeys_popup.show_help end },
+                     { "Gtk3 Config", "lxappearance" },
+                     { "Restart", awesome.restart },
                      { "Quit", function () awesome.quit() end }
                   }
                },
@@ -128,9 +130,14 @@ local tasklist_buttons = gears.table.join(
          end)
    )
 
+
+-- Create clock and calendar popup
+textclock = wibox.widget.textclock("%F %H:%M")
+calendar_popup = awful.widget.calendar_popup.month()
+calendar_popup:attach(textclock)
+
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
-
 
 -- Setup each screen
 awful.screen.connect_for_each_screen(function (s)
@@ -181,7 +188,7 @@ awful.screen.connect_for_each_screen(function (s)
          s.separator,
          wibox.widget.systray(),
          s.separator,
-         wibox.widget.textclock("%F %H:%M"),
+         textclock,
          s.separator,
          s.layoutbox
       },
