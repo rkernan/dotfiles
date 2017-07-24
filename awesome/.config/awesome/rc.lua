@@ -63,6 +63,7 @@ local function run_once(cmd)
 end
 
 run_once("nm-applet")
+run_once("blueman-applet")
 run_once("volumeicon")
 run_once("cbatticon")
 
