@@ -229,7 +229,15 @@ local global_keys = gears.table.join(
       awful.key({ modkey, "Shift" }, "k", function () awful.client.swap.bydirection("up") end,
                 { description = "Swap with window above", group = "awesome: layout" }),
       awful.key({ modkey, "Shift" }, "l", function () awful.client.swap.bydirection("right") end,
-                { description = "Swap with window to the right", group = "awesome: layout" })
+                { description = "Swap with window to the right", group = "awesome: layout" }),
+      -- brightness control
+      awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("brightnessctl set 5%-") end,
+                { description = "Reduce screen brightness by 5%", group = "awesome: misc" }),
+      awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn("brightnessctl set +5%") end,
+                { description = "Reduce screen brightness by 5%", group = "awesome: misc" }),
+      -- lock screen
+      awful.key({ modkey }, "Escape", function() awful.util.spawn("light-locker-command -l") end,
+                { description = "Lock the screen", group = "awesome: misc" })
    )
 
 root.keys(global_keys)
