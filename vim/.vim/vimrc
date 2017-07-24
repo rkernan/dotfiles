@@ -179,13 +179,13 @@ let g:AutoPairsMultilineClose = 0
 autocmd FileType vim let b:AutoPairs = {'(': ')', '[': ']', '{': '}', "'": "'", '`': '`'}
 
 " Plugin - Denite
-call denite#custom#option('default', 'auto_resize', 1)
-call denite#custom#option('default', 'statusline', 0)
+call denite#custom#option('default', 'auto_resize', v:true)
+call denite#custom#option('default', 'statusline', v:false)
 call denite#custom#option('default', 'highlight_mode_normal', 'CursorLine')
 call denite#custom#option('default', 'highlight_mode_insert', 'CursorLine')
 call denite#custom#option('grep', 'mode', 'normal')
-call denite#custom#option('grep', 'auto_resize', 1)
-call denite#custom#option('grep', 'statusline', 0)
+call denite#custom#option('grep', 'auto_resize', v:true)
+call denite#custom#option('grep', 'statusline', v:false)
 call denite#custom#option('grep', 'highlight_mode_normal', 'CursorLine')
 call denite#custom#option('grep', 'highlight_mode_insert', 'CursorLine')
 " build ag ignores from wildignore
