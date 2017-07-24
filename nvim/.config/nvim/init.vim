@@ -21,6 +21,7 @@ Plug 'wellle/targets.vim'
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 " other
+Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-commentary'
