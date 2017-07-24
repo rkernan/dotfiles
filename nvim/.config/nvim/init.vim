@@ -55,7 +55,7 @@ set clipboard=unnamedplus,unnamed
 
 set completeopt=menu,menuone,noselect
 
-set wildmode=longest:full
+set wildmode=longest:full,full
 set wildignore+=.hg,.git,.svn                    " version control files
 set wildignore+=*.aux,*.out,*.toc                " LaTeX build files
 set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
