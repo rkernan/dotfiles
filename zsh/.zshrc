@@ -28,6 +28,11 @@ alias la='ll -A'
 alias p='$PAGER'
 alias path='echo -e ${PATH//:/\\n}'
 
+if (( $+commands[xsel] )); then
+	alias pbcopy='xsel --clipboard --input'
+	alias pbpaste='xsel --clipboard --output'
+fi
+
 # history
 HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
 HISTSIZE=10000
