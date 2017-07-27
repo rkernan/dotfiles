@@ -234,7 +234,7 @@ local global_keys = gears.table.join(
       awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("brightnessctl set 5%-") end,
                 { description = "Reduce screen brightness by 5%", group = "awesome: misc" }),
       awful.key({ }, "XF86MonBrightnessUp", function () awful.util.spawn("brightnessctl set +5%") end,
-                { description = "Reduce screen brightness by 5%", group = "awesome: misc" }),
+                { description = "Increase screen brightness by 5%", group = "awesome: misc" }),
       -- lock screen
       awful.key({ modkey }, "Escape", function() awful.util.spawn("light-locker-command -l") end,
                 { description = "Lock the screen", group = "awesome: misc" })
