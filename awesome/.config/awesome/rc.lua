@@ -100,7 +100,7 @@ launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
                   }
                },
                { "Terminal", terminal },
-               { "Browser", "google-chrome-stable" },
+               { "Browser", "chromium" },
                { "Passwords", "keepass" }
             }
          })
