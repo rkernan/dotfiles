@@ -142,6 +142,9 @@ calendar_popup:attach(textclock)
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
 screen.connect_signal("property::geometry", set_wallpaper)
 
+-- Define tags
+local tags = { "1", "2", "3" }
+
 -- Setup each screen
 awful.screen.connect_for_each_screen(function (s)
    -- Wallpaper
@@ -151,7 +154,7 @@ awful.screen.connect_for_each_screen(function (s)
    s.separator = wibox.widget.textbox(" ")
 
    -- Each screen has it's own tag table
-   awful.tag({ "main" }, s, awful.layout.layouts[1])
+   awful.tag(tags, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.promptbox = awful.widget.prompt()
@@ -178,8 +181,7 @@ awful.screen.connect_for_each_screen(function (s)
          layout = wibox.layout.fixed.horizontal,
          launcher,
          s.separator,
-         -- s.taglist,
-         -- s.separator,
+         s.taglist,
          s.promptbox,
          s.separator
       },
@@ -239,6 +241,44 @@ local global_keys = gears.table.join(
       awful.key({ modkey }, "Escape", function() awful.util.spawn("light-locker-command -l") end,
                 { description = "Lock the screen", group = "awesome: misc" })
    )
+
+-- Add tag controls for each tag
+for i = 1, math.min(9, #tags) do
+   global_keys = gears.table.join(global_keys,
+      -- View tag
+      awful.key({ modkey }, "#" .. i + 9,
+         function ()
+            local screen = awful.screen.focused()
+            local tag = screen.tags[i]
+            if tag then
+               tag:view_only()
+            end
+         end,
+         { description = "View tag '" .. tags[i] .. "'", group = "awesome: tags" }),
+      -- Add client to tag
+      awful.key({ modkey, "Control" }, "#" .. i + 9,
+         function ()
+            if client.focus then
+               local tag = client.focus.screen.tags[i]
+               if tag then
+                  client.focus:toggle_tag(tag)
+               end
+            end
+         end,
+         { description = "Add tag '" .. tags[i] .. "' to focused client", group = "awesome: tags" }),
+      -- Move client to tag
+      awful.key({ modkey, "Shift" }, "#" .. i + 9,
+         function ()
+            if client.focus then
+               local tag = client.focus.screen.tags[i]
+               if tag then
+                  client.focus:move_to_tag(tag)
+               end
+            end
+         end,
+         { description = "Move focused client to tag '" .. tags[i] .. "'", group = "awesome: tags" })
+      )
+end
 
 root.keys(global_keys)
 
