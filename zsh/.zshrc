@@ -53,6 +53,13 @@ setopt auto_menu
 # case insensitive when lowercase (smartcase)
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
+# emacs mode
+bindkey -e
+
+# exit current command in EDITOR
+autoload -U edit-command-line && zle -N edit-command-line
+bindkey '^x^e' edit-command-line
+
 # bindings
 bindkey -e
 bindkey '^r' history-incremental-pattern-search-backward
