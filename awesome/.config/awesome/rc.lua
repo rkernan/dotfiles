@@ -39,18 +39,7 @@ editor_cmd = terminal .. " -e " .. editor
 
 -- Theme
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
-
-local function set_wallpaper(s)
-    -- Wallpaper
-    if beautiful.wallpaper then
-        local wallpaper = beautiful.wallpaper
-        -- If wallpaper is a function, call it with the screen
-        if type(wallpaper) == "function" then
-            wallpaper = wallpaper(s)
-        end
-        gears.wallpaper.maximized(wallpaper, s, true)
-    end
-end
+gears.wallpaper.set('#018574')
 
 -- Autostart
 local function run_once(cmd)
@@ -62,9 +51,10 @@ local function run_once(cmd)
    awful.spawn.with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
 end
 
+run_once("udiskie")
 run_once("nm-applet")
-run_once("blueman-applet")
 run_once("volumeicon")
+run_once("blueman-applet")
 run_once("cbatticon")
 
 run_once("light-locker --lock-on-suspend")
@@ -85,6 +75,11 @@ launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
             items = {
                {
                   "System", {
+                     {
+                        "Config", {
+                           { "Gtk3", "lxappearance" }
+                        }
+                     },
                      { "Suspend", function () awful.spawn("systemctl suspend") end },
                      { "Hibernate", function () awful.spawn("systemctl hibernate") end },
                      { "Reboot", function () awful.spawn("systemctl reboot") end },
@@ -94,7 +89,6 @@ launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
                {
                   "Awesome", {
                      { "Hotkeys", function () return false, hotkeys_popup.show_help end },
-                     { "Gtk3 Config", "lxappearance" },
                      { "Restart", awesome.restart },
                      { "Quit", function () awesome.quit() end }
                   }
@@ -139,17 +133,11 @@ textclock = wibox.widget.textclock("%F %H:%M")
 calendar_popup = awful.widget.calendar_popup.month()
 calendar_popup:attach(textclock)
 
--- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", set_wallpaper)
-
 -- Define tags
 local tags = { "1", "2", "3" }
 
 -- Setup each screen
 awful.screen.connect_for_each_screen(function (s)
-   -- Wallpaper
-   -- set_wallpaper(s)
-
    -- Separator
    s.separator = wibox.widget.textbox(" ")
 
