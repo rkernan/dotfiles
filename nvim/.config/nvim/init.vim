@@ -4,8 +4,7 @@ call plug#begin()
 Plug 'rkernan/vim-modestatus'
 Plug 'morhetz/gruvbox'
 " completion
-Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'shougo/echodoc.vim'
+Plug 'roxma/nvim-completion-manager'
 " languages
 Plug 'sheerun/vim-polyglot'
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
@@ -175,11 +174,6 @@ nnoremap <leader>f :Denite file_rec<cr>
 nnoremap <leader>o :Denite outline<cr>
 nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
 
-" Plugin - deoplete
-let g:deoplete#enable_at_startup = 1
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
 " Plugin - Incsearch, Incsearch-Fuzzy, Asterisk
 " don't break basic search if plugin is not installed
 noremap <Plug>(incsearch-forward) /
@@ -264,6 +258,10 @@ silent! call modestatus#options#add('line_max', 'color', ['Modestatus2', 'Modest
 silent! call modestatus#options#add('line_percent', 'color', ['Modestatus2', 'Modestatus2NC'])
 silent! call modestatus#options#add('denite_mode', 'color', 'ModestatusMode')
 silent! call modestatus#options#add('denite_sources', 'color', ['ModestatusBold', 'ModestatusNC'])
+
+" Plugin - Nvim Completion Manager
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Plugin - Signify
 let g:signify_sign_change = '~'
