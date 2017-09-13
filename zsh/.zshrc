@@ -1,3 +1,10 @@
+# general options
+setopt no_flow_control # disable output flow control
+setopt long_list_jobs  # list jobs in the long format by defaut
+setopt notify          # report the status of background processes immediately
+setopt hash_list_all   # hash entire command path before first completion
+setopt extended_glob   # treat #, ~, and ^ as part of patterns for filename completion
+
 setopt prompt_subst
 
 # vcs_info
@@ -24,6 +31,7 @@ precmd() {
 PROMPT='%F{green}%c %f${vcs_info_msg_0_} %(?..%F{red}%? )%f%b%# '
 PROMPT='%(?..%F{red}%? )%F{green}%c %f${vcs_info_msg_0_} %# '
 
+# print directory after cd
 cd() {
 	builtin cd "$@"
 	builtin pwd
@@ -31,21 +39,21 @@ cd() {
 
 # history
 HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
-HISTSIZE=10000
-SAVEHIST=10000
-setopt append_history         # allow multiple sessions to write history
+HISTSIZE=100000
+SAVEHIST=100000
 setopt extended_history       # write history with timestamps
-setopt hist_expire_dups_first # expire duplicates first when trimming history
-setopt hist_ignore_dups       # ignore duplicate entries
-setopt hist_reduce_blanks     # remove extra blanks on expansion
-setopt hist_verify            # don't execute immediately on completion
+setopt append_history         # allow multiple sessions to write history
 setopt inc_append_history     # write to history immediately
+setopt hist_ignore_all_dups   # ignore duplicate entries
+setopt hist_reduce_blanks     # remove extra blanks on expansion
+setopt hist_verify            # dont execute immediately on completion
 setopt share_history          # share history between sessions
 
 # completion
 autoload -Uz compinit && compinit -i
-setopt complete_in_word
-setopt auto_menu
+setopt complete_in_word # allow completion inside word
+setopt auto_menu        # automatically use menu after second completion request
+setopt no_nomatch       # disable "No matches..." dialog
 # case insensitive when lowercase (smartcase)
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 
@@ -98,3 +106,22 @@ if (( $+commands[xsel] )); then
 	alias pbcopy='xsel --clipboard --input'
 	alias pbpaste='xsel --clipboard --output'
 fi
+
+# install zplug
+export ZPLUG_HOME="${HOME}/.zplug"
+if [[ ! -d "${ZPLUG_HOME}" ]]; then
+	echo "Installing zplug"
+	curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
+fi
+source "${ZPLUG_HOME}/init.zsh"
+
+# let zplug self-manage
+zplug 'zplug/zplug', hook-build:'zplug --self-manage'
+
+# plugins
+zplug "zsh-users/zsh-autosuggestions"
+zplug "zsh-users/zsh-completions"
+zplug "zsh-users/zsh-syntax-highlighting", defer:2
+
+zplug check || zplug install
+zplug load
