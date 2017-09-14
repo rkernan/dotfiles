@@ -106,22 +106,3 @@ if (( $+commands[xsel] )); then
 	alias pbcopy='xsel --clipboard --input'
 	alias pbpaste='xsel --clipboard --output'
 fi
-
-# install zplug
-export ZPLUG_HOME="${HOME}/.zplug"
-if [[ ! -d "${ZPLUG_HOME}" ]]; then
-	echo "Installing zplug"
-	curl -sL --proto-redir -all,https https://raw.githubusercontent.com/zplug/installer/master/installer.zsh| zsh
-fi
-source "${ZPLUG_HOME}/init.zsh"
-
-# let zplug self-manage
-zplug 'zplug/zplug', hook-build:'zplug --self-manage'
-
-# plugins
-zplug "zsh-users/zsh-autosuggestions"
-zplug "zsh-users/zsh-completions"
-zplug "zsh-users/zsh-syntax-highlighting", defer:2
-
-zplug check || zplug install
-zplug load
