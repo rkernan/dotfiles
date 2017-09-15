@@ -52,7 +52,7 @@ set smartcase
 set fillchars=
 set listchars=eol:¬,tab:»\ ,trail:·
 
-set clipboard=unnamedplus,unnamed
+set clipboard+=unnamedplus
 
 set completeopt=menu,menuone,noselect
 
