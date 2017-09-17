@@ -4,10 +4,10 @@ call plug#begin()
 Plug 'rkernan/vim-modestatus'
 Plug 'morhetz/gruvbox'
 " completion
-Plug 'roxma/nvim-completion-manager'
-" languages
-Plug 'sheerun/vim-polyglot'
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'shougo/echodoc.vim'
+Plug 'zchee/deoplete-go'
+Plug 'zchee/deoplete-jedi'
 " searching
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
@@ -171,7 +171,6 @@ call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'nor
 " triggers
 nnoremap <leader>b :Denite buffer<cr>
 nnoremap <leader>f :Denite file_rec<cr>
-nnoremap <leader>o :Denite outline<cr>
 nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
 
 " Plugin - Incsearch, Incsearch-Fuzzy, Asterisk
@@ -205,17 +204,6 @@ map <buffer> : <Plug>(incsearch-nohl)<Plug>(my_:)
 map z/ <Plug>(incsearch-fuzzy-/)
 map z? <Plug>(incsearch-fuzzy-?)
 map zg/ <Plug>(incsearch-fuzzy-stay)
-
-" Plugin - LanguageClient
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_serverCommands = {}
-nnoremap <silent> K :call LanguageClient_textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient_textDocument_rename()<CR>
-let g:LanguageClient_serverCommands = {
-	\   'go': ['go-langserver'],
-	\   'python': ['pyls']
-	\ }
 
 " Plugin - Modestatus
 let g:modestatus#statusline = [
@@ -259,9 +247,13 @@ silent! call modestatus#options#add('line_percent', 'color', ['Modestatus2', 'Mo
 silent! call modestatus#options#add('denite_mode', 'color', 'ModestatusMode')
 silent! call modestatus#options#add('denite_sources', 'color', ['ModestatusBold', 'ModestatusNC'])
 
-" Plugin - Nvim Completion Manager
+" Plugin - Deoplete
+let g:deoplete#enable_at_startup = 1
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Plugin - Echodoc
+let g:echodoc#enable_at_startup = 1
 
 " Plugin - Signify
 let g:signify_sign_change = '~'
