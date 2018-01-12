@@ -13,9 +13,6 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'haya14busa/vim-asterisk'
 " text object
-Plug 'kana/vim-textobj-user' " dependency
-Plug 'kana/vim-textobj-entire'
-Plug 'kana/vim-textobj-indent'
 Plug 'wellle/targets.vim'
 " vcs integration
 Plug 'mhinz/vim-signify'
