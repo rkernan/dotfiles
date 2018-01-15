@@ -8,7 +8,6 @@ function install_cli_config {
   stow git
   stow nvim
   stow tmux
-  stow vim
   stow zsh
 }
 
