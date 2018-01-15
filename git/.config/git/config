@@ -26,6 +26,7 @@
 	ci = commit
 	co = checkout
 	lg = log --graph --abbrev-commit --decorate --date=relative --all
+	stat = status -s
 	uncommit = reset --soft HEAD~
 	unstage = reset HEAD --
 
