@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
+function backup_bashrc {
+  if [ -f ~/.bashrc ]; then
+    mv "$HOME/.bashrc" "$HOME/.bashrc.backup.$(date +%F_%R)"
+  fi
+}
+
 function stow {
-  command stow -t $HOME -v $1
+  command stow -t "$HOME" -v "$1"
 }
 
 function install_cli_config {
@@ -16,6 +22,11 @@ function install_gui_config {
   stow termite
 }
 
+function install_ldap_fixes {
+  backup_bashrc
+  stow bash-ldap
+}
+
 readonly target=${1:-all}
 
 case $target in
@@ -28,6 +39,10 @@ case $target in
     ;;
   gui)
     install_gui_config
+    ;;
+  work)
+    install_cli_config
+    install_ldap_fixes
     ;;
   *)
     echo "Unknown target $target" 2>&1
