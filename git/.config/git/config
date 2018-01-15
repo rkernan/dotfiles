@@ -9,6 +9,14 @@
 	editor = $EDITOR
 	excludesfile = ~/.gitignore
 
+[color]
+	ui = auto
+
+[color "status"]
+	added = green
+	changed = yellow
+	untracked = red
+
 [alias]
 	a = add
 	ai = add --interactive
