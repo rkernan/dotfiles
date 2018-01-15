@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function backup_bashrc {
-  if [ -f ~/.bashrc ]; then
+  if [ -f "$HOME/.bashrc" ] && [ ! -L "$HOME/.bashrc" ]; then
     mv "$HOME/.bashrc" "$HOME/.bashrc.backup.$(date +%F_%R)"
   fi
 }
