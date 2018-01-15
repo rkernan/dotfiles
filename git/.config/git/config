@@ -25,7 +25,7 @@
 	amend = commit --amend
 	ci = commit
 	co = checkout
-	lg = log --graph --abbrev-commit --decorate --date=relative --all
+	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s - %C(dim white)%an%C(reset)'
 	stat = status -s
 	uncommit = reset --soft HEAD~
 	unstage = reset HEAD --
