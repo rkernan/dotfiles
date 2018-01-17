@@ -106,3 +106,8 @@ if (( $+commands[xsel] )); then
 	alias pbcopy='xsel --clipboard --input'
 	alias pbpaste='xsel --clipboard --output'
 fi
+
+# always use tmux
+if [ -z "$TMUX" ]; then
+	tmux attach -t default || tmux new -s default; exit
+fi
