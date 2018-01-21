@@ -1,6 +1,6 @@
 # local/private config
 [include]
-	path = ~/.config/git/config.sec
+	path = ~/.gitconfig.sec
 
 [user]
 	name = Robert Kernan
