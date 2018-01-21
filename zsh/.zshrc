@@ -108,6 +108,7 @@ if (( $+commands[xsel] )); then
 fi
 
 # always use tmux
+TMUX_SESSION="main"
 if [ -z "$TMUX" ]; then
-	tmux attach -t default || tmux new -s default; exit
+	(tmux attach -t "$TMUX_SESSION" || tmux new -s "$TMUX_SESSION") && exit
 fi
