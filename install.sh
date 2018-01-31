@@ -18,6 +18,7 @@ function install_cli_config {
 }
 
 function install_gui_config {
+  stow xmodmap
   stow awesome
   stow termite
 }
