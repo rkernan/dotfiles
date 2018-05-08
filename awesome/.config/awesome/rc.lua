@@ -32,7 +32,7 @@ end
 -- Keys
 modkey = "Mod4"
 
--- Variables
+-- Default applications
 terminal = "termite"
 editor = os.getenv("EDITOR") or "vi"
 editor_cmd = terminal .. " -e " .. editor
@@ -68,7 +68,6 @@ run_once("nm-applet")
 run_once("volumeicon")
 run_once("blueman-applet")
 run_once("cbatticon")
-
 run_once("light-locker --lock-on-suspend")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
@@ -87,10 +86,10 @@ launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
             items = {
                {
                   "Power", {
-                     { "Suspend", function () run_once("systemctl suspend") end },
-                     { "Hibernate", function () run_once("systemctl hibernate") end },
-                     { "Reboot", function () run_once("systemctl reboot") end },
-                     { "Poweroff", function () run_once("systemctl poweroff") end }
+                     { "Suspend", "systemctl suspend" },
+                     { "Hibernate", "systemctl hibernate" },
+                     { "Reboot", "systemctl reboot" },
+                     { "Poweroff", "systemctl poweroff" }
                   },
                },
                {
