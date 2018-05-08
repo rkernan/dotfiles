@@ -342,7 +342,7 @@ awful.rules.rules = {
    -- Floating and centered clients.
    {
       rule_any = {
-         instance = { sound_control, display_control, "lxappearance" },
+         instance = { sound_control, display_control, "blueman-manager", "lxappearance", "nm-connection-editor" },
          role = { "pop-up" }
       },
       properties = {
