@@ -36,19 +36,31 @@ modkey = "Mod4"
 terminal = "termite"
 editor = os.getenv("EDITOR") or "vi"
 editor_cmd = terminal .. " -e " .. editor
+display_control = "arandr"
+sound_control = "pavucontrol"
 
 -- Theme
 beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
 gears.wallpaper.set('#018574')
 
--- Autostart
-local function run_once(cmd)
+-- Get the base process name of a command
+local function get_cmd_basename(cmd)
    findme = cmd
    firstspace = cmd:find(" ")
    if firstspace then
       findme = cmd:sub(0, firstspace -1)
    end
-   awful.spawn.with_shell("pgrep -u $USER -x " .. findme .. " > /dev/null || (" .. cmd .. ")")
+   return findme
+end
+
+-- Run once
+local function run_once(cmd)
+   awful.spawn.with_shell("pgrep -u $USER -x " .. get_cmd_basename(cmd) .. " > /dev/null || (" .. cmd .. ")")
+end
+
+-- Toggle
+local function run_toggle(cmd)
+   awful.spawn.with_shell("kill $(pgrep -u $USER -x " .. get_cmd_basename(cmd) .. ") || (" .. cmd .. ")")
 end
 
 run_once("udiskie")
@@ -74,17 +86,19 @@ launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
       menu = awful.menu({
             items = {
                {
-                  "System", {
-                     {
-                        "Config", {
-                           { "Gtk3", "lxappearance" }
-                        }
-                     },
-                     { "Suspend", function () awful.spawn("systemctl suspend") end },
-                     { "Hibernate", function () awful.spawn("systemctl hibernate") end },
-                     { "Reboot", function () awful.spawn("systemctl reboot") end },
-                     { "Poweroff", function () awful.spawn("systemctl poweroff") end }
-                  }
+                  "Power", {
+                     { "Suspend", function () run_once("systemctl suspend") end },
+                     { "Hibernate", function () run_once("systemctl hibernate") end },
+                     { "Reboot", function () run_once("systemctl reboot") end },
+                     { "Poweroff", function () run_once("systemctl poweroff") end }
+                  },
+               },
+               {
+                  "Config", {
+                     { "Sound", sound_control },
+                     { "Displays", display_control },
+                     { "Gtk3", "lxappearance" }
+                  },
                },
                {
                   "Awesome", {
@@ -201,8 +215,8 @@ local global_keys = gears.table.join(
       -- launch programs
       awful.key({ modkey }, "r", function () awful.screen.focused().promptbox:run() end,
                 {description = "run prompt", group = "awesome: launcher"}),
-       awful.key({ modkey }, "Return", function () awful.spawn(terminal) end,
-                 { description = "open a terminal", group = "launcher" }),
+      awful.key({ modkey }, "Return", function () awful.spawn(terminal) end,
+                { description = "open a terminal", group = "awesome: launcher" }),
       -- focus windows
       awful.key({ modkey }, "h", function () awful.client.focus.bydirection("left") end,
                 { description = "Focus the window the the left", group = "awesome: focus" }),
@@ -221,6 +235,7 @@ local global_keys = gears.table.join(
                 { description = "Swap with window above", group = "awesome: layout" }),
       awful.key({ modkey, "Shift" }, "l", function () awful.client.swap.bydirection("right") end,
                 { description = "Swap with window to the right", group = "awesome: layout" }),
+      awful.key({ modkey, "Shift" }, "o", awful.client.movetoscreen),
       -- brightness control
       awful.key({ }, "XF86MonBrightnessDown", function () awful.util.spawn("brightnessctl set 5%-") end,
                 { description = "Reduce screen brightness by 5%", group = "awesome: misc" }),
@@ -325,23 +340,17 @@ awful.rules.rules = {
       }
    },
 
-   -- Floating clients.
-   -- {
-   --    rule_any = { },
-   --    properties = { floating = true }
-   -- },
-
-   -- Add titlebars to normal clients and dialogs
-   -- {
-   --    rule_any = { },
-   --    properties = { titlebars_enabled = false }
-   -- },
-
-   -- Set Firefox to always map on the tag named "2" on screen 1.
-   -- {
-   --    rule = { class = "Firefox" },
-   --    properties = { screen = 1, tag = "2" }
-   -- },
+   -- Floating and centered clients.
+   {
+      rule_any = {
+         instance = { sound_control, display_control, "lxappearance" },
+         role = { "pop-up" }
+      },
+      properties = {
+         floating = true,
+         placement = awful.placement.centered
+      },
+   }
 }
 
 -- Prevent clients from being unreachable after screen count changes.
