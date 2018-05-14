@@ -10,6 +10,10 @@
 	excludesfile = ~/.gitignore
 
 [color]
+	branch = auto
+	diff = auto
+	status = auto
+	showbranch = auto
 	ui = auto
 
 [color "status"]
@@ -17,43 +21,33 @@
 	changed = yellow
 	untracked = red
 
+[status]
+	showUntrackedFiles = all
+
+[push]
+	default = simple
+
+[branch]
+	autosetuprebase = always
+
+[merge]
+	ff = only
+
+[rerere]
+	enabled = 1
+
 [alias]
 	a = add
 	ai = add --interactive
 	aa = add --all
 	ap = add --patch
 	amend = commit --amend
+	br = branch
 	ci = commit
 	co = checkout
-	lg = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s - %C(dim white)%an%C(reset)'
+	lg1 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %s %C(dim white)- %an%C(reset)%C(bold yellow)%d%C(reset)' --all
+	lg2 = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(bold yellow)%d%C(reset)%n''          %s %C(dim white)- %an%C(reset)' --all
+	lg = !"git lg1"
+	prune = fetch --prune
+	stash-all = stash save --include-untracked
 	stat = status -s
-	uncommit = reset --soft HEAD~
-	unstage = reset HEAD --
-
-[diff]
-	tool = vimdiff
-
-[difftool]
-	prompt = false
-
-[difftool "vimdiff"]
-	cmd = $EDITOR -d $LOCAL $REMOTE
-
-[merge]
-	tool = vimdiff
-	conflictstyle = diff3
-
-[mergetool]
-	prompt = true
-
-[mergetool "vimdiff"]
-	cmd = $EDITOR -d $BASE $LOCAL $REMOTE $MERGED
-
-[pull]
-	rebase = true
-
-[push]
-	default = simple
-
-[rebase]
-	autosquash = true
