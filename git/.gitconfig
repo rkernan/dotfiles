@@ -1,5 +1,5 @@
-# local/private config
 [include]
+	# local/private config
 	path = ~/.gitconfig.sec
 
 [user]
