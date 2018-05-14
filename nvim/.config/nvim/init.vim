@@ -1,16 +1,15 @@
+if !empty(glob('~/.at_work'))
+	let g:at_work = 1
+else
+	let g:at_work = 0
+endif
+
 call plug#begin()
 
 " appearance
 Plug 'rkernan/vim-modestatus'
 Plug 'morhetz/gruvbox'
-" completion
-Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'shougo/echodoc.vim'
-Plug 'zchee/deoplete-go'
-Plug 'zchee/deoplete-jedi'
 " searching
-Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/incsearch-fuzzy.vim'
 Plug 'haya14busa/vim-asterisk'
 " text object
 Plug 'wellle/targets.vim'
@@ -28,6 +27,17 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+
+if g:at_work == 0
+	" completion
+	Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+	Plug 'shougo/echodoc.vim'
+	Plug 'zchee/deoplete-go'
+	Plug 'zchee/deoplete-jedi'
+	" searching
+	Plug 'haya14busa/incsearch.vim'
+	Plug 'haya14busa/incsearch-fuzzy.vim'
+endif
 
 call plug#end()
 

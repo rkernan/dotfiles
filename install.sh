@@ -44,6 +44,7 @@ case $target in
   work)
     install_cli_config
     install_ldap_fixes
+    touch ~/.at_work
     ;;
   *)
     echo "Unknown target $target" 2>&1
