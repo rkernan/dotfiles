@@ -1,53 +1,52 @@
 #!/usr/bin/env bash
 
-function backup_bashrc {
-  if [ -f "$HOME/.bashrc" ] && [ ! -L "$HOME/.bashrc" ]; then
-    mv "$HOME/.bashrc" "$HOME/.bashrc.backup.$(date +%F_%R)"
-  fi
-}
+set -e
 
 function stow {
   command stow -t "$HOME" -v "$1"
 }
 
-function install_cli_config {
-  stow git
-  stow nvim
-  stow tmux
-  stow zsh
+function guess_target {
+  if which pacman >/dev/null 2>&1; then
+    # arch linux
+    echo cli gui
+  elif which yum >/dev/null 2>&1; then
+    # centos/rhel/fedora
+    echo at_work bash-ldap cli
+  else
+    # other
+    echo cli
+  fi
 }
 
-function install_gui_config {
-  stow xmodmap
-  stow awesome
-  stow termite
-}
+readonly targets=${*:-$(guess_target)}
 
-function install_ldap_fixes {
-  backup_bashrc
-  stow bash-ldap
-}
-
-readonly target=${1:-all}
-
-case $target in
-  all)
-    install_cli_config
-    install_gui_config
-    ;;
-  cli)
-    install_cli_config
-    ;;
-  gui)
-    install_gui_config
-    ;;
-  work)
-    install_cli_config
-    install_ldap_fixes
-    touch ~/.at_work
-    ;;
-  *)
-    echo "Unknown target $target" 2>&1
-    exit 1
-    ;;
-esac
+for target in $targets; do
+  case $target in
+    at_work)
+      touch ~/.at_work
+      ;;
+    bash-ldap)
+      backup_bashrc
+      if [ -f "$HOME/.bashrc" ]; then
+        mv "$HOME/.bashrc" "$HOME/.bashrc.backup.$(date +%F_%R)"
+      fi
+      stow bash-ldap
+      ;;
+    cli)
+      stow git
+      stow nvim
+      stow tmux
+      stow zsh
+      ;;
+    gui)
+      stow xmodmap
+      stow awesome
+      stow termite
+      ;;
+    *)
+      echo "Unknown target $target" 2>&1
+      exit 1
+      ;;
+  esac
+done
