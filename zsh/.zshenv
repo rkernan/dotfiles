@@ -1,9 +1,6 @@
-export EDITOR='vim'
-if which nvim > /dev/null 2>&1; then
-	export EDITOR='nvim'
-fi
-export VISUAL=$EDITOR
-export PAGER='less'
+export VISUAL=$(which 'nvim' || which 'vim')
+export EDITOR=$VISUAL
+export PAGER=$(which 'less')
 
 if [[ -z "$LANG" ]]; then
 	export LANG='en_US.UTF-8'

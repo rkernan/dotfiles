@@ -60,7 +60,7 @@ zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
 # emacs mode
 bindkey -e
 
-# exit current command in EDITOR
+# edit current command in VISUAL
 autoload -U edit-command-line && zle -N edit-command-line
 bindkey '^x^e' edit-command-line
 
@@ -93,7 +93,7 @@ alias sftp='noglob sftp'
 # shortcuts
 alias dirs='dirs -v'
 alias df='df -kh'
-alias e='$EDITOR'
+alias e='$VISUAL'
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
 alias ls='ls --group-directories-first --color=auto'
 alias l='ls -1A'
