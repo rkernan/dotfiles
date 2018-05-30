@@ -9,7 +9,7 @@ function stow {
 function guess_target {
   if which pacman >/dev/null 2>&1; then
     # arch linux
-    echo cli gui
+    echo bin_arch cli gui
   elif which yum >/dev/null 2>&1; then
     # centos/rhel/fedora
     echo at_work bash-ldap cli
@@ -32,6 +32,10 @@ for target in $targets; do
         mv "$HOME/.bashrc" "$HOME/.bashrc.backup.$(date +%F_%R)"
       fi
       stow bash-ldap
+      ;;
+    bin_arch)
+      mkdir -p ~/bin
+      stow bin_arch
       ;;
     cli)
       stow git
