@@ -107,6 +107,10 @@ if (( $+commands[xsel] )); then
 	alias pbpaste='xsel --clipboard --output'
 fi
 
+if (( $+commands[xdg-open] )); then
+	alias open='xdg-open'
+fi
+
 # always use tmux
 TMUX_SESSION="main"
 if [ -z "$TMUX" ]; then
