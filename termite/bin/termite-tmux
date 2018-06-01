@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+termite -t "termite" -e "tmux-start-or-attach"

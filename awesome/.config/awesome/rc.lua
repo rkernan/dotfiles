@@ -33,7 +33,7 @@ end
 modkey = "Mod4"
 
 -- Default applications
-terminal = "termite"
+terminal = "termite-tmux"
 editor = os.getenv("EDITOR") or "vi"
 editor_cmd = terminal .. " -e " .. editor
 display_control = "arandr"

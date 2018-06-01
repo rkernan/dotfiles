@@ -35,7 +35,7 @@ for target in $targets; do
       ;;
     bin_arch)
       mkdir -p ~/bin
-      stow bin_arch
+      stow bin-arch
       ;;
     cli)
       stow git
@@ -47,6 +47,7 @@ for target in $targets; do
       stow xmodmap
       stow awesome
       stow termite
+      stow udiskie
       ;;
     *)
       echo "Unknown target $target" 2>&1

@@ -111,8 +111,10 @@ if (( $+commands[xdg-open] )); then
 	alias open='xdg-open'
 fi
 
-# always use tmux
-TMUX_SESSION="main"
-if [ -z "$TMUX" ]; then
-	(tmux attach -t "$TMUX_SESSION" || tmux new -s "$TMUX_SESSION") && exit
-fi
+# always use tmux for interactive shells
+# case $- in *i*)
+# 	TMUX_SESSION="main"
+# 	if [ -z "$TMUX" ]; then
+# 		(tmux attach -t "$TMUX_SESSION" || tmux new -s "$TMUX_SESSION") && exit
+# 	fi
+# esac
