@@ -30,11 +30,16 @@ function usage_no_params {
 	echo "Sub-command '$1' does not accept additional parameters."
 }
 
+if (( EUID == 0 )); then
+	(>&2 echo "Script cannot be run as root")
+	exit 1
+fi
+
 case $CMD in
 	clean)
 		if [ $# -ne 0 ]; then
 			(>&2 usage_no_params $CMD)
-			exit 2
+			exit 1
 		fi
 		rm -rf ~/.cache/pacaur
 		exec $(which paccache) -r
@@ -54,7 +59,7 @@ case $CMD in
 	list-orphans)
 		if [ $# -ne 0 ]; then
 			(>&2 usage_no_params $CMD)
-			exit 2
+			exit 1
 		fi
 		exec $BIN -Qdt
 		;;
@@ -73,7 +78,7 @@ case $CMD in
 	sync)
 		if [ $# -ne 0 ]; then
 			(>&2 usage_no_params $CMD)
-			exit 2
+			exit 1
 		fi
 		exec $SU_BIN -Fy
 		;;
