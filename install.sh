@@ -9,7 +9,7 @@ function stow {
 function guess_target {
   if which pacman >/dev/null 2>&1; then
     # arch linux
-    echo bin_arch cli gui
+    echo bin-arch cli gui
   elif which yum >/dev/null 2>&1; then
     # centos/rhel/fedora
     echo at_work bash-ldap cli
@@ -20,6 +20,9 @@ function guess_target {
 }
 
 readonly targets=${*:-$(guess_target)}
+
+# always make bin dir
+mkdir -p ~/bin
 
 for target in $targets; do
   case $target in
@@ -33,8 +36,7 @@ for target in $targets; do
       fi
       stow bash-ldap
       ;;
-    bin_arch)
-      mkdir -p ~/bin
+    bin-arch)
       stow bin-arch
       ;;
     cli)
