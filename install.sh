@@ -30,7 +30,6 @@ for target in $targets; do
       touch ~/.at_work
       ;;
     bash-ldap)
-      backup_bashrc
       if [ -f "$HOME/.bashrc" ]; then
         mv "$HOME/.bashrc" "$HOME/.bashrc.backup.$(date +%F_%R)"
       fi
