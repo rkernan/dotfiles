@@ -12,6 +12,7 @@ function usage {
 	echo "Usage: $0 [sub-cmd] [options]"
 	echo "  clean               : Clean the pacman cache, does not accept additional parameters"
 	echo "  dependencies | deps : List dependency tree of a given package"
+	echo "  diff                : Clean up pacnew files, does not accept addition parameters"
 	echo "  download            : Download a remote package"
 	echo "  install             : Install a remote package"
 	echo "  install-local       : Install a local file"
@@ -46,6 +47,13 @@ case $CMD in
 		;;
 	dependencies|deps)
 		exec $(which pactree) $*
+		;;
+	diff)
+		if [ $# -ne 0 ]; then
+			(>&2 usage_no_params $CMD)
+			exit 1
+		fi
+		exec sudo $(which pacdiff)
 		;;
 	download)
 		exec $SU_BIN -Sw $*
