@@ -103,8 +103,8 @@ alias p='$PAGER'
 alias path='echo -e ${PATH//:/\\n}'
 
 if (( $+commands[xsel] )); then
-	alias pbcopy='xsel --clipboard --input'
-	alias pbpaste='xsel --clipboard --output'
+	alias clip='xsel --clipboard --input'
+	alias paste='xsel --clipboard --output'
 fi
 
 if (( $+commands[xdg-open] )); then
