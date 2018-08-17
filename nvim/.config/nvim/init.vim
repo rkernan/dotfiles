@@ -258,7 +258,10 @@ inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Plugin - LanguageClient
-let g:LanguageClient_serverCommands = {'python': ['pyls']}
+let g:LanguageClient_serverCommands = {
+	\		'go': ['go-langserver'],
+	\		'python': ['pyls'],
+	\	}
 nnoremap <leader>c :Denite contextMenu<cr>
 
 " Plugin - Signify
