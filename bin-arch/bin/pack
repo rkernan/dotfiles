@@ -74,6 +74,9 @@ case $CMD in
 	provides)
 		exec $BIN -Fo $*
 		;;
+	provides-local)
+		exec $BIN -Qo $*
+		;;
 	remove)
 		exec $SU_BIN -Rns $*
 		;;
