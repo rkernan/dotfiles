@@ -30,10 +30,8 @@ Plug 'tpope/vim-unimpaired'
 
 if g:at_work == 0
 	" completion
+	Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 	Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-	Plug 'shougo/echodoc.vim'
-	Plug 'zchee/deoplete-go'
-	Plug 'zchee/deoplete-jedi'
 	" searching
 	Plug 'haya14busa/incsearch.vim'
 	Plug 'haya14busa/incsearch-fuzzy.vim'
@@ -259,8 +257,9 @@ let g:deoplete#enable_at_startup = 1
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-" Plugin - Echodoc
-let g:echodoc#enable_at_startup = 1
+" Plugin - LanguageClient
+let g:LanguageClient_serverCommands = {'python': ['pyls']}
+nnoremap <leader>c :Denite contextMenu<cr>
 
 " Plugin - Signify
 let g:signify_sign_change = '~'
