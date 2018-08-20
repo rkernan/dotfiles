@@ -109,6 +109,7 @@ launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
                { "Terminal", terminal },
                { "Browser", "chromium" },
                { "Media Player", "smplayer" },
+               { "Image Viewer", "gpicview" },
                { "Passwords", "keepass" }
             }
          })
