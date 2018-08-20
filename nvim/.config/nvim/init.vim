@@ -259,6 +259,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Plugin - LanguageClient
 let g:LanguageClient_serverCommands = {
+	\		'javascript': ['javascript-typescript-stdio'],
 	\		'go': ['go-langserver'],
 	\		'python': ['pyls'],
 	\	}
