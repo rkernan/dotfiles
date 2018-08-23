@@ -13,4 +13,4 @@ path=("$HOME/bin" $path)
 
 # go path
 export GOPATH="${HOME}/workspace/go"
-path=($path "${GOPATH}/bin")
+path=("${GOPATH}/bin" $path)
