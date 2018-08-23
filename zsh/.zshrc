@@ -31,6 +31,11 @@ precmd() {
 PROMPT='%F{green}%c %f${vcs_info_msg_0_} %(?..%F{red}%? )%f%b%# '
 PROMPT='%(?..%F{red}%? )%F{green}%c %f${vcs_info_msg_0_} %# '
 
+# auto pushd on cd
+setopt autopushd
+setopt pushd_ignore_dups
+export DIRSTACKSIZE=10
+
 # print directory after cd
 cd() {
 	builtin cd "$@"
