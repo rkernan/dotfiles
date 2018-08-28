@@ -5,7 +5,7 @@ function! s:get_gruvbox_color(group)
 endfunction
 
 function! s:hl(group, fg, bg, emphasis)
-	execute 'highlight ' . a:group . ' guifg=' . a:fg[0] . ' guibg=' . a:bg[0] . ' gui=' . a:emphasis .
+	execute 'highlight! ' . a:group . ' guifg=' . a:fg[0] . ' guibg=' . a:bg[0] . ' gui=' . a:emphasis .
 		\                        ' ctermfg=' . a:fg[1] . ' ctermbg=' . a:bg[1] . ' cterm=' . a:emphasis
 endfunction
 
@@ -33,14 +33,14 @@ let s:status_nc_fg = s:bg4
 let s:status_nc_bg = s:bg1
 
 " EasyMotion colors
-highlight link EasyMotionTarget EasyMotionTarget2First
+highlight! link EasyMotionTarget EasyMotionTarget2First
 
 " Signify colors
-highlight link SignifyLineAdd             GruvboxGreenSign
-highlight link SignifyLineChange          GruvboxAquaSign
-highlight link SignifyLineDelete          GruvboxRedSign
-highlight link SignifyLineChangeDelete    SignifyLineChange
-highlight link SignifyLineDeleteFirstLine SignifyLineDelete
+highlight! link SignifyLineAdd             GruvboxGreenSign
+highlight! link SignifyLineChange          GruvboxAquaSign
+highlight! link SignifyLineDelete          GruvboxRedSign
+highlight! link SignifyLineChangeDelete    SignifyLineChange
+highlight! link SignifyLineDeleteFirstLine SignifyLineDelete
 
 " Modestatus colors
 call s:hl('StatusLine', s:fg4, s:bg2, 'none')
@@ -72,3 +72,8 @@ call s:hl('ModestatusModeReplace', s:bg0, s:aqua, 'none')
 call s:hl('ModestatusModeVisual', s:bg0, s:orange, 'none')
 call s:hl('ModestatusModeVisualLine', s:bg0, s:orange, 'none')
 call s:hl('ModestatusModeVisualBlock', s:bg0, s:orange, 'none')
+
+" TabLine colors (override)
+highlight! link TabLine     StatusLine
+highlight! link TabLineFill StatusLineNC
+highlight! link TabLineSel  ModestatusModeNormal
