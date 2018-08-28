@@ -8,6 +8,8 @@ fi
 
 typeset -gU cdpath fpath mailpath path
 
+# add local bin to path - pip installs here
+path=("$HOME/.local/bin" $path)
 # add ~/bin to path
 path=("$HOME/bin" $path)
 
