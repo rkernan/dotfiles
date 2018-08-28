@@ -27,15 +27,12 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-
-if g:at_work == 0
-	" completion
-	Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
-	Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-	" searching
-	Plug 'haya14busa/incsearch.vim'
-	Plug 'haya14busa/incsearch-fuzzy.vim'
-endif
+" completion
+Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" searching
+Plug 'haya14busa/incsearch.vim'
+Plug 'haya14busa/incsearch-fuzzy.vim'
 
 call plug#end()
 
