@@ -19,6 +19,7 @@ Plug 'tpope/vim-fugitive'
 " other
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/auto-pairs'
+Plug 'lambdalisue/suda.vim' " TODO remove once fixed in neovim
 Plug 'shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
