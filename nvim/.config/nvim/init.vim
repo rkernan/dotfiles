@@ -258,7 +258,7 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " Plugin - LanguageClient
 let g:LanguageClient_serverCommands = {
 	\		'javascript': ['javascript-typescript-stdio'],
-	\		'go': ['go-langserver'],
+	\		'go': ['go-langserver', '-gocodecompletion'],
 	\		'python': ['pyls'],
 	\	}
 nnoremap <leader>c :Denite contextMenu<cr>
