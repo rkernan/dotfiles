@@ -8,11 +8,15 @@ fi
 
 typeset -gU cdpath fpath mailpath path
 
-# add local bin to path - pip installs here
+# pip bin path
 path=("$HOME/.local/bin" $path)
-# add ~/bin to path
+# rust bin path
+path=("$HOME/.cargo/bin" $path)
+# user bin path
 path=("$HOME/bin" $path)
 
 # go path
 export GOPATH="${HOME}/workspace/go"
 path=("${GOPATH}/bin" $path)
+
+export PATH="$HOME/.cargo/bin:$PATH"

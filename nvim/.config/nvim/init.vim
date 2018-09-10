@@ -260,6 +260,7 @@ let g:LanguageClient_serverCommands = {
 	\		'javascript': ['javascript-typescript-stdio'],
 	\		'go': ['go-langserver', '-gocodecompletion'],
 	\		'python': ['pyls'],
+	\		'rust': ['rustup', 'run', 'stable', 'rls'],
 	\	}
 nnoremap <leader>c :Denite contextMenu<cr>
 
