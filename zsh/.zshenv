@@ -8,13 +8,12 @@ fi
 
 typeset -gU cdpath fpath mailpath path
 
-# pip bin path
+# pip path
 path=("$HOME/.local/bin" $path)
-# rust bin path
+# rust path
 path=("$HOME/.cargo/bin" $path)
-# user bin path
-path=("$HOME/bin" $path)
-
 # go path
 export GOPATH="${HOME}/workspace/go"
 path=("${GOPATH}/bin" $path)
+# user path
+path=("$HOME/bin" $path)
