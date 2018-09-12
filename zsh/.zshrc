@@ -36,6 +36,12 @@ setopt autopushd
 setopt pushd_ignore_dups
 export DIRSTACKSIZE=10
 
+# hide popd stdout, print directory after
+popd() {
+	builtin popd > /dev/null
+	builtin pwd
+}
+
 # print directory after cd
 cd() {
 	builtin cd "$@"
