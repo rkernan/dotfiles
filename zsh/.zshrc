@@ -28,8 +28,7 @@ precmd() {
 }
 
 # set prompt
-PROMPT='%F{green}%c %f${vcs_info_msg_0_} %(?..%F{red}%? )%f%b%# '
-PROMPT='%(?..%F{red}%? )%F{green}%c %f${vcs_info_msg_0_} %# '
+PROMPT='%F{green}%c%f${vcs_info_msg_0_} %(?..%F{red}%? )%f%# '
 
 # auto pushd on cd
 setopt autopushd
