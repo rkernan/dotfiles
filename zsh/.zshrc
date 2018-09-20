@@ -35,6 +35,11 @@ setopt autopushd
 setopt pushd_ignore_dups
 export DIRSTACKSIZE=10
 
+# don't expand ~
+function pwd_no_expand {
+	echo "${PWD/$HOME/~}"
+}
+
 # hide pushd stdout
 function pushd {
 	builtin pushd "$@" > /dev/null
@@ -43,13 +48,13 @@ function pushd {
 # hide popd stdout, print directory after
 function popd {
 	builtin popd "$@" > /dev/null
-	builtin pwd
+	pwd_no_expand
 }
 
 # print directory after cd
 function cd {
 	builtin cd "$@" > /dev/null
-	builtin pwd
+	pwd_no_expand
 }
 
 # history
