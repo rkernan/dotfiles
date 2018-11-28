@@ -4,7 +4,9 @@ fi
 
 typeset -gU cdpath fpath mailpath path
 
-# pip path
+# pyenv path
+path=("$HOME/.pyenv/bin" $path)
+# pip install path
 path=("$HOME/.local/bin" $path)
 # rust path
 path=("$HOME/.cargo/bin" $path)

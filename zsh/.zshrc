@@ -131,6 +131,13 @@ if (( $+commands[xdg-open] )); then
 	alias open='xdg-open'
 fi
 
+if (( $+commands[pyenv] )); then
+	# TODO add pyenv indicator to prompt
+	export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+	eval "$(pyenv init -)"
+	eval "$(pyenv virtualenv-init -)"
+fi
+
 # always use tmux for interactive shells
 # case $- in *i*)
 # 	TMUX_SESSION="main"
