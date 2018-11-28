@@ -1,7 +1,3 @@
-export VISUAL=$(which 'nvim' || which 'vim')
-export EDITOR=$VISUAL
-export PAGER=$(which 'less')
-
 if [[ -z "$LANG" ]]; then
 	export LANG='en_US.UTF-8'
 fi
@@ -17,3 +13,7 @@ export GOPATH="${HOME}/workspace/go"
 path=("${GOPATH}/bin" $path)
 # user path
 path=("$HOME/bin" $path)
+
+export VISUAL=$(which 'nvim' || which 'vim')
+export EDITOR=$VISUAL
+export PAGER=$(which 'less')
