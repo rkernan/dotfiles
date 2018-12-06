@@ -137,11 +137,3 @@ if (( $+commands[pyenv] )); then
 	eval "$(pyenv init -)"
 	eval "$(pyenv virtualenv-init -)"
 fi
-
-# always use tmux for interactive shells
-# case $- in *i*)
-# 	TMUX_SESSION="main"
-# 	if [ -z "$TMUX" ]; then
-# 		(tmux attach -t "$TMUX_SESSION" || tmux new -s "$TMUX_SESSION") && exit
-# 	fi
-# esac
