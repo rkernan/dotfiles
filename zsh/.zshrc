@@ -23,12 +23,28 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 	fi
 }
 
+# python_info
+zstyle ':python_info:virtualenv' format ' pyenv:%v'
+
+function python_info_virtualenv {
+	unset python_info[virtualenv]
+	typeset -gA python_info
+	local virtualenv_format
+	zstyle -s ':python_info:virtualenv' format 'virtualenv_format'
+	if [[ -n $virtualenv_format && -n "$PYENV_VERSION" ]]; then
+		zformat -f python_info[virtualenv] "$virtualenv_format" "v:${PYENV_VERSION:t}"
+	fi
+}
+
+# run on prompt refresh
 precmd() {
 	vcs_info
+	python_info_virtualenv
 }
 
 # set prompt
 PROMPT='%F{green}%c%f${vcs_info_msg_0_} %(?..%F{red}%? )%f%# '
+RPROMPT='%F{white}$python_info[virtualenv]%f'
 
 # auto pushd on cd
 setopt autopushd
@@ -58,9 +74,9 @@ function cd {
 }
 
 # history
-HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
-HISTSIZE=100000
-SAVEHIST=100000
+export HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
+export HISTSIZE=100000
+export SAVEHIST=100000
 setopt extended_history       # write history with timestamps
 setopt append_history         # allow multiple sessions to write history
 setopt inc_append_history     # write to history immediately
@@ -131,6 +147,7 @@ if (( $+commands[xdg-open] )); then
 	alias open='xdg-open'
 fi
 
+# pyenv
 if (( $+commands[pyenv] )); then
 	# TODO add pyenv indicator to prompt
 	export PYENV_VIRTUALENV_DISABLE_PROMPT=1
