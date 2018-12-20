@@ -46,8 +46,7 @@ precmd() {
 PROMPT='%F{green}%c%f${vcs_info_msg_0_} %(?..%F{red}%? )%f%# '
 RPROMPT='%F{white}$python_info[virtualenv]%f'
 
-# auto pushd on cd
-setopt autopushd
+# pushd settings
 setopt pushd_ignore_dups
 export DIRSTACKSIZE=10
 
