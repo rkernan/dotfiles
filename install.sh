@@ -9,7 +9,7 @@ function stow {
 function guess_target {
   if which pacman >/dev/null 2>&1; then
     # arch linux
-    echo bin-arch cli gui
+    echo bin-arch cli gui pyenv
   elif which yum >/dev/null 2>&1; then
     # centos/rhel/fedora
     echo at_work bash-ldap cli pyenv
