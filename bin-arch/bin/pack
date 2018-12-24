@@ -2,8 +2,8 @@
 
 set -e
 
-readonly BIN=$(which pacaur 2>/dev/null || which pacman)
-readonly SU_BIN=$(which pacaur 2>/dev/null || echo "sudo $(which pacman)")
+readonly BIN=$(which yay 2>/dev/null || which pacman)
+readonly SU_BIN=$(which yay 2>/dev/null || echo "sudo $(which pacman)")
 readonly CMD=$1
 shift
 
@@ -42,7 +42,6 @@ case $CMD in
 			(>&2 usage_no_params $CMD)
 			exit 1
 		fi
-		rm -rf ~/.cache/pacaur
 		exec $(which paccache) -r
 		;;
 	dependencies|deps)
