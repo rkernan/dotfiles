@@ -24,7 +24,7 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 }
 
 # python_info
-zstyle ':python_info:virtualenv' format ' pyenv:%v'
+zstyle ':python_info:virtualenv' format 'pyenv:%v '
 
 function python_info_virtualenv {
 	unset python_info[virtualenv]
@@ -43,8 +43,7 @@ precmd() {
 }
 
 # set prompt
-PROMPT='%F{green}%c%f${vcs_info_msg_0_} %(?..%F{red}%? )%f%# '
-RPROMPT='%F{white}$python_info[virtualenv]%f'
+PROMPT='%F{white}$python_info[virtualenv]%f%F{green}%c%f${vcs_info_msg_0_} %(?..%F{red}%? )%f%# '
 
 # pushd settings
 setopt pushd_ignore_dups
