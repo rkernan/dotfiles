@@ -49,6 +49,7 @@ function install_pyenv {
   rm -rf "$(pyenv root)/versions/${python2_ver}/envs/${neovim2_env}"
   pyenv virtualenv "$python2_ver" "$neovim2_env"
   pyenv activate "$neovim2_env"
+  pip install pynvim
   pip install neovim
   # setup neovim3
   readonly python3_ver="3.7.1"
@@ -60,6 +61,7 @@ function install_pyenv {
   rm -rf "$(pyenv root)/versions/${python3_ver}/envs/${neovim3_env}"
   pyenv virtualenv "$python3_ver" "$neovim3_env"
   pyenv activate "$neovim3_env"
+  pip install pynvim
   pip install neovim
 }
 
