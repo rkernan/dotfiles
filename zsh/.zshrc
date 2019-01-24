@@ -26,7 +26,7 @@ zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 # python_info
 zstyle ':python_info:virtualenv' format 'pyenv:%v '
 
-function python_info_virtualenv {
+python_info_virtualenv() {
 	unset python_info[virtualenv]
 	typeset -gA python_info
 	local virtualenv_format
@@ -50,23 +50,23 @@ setopt pushd_ignore_dups
 export DIRSTACKSIZE=10
 
 # don't expand ~
-function pwd_no_expand {
+pwd_no_expand() {
 	echo "${PWD/$HOME/~}"
 }
 
 # hide pushd stdout
-function pushd {
+pushd() {
 	builtin pushd "$@" > /dev/null
 }
 
 # hide popd stdout, print directory after
-function popd {
+popd() {
 	builtin popd "$@" > /dev/null
 	pwd_no_expand
 }
 
 # print directory after cd
-function cd {
+cd() {
 	builtin cd "$@" > /dev/null
 	pwd_no_expand
 }
@@ -135,6 +135,51 @@ alias ll='ls -lh'
 alias la='ll -A'
 alias p='$PAGER'
 alias path='echo -e ${PATH//:/\\n}'
+
+extract() {
+	if [ -f $1 ] ; then
+		case $1 in
+			*.tar.bz2)
+				tar -vxjf $1
+				;;
+			*.tar.gz)
+				tar -vxzf $1
+				;;
+			*.bz2)
+				bunzip2 -v $1
+				;;
+			*.rar)
+				rar x $1
+				;;
+			*.gz)
+				gunzip $1
+				;;
+			*.tar)
+				tar -vxf $1
+				;;
+			*.tbz2)
+				tar -vxjf $1
+				;;
+			*.tgz)
+				tar -vxzf $1
+				;;
+			*.zip)
+				unzip $1
+				;;
+			*.Z)
+				uncompress $1
+				;;
+			*.7z)
+				7z x $1
+				;;
+			*)
+				echo "'$1' cannot be extracted"
+				;;
+		esac
+	else
+		echo "'$1' is not a valid file"
+	fi
+}
 
 if (( $+commands[xsel] )); then
 	alias clip='xsel --clipboard --input'
