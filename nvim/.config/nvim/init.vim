@@ -1,9 +1,3 @@
-if !empty(glob('~/.at_work'))
-	let g:at_work = 1
-else
-	let g:at_work = 0
-endif
-
 " use pyenv pythons
 let g:python_host_prog = expand('~/.pyenv/versions/neovim2/bin/python')
 let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
@@ -23,7 +17,6 @@ Plug 'tpope/vim-fugitive'
 " other
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'lambdalisue/suda.vim' " TODO remove once fixed in neovim
 Plug 'shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'

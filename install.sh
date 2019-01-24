@@ -11,8 +11,8 @@ function guess_target {
     # arch linux
     echo bin-arch cli gui pyenv
   elif which yum >/dev/null 2>&1; then
-    # centos/rhel/fedora
-    echo at_work bash-ldap cli pyenv
+    # centos/rhel/fedora - work
+    echo bash-ldap cli pyenv
   else
     # other
     echo cli pyenv
@@ -72,9 +72,6 @@ mkdir -p ~/bin
 
 for target in $targets; do
   case $target in
-    at_work)
-      touch ~/.at_work
-      ;;
     bash-ldap)
       if [ -f "$HOME/.bashrc" ]; then
         mv "$HOME/.bashrc" "$HOME/.bashrc.backup.$(date +%F_%R)"
