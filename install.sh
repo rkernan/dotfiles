@@ -73,7 +73,9 @@ mkdir -p ~/bin
 for target in $targets; do
   case $target in
     bash-ldap)
-      if [ -f "$HOME/.bashrc" ]; then
+      if [ -L "$HOME/.bashrc" ]; then
+        rm -f "$HOME/.bashrc"
+      elif [ -f "$HOME/.bashrc" ]; then
         mv "$HOME/.bashrc" "$HOME/.bashrc.backup.$(date +%F_%R)"
       fi
       stow bash-ldap
