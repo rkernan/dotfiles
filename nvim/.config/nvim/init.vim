@@ -132,7 +132,7 @@ endfunction
 xnoremap @ :<C-u>call <SID>execute_macro_over_visual_range()<CR>
 
 " Plugin - Auto-pairs
-let g:AutoPairsMultilineClose = 0
+let g:AutoPairsFlyMode = 1
 autocmd FileType vim let b:AutoPairs = {'(': ')', '[': ']', '{': '}', "'": "'", '`': '`'}
 
 " Plugin - Denite
