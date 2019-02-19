@@ -52,7 +52,7 @@ function install_pyenv {
   pip install pynvim
   pip install neovim
   # setup neovim3
-  readonly python3_ver="3.7.1"
+  readonly python3_ver="3.7.2"
   if [ ! -d "$(pyenv root)/versions/${python3_ver}" ]; then
     pyenv install "$python3_ver"
   fi
