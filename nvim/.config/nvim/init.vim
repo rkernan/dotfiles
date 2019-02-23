@@ -28,6 +28,7 @@ Plug 'tpope/vim-unimpaired'
 " completion
 Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
 Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'shougo/neosnippet.vim'
 " searching
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
@@ -249,8 +250,17 @@ silent! call modestatus#options#add('denite_sources', 'color', ['ModestatusBold'
 
 " Plugin - Deoplete
 let g:deoplete#enable_at_startup = 1
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" s-tab behavior
+inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Plugin - Neosnippet
+let g:neosnippet#disable_runtime_snippets = {'_': 1}
+let g:neosnippet#enable_complete_done = 1
+imap <C-k> <Plug>(neosnippet_expand_or_jump)
+smap <C-k> <Plug>(neosnippet_expand_or_jump)
+xmap <C-k> <Plug>(neosnippet_expand_target)
+imap <expr><Tab> pumvisible() ? "\<C-n>" : neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
+smap <expr><Tab> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<Tab>"
 
 " Plugin - LanguageClient
 let g:LanguageClient_serverCommands = {
