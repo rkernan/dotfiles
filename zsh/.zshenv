@@ -16,6 +16,6 @@ path=("${GOPATH}/bin" $path)
 # user path
 path=("$HOME/bin" $path)
 
-export VISUAL=$(which 'nvim' || which 'vim')
+export VISUAL=$(whence 'nvim' || whence 'vim')
 export EDITOR=$VISUAL
-export PAGER=$(which 'less')
+export PAGER=$(whence 'less')
