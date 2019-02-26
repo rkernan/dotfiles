@@ -10,9 +10,12 @@ function guess_target {
   if which pacman >/dev/null 2>&1; then
     # arch linux
     echo bin-arch cli gui pyenv
+  elif which apt-get >/dev/null 2>&1; then
+    # ubuntu/linux-subsystem
+    echo bash-to-zsh cli pyenv
   elif which yum >/dev/null 2>&1; then
     # centos/rhel/fedora - work
-    echo bash-ldap cli pyenv
+    echo bash-to-zsh cli pyenv
   else
     # other
     echo cli pyenv
@@ -72,13 +75,13 @@ mkdir -p ~/bin
 
 for target in $targets; do
   case $target in
-    bash-ldap)
+    bash-to-zsh)
       if [ -L "$HOME/.bashrc" ]; then
         rm -f "$HOME/.bashrc"
       elif [ -f "$HOME/.bashrc" ]; then
         mv "$HOME/.bashrc" "$HOME/.bashrc.backup.$(date +%F_%R)"
       fi
-      stow bash-ldap
+      stow bash-to-zsh
       ;;
     bin-arch)
       stow bin-arch
