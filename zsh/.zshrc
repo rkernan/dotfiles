@@ -129,10 +129,9 @@ alias dirs='dirs -v'
 alias df='df -kh'
 alias e='$VISUAL'
 alias history-stat="history 0 | awk '{print \$2}' | sort | uniq -c | sort -n -r | head"
+alias la='ls --group-directories-first --color=auto -lhA'
+alias ll='ls --group-directories-first --color=auto -lh'
 alias ls='ls --group-directories-first --color=auto'
-alias l='ls -1A'
-alias ll='ls -lh'
-alias la='ll -A'
 alias p='$PAGER'
 alias path='echo -e ${PATH//:/\\n}'
 
