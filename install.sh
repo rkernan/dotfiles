@@ -18,7 +18,7 @@ guess_target() {
     echo bin-arch cli gui pyenv neovim
   else
     # other
-    echo cli pyenv
+    echo cli pyenv neovim
   fi
 }
 
