@@ -82,7 +82,7 @@ setup_language_servers() {
   pip install -U python-language-server
   pyenv deactivate
   # go
-  go get -u github.com/sourcegraph/go-langserver
+  go get -u -v github.com/sourcegraph/go-langserver
 }
 
 setup_local_neovim() {
