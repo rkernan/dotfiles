@@ -2,6 +2,9 @@
 
 set -e
 
+readonly python2_ver="2.7.15"
+readonly python3_ver="3.7.2"
+
 function stow {
   command stow -t "$HOME" -v "$1"
 }
@@ -24,7 +27,7 @@ guess_target() {
 
 setup_pyenv() {
   # install pyenv
-  readonly pyenv_root="$HOME/.pyenv"
+  local pyenv_root="$HOME/.pyenv"
   if [ ! -d "$pyenv_root" ]; then
     git clone https://github.com/pyenv/pyenv.git "$pyenv_root"
     PATH="${pyenv_root}:${PATH}"
@@ -46,27 +49,40 @@ setup_pyenv() {
 
 setup_neovim_venv() {
   # setup neovim2 virtualenv
-  readonly python2_ver="2.7.15"
   if [ ! -d "$(pyenv root)/versions/${python2_ver}" ]; then
     pyenv install "$python2_ver"
   fi
-  readonly neovim2_env="neovim2"
+  local neovim2_env="neovim2"
   if [ ! -d "$(pyenv root)/versions/${neovim2_env}" ]; then
     pyenv virtualenv "$python2_ver" "$neovim2_env"
   fi
   pyenv activate "$neovim2_env"
   pip install -U pynvim neovim
   # setup neovim3 virtualenv
-  readonly python3_ver="3.7.2"
   if [ ! -d "$(pyenv root)/versions/${python3_ver}" ]; then
     pyenv install "$python3_ver"
   fi
-  readonly neovim3_env="neovim3"
+  local neovim3_env="neovim3"
   if [ ! -d "$(pyenv root)/versions/${neovim3_env}" ]; then
     pyenv virtualenv "$python3_ver" "$neovim3_env"
   fi
   pyenv activate "$neovim3_env"
   pip install -U pynvim neovim
+  # deactivate
+  pyenv deactivate
+}
+
+setup_language_servers() {
+  # pyls
+  local pyls_env="pyls"
+  if [ ! -d "$(pyenv root)/versions/${pyls_env}" ]; then
+    pyenv virtualenv "$python3_ver" "$pyls_env"
+  fi
+  pyenv activate "$pyls_env"
+  pip install -U python-language-server
+  pyenv deactivate
+  # go
+  go get -u github.com/sourcegraph/go-langserver
 }
 
 setup_local_neovim() {
@@ -114,6 +130,7 @@ for target in $targets; do
     neovim)
       setup_neovim_venv
       setup_local_neovim
+      setup_language_servers
       ;;
     *)
       echo "Unknown target $target" 2>&1
