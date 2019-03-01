@@ -18,7 +18,7 @@ guess_target() {
     echo bash-to-zsh cli pyenv neovim
   elif which yum >/dev/null 2>&1; then
     # centos/rhel/fedora - work
-    echo bin-arch cli gui pyenv neovim
+    echo bash-to-zsh cli pyenv neovim
   else
     # other
     echo cli pyenv neovim
