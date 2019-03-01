@@ -265,7 +265,7 @@ smap <expr><Tab> neosnippet#expandable_or_jumpable() ? "\<Plug>(neosnippet_expan
 " Plugin - LanguageClient
 let g:LanguageClient_serverCommands = {
 	\		'javascript': ['javascript-typescript-stdio'],
-	\		'go': ['go-langserver', '-gocodecompletion'],
+	\		'go': ['bingo'],
 	\		'python': ['~/.pyenv/versions/pyls/bin/pyls'],
 	\		'rust': ['rustup', 'run', 'stable', 'rls'],
 	\	}
