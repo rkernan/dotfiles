@@ -12,20 +12,25 @@ function stow {
 guess_target() {
   if which pacman >/dev/null 2>&1; then
     # arch linux
-    echo bin-arch cli gui pyenv neovim
-  elif which apt-get >/dev/null 2>&1; then
-    # ubuntu/linux-subsystem
-    echo bash-to-zsh cli pyenv neovim
+    echo bin-arch cli gui python rust javascript neovim
   elif which yum >/dev/null 2>&1; then
     # centos/rhel/fedora - work
-    echo bash-to-zsh cli pyenv neovim
+    echo bash-to-zsh cli python javascript neovim
   else
     # other
-    echo cli pyenv neovim
+    echo cli python rust javascript neovim
   fi
 }
 
-setup_pyenv() {
+install_go_langserver() {
+  go get -u github.com/saibing/bingo
+}
+
+install_javascript_langserver() {
+  npm install -g javascript-typescript-langserver
+}
+
+install_pyenv() {
   # install pyenv
   local pyenv_root="$HOME/.pyenv"
   if [ ! -d "$pyenv_root" ]; then
@@ -47,6 +52,27 @@ setup_pyenv() {
   pyenv update
 }
 
+install_python_langserver() {
+  local pyls_env="pyls"
+  if [ ! -d "$(pyenv root)/versions/${pyls_env}" ]; then
+    pyenv virtualenv "$python3_ver" "$pyls_env"
+  fi
+  pyenv activate "$pyls_env"
+  python -m pip install -U python-language-server
+  pyenv deactivate
+}
+
+install_rust() {
+  if [ ! -d ~/.rustup ]; then
+    curl https://sh.rustup.rs -sSf | sh
+  fi
+  rustup update
+}
+
+install_rust_langserver() {
+  rustup component add rls rust-analysis rust-src
+}
+
 setup_neovim_venv() {
   # setup neovim2 virtualenv
   if [ ! -d "$(pyenv root)/versions/${python2_ver}" ]; then
@@ -57,7 +83,7 @@ setup_neovim_venv() {
     pyenv virtualenv "$python2_ver" "$neovim2_env"
   fi
   pyenv activate "$neovim2_env"
-  pip install -U pynvim neovim
+  python -m pip install -U pynvim neovim
   # setup neovim3 virtualenv
   if [ ! -d "$(pyenv root)/versions/${python3_ver}" ]; then
     pyenv install "$python3_ver"
@@ -67,25 +93,12 @@ setup_neovim_venv() {
     pyenv virtualenv "$python3_ver" "$neovim3_env"
   fi
   pyenv activate "$neovim3_env"
-  pip install -U pynvim neovim
+  python -m pip install -U pynvim neovim
   # deactivate
   pyenv deactivate
 }
 
-setup_language_servers() {
-  # pyls
-  local pyls_env="pyls"
-  if [ ! -d "$(pyenv root)/versions/${pyls_env}" ]; then
-    pyenv virtualenv "$python3_ver" "$pyls_env"
-  fi
-  pyenv activate "$pyls_env"
-  pip install -U python-language-server
-  pyenv deactivate
-  # go
-  go get -u -v github.com/saibing/bingo
-}
-
-setup_local_neovim() {
+install_local_neovim() {
   pushd ~/bin
   rm -f nvim.appimage
   curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
@@ -118,19 +131,30 @@ for target in $targets; do
       stow tmux
       stow zsh
       ;;
+    go)
+      install_go_langserver
+      ;;
     gui)
       stow xmodmap
       stow awesome
       stow termite
       stow udiskie
       ;;
-    pyenv)
-      setup_pyenv
+    javascript)
+      stow npm
+      install_javascript_langserver
       ;;
     neovim)
       setup_neovim_venv
-      setup_local_neovim
-      setup_language_servers
+      install_local_neovim
+      ;;
+    python)
+      install_pyenv
+      install_python_langserver
+      ;;
+    rust)
+      install_rust
+      install_rust_langserver
       ;;
     *)
       echo "Unknown target $target" 2>&1
