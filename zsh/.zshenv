@@ -14,7 +14,7 @@ path=("$HOME/.cargo/bin" $path)
 export GOPATH="${HOME}/workspace/go"
 path=("${GOPATH}/bin" $path)
 # npm path
-export NPM_PACKAGES="${HOME}/.npm"
+export NPM_PACKAGES="${HOME}/.npm-packages"
 path=("${NPM_PACKAGES}/bin" $path)
 # user path
 path=("$HOME/bin" $path)
