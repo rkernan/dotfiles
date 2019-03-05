@@ -115,10 +115,8 @@ mkdir -p ~/bin
 for target in $targets; do
   case $target in
     bash-to-zsh)
-      if [ -L "$HOME/.bashrc" ]; then
-        rm -f "$HOME/.bashrc"
-      elif [ -f "$HOME/.bashrc" ]; then
-        mv "$HOME/.bashrc" "$HOME/.bashrc.backup.$(date +%F_%R)"
+      if [ -f "${HOME}/.bashrc" ] && [ ! -L "${HOME}/.bashrc" ]; then
+        mv "${HOME}/.bashrc" "${HOME}/.bashrc.backup.$(date +%F_%R)"
       fi
       stow bash-to-zsh
       ;;
