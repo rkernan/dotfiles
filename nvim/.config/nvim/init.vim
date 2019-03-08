@@ -172,6 +172,8 @@ call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'nor
 " triggers
 nnoremap <leader>b :Denite buffer<cr>
 nnoremap <leader>f :Denite file_rec<cr>
+nnoremap <leader>l :Denite line<cr>
+nnoremap <leader>o :Denite outline<cr>
 nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
 
 " Plugin - Incsearch, Incsearch-Fuzzy, Asterisk
