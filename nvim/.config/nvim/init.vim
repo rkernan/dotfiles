@@ -153,7 +153,7 @@ for pattern in split(&wildignore, ',')
 endfor
 " file_rec command
 if executable('ag')
-	silent! call denite#custom#var('file_rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden'] + s:ag_ignore + ['-g', ''])
+	silent! call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden'] + s:ag_ignore + ['-g', ''])
 endif
 " grep command
 if executable('ag')
@@ -171,7 +171,7 @@ call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap
 call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
 " triggers
 nnoremap <leader>b :Denite buffer<cr>
-nnoremap <leader>f :Denite file_rec<cr>
+nnoremap <leader>f :Denite file/rec<cr>
 nnoremap <leader>l :Denite line<cr>
 nnoremap <leader>o :Denite outline<cr>
 nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
