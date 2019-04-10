@@ -2,4 +2,4 @@ program_options:
   tray: "auto"
   automount: true
   notify: true
-  file_manager: termite-at
+  file_manager: pcmanfm

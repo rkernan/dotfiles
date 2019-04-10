@@ -108,7 +108,8 @@ launcher = awful.widget.launcher({ image = beautiful.awesome_icon,
                   }
                },
                { "Terminal", terminal },
-               { "Browser", "chromium" },
+               { "Files", "pcmanfm" },
+               { "Web Browser", "chromium" },
                { "Media Player", "smplayer" },
                { "Image Viewer", "gpicview" },
                { "Passwords", "keepass" }
@@ -344,7 +345,7 @@ awful.rules.rules = {
    -- Floating and centered clients.
    {
       rule_any = {
-         instance = { sound_control, display_control, "blueman-manager", "lxappearance", "nm-connection-editor" },
+         instance = { sound_control, display_control, "pcmanfm", "blueman-manager", "lxappearance", "nm-connection-editor" },
          role = { "pop-up" }
       },
       properties = {
