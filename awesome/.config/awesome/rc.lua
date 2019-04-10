@@ -68,6 +68,7 @@ run_once("nm-applet")
 run_once("volumeicon")
 run_once("blueman-applet")
 run_once("cbatticon")
+run_once("dropbox")
 run_once("light-locker --lock-on-suspend")
 
 -- Table of layouts to cover with awful.layout.inc, order matters.
