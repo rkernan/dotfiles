@@ -14,6 +14,7 @@ function usage {
 	echo "  dependencies | deps : List dependency tree of a given package"
 	echo "  diff                : Clean up pacnew files, does not accept addition parameters"
 	echo "  download            : Download a remote package"
+	echo "  firmware-upgrade     ; Upgrade the system firmware"
 	echo "  install             : Install a remote package"
 	echo "  install-local       : Install a local file"
 	echo "  list-orphans        : List all installed orphan packages, does not accept additional parameters"
@@ -56,6 +57,14 @@ case $CMD in
 		;;
 	download)
 		exec $SU_BIN -Sw $*
+		;;
+	firmware-upgrade)
+		if [ $# -ne 0 ]; then
+			(>&2 usage_no_params $CMD)
+			exit 1
+		fi
+		$(which fwupdmgr) refresh
+		exec $(which fwupdmgr) update
 		;;
 	install)
 		exec $SU_BIN -S $*
