@@ -136,6 +136,7 @@ for target in $targets; do
       stow xmodmap
       stow awesome
       stow termite
+      stow rofi
       stow udiskie
       ;;
     javascript)
