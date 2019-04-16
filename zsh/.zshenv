@@ -22,5 +22,3 @@ path=("$HOME/bin" $path)
 export VISUAL=$(whence 'nvim' || whence 'vim')
 export EDITOR=$VISUAL
 export PAGER=$(whence 'less')
-
-export PATH="$HOME/.cargo/bin:$PATH"
