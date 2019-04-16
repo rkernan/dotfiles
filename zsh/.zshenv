@@ -11,7 +11,7 @@ path=("$HOME/.local/bin" $path)
 # rust path
 path=("$HOME/.cargo/bin" $path)
 # go path
-export GOPATH="${HOME}/workspace/go"
+export GOPATH="${HOME}/dev/go"
 path=("${GOPATH}/bin" $path)
 # npm path
 export NPM_PACKAGES="${HOME}/.npm-packages"
