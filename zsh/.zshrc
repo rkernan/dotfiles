@@ -18,28 +18,37 @@ zstyle ':vcs_info:*' actionformats ' %f[%F{cyan}%b!%a%f%c%u%m%f]'
 zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
 
 +vi-git-untracked() {
-	if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && git status --porcelain | fgrep '??' &> /dev/null; then
-		hook_com[misc]='%F{red}●%f'
-	fi
+  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && git status --porcelain | fgrep '??' &> /dev/null; then
+    hook_com[misc]='%F{red}●%f'
+  fi
 }
 
 # python_info
 zstyle ':python_info:virtualenv' format 'pyenv:%v '
 
 python_info_virtualenv() {
-	unset python_info[virtualenv]
-	typeset -gA python_info
-	local virtualenv_format
-	zstyle -s ':python_info:virtualenv' format 'virtualenv_format'
-	if [[ -n $virtualenv_format && -n "$PYENV_VERSION" ]]; then
-		zformat -f python_info[virtualenv] "$virtualenv_format" "v:${PYENV_VERSION:t}"
-	fi
+  unset python_info[virtualenv]
+  typeset -gA python_info
+  local virtualenv_format
+  zstyle -s ':python_info:virtualenv' format 'virtualenv_format'
+  if [[ -n $virtualenv_format && -n "$PYENV_VERSION" ]]; then
+    zformat -f python_info[virtualenv] "$virtualenv_format" "v:${PYENV_VERSION:t}"
+  fi
+}
+
+set_term_title() {
+  case $TERM in
+    xterm*)
+      print -Pn "\e];%~\a"
+      ;;
+  esac
 }
 
 # run on prompt refresh
 precmd() {
-	vcs_info
-	python_info_virtualenv
+  set_term_title
+  vcs_info
+  python_info_virtualenv
 }
 
 # set prompt
@@ -51,24 +60,24 @@ export DIRSTACKSIZE=10
 
 # don't expand ~
 pwd_no_expand() {
-	echo "${PWD/$HOME/~}"
+  echo "${PWD/$HOME/~}"
 }
 
 # hide pushd stdout
 pushd() {
-	builtin pushd "$@" > /dev/null
+  builtin pushd "$@" > /dev/null
 }
 
 # hide popd stdout, print directory after
 popd() {
-	builtin popd "$@" > /dev/null
-	pwd_no_expand
+  builtin popd "$@" > /dev/null
+  pwd_no_expand
 }
 
 # print directory after cd
 cd() {
-	builtin cd "$@" > /dev/null
-	pwd_no_expand
+  builtin cd "$@" > /dev/null
+  pwd_no_expand
 }
 
 # history
@@ -136,63 +145,63 @@ alias p='$PAGER'
 alias path='echo -e ${PATH//:/\\n}'
 
 extract() {
-	if [ -f $1 ] ; then
-		case $1 in
-			*.tar.bz2)
-				tar -vxjf $1
-				;;
-			*.tar.gz)
-				tar -vxzf $1
-				;;
-			*.bz2)
-				bunzip2 -v $1
-				;;
-			*.rar)
-				rar x $1
-				;;
-			*.gz)
-				gunzip $1
-				;;
-			*.tar)
-				tar -vxf $1
-				;;
-			*.tbz2)
-				tar -vxjf $1
-				;;
-			*.tgz)
-				tar -vxzf $1
-				;;
-			*.zip)
-				unzip $1
-				;;
-			*.Z)
-				uncompress $1
-				;;
-			*.7z)
-				7z x $1
-				;;
-			*)
-				echo "'$1' cannot be extracted"
-				;;
-		esac
-	else
-		echo "'$1' is not a valid file"
-	fi
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)
+        tar -vxjf $1
+        ;;
+      *.tar.gz)
+        tar -vxzf $1
+        ;;
+      *.bz2)
+        bunzip2 -v $1
+        ;;
+      *.rar)
+        rar x $1
+        ;;
+      *.gz)
+        gunzip $1
+        ;;
+      *.tar)
+        tar -vxf $1
+        ;;
+      *.tbz2)
+        tar -vxjf $1
+        ;;
+      *.tgz)
+        tar -vxzf $1
+        ;;
+      *.zip)
+        unzip $1
+        ;;
+      *.Z)
+        uncompress $1
+        ;;
+      *.7z)
+        7z x $1
+        ;;
+      *)
+        echo "'$1' cannot be extracted"
+        ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
 }
 
 if (( $+commands[xsel] )); then
-	alias clip='xsel --clipboard --input'
-	alias paste='xsel --clipboard --output'
+  alias clip='xsel --clipboard --input'
+  alias paste='xsel --clipboard --output'
 fi
 
 if (( $+commands[xdg-open] )); then
-	alias open='xdg-open'
+  alias open='xdg-open'
 fi
 
 # pyenv
 if (( $+commands[pyenv] )); then
-	# TODO add pyenv indicator to prompt
-	export PYENV_VIRTUALENV_DISABLE_PROMPT=1
-	eval "$(pyenv init -)"
-	eval "$(pyenv virtualenv-init -)"
+  # TODO add pyenv indicator to prompt
+  export PYENV_VIRTUALENV_DISABLE_PROMPT=1
+  eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
 fi
