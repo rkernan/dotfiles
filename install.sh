@@ -133,7 +133,6 @@ for target in $targets; do
       install_go_langserver
       ;;
     gui)
-      stow xmodmap
       stow awesome
       stow termite
       stow rofi
