@@ -4,7 +4,7 @@ if [ -e "${HOME}/.profile" ]; then
   source "${HOME}/.profile"
 fi
 
-light-locker --lock-on-suspend &
+light-locker --lock-after-screensaver=3 --lock-on-suspend &
 udiskie --automount --notify --smart-tray --file-manager 'termite -d' &
 
 export PATH=$HOME/bin:$PATH
