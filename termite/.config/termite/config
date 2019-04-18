@@ -1,5 +1,6 @@
 [options]
-font = Hack 9
+font = Monospace 9
+icon_name = terminal
 
 # from github.com:morhetz/gruvbox-contrib
 [colors]
