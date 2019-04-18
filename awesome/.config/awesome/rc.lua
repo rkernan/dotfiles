@@ -54,9 +54,6 @@ local function run_once(cmd)
       awful.spawn.with_shell(string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd))
 end
 
--- run_once({ "urxvtd", "unclutter -root" }) -- entries must be separated by commas
-run_once("udiskie")
-run_once("light-locker --lock-on-suspend")
 -- TODO replace with widgets
 run_once("nm-applet")
 run_once("volumeicon")
@@ -322,7 +319,7 @@ globalkeys = my_table.join(
     awful.key({ modkey }, "s", hotkeys_popup.show_help,
               {description = "show help", group="awesome: misc"}),
     -- lock screen
-    awful.key({ altkey, "Control" }, "l", function () os.execute(scrlocker) end,
+    awful.key({ modkey }, "l", function () os.execute(scrlocker) end,
               { description = "lock screen", group = "awesome: misc" }),
     -- client focus
     awful.key({ modkey }, "h", function () awful.client.focus.bydirection("left") end,

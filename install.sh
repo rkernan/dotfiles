@@ -136,7 +136,6 @@ for target in $targets; do
       stow awesome
       stow termite
       stow rofi
-      stow udiskie
       ;;
     javascript)
       stow npm

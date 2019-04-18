@@ -1,5 +1,0 @@
-program_options:
-  tray: "auto"
-  automount: true
-  notify: true
-  file_manager: pcmanfm

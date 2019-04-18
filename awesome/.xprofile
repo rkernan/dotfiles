@@ -1,1 +1,10 @@
+#!/usr/bin/env sh
+
+if [ -e "${HOME}/.profile" ]; then
+  source "${HOME}/.profile"
+fi
+
+light-locker --lock-on-suspend &
+udiskie --automount --notify --smart-tray --file-manager 'termite -d' &
+
 export PATH=$HOME/bin:$PATH
