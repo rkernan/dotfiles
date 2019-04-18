@@ -20,11 +20,12 @@ function usage {
 	echo "  list-orphans        : List all installed orphan packages, does not accept additional parameters"
 	echo "  provides            : Query which remote package provides a specified file"
 	echo "  provides-local      : Query which local package provides a specified file"
+	echo "  provides-what       : List all files provided by the given package or all packages if none are specified"
 	echo "  remove              : Uninstall a local package"
 	echo "  search              : Search for the specified remote package or list all remote packages if none are specified"
 	echo "  search-local        : Search for the specified local package or list all local packages if none are specified"
 	echo "  sync                : Sync the package file database, does not accept additional parameters"
-	echo "  upgrade             : Undate the specified packages or all packages if none are specified"
+	echo "  upgrade             : Update the specified packages or all packages if none are specified"
 	echo "  verify              : Validate the specified packages or all packages if none are specified"
 }
 
@@ -84,6 +85,9 @@ case $CMD in
 		;;
 	provides-local)
 		exec $BIN -Qo $*
+		;;
+	provides-what)
+		exec $BIN -Ql $*
 		;;
 	remove)
 		exec $SU_BIN -Rns $*
