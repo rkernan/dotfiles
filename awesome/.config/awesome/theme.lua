@@ -301,7 +301,7 @@ client.connect_signal("request::titlebars", function(c)
     end)
   )
 
-  awful.titlebar(c, { size = dpi(16), font = theme.font }) : setup({
+  awful.titlebar(c, { size = dpi(20), font = theme.font }) : setup({
     { -- Left
       layout = wibox.layout.fixed.horizontal,
       buttons = buttons,
