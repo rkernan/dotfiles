@@ -63,7 +63,7 @@ theme.layout_magnifier                                = theme.icon_dir .. "/layo
 theme.layout_floating                                 = theme.icon_dir .. "/layout/floating.png"
 theme.tasklist_plain_task_name                        = false
 theme.tasklist_disable_icon                           = false
-theme.useless_gap                                     = dpi(2)
+theme.useless_gap                                     = 0
 -- close button
 theme.titlebar_close_button_normal                    = theme.icon_dir .. "/titlebar/close.png"
 theme.titlebar_close_button_normal_hover              = theme.titlebar_close_button_normal
