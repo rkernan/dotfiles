@@ -17,8 +17,10 @@ theme.border_width                                    = dpi(2)
 theme.border_normal                                   = "#252525"
 theme.border_focus                                    = "#0099CC"
 theme.taglist_fg_focus                                = theme.border_focus
-theme.tasklist_bg_normal                              = theme.bg_normal
-theme.tasklist_fg_focus                               = theme.fg_focus
+theme.tasklist_bg_normal                              = theme.bg_focus
+theme.tasklist_font_focus                             = "Monospace Bold 9"
+theme.tasklist_fg_minimize                            = theme.fg_focus
+theme.tasklist_bg_minimize                            = theme.bg_normal
 theme.menu_font                                       = "Sans Regular 9"
 theme.menu_height                                     = dpi(20)
 theme.menu_width                                      = dpi(160)
@@ -224,7 +226,7 @@ function theme.at_screen_connect(s)
                          awful.button({ }, 5, function () awful.layout.inc(-1) end)))
 
   -- Create a tasklist widget
-  mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
+  mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons, { spacing = dpi(5) })
   s.mytasklist = wibox.container.margin(mytasklist, dpi(5), dpi(5), dpi(5), dpi(5))
 
   -- create systray widget
