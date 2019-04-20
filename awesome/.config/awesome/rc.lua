@@ -56,7 +56,7 @@ run_once("blueman-applet")
 run_once("dropbox")
 
 -- TODO
--- This function implements the XDG autostart specification
+-- -- This function implements the XDG autostart specification
 -- awful.spawn.with_shell(
 --   'if (xrdb -query | grep -q "^awesome\\.started:\\s*true$"); then exit; fi;' ..
 --   'xrdb -merge <<< "awesome.started:true";' ..

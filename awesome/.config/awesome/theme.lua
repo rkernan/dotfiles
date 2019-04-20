@@ -171,6 +171,7 @@ local mybaticon = wibox.widget.imagebox(theme.widget_batt)
 local mybat = lain.widget.bat({
   timeout = 31,
   battery = "BAT0",
+  notify = "off",
   settings = function()
     local perc = bat_now.perc .. "%"
     if bat_now.ac_status == 1 then
