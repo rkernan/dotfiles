@@ -43,13 +43,6 @@ theme.widget_clock                                    = theme.icon_dir .. "/widg
 theme.widget_vol                                      = theme.icon_dir .. "/widget/spkr.png"
 theme.taglist_squares_sel                             = theme.icon_dir .. "/square_sel.png"
 theme.taglist_squares_unsel                           = theme.icon_dir .. "/square_unsel.png"
-theme.spr_small                                       = theme.icon_dir .. "/spr_small.png"
-theme.spr_very_small                                  = theme.icon_dir .. "/spr_very_small.png"
-theme.spr_right                                       = theme.icon_dir .. "/spr_right.png"
-theme.spr_bottom_right                                = theme.icon_dir .. "/spr_bottom_right.png"
-theme.spr_left                                        = theme.icon_dir .. "/spr_left.png"
-theme.bar                                             = theme.icon_dir .. "/bar.png"
-theme.bottom_bar                                      = theme.icon_dir .. "/bottom_bar.png"
 theme.layout_tile                                     = theme.icon_dir .. "/layout/tile.png"
 theme.layout_tileleft                                 = theme.icon_dir .. "/layout/tileleft.png"
 theme.layout_tilebottom                               = theme.icon_dir .. "/layout/tilebottom.png"
@@ -101,9 +94,11 @@ theme.systray_icon_spacing = dpi(5)
 --------------------
 local markup = lain.util.markup
 
+local mysep = wibox.widget.textbox(" ")
+
 -- Clock
 local myclockicon = wibox.widget.imagebox(theme.widget_clock)
-local mytextclock = wibox.widget.textclock(markup("#7788af", "%A %d %B ") .. markup("#de5e1e", "%H:%M "))
+local mytextclock = wibox.widget.textclock(markup("#7788af", "%A %d %B ") .. markup("#de5e1e", "%H:%M"))
 mytextclock.font = theme.font
 
 -- Calendar
@@ -121,7 +116,7 @@ local mycpuicon = wibox.widget.imagebox(theme.widget_cpu)
 local mycpu = lain.widget.cpu({
   timeout = 3,
   settings = function()
-    widget:set_markup(markup.fontfg(theme.font, "#e33a6e", cpu_now.usage .. "% "))
+    widget:set_markup(markup.fontfg(theme.font, "#e33a6e", cpu_now.usage .. "%"))
   end
 })
 
@@ -130,7 +125,7 @@ local mymemicon = wibox.widget.imagebox(theme.widget_mem)
 local mymem = lain.widget.mem({
   timeout = 3,
   settings = function()
-    widget:set_markup(markup.fontfg(theme.font, "#e0da37", mem_now.used .. "M "))
+    widget:set_markup(markup.fontfg(theme.font, "#e0da37", mem_now.used .. "M"))
   end
 })
 
@@ -173,7 +168,7 @@ local mybat = lain.widget.bat({
   battery = "BAT0",
   notify = "off",
   settings = function()
-    widget:set_markup(markup.fontfg(theme.font, theme.fg_normal, bat_now.perc .. "% "))
+    widget:set_markup(markup.fontfg(theme.font, theme.fg_normal, bat_now.perc .. "%"))
   end
 })
 
@@ -237,24 +232,30 @@ function theme.at_screen_connect(s)
     layout = wibox.layout.align.horizontal,
     { -- Left widgets
       layout = wibox.layout.fixed.horizontal,
+      mysep,
       s.mytag,
-      spr_small,
       s.mylayoutbox,
     },
     nil, -- Middle widget
     { -- Right widgets
       layout = wibox.layout.fixed.horizontal,
       s.mysystray,
+      mysep,
       myvolicon,
       myvol.widget,
+      mysep,
       mybaticon,
       mybat,
+      mysep,
       mymemicon,
       mymem,
+      mysep,
       mycpuicon,
       mycpu,
+      mysep,
       myclockicon,
       mytextclock,
+      mysep,
     },
   }
 
@@ -270,7 +271,6 @@ function theme.at_screen_connect(s)
     s.mytasklist, -- Middle widget
     { -- Right widgets
       layout = wibox.layout.fixed.horizontal,
-      spr_bottom_right,
     },
   }
 end
