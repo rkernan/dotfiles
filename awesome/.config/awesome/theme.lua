@@ -173,11 +173,7 @@ local mybat = lain.widget.bat({
   battery = "BAT0",
   notify = "off",
   settings = function()
-    local perc = bat_now.perc .. "%"
-    if bat_now.ac_status == 1 then
-      perc = perc .. " C"
-    end
-    widget:set_markup(markup.fontfg(theme.font, theme.fg_normal, perc .. " "))
+    widget:set_markup(markup.fontfg(theme.font, theme.fg_normal, bat_now.perc .. "% "))
   end
 })
 
