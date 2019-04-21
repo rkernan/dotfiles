@@ -50,7 +50,6 @@ local function run_once(cmd)
   awful.spawn.with_shell(string.format("pgrep -u $USER -fx '%s' > /dev/null || (%s)", cmd, cmd))
 end
 
-run_once("compton -b")
 run_once("nm-applet")
 run_once("blueman-applet")
 run_once("dropbox")
@@ -179,7 +178,6 @@ awful.util.mymainmenu = awful.menu(
         "Config", {
           { "Sound", "pavucontrol" },
           { "Displays", "arandr" },
-          { "Compton", "compton-conf" },
           { "Gtk3", "lxappearance" },
         },
       },
