@@ -25,9 +25,9 @@ guess_target() {
 install_fzf() {
   local fzf_root="$HOME/.fzf"
   if [ ! -d "$fzf_root" ]; then
-    git clone https://github.com/junegunn/fzf.git ~/.fzf
+    git clone https://github.com/junegunn/fzf.git "$fzf_root"
   fi
-  ~/.fzf/install --all --no-bash
+  ${fzf_root}/install --all --no-bash
 }
 
 install_go_langserver() {
