@@ -14,10 +14,12 @@ Plug 'wellle/targets.vim'
 " vcs integration
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
+" fzf integration
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-bash' }
+Plug 'junegunn/fzf.vim'
 " other
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/auto-pairs'
-Plug 'shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
@@ -26,7 +28,7 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 " completion
-Plug 'autozimu/LanguageClient-neovim', {'branch': 'next', 'do': 'bash install.sh'}
+Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " searching
 Plug 'haya14busa/incsearch.vim'
@@ -135,45 +137,13 @@ xnoremap @ :<C-u>call <SID>execute_macro_over_visual_range()<CR>
 let g:AutoPairsFlyMode = 1
 autocmd FileType vim let b:AutoPairs = {'(': ')', '[': ']', '{': '}', "'": "'", '`': '`'}
 
-" Plugin - Denite
-silent! call denite#custom#option('default', 'auto_resize', 1)
-silent! call denite#custom#option('default', 'statusline', 0)
-silent! call denite#custom#option('default', 'highlight_mode_normal', 'CursorLine')
-silent! call denite#custom#option('default', 'highlight_mode_insert', 'CursorLine')
-silent! call denite#custom#option('grep', 'mode', 'normal')
-silent! call denite#custom#option('grep', 'auto_resize', 1)
-silent! call denite#custom#option('grep', 'statusline', 0)
-silent! call denite#custom#option('grep', 'highlight_mode_normal', 'CursorLine')
-silent! call denite#custom#option('grep', 'highlight_mode_insert', 'CursorLine')
-" build ag ignores from wildignore
-let s:ag_ignore = []
-for pattern in split(&wildignore, ',')
-	let s:ag_ignore += ['--ignore', pattern]
-endfor
-" file_rec command
-if executable('ag')
-	silent! call denite#custom#var('file/rec', 'command', ['ag', '--follow', '--nocolor', '--nogroup', '--hidden'] + s:ag_ignore + ['-g', ''])
-endif
-" grep command
-if executable('ag')
-	silent! call denite#custom#var('grep', 'command', ['ag', '--hidden'] + s:ag_ignore)
-	silent! call denite#custom#var('grep', 'default_opts', ['-i', '--vimgrep'])
-	silent! call denite#custom#var('grep', 'recursive_opts', [])
-	silent! call denite#custom#var('grep', 'pattern_opt', [])
-	silent! call denite#custom#var('grep', 'separator', [])
-	silent! call denite#custom#var('grep', 'final_opts', [])
-endif
-" mappings
-call denite#custom#map('insert', '<Esc>', '<denite:enter_mode:normal>')
-call denite#custom#map('normal', '<Esc>', '<denite:quit>')
-call denite#custom#map('insert', '<C-n>', '<denite:move_to_next_line>', 'noremap')
-call denite#custom#map('insert', '<C-p>', '<denite:move_to_previous_line>', 'noremap')
-" triggers
-nnoremap <leader>b :Denite buffer<cr>
-nnoremap <leader>f :Denite file/rec<cr>
-nnoremap <leader>l :Denite line<cr>
-nnoremap <leader>o :Denite outline<cr>
-nnoremap <leader>/ :Denite -buffer-name=grep grep<cr>
+" Plug - FZF
+nnoremap <leader>b :Buffers<cr>
+nnoremap <leader>f :Files<cr>
+" use floating 
+let g:fzf_layout = { 'window': 'call float_fzf#open()' }
+let g:float_fzf_pad = 4
+let g:float_fzf_pad_bottom = 3
 
 " Plugin - Incsearch, Incsearch-Fuzzy, Asterisk
 " don't break basic search if plugin is not installed
@@ -216,11 +186,9 @@ let g:modestatus#statusline = [
 	\		'expandtab', 'shiftwidth', 'encoding', 'bomb', 'fileformat',
 	\		['line', 'column', 'line_percent']
 	\	]
-let g:modestatus#statusline_override_denite = [['denite_mode'], 'denite_sources', 'denite_path', 'filetype', '%=', ['line', 'line_max', 'line_percent']]
 let g:modestatus#statusline_override_fugitiveblame = ['filetype', '%=', ['line', 'line_max', 'line_percent']]
 let g:modestatus#statusline_override_qf = [['mode'], 'buftype', 'filetype', '%=', ['line', 'line_max', 'line_percent']]
 " overrides
-autocmd FileType denite silent! call modestatus#setlocal('denite')
 autocmd FileType fugitiveblame silent! call modestatus#setlocal('fugitiveblame')
 autocmd FileType qf silent! call modestatus#setlocal('qf')
 " settings
@@ -246,8 +214,6 @@ silent! call modestatus#options#add('column', 'color', ['Modestatus2', 'Modestat
 silent! call modestatus#options#add('line_max', 'format', '/%s')
 silent! call modestatus#options#add('line_max', 'color', ['Modestatus2', 'Modestatus2NC'])
 silent! call modestatus#options#add('line_percent', 'color', ['Modestatus2', 'Modestatus2NC'])
-silent! call modestatus#options#add('denite_mode', 'color', 'ModestatusMode')
-silent! call modestatus#options#add('denite_sources', 'color', ['ModestatusBold', 'ModestatusNC'])
 
 " Plugin - Deoplete
 let g:deoplete#enable_at_startup = 1
@@ -261,7 +227,7 @@ let g:LanguageClient_serverCommands = {
 	\		'python': ['~/.pyenv/versions/pyls/bin/pyls'],
 	\		'rust': ['rustup', 'run', 'stable', 'rls'],
 	\	}
-nnoremap <leader>c :Denite contextMenu<cr>
+nnoremap <leader>c :call LanguageClient_contextMenu()<cr>
 
 " Plugin - Signify
 let g:signify_sign_change = '~'

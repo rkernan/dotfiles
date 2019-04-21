@@ -22,6 +22,14 @@ guess_target() {
   fi
 }
 
+install_fzf() {
+  local fzf_root="$HOME/.fzf"
+  if [ ! -d "$fzf_root" ]; then
+    git clone https://github.com/junegunn/fzf.git ~/.fzf
+  fi
+  ~/.fzf/install --all --no-bash
+}
+
 install_go_langserver() {
   go get -u github.com/saibing/bingo
 }
@@ -128,6 +136,7 @@ for target in $targets; do
       stow nvim
       stow tmux
       stow zsh
+      install_fzf
       ;;
     go)
       install_go_langserver

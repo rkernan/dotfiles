@@ -200,8 +200,15 @@ fi
 
 # pyenv
 if (( $+commands[pyenv] )); then
-  # TODO add pyenv indicator to prompt
   export PYENV_VIRTUALENV_DISABLE_PROMPT=1
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
+fi
+
+# fzf
+if [ -f ~/.fzf.zsh ]; then
+  export FZF_DEFAULT_COMMAND="find ."
+  export FZF_DEFAULT_OPTS="--layout=reverse"
+  export FZF_CTRL_T_COMMAND="find ."
+  source ~/.fzf.zsh
 fi
