@@ -79,8 +79,7 @@ highlight! link TabLineFill StatusLineNC
 highlight! link TabLineSel  ModestatusModeNormal
 
 " Neovim floating windows
-highlight! NormalFloat cterm=NONE ctermfg=14 ctermbg=0 gui=NONE guifg=#93a1a1 guibg=#002931
-highlight! link NormalFloat StatusLineNC
+call s:hl('NormalFloat', s:fg1, s:bg2, 'none')
 
 " FZF colors
 let g:fzf_colors =
