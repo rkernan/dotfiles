@@ -39,7 +39,9 @@ function globalkey(mod, key, func, desc)
 end
 
 -- launch programs
-globalkey({ modkey }, "r", function () awful.spawn("rofi -show run -modi run,window -sidebar-mode") end,
+globalkey({ modkey }, "r", function () awful.spawn("rofi -show run") end,
+          { description = "run rofi", group = "awesome: launcher" })
+globalkey({ modkey }, "w", function () awful.spawn("rofi -show window") end,
           { description = "run rofi", group = "awesome: launcher" })
 globalkey({ modkey }, "Return", function () awful.spawn(terminal) end,
           { description = "open terminal", group = "awesome: launcher" })

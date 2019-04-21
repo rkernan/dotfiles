@@ -144,7 +144,6 @@ for target in $targets; do
     gui)
       stow awesome
       stow termite
-      stow rofi
       ;;
     javascript)
       stow npm
