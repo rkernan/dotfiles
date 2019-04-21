@@ -20,10 +20,22 @@ awful.rules.rules = {
   {
     rule_any = {
       name = { },
-      class = { },
+      class = {
+        "arandr", "Arandr",
+        "blueman-adapters", "Blueman-adapters",
+        "blueman-manager", "Blueman-manager",
+        "blueman-services", "Blueman-services",
+        "keepass2", "KeePass2",
+        "lxappearance", "Lxappearance",
+        "nm-connection-editor", "Nm-connection-editor",
+        "pavucontrol", "Pavucontrol",
+      },
       role = { "AlarmWindow", "pop-up" },
-      type = { "dialog" }
+      type = { "dialog", }
     },
-    properties = { floating = true }
+    properties = {
+      floating = true,
+      placement = awful.placement.centered
+    }
   }
 }
