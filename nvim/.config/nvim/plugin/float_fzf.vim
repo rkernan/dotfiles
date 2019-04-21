@@ -5,18 +5,16 @@ let g:loaded_float_fzf = 1
 
 let g:float_fzf_width = get(g:, 'float_fzf_width', 0)
 let g:float_fzf_height = get(g:, 'float_fzf_height', 20)
-let g:float_fzf_pad = get(g:, 'float_fzf_pad', 0)
-let g:float_fzf_pad_left = get(g:, 'float_fzf_pad_left', g:float_fzf_pad)
-let g:float_fzf_pad_right = get(g:, 'float_fzf_pad_right', g:float_fzf_pad)
-let g:float_fzf_pad_bottom = get(g:, 'float_fzf_pad_bottom', g:float_fzf_pad)
+let g:float_fzf_pad_side = get(g:, 'float_fzf_pad_side', 0)
+let g:float_fzf_pad_bottom = get(g:, 'float_fzf_pad_bottom', 0)
 
 function! float_fzf#open()
 	let buf = nvim_create_buf(v:false, v:true)
 
 	let opts = { 'relative': 'editor' }
-	let opts.width = g:float_fzf_width > 0 ? g:float_fzf_width : &columns - g:float_fzf_pad_left - g:float_fzf_pad_right
+	let opts.width = g:float_fzf_width > 0 ? g:float_fzf_width : (&columns - (g:float_fzf_pad_side * 2))
 	let opts.height = g:float_fzf_height > 0 ? g:float_fzf_height : &lines
-	let opts.col = g:float_fzf_pad_left
+	let opts.col = g:float_fzf_pad_side
 	let opts.row = &lines - opts.height - g:float_fzf_pad_bottom
 
 	let win = call('nvim_open_win', [buf, v:true, opts])

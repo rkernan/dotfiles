@@ -143,7 +143,8 @@ nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :Files<cr>
 " use floating 
 let g:fzf_layout = { 'window': 'call float_fzf#open()' }
-let g:float_fzf_pad = 4
+let g:float_fzf_width = 120
+let g:float_fzf_pad_side = 4
 let g:float_fzf_pad_bottom = 3
 
 " Plugin - Incsearch, Incsearch-Fuzzy, Asterisk
