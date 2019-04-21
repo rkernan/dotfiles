@@ -143,6 +143,7 @@ for target in $targets; do
       ;;
     gui)
       stow awesome
+      stow rofi
       stow termite
       ;;
     javascript)
