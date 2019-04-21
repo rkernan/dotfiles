@@ -27,9 +27,13 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-" completion
+" completion - engine
 Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
-Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+Plug 'roxma/nvim-yarp'
+Plug 'ncm2/ncm2'
+" completion - sources
+Plug 'ncm2/ncm2-bufword'
+Plug 'ncm2/ncm2-path'
 " searching
 Plug 'haya14busa/incsearch.vim'
 Plug 'haya14busa/incsearch-fuzzy.vim'
@@ -55,8 +59,6 @@ set fillchars=
 set listchars=eol:¬,tab:»\ ,trail:·
 
 set clipboard+=unnamedplus
-
-set completeopt=noinsert,menuone,noselect
 
 set wildmode=longest:full,full
 set wildignore+=.hg,.git,.svn                    " version control files
@@ -134,7 +136,6 @@ endfunction
 xnoremap @ :<C-u>call <SID>execute_macro_over_visual_range()<CR>
 
 " Plugin - Auto-pairs
-let g:AutoPairsFlyMode = 1
 autocmd FileType vim let b:AutoPairs = {'(': ')', '[': ']', '{': '}', "'": "'", '`': '`'}
 
 " Plug - FZF
@@ -215,11 +216,6 @@ silent! call modestatus#options#add('line_max', 'format', '/%s')
 silent! call modestatus#options#add('line_max', 'color', ['Modestatus2', 'Modestatus2NC'])
 silent! call modestatus#options#add('line_percent', 'color', ['Modestatus2', 'Modestatus2NC'])
 
-" Plugin - Deoplete
-let g:deoplete#enable_at_startup = 1
-inoremap <expr><Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr><S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
 " Plugin - LanguageClient
 let g:LanguageClient_serverCommands = {
 	\		'javascript': ['javascript-typescript-stdio'],
@@ -228,6 +224,14 @@ let g:LanguageClient_serverCommands = {
 	\		'rust': ['rustup', 'run', 'stable', 'rls'],
 	\	}
 nnoremap <leader>c :call LanguageClient_contextMenu()<cr>
+
+" Plug - NCM2
+set completeopt=noinsert,menuone,noselect
+autocmd BufEnter * call ncm2#enable_for_buffer()
+let g:ncm2#matcher = 'substrfuzzy'
+inoremap <C-c> <Esc>
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " Plugin - Signify
 let g:signify_sign_change = '~'
