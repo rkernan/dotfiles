@@ -120,7 +120,7 @@ function clientkey(mod, key, func, desc)
 end
 
 --  client control
-clientkey({ modkey }, "c", function (c) c:kill() end,
+clientkey({ modkey }, "x", function (c) c:kill() end,
           { description = "close window", group = "awesome: client" })
 clientkey({ modkey }, "space", awful.client.floating.toggle,
           { description = "toggle floating", group = "awesome: client" })
