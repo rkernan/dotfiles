@@ -207,8 +207,9 @@ fi
 
 # fzf
 if [ -f ~/.fzf.zsh ]; then
-  export FZF_DEFAULT_COMMAND="find ."
+  export FZF_DEFAULT_COMMAND="command find -L ."
+  export FZF_CTRL_T_COMMAND="command find -L ."
+  export FZF_ALT_C_COMMAND="command find -L . -type d"
   export FZF_DEFAULT_OPTS="--layout=reverse"
-  export FZF_CTRL_T_COMMAND="find ."
   source ~/.fzf.zsh
 fi
