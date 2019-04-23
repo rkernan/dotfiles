@@ -115,6 +115,14 @@ install_local_neovim() {
   popd
 }
 
+setup_gpg_agent() {
+  pushd "${HOME}/.config/systemd/user"
+  cp -f /usr/share/doc/gnupg/examples/systemd-user/* .
+  systemctl --user daemon-reload
+  systemctl --user enable *.socket
+  popd
+}
+
 readonly targets=${*:-$(guess_target)}
 
 # always make bin dir
@@ -145,6 +153,8 @@ for target in $targets; do
       stow awesome
       stow rofi
       stow termite
+      stow gnupg
+      setup_gpg_agent
       ;;
     javascript)
       stow npm

@@ -4,6 +4,9 @@ if [ -e "${HOME}/.profile" ]; then
   source "${HOME}/.profile"
 fi
 
+# use gpg-agent for ssh keys
+export SSH_AUTH_SOCK="/run/user/$(id -u)/gnupg/S.gpg-agent.ssh"
+
 light-locker &
 udiskie --automount --notify --smart-tray --file-manager 'termite -d' &
 
