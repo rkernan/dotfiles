@@ -39,7 +39,7 @@
 [alias]
 	a = add
 	ai = add --interactive
-	aa = add --all .
+	aa = add --all
 	ap = add --patch
 	amend = commit --amend
 	br = branch
