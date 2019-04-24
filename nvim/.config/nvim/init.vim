@@ -142,6 +142,7 @@ autocmd FileType vim let b:AutoPairs = {'(': ')', '[': ']', '{': '}', "'": "'", 
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :Files<cr>
 " use floating 
+let $FZF_DEFAULT_COMMAND="find -L -type f"
 let $FZF_DEFAULT_OPTS='--layout=reverse'
 let g:fzf_layout = { 'window': 'call float_fzf#open()' }
 let g:float_fzf_width = 120
