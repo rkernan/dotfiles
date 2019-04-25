@@ -25,6 +25,7 @@ theme.menu_font                                       = "Sans Regular 9"
 theme.menu_height                                     = dpi(20)
 theme.menu_width                                      = dpi(160)
 theme.menu_icon_size                                  = dpi(24)
+theme.notification_icon_size                          = dpi(64)
 theme.awesome_icon                                    = theme.icon_dir .. "/awesome_icon_white.png"
 theme.awesome_icon_launcher                           = theme.icon_dir .. "/awesome_icon.png"
 theme.widget_temp                                     = theme.icon_dir .. "/widget/temp.png"
