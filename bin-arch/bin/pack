@@ -18,10 +18,12 @@ usage() {
     echo "Pacman helper tool ('$BIN', '$SU_BIN')"
     echo "Usage: $0 [sub-cmd] [options]"
     echo "  clean               : Clean the pacman cache, does not accept additional parameters"
-    echo "  dependencies | deps : List dependency tree of a given package"
+    echo "  deptree             : List dependency tree of a given package"
     echo "  diff                : Clean up pacnew files, does not accept addition parameters"
     echo "  download            : Download a remote package"
-    echo "  firmware-upgrade     ; Upgrade the system firmware"
+    echo "  firmware-upgrade    : Upgrade the system firmware"
+    echo "  info                | Show info for a package or packages"
+    echo "  info-local          : Show info for a local package or packages"
     echo "  install             : Install a remote package"
     echo "  install-local       : Install a local file"
     echo "  list-deps           : List all packages intalled as dependencies, does not accept additional parameters"
@@ -52,7 +54,7 @@ case $CMD in
         no_params_or_die $*
         exec $(which paccache) -r
         ;;
-    dependencies|deps)
+    deptree)
         exec $(which pactree) $*
         ;;
     diff)
@@ -66,6 +68,12 @@ case $CMD in
         no_params_or_die $*
         $(which fwupdmgr) refresh
         exec $(which fwupdmgr) update
+        ;;
+    info)
+        exec $SU_BIN -Si $*
+        ;;
+    info-local)
+        exec $SU_BIN -Qi $*
         ;;
     install)
         exec $SU_BIN -S $*
