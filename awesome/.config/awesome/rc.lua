@@ -14,7 +14,7 @@ local naughty = require("naughty")
 
 modkey       = "Mod4"
 altkey       = "Mod1"
-terminal     = "termite"
+terminal     = "kitty"
 editor       = os.getenv("EDITOR") or "vim"
 browser      = "google-chrome-stable"
 scrlocker    = "light-locker-command --lock"
@@ -184,7 +184,7 @@ awful.util.mymainmenu = awful.menu(
       {
         "Awesome", {
           { "Hotkeys", function () return false, hotkeys_popup.show_help end },
-          { "Edit Config", string.format("%s -e '%s %s'", terminal, editor, awesome.conffile) },
+          { "Edit Config", string.format("%s '%s %s'", terminal, editor, awesome.conffile) },
           { "Restart", awesome.restart },
           { "Quit", function () awesome.quit() end },
         },

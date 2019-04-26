@@ -8,6 +8,6 @@ fi
 export SSH_AUTH_SOCK="/run/user/$(id -u)/gnupg/S.gpg-agent.ssh"
 
 light-locker &
-udiskie --automount --notify --smart-tray --file-manager 'termite -d' &
+udiskie --automount --notify --smart-tray --file-manager 'kitty --directory' &
 
 export PATH=$HOME/bin:$PATH

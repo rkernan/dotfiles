@@ -152,7 +152,7 @@ for target in $targets; do
     gui)
       stow awesome
       stow rofi
-      stow termite
+      stow kitty
       stow gnupg
       setup_gpg_agent
       ;;
