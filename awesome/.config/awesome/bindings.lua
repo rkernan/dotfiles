@@ -103,9 +103,9 @@ globalkey({ }, "XF86AudioLowerVolume", function () volume_adjust("-5") end,
           { description = "lower volume", group = "awesome: misc" })
 
 -- brightness control
-globalkey({ }, "XF86MonBrightnessDown", function () awful.spawn("brightnessctl set 5%-") end,
+globalkey({ }, "XF86MonBrightnessDown", function () awful.spawn("light -U 5") end,
           { description = "reduce screen brightness", group = "awesome: misc" })
-globalkey({ }, "XF86MonBrightnessUp", function () awful.spawn("brightnessctl set +5%") end,
+globalkey({ }, "XF86MonBrightnessUp", function () awful.spawn("light -A 5") end,
           { description = "increase screen brightness", group = "awesome: misc" })
 
 root.keys(globalkeys)

@@ -111,7 +111,7 @@ theme.cal = lain.widget.cal({
   notification_preset = {
     fg = theme.fg_normal,
     bg = theme.bg_normal,
-    font = font_mono -- NOTE must be monospace
+    font = font_mono -- must be monospace
   }
 })
 
