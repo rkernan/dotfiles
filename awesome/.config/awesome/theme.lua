@@ -1,30 +1,36 @@
 local awful, dpi, gears, lain, wibox = awful, dpi, gears, lain, wibox
 
+local font_sans = "Fira Sans 10"
+local font_sans_bold = "Fira Sans Bold 10"
+local font_mono = "Fira Code 10"
+
 local theme                                           = {}
 theme.default_dir                                     = awful.util.get_themes_dir() .. "default"
 theme.dir                                             = os.getenv("HOME") .. "/.config/awesome"
 theme.icon_dir                                        = theme.dir .. "/icons"
 theme.wallpaper                                       = theme.dir .. "/wall.png"
-theme.font                                            = "Fira Code 10"
-theme.taglist_font                                    = "Fira Sans Regular 10"
-theme.fg_normal                                       = "#FFFFFF"
+theme.font                                            = font_mono
+theme.taglist_font                                    = font_sans
+theme.fg_normal                                       = "#ffffff"
 theme.fg_focus                                        = theme.fg_normal
 theme.bg_focus                                        = "#303030"
 theme.bg_normal                                       = "#202020"
-theme.fg_urgent                                       = "#CC9393"
-theme.bg_urgent                                       = "#006B8E"
+theme.fg_urgent                                       = "#cc9393"
+theme.bg_urgent                                       = "#006b8e"
 theme.border_width                                    = dpi(2)
 theme.border_normal                                   = "#252525"
-theme.border_focus                                    = "#0099CC"
+theme.border_focus                                    = "#0099cc"
 theme.taglist_fg_focus                                = theme.border_focus
 theme.tasklist_bg_normal                              = theme.bg_focus
-theme.tasklist_font_focus                             = "Fira Mono Bold 10"
+theme.tasklist_font                                   = font_sans
+theme.tasklist_font_focus                             = font_sans_bold
 theme.tasklist_fg_minimize                            = theme.fg_focus
 theme.tasklist_bg_minimize                            = theme.bg_normal
-theme.menu_font                                       = "Fira Sans Regular 10"
+theme.menu_font                                       = font_sans
 theme.menu_height                                     = dpi(20)
 theme.menu_width                                      = dpi(160)
 theme.menu_icon_size                                  = dpi(24)
+theme.notofication_font                               = font_sans
 theme.notification_icon_size                          = dpi(64)
 theme.awesome_icon                                    = theme.icon_dir .. "/awesome_icon_white.png"
 theme.awesome_icon_launcher                           = theme.icon_dir .. "/awesome_icon.png"
@@ -93,14 +99,11 @@ theme.systray_icon_spacing = dpi(5)
 --------------------
 -- Widgets
 --------------------
-local markup = lain.util.markup
-
 local mysep = wibox.widget.textbox(" ")
 
 -- Clock
 local myclockicon = wibox.widget.imagebox(theme.widget_clock)
-local mytextclock = wibox.widget.textclock(markup("#7788af", "%A %d %B ") .. markup("#de5e1e", "%H:%M"))
-mytextclock.font = theme.font
+local mytextclock = wibox.widget.textclock(lain.util.markup.fontfg(font_sans, "#7788af", "%A %d %B") .. lain.util.markup.fontfg(font_mono, "#de5e1e", " %H:%M"))
 
 -- Calendar
 theme.cal = lain.widget.cal({
@@ -108,7 +111,7 @@ theme.cal = lain.widget.cal({
   notification_preset = {
     fg = theme.fg_normal,
     bg = theme.bg_normal,
-    font = theme.font -- NOTE must be monospace
+    font = font_mono -- NOTE must be monospace
   }
 })
 
@@ -117,7 +120,7 @@ local mycpuicon = wibox.widget.imagebox(theme.widget_cpu)
 local mycpu = lain.widget.cpu({
   timeout = 3,
   settings = function()
-    widget:set_markup(markup.fontfg(theme.font, "#e33a6e", cpu_now.usage .. "%"))
+    widget:set_markup(lain.util.markup.fontfg(font_mono, "#e33a6e", cpu_now.usage .. "%"))
   end
 })
 
@@ -126,7 +129,7 @@ local mymemicon = wibox.widget.imagebox(theme.widget_mem)
 local mymem = lain.widget.mem({
   timeout = 3,
   settings = function()
-    widget:set_markup(markup.fontfg(theme.font, "#e0da37", mem_now.used .. "M"))
+    widget:set_markup(lain.util.markup.fontfg(font_mono, "#e0da37", mem_now.used .. "M"))
   end
 })
 
@@ -135,11 +138,12 @@ local myvolicon = wibox.widget.imagebox(theme.widget_vol)
 local myvol = lain.widget.pulse({
     timeout = 7,
     settings = function()
-        vlevel = volume_now.left .. "%"
+        vlevel = lain.util.markup.fontfg(font_mono, "#7493d2", volume_now.left .. "%")
         if volume_now.muted == "yes" then
-            vlevel = vlevel .. " M"
+          -- strikethrough to show muted
+          vlevel = lain.util.markup.strike(vlevel)
         end
-        widget:set_markup(lain.util.markup("#7493d2", vlevel))
+        widget:set_markup(vlevel)
     end
 })
 
@@ -169,7 +173,7 @@ local mybat = lain.widget.bat({
   battery = "BAT0",
   notify = "off",
   settings = function()
-    widget:set_markup(markup.fontfg(theme.font, theme.fg_normal, bat_now.perc .. "%"))
+    widget:set_markup(lain.util.markup.fontfg(font_mono, theme.fg_normal, bat_now.perc .. "%"))
   end
 })
 
@@ -278,28 +282,23 @@ end
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
-  -- Custom
-  if beautiful.titlebar_fun then
-    beautiful.titlebar_fun(c)
-    return
-  end
 
   awful.titlebar.enable_tooltip = false
 
-  -- Default buttons for the titlebar
   local buttons = gears.table.join(
     awful.button({ }, 1, function()
-      c:emit_signal("request::activate", "titlebar", {raise = true})
+      c:emit_signal("request::activate", "titlebar", { raise = true })
       awful.mouse.client.move(c)
     end),
     awful.button({ }, 2, function() c:kill() end),
     awful.button({ }, 3, function()
-      c:emit_signal("request::activate", "titlebar", {raise = true})
+      c:emit_signal("request::activate", "titlebar", { raise = true })
       awful.mouse.client.resize(c)
     end)
   )
 
-  awful.titlebar(c, { size = dpi(20), font = theme.font }) : setup({
+  -- FIXME font not being used
+  awful.titlebar(c, { size = dpi(20), font = font_sans }) : setup({
     { -- Left
       layout = wibox.layout.fixed.horizontal,
       buttons = buttons,
