@@ -1,4 +1,4 @@
-local awful, dpi, gears, lain, wibox = awful, dpi, gears, lain, wibox
+local awful, dpi, gears, lain, naughty, wibox = awful, dpi, gears, lain, naughty, wibox
 
 local font_sans = "Fira Sans 10"
 local font_sans_bold = "Fira Sans Bold 10"
@@ -165,6 +165,32 @@ theme.volume.widget:buttons(awful.util.table.join(
     awful.button({}, 4, function() volume_adjust("+1") end),
     awful.button({}, 5, function() volume_adjust("-1") end)
 ))
+
+-- Screen brightness
+screen_brightness_notification = nil
+
+function screen_brightness_adjust(perc)
+  if perc > 0 then
+    os.execute(string.format("light -A %d", perc))
+  else
+    os.execute(string.format("light -U %d", math.abs(perc)))
+  end
+  -- show a notification
+  awful.spawn.easy_async("light -G",
+    function (stdout, stderr, reason, exit_code)
+      local replaces = nil
+      if screen_brightness_notification then
+        replaces = screen_brightness_notification.id
+      end
+      screen_brightness_notification = naughty.notify({
+        replaces_id = replaces,
+        title = "Screen brightness",
+        text = string.format("%d%%", stdout),
+        destroy = function () screen_brightness_notification = nil end
+      })
+    end
+  )
+end
 
 -- Battery
 local mybaticon = wibox.widget.imagebox(theme.widget_batt)

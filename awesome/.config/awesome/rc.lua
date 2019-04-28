@@ -4,13 +4,11 @@ dpi = require("beautiful.xresources").apply_dpi
 gears = require("gears")
 hotkeys_popup = require("awful.hotkeys_popup").widget
 lain = require("lain")
+naughty = require("naughty")
 wibox = require("wibox")
 
 require("awful.autofocus")
 require("awful.hotkeys_popup.keys")
-
--- local freedesktop = require("freedesktop")
-local naughty = require("naughty")
 
 modkey       = "Mod4"
 altkey       = "Mod1"
