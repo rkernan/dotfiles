@@ -97,9 +97,9 @@ globalkey({ modkey, "Shift" }, "l", function () awful.client.swap.bydirection("r
 -- volume control
 globalkey({ }, "XF86AudioMute", volume_toggle_mute,
           { description = "mute volume", group = "awesome: misc" })
-globalkey({ }, "XF86AudioRaiseVolume", function () volume_adjust("+5") end,
+globalkey({ }, "XF86AudioRaiseVolume", function () volume_adjust(5) end,
           { description = "raise volume", group = "awesome: misc" })
-globalkey({ }, "XF86AudioLowerVolume", function () volume_adjust("-5") end,
+globalkey({ }, "XF86AudioLowerVolume", function () volume_adjust(-5) end,
           { description = "lower volume", group = "awesome: misc" })
 
 -- brightness control

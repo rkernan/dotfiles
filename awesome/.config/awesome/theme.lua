@@ -155,7 +155,11 @@ function volume_toggle_mute()
 end
 
 function volume_adjust(perc)
-  os.execute(string.format("pactl set-sink-volume %d %s%%", theme.volume.device, perc))
+  if perc > 0 then
+    os.execute(string.format("pactl set-sink-volume %d +%d%%", theme.volume.device, perc))
+  else
+    os.execute(string.format("pactl set-sink-volume %d -%d%%", theme.volume.device, math.abs(perc)))
+  end
   theme.volume.update()
 end
 
