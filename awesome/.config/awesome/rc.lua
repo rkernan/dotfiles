@@ -52,15 +52,6 @@ run_once("nm-applet")
 run_once("blueman-applet")
 run_once("dropbox")
 
--- TODO
--- -- This function implements the XDG autostart specification
--- awful.spawn.with_shell(
---   'if (xrdb -query | grep -q "^awesome\\.started:\\s*true$"); then exit; fi;' ..
---   'xrdb -merge <<< "awesome.started:true";' ..
---   -- list each of your autostart commands, followed by ; inside single quotes, followed by ..
---   'dex --environment Awesome --autostart --search-paths "$XDG_CONFIG_DIRS/autostart:$XDG_CONFIG_HOME/autostart"' -- https://github.com/jceb/dex
--- )
-
 --------------------
 -- Layouts
 --------------------
@@ -195,19 +186,6 @@ awful.util.mymainmenu = awful.menu(
     },
   }
 )
-
--- TODO
--- local myawesomemenu = {
---   { "Hotkeys", function () return false, hotkeys_popup.show_help end },
---   { "Edit Config", string.format("%s -e '%s %s'", terminal, editor, awesome.conffile) },
---   { "Restart", awesome.restart },
---   { "Quit", function () awesome.quit() end }
--- }
-
--- awful.util.mymainmenu = freedesktop.menu.build({
---   icon_size = dpi(22),
---   before = {{"Awesome", myawesomemenu, beautiful.awesome_icon}}
--- })
 
 --------------------
 -- Bindings
