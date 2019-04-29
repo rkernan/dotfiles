@@ -153,7 +153,6 @@ for target in $targets; do
       stow awesome
       stow rofi
       stow kitty
-      stow gnupg
       setup_gpg_agent
       ;;
     javascript)
