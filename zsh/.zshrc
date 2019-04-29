@@ -189,6 +189,10 @@ extract() {
   fi
 }
 
+if (( $+commands[srm] )); then
+  alias srm='nocorrect srm -i'
+fi
+
 if (( $+commands[xsel] )); then
   alias clip='xsel --clipboard --input'
   alias paste='xsel --clipboard --output'
