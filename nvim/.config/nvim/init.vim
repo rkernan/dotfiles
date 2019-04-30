@@ -40,6 +40,7 @@ Plug 'haya14busa/incsearch-fuzzy.vim'
 
 call plug#end()
 
+set termguicolors
 set background=dark
 try
 	colorscheme gruvbox
