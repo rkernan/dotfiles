@@ -7,8 +7,6 @@ call plug#begin()
 " appearance
 Plug 'rkernan/vim-modestatus'
 Plug 'morhetz/gruvbox'
-" searching
-Plug 'haya14busa/vim-asterisk'
 " text object
 Plug 'wellle/targets.vim'
 " vcs integration
@@ -34,9 +32,9 @@ Plug 'ncm2/ncm2'
 " completion - sources
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
-" searching
-Plug 'haya14busa/incsearch.vim'
-Plug 'haya14busa/incsearch-fuzzy.vim'
+" searching/movement
+Plug 'haya14busa/vim-asterisk'
+Plug 'justinmk/vim-sneak'
 
 call plug#end()
 
@@ -139,7 +137,17 @@ xnoremap @ :<C-u>call <SID>execute_macro_over_visual_range()<CR>
 " Plugin - Auto-pairs
 autocmd FileType vim let b:AutoPairs = {'(': ')', '[': ']', '{': '}', "'": "'", '`': '`'}
 
-" Plug - FZF
+" Plugin - Asterisk
+map *   <Plug>(asterisk-*)
+map #   <Plug>(asterisk-#)
+map g*  <Plug>(asterisk-g*)
+map g#  <Plug>(asterisk-g#)
+map z*  <Plug>(asterisk-z*)
+map gz* <Plug>(asterisk-gz*)
+map z#  <Plug>(asterisk-z#)
+map gz# <Plug>(asterisk-gz#)
+
+" Plugin - FZF
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :Files<cr>
 " use floating 
@@ -149,38 +157,6 @@ let g:fzf_layout = { 'window': 'call float_fzf#open()' }
 let g:float_fzf_width = 120
 let g:float_fzf_pad_side = 4
 let g:float_fzf_pad_bottom = 3
-
-" Plugin - Incsearch, Incsearch-Fuzzy, Asterisk
-" don't break basic search if plugin is not installed
-noremap <Plug>(incsearch-forward) /
-noremap <Plug>(incsearch-backward) ?
-noremap <Plug>(incsearch-nohl-n) n
-noremap <Plug>(incsearch-nohl-N) N
-noremap <Plug>(incsearch-nohl) <nop>
-" replace search
-map / <Plug>(incsearch-forward)
-map ? <Plug>(incsearch-backward)
-map g/ <Plug>(incsearch-stay)
-" auto nohlsearch
-set hlsearch
-let g:incsearch#auto_nohlsearch = 1
-map n <Plug>(incsearch-nohl-n)
-map N <Plug>(incsearch-nohl-N)
-map * <Plug>(incsearch-nohl)<Plug>(asterisk-*)
-map g* <Plug>(incsearch-nohl)<Plug>(asterisk-g*)
-map # <Plug>(incsearch-nohl)<Plug>(asterisk-#)
-map g# <Plug>(incsearch-nohl)<Plug>(asterisk-g#)
-map z* <Plug>(incsearch-nohl0)<Plug>(asterisk-z*)
-map gz* <Plug>(incsearch-nohl0)<Plug>(asterisk-gz*)
-map z# <Plug>(incsearch-nohl0)<Plug>(asterisk-z#)
-map gz# <Plug>(incsearch-nohl0)<Plug>(asterisk-gz#)
-" auto nohlsearch in substitute
-noremap <Plug>(my_:) :
-map <buffer> : <Plug>(incsearch-nohl)<Plug>(my_:)
-" fuzzy search
-map z/ <Plug>(incsearch-fuzzy-/)
-map z? <Plug>(incsearch-fuzzy-?)
-map zg/ <Plug>(incsearch-fuzzy-stay)
 
 " Plugin - Modestatus
 let g:modestatus#statusline = [
@@ -240,6 +216,12 @@ inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 " Plugin - Signify
 let g:signify_sign_change = '~'
 let g:signify_sign_delete = '-'
+
+" Plugin - Sneak
+map f <Plug>Sneak_f
+map F <Plug>Sneak_F
+map t <Plug>Sneak_t
+map T <Plug>Sneak_T
 
 " Plugin - Targets
 let g:targets_pairs = '() {} [] <>'
