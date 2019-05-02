@@ -12,7 +12,7 @@ function stow {
 guess_target() {
   if which pacman >/dev/null 2>&1; then
     # arch linux
-    echo bin-arch cli gui python rust javascript neovim
+    echo bin-arch cli gui python go rust javascript neovim
   elif which yum >/dev/null 2>&1; then
     # centos/rhel/fedora - work
     echo bash-to-zsh cli python javascript neovim
