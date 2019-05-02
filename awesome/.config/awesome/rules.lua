@@ -29,6 +29,7 @@ awful.rules.rules = {
         "lxappearance", "Lxappearance",
         "nm-connection-editor", "Nm-connection-editor",
         "pavucontrol", "Pavucontrol",
+        "lxpolkit", "Lxpolkit",
       },
       role = { "AlarmWindow", "pop-up" },
       type = { "dialog", }
