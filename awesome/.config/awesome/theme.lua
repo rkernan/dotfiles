@@ -207,13 +207,12 @@ local mybat = lain.widget.bat({
   end
 })
 
-local mybat_t = awful.tooltip({ })
+local mybat_t = awful.tooltip({ font = font_sans })
 mybat_t:add_to_object(mybat.widget)
 mybat.widget:connect_signal("mouse::enter",
   function ()
-    awful.spawn.easy_async("acpi",
+    awful.spawn.easy_async_with_shell("upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E 'state|percentage|to\\ full|to\\ empty' | awk '{$1=$1;print}'",
       function (stdout, stderr, reason, exit_code)
-        -- trim trailing spaces
         mybat_t.text = stdout:gsub("^%s*(.-)%s*$", "%1")
       end
     )
