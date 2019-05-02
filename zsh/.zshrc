@@ -52,7 +52,7 @@ precmd() {
 }
 
 # set prompt
-PROMPT='%F{white}$python_info[virtualenv]%f%F{green}%c%f${vcs_info_msg_0_} %(?..%F{red}%? )%f%# '
+PROMPT='%F{white}$python_info[virtualenv]%f%F{green}%c%f${vcs_info_msg_0_} %F{yellow}%(1j.%j%D{ }.)%(?..%F{red}%? )%f%# '
 
 # pushd settings
 setopt pushd_ignore_dups
