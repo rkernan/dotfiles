@@ -150,15 +150,15 @@ local myvol = lain.widget.pulse({
 theme.volume = myvol
 
 function volume_toggle_mute()
-  os.execute(string.format("pactl set-sink-mute %d toggle", theme.volume.device))
+  os.execute("pulseaudio-ctl mute")
   theme.volume.update()
 end
 
 function volume_adjust(perc)
   if perc > 0 then
-    os.execute(string.format("pactl set-sink-volume %d +%d%%", theme.volume.device, perc))
+    os.execute(string.format("pulseaudio-ctl up +%d%%", perc))
   else
-    os.execute(string.format("pactl set-sink-volume %d -%d%%", theme.volume.device, math.abs(perc)))
+    os.execute(string.format("pulseaudio-ctl down -%d%%", math.abs(perc)))
   end
   theme.volume.update()
 end
