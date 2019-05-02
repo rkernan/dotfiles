@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-TMUX_SESSION="main"
-if [ -z "$TMUX" ]; then
-	(tmux attach -t "$TMUX_SESSION" || tmux new -s "$TMUX_SESSION") && exit
-fi
