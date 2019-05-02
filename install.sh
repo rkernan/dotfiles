@@ -74,8 +74,9 @@ install_python_langserver() {
 }
 
 install_rust() {
+  # FIXME don't change shell configs
   if [ ! -d ~/.rustup ]; then
-    curl https://sh.rustup.rs -sSf | sh
+    curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
   fi
   rustup update
 }
