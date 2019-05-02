@@ -58,6 +58,9 @@ install_pyenv() {
   eval "$(pyenv virtualenv-init -)"
   # update
   pyenv update
+  # install versions - we use later
+  pyenv install -s "$python2_ver"
+  pyenv install -s "$python3_ver"
 }
 
 install_python_langserver() {
@@ -83,9 +86,6 @@ install_rust_langserver() {
 
 setup_neovim_venv() {
   # setup neovim2 virtualenv
-  if [ ! -d "$(pyenv root)/versions/${python2_ver}" ]; then
-    pyenv install "$python2_ver"
-  fi
   local neovim2_env="neovim2"
   if [ ! -d "$(pyenv root)/versions/${neovim2_env}" ]; then
     pyenv virtualenv "$python2_ver" "$neovim2_env"
@@ -93,9 +93,6 @@ setup_neovim_venv() {
   pyenv activate "$neovim2_env"
   python -m pip install -U pynvim neovim
   # setup neovim3 virtualenv
-  if [ ! -d "$(pyenv root)/versions/${python3_ver}" ]; then
-    pyenv install "$python3_ver"
-  fi
   local neovim3_env="neovim3"
   if [ ! -d "$(pyenv root)/versions/${neovim3_env}" ]; then
     pyenv virtualenv "$python3_ver" "$neovim3_env"
