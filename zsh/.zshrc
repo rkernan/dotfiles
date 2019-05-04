@@ -190,7 +190,7 @@ extract() {
 }
 
 if (( $+commands[srm] )); then
-  alias srm='nocorrect srm -i'
+  alias srm='nocorrect srm'
 fi
 
 if (( $+commands[xsel] )); then
