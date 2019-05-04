@@ -178,6 +178,7 @@ awful.util.mymainmenu = awful.menu(
       { "Web Browser", browser },
       { "Media Player", "smplayer" },
       { "Image Viewer", "gpicview" },
+      { "Processes", string.format("%s htop", terminal) },
     },
   }
 )
