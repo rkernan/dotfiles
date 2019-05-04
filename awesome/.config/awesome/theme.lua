@@ -175,12 +175,12 @@ screen_brightness_notification = nil
 
 function screen_brightness_adjust(perc)
   if perc > 0 then
-    os.execute(string.format("light -A %d", perc))
+    os.execute(string.format("xbacklight -inc %d", perc))
   else
-    os.execute(string.format("light -U %d", math.abs(perc)))
+    os.execute(string.format("xbacklight -dec %d", math.abs(perc)))
   end
   -- show a notification
-  awful.spawn.easy_async("light -G",
+  awful.spawn.easy_async("xbacklight -get",
     function (stdout, stderr, reason, exit_code)
       local replaces = nil
       if screen_brightness_notification then
