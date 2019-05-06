@@ -176,6 +176,7 @@ awful.util.mymainmenu = awful.menu(
       },
       { "Terminal", terminal },
       { "Web Browser", browser },
+      { "Music", "gpmdp" },
       { "Media Player", "smplayer" },
       { "Image Viewer", "gpicview" },
       { "Processes", string.format("%s htop", terminal) },

@@ -30,6 +30,7 @@ awful.rules.rules = {
         "nm-connection-editor", "Nm-connection-editor",
         "pavucontrol", "Pavucontrol",
         "lxpolkit", "Lxpolkit",
+        "google play music desktop player", "Google Play Music Desktop Player",
       },
       role = { "AlarmWindow", "pop-up" },
       type = { "dialog", }
