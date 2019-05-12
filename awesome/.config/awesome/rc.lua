@@ -160,13 +160,6 @@ awful.util.mymainmenu = awful.menu(
         },
       },
       {
-        "Config", {
-          { "Sound", "pavucontrol" },
-          { "Displays", "arandr" },
-          { "Gtk3", "lxappearance" },
-        },
-      },
-      {
         "Awesome", {
           { "Hotkeys", function () return false, hotkeys_popup.show_help end },
           { "Edit Config", string.format("%s %s %s", terminal, editor, awesome.conffile) },
@@ -174,12 +167,20 @@ awful.util.mymainmenu = awful.menu(
           { "Quit", function () awesome.quit() end },
         },
       },
+      {
+        "Config", {
+          { "Sound", "pavucontrol" },
+          { "Displays", "arandr" },
+          { "Gtk3", "lxappearance" },
+        },
+      },
       { "Terminal", terminal },
-      { "Web Browser", browser },
-      { "Music", "gpmdp" },
-      { "Media Player", "smplayer" },
+      { "Discord", discord },
+      { "Google Play Music", "gpmdp" },
       { "Image Viewer", "gpicview" },
+      { "Media Player", "smplayer" },
       { "Processes", string.format("%s htop", terminal) },
+      { "Web Browser", browser },
     },
   }
 )
