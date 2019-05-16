@@ -26,12 +26,12 @@ Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 " completion - engine
-Plug 'autozimu/LanguageClient-neovim', { 'branch': 'next', 'do': 'bash install.sh' }
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2'
 " completion - sources
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-jedi'
 " searching/movement
 Plug 'haya14busa/vim-asterisk'
 Plug 'justinmk/vim-sneak'
@@ -195,15 +195,6 @@ silent! call modestatus#options#add('column', 'color', ['Modestatus2', 'Modestat
 silent! call modestatus#options#add('line_max', 'format', '/%s')
 silent! call modestatus#options#add('line_max', 'color', ['Modestatus2', 'Modestatus2NC'])
 silent! call modestatus#options#add('line_percent', 'color', ['Modestatus2', 'Modestatus2NC'])
-
-" Plugin - LanguageClient
-let g:LanguageClient_serverCommands = {
-	\		'javascript': ['javascript-typescript-stdio'],
-	\		'go': ['bingo'],
-	\		'python': ['~/.pyenv/versions/pyls/bin/pyls'],
-	\		'rust': ['rustup', 'run', 'stable', 'rls'],
-	\	}
-nnoremap <leader>c :call LanguageClient_contextMenu()<cr>
 
 " Plug - NCM2
 set completeopt=noinsert,menuone,noselect

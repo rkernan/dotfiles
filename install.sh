@@ -2,8 +2,8 @@
 
 set -e
 
-readonly python2_ver="2.7.15"
 readonly python3_ver="3.7.2"
+readonly neovim3_env="neovim3"
 
 function stow {
   command stow -t "$HOME" -v "$1"
@@ -12,13 +12,13 @@ function stow {
 guess_target() {
   if which pacman >/dev/null 2>&1; then
     # arch linux
-    echo bin-arch cli gui python go rust javascript neovim
+    echo bin-arch cli gui
   elif which yum >/dev/null 2>&1; then
     # centos/rhel/fedora - work
-    echo bash-to-zsh cli python javascript neovim
+    echo bash-to-zsh cli
   else
     # other
-    echo cli python rust javascript neovim
+    echo cli
   fi
 }
 
@@ -28,14 +28,6 @@ install_fzf() {
     git clone https://github.com/junegunn/fzf.git "$fzf_root"
   fi
   ${fzf_root}/install --all --no-bash
-}
-
-install_go_langserver() {
-  go get -u github.com/saibing/bingo
-}
-
-install_javascript_langserver() {
-  npm install -g javascript-typescript-langserver
 }
 
 install_pyenv() {
@@ -59,42 +51,11 @@ install_pyenv() {
   # update
   pyenv update
   # install versions - we use later
-  pyenv install -s "$python2_ver"
   pyenv install -s "$python3_ver"
 }
 
-install_python_langserver() {
-  local pyls_env="pyls"
-  if [ ! -d "$(pyenv root)/versions/${pyls_env}" ]; then
-    pyenv virtualenv "$python3_ver" "$pyls_env"
-  fi
-  pyenv activate "$pyls_env"
-  python -m pip install -U python-language-server
-  pyenv deactivate
-}
-
-install_rust() {
-  # FIXME don't change shell configs
-  if [ ! -d ~/.rustup ]; then
-    curl https://sh.rustup.rs -sSf | sh -s -- -y --no-modify-path
-  fi
-  rustup update
-}
-
-install_rust_langserver() {
-  rustup component add rls rust-analysis rust-src
-}
-
 setup_neovim_venv() {
-  # setup neovim2 virtualenv
-  local neovim2_env="neovim2"
-  if [ ! -d "$(pyenv root)/versions/${neovim2_env}" ]; then
-    pyenv virtualenv "$python2_ver" "$neovim2_env"
-  fi
-  pyenv activate "$neovim2_env"
-  python -m pip install -U pynvim neovim
   # setup neovim3 virtualenv
-  local neovim3_env="neovim3"
   if [ ! -d "$(pyenv root)/versions/${neovim3_env}" ]; then
     pyenv virtualenv "$python3_ver" "$neovim3_env"
   fi
@@ -111,6 +72,15 @@ install_local_neovim() {
   chmod u+x nvim.appimage
   ln -fs nvim.appimage nvim
   popd
+}
+
+setup_neovim() {
+  # install plugins
+  nvim +PlugUpdate +qall
+  # install jedi - ncm2-jedi
+  pyenv activate "$neovim3_env"
+  pip install -U jedi
+  pyenv deactivate
 }
 
 setup_gpg_agent() {
@@ -143,31 +113,16 @@ for target in $targets; do
       stow tmux
       stow zsh
       install_fzf
-      ;;
-    go)
-      install_go_langserver
+      install_pyenv
+      setup_neovim_venv
+      install_local_neovim
+      setup_neovim
       ;;
     gui)
       stow awesome
       stow rofi
       stow kitty
       setup_gpg_agent
-      ;;
-    javascript)
-      stow npm
-      install_javascript_langserver
-      ;;
-    neovim)
-      setup_neovim_venv
-      install_local_neovim
-      ;;
-    python)
-      install_pyenv
-      install_python_langserver
-      ;;
-    rust)
-      install_rust
-      install_rust_langserver
       ;;
     *)
       echo "Unknown target $target" 2>&1
