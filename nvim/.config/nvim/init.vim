@@ -154,10 +154,7 @@ nnoremap <leader>f :Files<cr>
 " use floating 
 let $FZF_DEFAULT_COMMAND="find -L -type f"
 let $FZF_DEFAULT_OPTS='--layout=reverse'
-let g:fzf_layout = { 'window': 'call float_fzf#open()' }
-let g:float_fzf_width = 120
-let g:float_fzf_pad_side = 4
-let g:float_fzf_pad_bottom = 3
+let g:fzf_layout = { 'window': 'call floating#open_fzf()' }
 
 " Plugin - Modestatus
 let g:modestatus#statusline = [
@@ -202,6 +199,7 @@ set completeopt=noinsert,menuone,noselect
 autocmd BufEnter * call ncm2#enable_for_buffer()
 let g:ncm2#matcher = 'substrfuzzy'
 inoremap <C-c> <Esc>
+" nagivate pum with tab
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
