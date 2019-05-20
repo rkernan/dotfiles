@@ -1,12 +1,12 @@
-if exists('g:loaded_set_tabs')
+if exists('g:loaded_tabs')
 	finish
 endif
-let g:loaded_set_tabs = 1
+let g:loaded_tabs = 1
 
-function! s:set_tabs()
+function! tabs#set()
 	echohl Question
 	let l:tabstop = 1 * input('setlocal tabstop = softtabstop = shiftwidth = ')
-	let l:et = input('setlocal expandtab = (y/n)')
+	let l:et = input('setlocal expandtab [y/N] ')
 	echohl None
 	if l:tabstop > 0
 		let &l:ts = l:tabstop
@@ -20,14 +20,14 @@ function! s:set_tabs()
 	end
 	echo
 	echo "\r"
-	call s:summarize_tabs()
+	call tabs#summarize()
 endfunction
 
-function! s:summarize_tabs()
+function! tabs#summarize()
 	try
 		echomsg 'tabstop=' . &l:ts . ' softtabstop=' . &l:sts . ' shiftwidth=' . &l:sw . ' ' . ((&l:et) ? 'expandtab' : 'noexpandtab')
 	endtry
 endfunction
 
-command! -nargs=0 SetTabs call s:set_tabs()
-command! -nargs=0 SummarizeTabs call s:summarize_tabs()
+command! -nargs=0 SetTabs call tabs#set()
+command! -nargs=0 SummarizeTabs call tabs#summarize()
