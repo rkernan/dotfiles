@@ -77,10 +77,12 @@ install_local_neovim() {
 setup_neovim() {
   # install plugins
   nvim +PlugUpdate +qall
-  # install jedi - ncm2-jedi
+  # install python linters
   pyenv activate "$neovim3_env"
   pip install -U jedi
   pyenv deactivate
+  # install linters globally
+  pip install --user -U flake8 mypy pylint
 }
 
 setup_gpg_agent() {

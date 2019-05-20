@@ -33,6 +33,8 @@ Plug 'filipekiss/ncm2-look.vim'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-jedi'
+" linting
+Plug 'w0rp/ale'
 " searching/movement
 Plug 'haya14busa/vim-asterisk'
 Plug 'justinmk/vim-sneak'
@@ -135,6 +137,10 @@ function! s:execute_macro_over_visual_range()
 endfunction
 xnoremap @ :<C-u>call <SID>execute_macro_over_visual_range()<CR>
 
+" Plugin - ALE
+let g:ale_sign_error = '▶'
+let g:ale_sign_warning = '▶'
+
 " Plugin - Auto-pairs
 autocmd FileType vim let b:AutoPairs = {'(': ')', '[': ']', '{': '}', "'": "'", '`': '`'}
 
@@ -160,7 +166,7 @@ let g:fzf_layout = { 'window': 'call floating#open_fzf()' }
 let g:modestatus#statusline = [
 	\		['mode'],
 	\		['fugitive_branch', 'signify_added', 'signify_modified', 'signify_removed'],
-	\		'filename', 'modified', 'readonly', 'filetype',
+	\		'filename', 'modified', 'readonly', 'filetype', 'ale_errors', 'ale_warnings',
 	\		'%=',
 	\		'expandtab', 'shiftwidth', 'encoding', 'bomb', 'fileformat',
 	\		['line', 'column', 'line_percent']
@@ -171,6 +177,10 @@ let g:modestatus#statusline_override_qf = [['mode'], 'buftype', 'filetype', '%='
 autocmd FileType fugitiveblame silent! call modestatus#setlocal('fugitiveblame')
 autocmd FileType qf silent! call modestatus#setlocal('qf')
 " settings
+silent! call modestatus#options#add('ale_errors', 'color', ['ModestatusRed', 'ModestatusNCRed'])
+silent! call modestatus#options#add('ale_errors', 'format', '▸%s')
+silent! call modestatus#options#add('ale_warnings', 'color', ['ModestatusYellow', 'ModestatusNCYellow'])
+silent! call modestatus#options#add('ale_warnings', 'format', '▸%s')
 silent! call modestatus#options#add('mode', 'color', 'ModestatusMode')
 silent! call modestatus#options#add('fugitive_branch', 'color', ['Modestatus2', 'Modestatus2NC'])
 silent! call modestatus#options#add('signify_added', 'color', ['Modestatus2Green', 'Modestatus2NCGreen'])
