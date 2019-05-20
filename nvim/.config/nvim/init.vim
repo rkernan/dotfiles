@@ -29,6 +29,7 @@ Plug 'tpope/vim-unimpaired'
 Plug 'roxma/nvim-yarp'
 Plug 'ncm2/ncm2'
 " completion - sources
+Plug 'filipekiss/ncm2-look.vim'
 Plug 'ncm2/ncm2-bufword'
 Plug 'ncm2/ncm2-path'
 Plug 'ncm2/ncm2-jedi'
@@ -203,6 +204,8 @@ let g:ncm2#matcher = 'substrfuzzy'
 inoremap <C-c> <Esc>
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+autocmd FileType help,markdown,tex,text let b:ncm2_look_enabled = 1
 
 " Plugin - Signify
 let g:signify_sign_change = '~'
