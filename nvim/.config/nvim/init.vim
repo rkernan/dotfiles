@@ -203,7 +203,14 @@ inoremap <C-c> <Esc>
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
-autocmd FileType help,markdown,tex,text let b:ncm2_look_enabled = 1
+augroup prose_mode
+	autocmd!
+	autocmd FileType gitcommit     call prose_mode#enable_for_buffer()
+	autocmd FileType help         call prose_mode#enable_for_buffer()
+	autocmd FileType markdown,mkd call prose_mode#enable_for_buffer()
+	autocmd FileType tex          call prose_mode#enable_for_buffer()
+	autocmd FileType text         call prose_mode#enable_for_buffer()
+augroup END
 
 " Plugin - Signify
 let g:signify_sign_change = '~'
