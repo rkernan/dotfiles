@@ -160,7 +160,7 @@ nnoremap <leader>f :Files<cr>
 " use floating 
 let $FZF_DEFAULT_COMMAND="find -L -type f"
 let $FZF_DEFAULT_OPTS='--layout=reverse'
-let g:fzf_layout = { 'window': 'call floating#open_fzf()' }
+let g:fzf_layout = { 'window': 'call floating#small()' }
 
 " Plugin - Modestatus
 let g:modestatus#statusline = [
