@@ -96,6 +96,3 @@ let g:fzf_colors =
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
   \ 'header':  ['fg', 'Comment'] }
-
-" partial fix for cursorline operator hightlights
-hi! link Operator GruvboxFg1

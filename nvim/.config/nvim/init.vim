@@ -6,7 +6,7 @@ call plug#begin()
 
 " appearance
 Plug 'rkernan/vim-modestatus'
-Plug 'morhetz/gruvbox'
+Plug 'gruvbox-community/gruvbox'
 " text object
 Plug 'wellle/targets.vim'
 " vcs integration
