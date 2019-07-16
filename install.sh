@@ -22,6 +22,18 @@ guess_target() {
   fi
 }
 
+install_cargo() {
+  if [ ! -e "$HOME/.rustup" ]; then
+    curl https://sh.rustup.rs -sSf | sh
+  fi
+  rustup update
+}
+
+install_ripgrep() {
+  # fails if already installed... just pass
+  cargo install ripgrep || true
+}
+
 install_fzf() {
   local fzf_root="$HOME/.fzf"
   if [ ! -d "$fzf_root" ]; then
@@ -116,6 +128,8 @@ for target in $targets; do
       stow zsh
       install_fzf
       install_pyenv
+      install_cargo
+      install_ripgrep
       setup_neovim_venv
       install_local_neovim
       setup_neovim

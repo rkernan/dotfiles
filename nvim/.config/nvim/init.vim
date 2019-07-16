@@ -157,8 +157,8 @@ map gz# <Plug>(asterisk-gz#)
 " Plugin - FZF
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :Files<cr>
+nnoremap <leader>/ :Rg<cr>
 " use floating 
-let $FZF_DEFAULT_COMMAND="find -L -type f"
 let $FZF_DEFAULT_OPTS='--layout=reverse'
 let g:fzf_layout = { 'window': 'call floating#small()' }
 

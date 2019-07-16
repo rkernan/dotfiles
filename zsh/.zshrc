@@ -211,9 +211,14 @@ fi
 
 # fzf
 if [ -f ~/.fzf.zsh ]; then
-  export FZF_DEFAULT_COMMAND="command find -L ."
-  export FZF_CTRL_T_COMMAND="command find -L ."
-  export FZF_ALT_C_COMMAND="command find -L . -type d"
+  if (( $+commands[rg] )); then
+    export FZF_DEFAULT_COMMAND="command rg --files --hidden"
+  else
+    export FZF_DEFAULT_COMMAND="command find -L ."
+  fi
+
   export FZF_DEFAULT_OPTS="--layout=reverse"
   source ~/.fzf.zsh
+
+  # TODO aliases
 fi
