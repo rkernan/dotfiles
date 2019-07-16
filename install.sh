@@ -22,6 +22,14 @@ guess_target() {
   fi
 }
 
+install_fzf() {
+  local fzf_root="$HOME/.fzf"
+  if [ ! -d "$fzf_root" ]; then
+    git clone https://github.com/junegunn/fzf.git "$fzf_root"
+  fi
+  ${fzf_root}/install --all --no-bash
+}
+
 install_cargo() {
   if [ ! -e "$HOME/.rustup" ]; then
     curl https://sh.rustup.rs -sSf | sh
@@ -34,12 +42,8 @@ install_ripgrep() {
   cargo install ripgrep || true
 }
 
-install_fzf() {
-  local fzf_root="$HOME/.fzf"
-  if [ ! -d "$fzf_root" ]; then
-    git clone https://github.com/junegunn/fzf.git "$fzf_root"
-  fi
-  ${fzf_root}/install --all --no-bash
+install_gocode() {
+  go get -u github.com/mdempsky/gocode
 }
 
 install_pyenv() {
@@ -130,6 +134,7 @@ for target in $targets; do
       install_pyenv
       install_cargo
       install_ripgrep
+      install_gocode
       setup_neovim_venv
       install_local_neovim
       setup_neovim

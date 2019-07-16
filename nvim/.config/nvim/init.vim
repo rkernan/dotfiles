@@ -31,8 +31,9 @@ Plug 'ncm2/ncm2'
 " completion - sources
 Plug 'filipekiss/ncm2-look.vim'
 Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-path'
+Plug 'ncm2/ncm2-go'
 Plug 'ncm2/ncm2-jedi'
+Plug 'ncm2/ncm2-path'
 " linting
 Plug 'w0rp/ale'
 " searching/movement
