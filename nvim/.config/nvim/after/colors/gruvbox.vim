@@ -1,12 +1,12 @@
 function! s:get_gruvbox_color(group)
-	let gui_color = synIDattr(hlID(a:group), 'fg', 'gui')
-	let term_color = synIDattr(hlID(a:group), 'fg', 'cterm')
-	return [gui_color, term_color]
+  let gui_color = synIDattr(hlID(a:group), 'fg', 'gui')
+  let term_color = synIDattr(hlID(a:group), 'fg', 'cterm')
+  return [gui_color, term_color]
 endfunction
 
 function! s:hl(group, fg, bg, emphasis)
-	execute 'highlight! ' . a:group . ' guifg=' . a:fg[0] . ' guibg=' . a:bg[0] . ' gui=' . a:emphasis .
-		\                        ' ctermfg=' . a:fg[1] . ' ctermbg=' . a:bg[1] . ' cterm=' . a:emphasis
+  execute 'highlight! ' . a:group . ' guifg='   . a:fg[0] . ' guibg='   . a:bg[0] . ' gui='   . a:emphasis .
+  \                                 ' ctermfg=' . a:fg[1] . ' ctermbg=' . a:bg[1] . ' cterm=' . a:emphasis
 endfunction
 
 let s:bg0 = s:get_gruvbox_color('GruvboxBg0')
