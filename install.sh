@@ -38,8 +38,8 @@ install_cargo() {
 }
 
 install_ripgrep() {
-  # fails if already installed... just pass
-  cargo install ripgrep || true
+  # FIXME needs force install to update...
+  cargo install ripgrep --force
 }
 
 install_gocode() {
