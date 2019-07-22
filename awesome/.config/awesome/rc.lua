@@ -174,13 +174,18 @@ awful.util.mymainmenu = awful.menu(
           { "Gtk3", "lxappearance" },
         },
       },
+      {
+        "Utilities", {
+          { "Image Viewer", "gpicview" },
+          { "Media Player", "smplayer" },
+          { "Google Play Music", "gpmdp" },
+          { "Discord", discord },
+        },
+      },
       { "Terminal", terminal },
-      { "Discord", discord },
-      { "Google Play Music", "gpmdp" },
-      { "Image Viewer", "gpicview" },
-      { "Media Player", "smplayer" },
-      { "Processes", string.format("%s htop", terminal) },
+      { "Files", "pcmanfm" },
       { "Web Browser", browser },
+      { "Processes", string.format("%s htop", terminal) },
     },
   }
 )
