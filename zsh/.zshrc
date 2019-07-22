@@ -214,21 +214,23 @@ if [ -f ~/.fzf.zsh ]; then
   if (( $+commands[rg] )); then
     # file list
     _fzf_compgen_path() {
-      command rg --hidden --files
+      command rg --hidden --files $1
     }
 
     # directory list
     _fzf_compgen_dir() {
-      command rg --hidden --files --null | xargs -0 dirname | uniq
+      command rg --hidden --files --null $1 | xargs -0 dirname | uniq
     }
   fi
 
+  export FZF_DEFAULT_COMMAND="rg --hidden --files"
   export FZF_DEFAULT_OPTS="--layout=reverse"
+
   source ~/.fzf.zsh
 
   # fuzzy edit
   fe() {
-    e $(_fzf_compgen_path | fzf --multi)
+    e $(_fzf_compgen_path | fzf -m)
   }
 
   # fuzzy cd
@@ -241,9 +243,9 @@ if [ -f ~/.fzf.zsh ]; then
     local code=${1}
     local pid
     if [ "$UID" != "0" ]; then
-      pid=$(ps -f -u $UID | sed 1d | fzf --multi | awk '{print $2}')
+      pid=$(ps -f -u $UID | sed 1d | fzf -m | awk '{print $2}')
     else
-      pid=$(ps -ef | sed 1d | fzf --multi | awk '{print $2}')
+      pid=$(ps -ef | sed 1d | fzf -m | awk '{print $2}')
     fi
 
     if [ ! -z $pid ]; then
