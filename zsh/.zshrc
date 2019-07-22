@@ -226,5 +226,28 @@ if [ -f ~/.fzf.zsh ]; then
   export FZF_DEFAULT_OPTS="--layout=reverse"
   source ~/.fzf.zsh
 
-  # TODO aliases
+  # fuzzy edit
+  fe() {
+    e $(_fzf_compgen_path | fzf --multi)
+  }
+
+  # fuzzy cd
+  fcd() {
+    cd $(_fzf_compgen_dir | fzf)
+  }
+
+  # fuzzy kill processes
+  fkill() {
+    local code=${1}
+    local pid
+    if [ "$UID" != "0" ]; then
+      pid=$(ps -f -u $UID | sed 1d | fzf --multi | awk '{print $2}')
+    else
+      pid=$(ps -ef | sed 1d | fzf --multi | awk '{print $2}')
+    fi
+
+    if [ ! -z $pid ]; then
+      echo $pid | xargs kill $code
+    fi
+  }
 fi
