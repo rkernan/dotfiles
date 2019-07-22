@@ -212,9 +212,15 @@ fi
 # fzf
 if [ -f ~/.fzf.zsh ]; then
   if (( $+commands[rg] )); then
-    export FZF_DEFAULT_COMMAND="command rg --files --hidden"
-  else
-    export FZF_DEFAULT_COMMAND="command find -L ."
+    # file list
+    _fzf_compgen_path() {
+      command rg --hidden --files
+    }
+
+    # directory list
+    _fzf_compgen_dir() {
+      command rg --hidden --files --null | xargs -0 dirname | uniq
+    }
   fi
 
   export FZF_DEFAULT_OPTS="--layout=reverse"
