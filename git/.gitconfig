@@ -31,7 +31,10 @@
 	autosetuprebase = always
 
 [merge]
-	ff = only
+	tool = nvim.fugitive
+
+[mergetool "nvim.fugitive"]
+	cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 
 [rerere]
 	enabled = 1
