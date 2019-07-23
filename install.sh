@@ -35,11 +35,13 @@ install_cargo() {
     curl https://sh.rustup.rs -sSf | sh
   fi
   rustup update
+  # install (or update) cargo-update
+  local pkg="cargo-update"
+  cargo install-update "$pkg" || cargo install "$pkg"
 }
 
 install_ripgrep() {
-  # FIXME needs force install to update...
-  cargo install ripgrep --force
+  cargo install-update ripgrep
 }
 
 install_gocode() {
