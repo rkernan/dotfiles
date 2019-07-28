@@ -81,9 +81,21 @@ highlight! link TabLineSel  ModestatusModeNormal
 " Neovim floating windows
 call s:hl('NormalFloat', s:fg1, s:bg2, 'none')
 
+" Coc warning signs
+highlight! link CocErrorSign GruvboxRedSign
+highlight! link CocWarningSign GruvboxYellowSign
+highlight! link CocInfoSign GruvboxWhiteSign
+highlight! link CocHintSign GruvboxBlueSign
+
+" Coc floating windows
+call s:hl('CocErrorFloat', s:red, s:bg2, 'none')
+call s:hl('CocWarningFloat', s:yellow, s:bg2, 'none')
+call s:hl('CocInfoFloat', s:fg1, s:bg2, 'none')
+call s:hl('CocHintFloat', s:blue, s:bg2, 'none')
+
 " FZF colors
-let g:fzf_colors =
-\ { 'fg':      ['fg', 'Normal'],
+let g:fzf_colors = {
+  \ 'fg':      ['fg', 'Normal'],
   \ 'bg':      ['bg', 'NormalFloat'],
   \ 'hl':      ['fg', 'Comment'],
   \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
@@ -95,4 +107,5 @@ let g:fzf_colors =
   \ 'pointer': ['fg', 'Exception'],
   \ 'marker':  ['fg', 'Keyword'],
   \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment'] }
+  \ 'header':  ['fg', 'Comment']
+  \ }

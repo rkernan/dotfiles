@@ -44,8 +44,8 @@ install_ripgrep() {
   cargo install-update ripgrep
 }
 
-install_gocode() {
-  go get -u github.com/mdempsky/gocode
+install_go_lsp() {
+  go get -u golang.org/x/tools/gopls
 }
 
 install_pyenv() {
@@ -95,12 +95,15 @@ install_local_neovim() {
 setup_neovim() {
   # install plugins
   nvim +PlugUpdate +qall
+  # force update Coc extensions
+  nvim +CocUpdate +qall
   # install python linters
   pyenv activate "$neovim3_env"
-  pip install -U jedi
   pyenv deactivate
-  # install linters globally
-  pip install --user -U flake8 mypy pylint
+}
+
+install_python_lsp() {
+  pip install --user -U jedi pylint rope
 }
 
 setup_gpg_agent() {
@@ -136,7 +139,8 @@ for target in $targets; do
       install_pyenv
       install_cargo
       install_ripgrep
-      install_gocode
+      install_go_lsp
+      install_python_lsp
       setup_neovim_venv
       install_local_neovim
       setup_neovim

@@ -19,23 +19,13 @@ Plug 'junegunn/fzf.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'jiangmiao/auto-pairs'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-" completion - engine
-Plug 'roxma/nvim-yarp'
-Plug 'ncm2/ncm2'
-" completion - sources
-Plug 'filipekiss/ncm2-look.vim'
-Plug 'ncm2/ncm2-bufword'
-Plug 'ncm2/ncm2-go'
-Plug 'ncm2/ncm2-jedi'
-Plug 'ncm2/ncm2-path'
-" linting
-Plug 'w0rp/ale'
+" completion
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " searching/movement
 Plug 'haya14busa/vim-asterisk'
 Plug 'justinmk/vim-sneak'
@@ -138,9 +128,15 @@ function! s:execute_macro_over_visual_range()
 endfunction
 xnoremap @ :<C-u>call <SID>execute_macro_over_visual_range()<CR>
 
-" Plugin - ALE
-let g:ale_sign_error = '▶'
-let g:ale_sign_warning = '▶'
+" additional options for editing text
+augroup prose_mode
+	autocmd!
+	autocmd FileType gitcommit     call prose_mode#enable_for_buffer()
+	autocmd FileType help         call prose_mode#enable_for_buffer()
+	autocmd FileType markdown,mkd call prose_mode#enable_for_buffer()
+	autocmd FileType tex          call prose_mode#enable_for_buffer()
+	autocmd FileType text         call prose_mode#enable_for_buffer()
+augroup END
 
 " Plugin - Auto-pairs
 autocmd FileType vim let b:AutoPairs = {'(': ')', '[': ']', '{': '}', "'": "'", '`': '`'}
@@ -155,6 +151,55 @@ map gz* <Plug>(asterisk-gz*)
 map z#  <Plug>(asterisk-z#)
 map gz# <Plug>(asterisk-gz#)
 
+" Plugin - Coc
+silent! call coc#add_extensions('coc-go')
+silent! call coc#add_extensions('coc-json')
+silent! call coc#add_extensions('coc-pairs')
+silent! call coc#add_extensions('coc-python')
+
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1] =~# '\s'
+endfunction
+
+" quicker diagnostic messages
+set updatetime=300
+
+" nagivate pum with tab
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<Tab>" : coc#refresh()
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+" ctrl+space to trigger completion
+inoremap <expr> <C-Space> coc#refresh()
+" cr to confirm selection
+inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+" ctrl+c for esc
+inoremap <C-c> <Esc>
+
+" [c and ]c to natigate diagnostics
+nmap [c <Plug>(coc-diagnostic-prev)
+nmap ]c <Plug>(coc-diagnostic-next)
+" remap keys for gotos
+nmap gd <Plug>(coc-definition)
+nmap gt <Plug>(coc-type-definition)
+nmap gi <Plug>(coc-implementation)
+nmap gr <Plug>(coc-references)
+" rename current word
+nmap <leader>rn <Plug>(coc-rename)
+" do code action on current line
+nmap <leader>ac <Plug>(coc-codeaction)
+" autofix current line
+nmap <leader>qf <Plug>(coc-fix-current)
+
+nnoremap K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+	if index(['vim', 'help'], &filetype) >= 0
+		execute 'h '.expand('<cword>')
+	else
+		call CocAction('doHover')
+	endif
+endfunction
+
 " Plugin - FZF
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :Files<cr>
@@ -167,7 +212,7 @@ let g:fzf_layout = { 'window': 'call floating#small()' }
 let g:modestatus#statusline = [
 	\		['mode'],
 	\		['fugitive_branch', 'signify_added', 'signify_modified', 'signify_removed'],
-	\		'filename', 'modified', 'readonly', 'filetype', 'ale_errors', 'ale_warnings',
+	\		'filename', 'modified', 'readonly', 'filetype', 'coc_errors', 'coc_warnings',
 	\		'%=',
 	\		'expandtab', 'shiftwidth', 'encoding', 'bomb', 'fileformat',
 	\		['line', 'column', 'line_percent']
@@ -178,10 +223,10 @@ let g:modestatus#statusline_override_qf = [['mode'], 'buftype', 'filetype', '%='
 autocmd FileType fugitiveblame silent! call modestatus#setlocal('fugitiveblame')
 autocmd FileType qf silent! call modestatus#setlocal('qf')
 " settings
-silent! call modestatus#options#add('ale_errors', 'color', ['ModestatusRed', 'ModestatusNCRed'])
-silent! call modestatus#options#add('ale_errors', 'format', '▸%s')
-silent! call modestatus#options#add('ale_warnings', 'color', ['ModestatusYellow', 'ModestatusNCYellow'])
-silent! call modestatus#options#add('ale_warnings', 'format', '▸%s')
+silent! call modestatus#options#add('coc_errors', 'color', ['ModestatusRed', 'ModestatusNCRed'])
+silent! call modestatus#options#add('coc_errors', 'format', '▸%s')
+silent! call modestatus#options#add('coc_warnings', 'color', ['ModestatusYellow', 'ModestatusNCYellow'])
+silent! call modestatus#options#add('coc_warnings', 'format', '▸%s')
 silent! call modestatus#options#add('mode', 'color', 'ModestatusMode')
 silent! call modestatus#options#add('fugitive_branch', 'color', ['Modestatus2', 'Modestatus2NC'])
 silent! call modestatus#options#add('signify_added', 'color', ['Modestatus2Green', 'Modestatus2NCGreen'])
@@ -204,24 +249,6 @@ silent! call modestatus#options#add('column', 'color', ['Modestatus2', 'Modestat
 silent! call modestatus#options#add('line_max', 'format', '/%s')
 silent! call modestatus#options#add('line_max', 'color', ['Modestatus2', 'Modestatus2NC'])
 silent! call modestatus#options#add('line_percent', 'color', ['Modestatus2', 'Modestatus2NC'])
-
-" Plug - NCM2
-set completeopt=noinsert,menuone,noselect
-autocmd BufEnter * call ncm2#enable_for_buffer()
-let g:ncm2#matcher = 'substrfuzzy'
-inoremap <C-c> <Esc>
-" nagivate pum with tab
-inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-augroup prose_mode
-	autocmd!
-	autocmd FileType gitcommit     call prose_mode#enable_for_buffer()
-	autocmd FileType help         call prose_mode#enable_for_buffer()
-	autocmd FileType markdown,mkd call prose_mode#enable_for_buffer()
-	autocmd FileType tex          call prose_mode#enable_for_buffer()
-	autocmd FileType text         call prose_mode#enable_for_buffer()
-augroup END
 
 " Plugin - Signify
 let g:signify_sign_change = '~'
