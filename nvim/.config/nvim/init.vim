@@ -16,14 +16,14 @@ Plug 'tpope/vim-fugitive'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-bash' }
 Plug 'junegunn/fzf.vim'
 " other
-Plug 'editorconfig/editorconfig-vim'
-Plug 'jiangmiao/auto-pairs'
+Plug 'cohama/lexima.vim'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-eunuch'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+" languages
+Plug 'sheerun/vim-polyglot'
 " completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 " searching/movement
@@ -41,39 +41,22 @@ endtry
 let mapleader="\<space>"
 
 set undofile
-
-set ttimeout
 set ttimeoutlen=100
-
 set ignorecase
 set smartcase
-
-set fillchars=
 set listchars=eol:¬,tab:»\ ,trail:·
-
 set clipboard+=unnamedplus
-
 set wildmode=longest:full,full
-set wildignore+=.hg,.git,.svn                    " version control files
-set wildignore+=*.aux,*.out,*.toc                " LaTeX build files
-set wildignore+=*.o,*.obj,*.exe,*.dll,*.manifest " compiled object files
-set wildignore+=*.class                          " java compiled objects
-set wildignore+=*.luac                           " lua byte code
-set wildignore+=*.pyc                            " python byte code
-set wildignore+=*.sw                             " vim swap files
-set wildignore+=*.DS_Store                       " OSX something
-
 set scrolloff=1
-set sidescrolloff=3
-
+set sidescrolloff=5
 set hidden
 set shortmess=actWIF
 set lazyredraw
 set splitbelow
 set splitright
-
 set signcolumn=yes
 set noshowmode
+set mouse=a
 
 set cursorline
 " auto-enable based on window focus
@@ -94,8 +77,6 @@ autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "norm
 
 " resize windows automatically
 autocmd VimResized * wincmd =
-
-set mouse=a
 
 " disable ex mode
 nnoremap Q <nop>
@@ -138,10 +119,9 @@ augroup prose_mode
 	autocmd FileType text         call prose_mode#enable_for_buffer()
 augroup END
 
-" Plugin - Auto-pairs
-autocmd FileType vim let b:AutoPairs = {'(': ')', '[': ']', '{': '}', "'": "'", '`': '`'}
-
+"""
 " Plugin - Asterisk
+"""
 map *   <Plug>(asterisk-*)
 map #   <Plug>(asterisk-#)
 map g*  <Plug>(asterisk-g*)
@@ -151,16 +131,12 @@ map gz* <Plug>(asterisk-gz*)
 map z#  <Plug>(asterisk-z#)
 map gz# <Plug>(asterisk-gz#)
 
+"""
 " Plugin - Coc
+"""
 silent! call coc#add_extensions('coc-go')
 silent! call coc#add_extensions('coc-json')
-silent! call coc#add_extensions('coc-pairs')
 silent! call coc#add_extensions('coc-python')
-
-function! s:check_back_space() abort
-	let col = col('.') - 1
-	return !col || getline('.')[col - 1] =~# '\s'
-endfunction
 
 " quicker diagnostic messages
 set updatetime=300
@@ -168,28 +144,41 @@ set updatetime=300
 " nagivate pum with tab
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<Tab>" : coc#refresh()
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1] =~# '\s'
+endfunction
+
 " ctrl+space to trigger completion
 inoremap <expr> <C-Space> coc#refresh()
+
 " cr to confirm selection
 inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
+
 " ctrl+c for esc
 inoremap <C-c> <Esc>
 
 " [c and ]c to natigate diagnostics
 nmap [c <Plug>(coc-diagnostic-prev)
 nmap ]c <Plug>(coc-diagnostic-next)
+
 " remap keys for gotos
 nmap gd <Plug>(coc-definition)
 nmap gt <Plug>(coc-type-definition)
 nmap gi <Plug>(coc-implementation)
 nmap gr <Plug>(coc-references)
+
 " rename current word
 nmap <leader>rn <Plug>(coc-rename)
+
 " do code action on current line
 nmap <leader>ac <Plug>(coc-codeaction)
+
 " autofix current line
 nmap <leader>qf <Plug>(coc-fix-current)
 
+" use K to show doc in preview window
 nnoremap K :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
@@ -200,7 +189,9 @@ function! s:show_documentation()
 	endif
 endfunction
 
+"""
 " Plugin - FZF
+"""
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :Files<cr>
 nnoremap <leader>/ :Rg<cr>
@@ -208,7 +199,9 @@ nnoremap <leader>/ :Rg<cr>
 let $FZF_DEFAULT_OPTS='--layout=reverse'
 let g:fzf_layout = { 'window': 'call floating#small()' }
 
+"""
 " Plugin - Modestatus
+"""
 let g:modestatus#statusline = [
 	\		['mode'],
 	\		['fugitive_branch', 'signify_added', 'signify_modified', 'signify_removed'],
@@ -250,17 +243,23 @@ silent! call modestatus#options#add('line_max', 'format', '/%s')
 silent! call modestatus#options#add('line_max', 'color', ['Modestatus2', 'Modestatus2NC'])
 silent! call modestatus#options#add('line_percent', 'color', ['Modestatus2', 'Modestatus2NC'])
 
+"""
 " Plugin - Signify
+"""
 let g:signify_sign_change = '~'
 let g:signify_sign_delete = '-'
 
+"""
 " Plugin - Sneak
+"""
 map f <Plug>Sneak_f
 map F <Plug>Sneak_F
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
 
+"""
 " Plugin - Targets
+"""
 let g:targets_pairs = '() {} [] <>'
 let g:targets_argTrigger = ','
 let g:targets_argOpening = '[({[]'
