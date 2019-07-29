@@ -7,17 +7,14 @@ export PATH="${HOME}/.cargo/bin:${PATH}"
 export GOPATH="${HOME}/workspace/go"
 export PATH="${GOPATH}/bin:${PATH}"
 
-# nodejs
-export PATH="${HOME}/.nodejs/bin:${PATH}"
-
 # pyenv
 export PATH="${HOME}/.pyenv/bin:${PATH}"
 
-# pip
-export PATH="$HOME/.local/bin:${PATH}"
+# local installs (pip, nodejs)
+export PATH="${HOME}/.local/bin:${PATH}"
 
 # user bin
-export PATH="$HOME/bin:${PATH}"
+export PATH="${HOME}/bin:${PATH}"
 
 export EDITOR="nvim"
 export VISUAL="$EDITOR"

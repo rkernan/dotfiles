@@ -63,7 +63,7 @@ install_cargo() {
 }
 
 install_nodejs() {
-  curl -sL https://install-node.now.sh | bash -s -- --prefix="${HOME}/.nodejs" -y
+  curl -sL https://install-node.now.sh | bash -s -- --prefix="${HOME}/.local" -y
 }
 
 install_pyenv() {
