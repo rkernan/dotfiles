@@ -15,14 +15,6 @@ zstyle ':vcs_info:*' check-for-changes true
 zstyle ':vcs_info:*' formats ' %f[%F{cyan}%b%f%c%u%m%f]'
 zstyle ':vcs_info:*' actionformats ' %f[%F{cyan}%b!%a%f%c%u%m%f]'
 
-zstyle ':vcs_info:git*+set-message:*' hooks git-untracked
-
-+vi-git-untracked() {
-  if [[ $(git rev-parse --is-inside-work-tree 2> /dev/null) == 'true' ]] && git status --porcelain | fgrep '??' &> /dev/null; then
-    hook_com[misc]='%F{red}●%f'
-  fi
-}
-
 # python_info
 zstyle ':python_info:virtualenv' format 'pyenv:%v '
 
@@ -202,14 +194,12 @@ if (( $+commands[xdg-open] )); then
   alias open='xdg-open'
 fi
 
-# pyenv
 if (( $+commands[pyenv] )); then
   export PYENV_VIRTUALENV_DISABLE_PROMPT=1
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
 
-# fzf
 if [ -f ~/.fzf.zsh ]; then
   if (( $+commands[rg] )); then
     # file list

@@ -30,9 +30,31 @@ install_fzf() {
   ${fzf_root}/install --all --no-bash
 }
 
+install_ripgrep() {
+  cargo install-update ripgrep
+}
+
+install_nvim() {
+  # setup neovim3 virtualenv
+  if [ ! -d "$(pyenv root)/versions/${neovim3_env}" ]; then
+    pyenv virtualenv "$python3_ver" "$neovim3_env"
+  fi
+  pyenv activate "$neovim3_env"
+  python -m pip install -U pynvim neovim
+  # deactivate
+  pyenv deactivate
+  # install nvim
+  pushd ~/bin
+  rm -f nvim.appimage
+  curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
+  chmod u+x nvim.appimage
+  ln -fs nvim.appimage nvim
+  popd
+}
+
 install_cargo() {
   if [ ! -e "$HOME/.rustup" ]; then
-    curl https://sh.rustup.rs -sSf | sh
+    curl -sL https://sh.rustup.rs | bash -s -- --no-modify-path -y
   fi
   rustup update
   # install (or update) cargo-update
@@ -40,12 +62,8 @@ install_cargo() {
   cargo install-update "$pkg" || cargo install "$pkg"
 }
 
-install_ripgrep() {
-  cargo install-update ripgrep
-}
-
-install_go_lsp() {
-  go get -u golang.org/x/tools/gopls
+install_nodejs() {
+  curl -sL https://install-node.now.sh | bash -s -- --prefix="${HOME}/.local" -y
 }
 
 install_pyenv() {
@@ -72,38 +90,19 @@ install_pyenv() {
   pyenv install -s "$python3_ver"
 }
 
-setup_neovim_venv() {
-  # setup neovim3 virtualenv
-  if [ ! -d "$(pyenv root)/versions/${neovim3_env}" ]; then
-    pyenv virtualenv "$python3_ver" "$neovim3_env"
-  fi
-  pyenv activate "$neovim3_env"
-  python -m pip install -U pynvim neovim
-  # deactivate
-  pyenv deactivate
-}
-
-install_local_neovim() {
-  pushd ~/bin
-  rm -f nvim.appimage
-  curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
-  chmod u+x nvim.appimage
-  ln -fs nvim.appimage nvim
-  popd
-}
-
-setup_neovim() {
-  # install plugins
-  nvim +PlugUpdate +qall
-  # force update Coc extensions
-  nvim +CocUpdate +qall
-  # install python linters
-  pyenv activate "$neovim3_env"
-  pyenv deactivate
+install_go_lsp() {
+  go get -u golang.org/x/tools/gopls
 }
 
 install_python_lsp() {
   pip install --user -U jedi pylint rope
+}
+
+update_nvim_plugins() {
+  # install plugins
+  nvim +PlugUpdate +qall
+  # force update Coc extensions
+  nvim +CocUpdate +qall
 }
 
 setup_gpg_agent() {
@@ -135,15 +134,21 @@ for target in $targets; do
       stow nvim
       stow tmux
       stow zsh
-      install_fzf
-      install_pyenv
+      # source environment, may have changed
+      source "${HOME}/.profile"
+      # package managers
       install_cargo
+      install_nodejs
+      install_pyenv
+      # utilities
+      install_fzf
+      install_nvim
       install_ripgrep
+      # language servers
       install_go_lsp
       install_python_lsp
-      setup_neovim_venv
-      install_local_neovim
-      setup_neovim
+      # neovim
+      update_nvim_plugins
       ;;
     gui)
       stow awesome
