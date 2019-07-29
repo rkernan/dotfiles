@@ -202,14 +202,12 @@ if (( $+commands[xdg-open] )); then
   alias open='xdg-open'
 fi
 
-# pyenv
 if (( $+commands[pyenv] )); then
   export PYENV_VIRTUALENV_DISABLE_PROMPT=1
   eval "$(pyenv init -)"
   eval "$(pyenv virtualenv-init -)"
 fi
 
-# fzf
 if [ -f ~/.fzf.zsh ]; then
   if (( $+commands[rg] )); then
     # file list
