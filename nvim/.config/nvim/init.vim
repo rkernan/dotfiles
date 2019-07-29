@@ -135,6 +135,7 @@ map gz# <Plug>(asterisk-gz#)
 " Plugin - Coc
 """
 silent! call coc#add_extensions('coc-go')
+silent! call coc#add_extensions('coc-highlight')
 silent! call coc#add_extensions('coc-json')
 silent! call coc#add_extensions('coc-python')
 
@@ -158,6 +159,12 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 
 " ctrl+c for esc
 inoremap <C-c> <Esc>
+
+" highlight current symbol on CursorHold
+augroup coc_highlight
+	autocmd!
+	autocmd CursorHold * silent call CocActionAsync('highlight')
+augroup END
 
 " [c and ]c to natigate diagnostics
 nmap [c <Plug>(coc-diagnostic-prev)
