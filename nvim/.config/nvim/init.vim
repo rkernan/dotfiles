@@ -134,10 +134,11 @@ map gz# <Plug>(asterisk-gz#)
 """
 " Plugin - Coc
 """
-silent! call coc#add_extensions('coc-go')
-silent! call coc#add_extensions('coc-highlight')
-silent! call coc#add_extensions('coc-json')
-silent! call coc#add_extensions('coc-python')
+silent! call coc#add_extension('coc-go')
+silent! call coc#add_extension('coc-highlight')
+silent! call coc#add_extension('coc-json')
+silent! call coc#add_extension('coc-python')
+silent! call coc#add_extension('coc-rls')
 
 " quicker diagnostic messages
 set updatetime=300
