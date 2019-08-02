@@ -13,10 +13,10 @@ version() {
 }
 
 guess_target() {
-  if which pacman >/dev/null 2>&1; then
+  if [ $(command -v pacman) ]; then
     # arch linux
     echo bin-arch cli gui
-  elif which yum >/dev/null 2>&1; then
+  elif [ $(command -v yum) ]; then
     # centos/rhel/fedora - work
     echo bash-to-zsh cli
   else
