@@ -3,10 +3,13 @@
 set -e
 
 readonly python3_ver="3.7.2"
-readonly neovim3_env="neovim3"
 
 function stow {
   command stow -t "$HOME" -v "$1"
+}
+
+version() {
+  echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'
 }
 
 guess_target() {
@@ -36,6 +39,7 @@ install_ripgrep() {
 
 install_nvim() {
   # setup neovim3 virtualenv
+  readonly neovim3_env="neovim3"
   if [ ! -d "$(pyenv root)/versions/${neovim3_env}" ]; then
     pyenv virtualenv "$python3_ver" "$neovim3_env"
   fi
@@ -63,7 +67,13 @@ install_cargo() {
 }
 
 install_nodejs() {
-  curl -sL https://install-node.now.sh | bash -s -- --prefix="${HOME}/.local" -y
+  local req_ver="12.0.0"
+  local actual_ver=$(node --version)
+  local actual_ver=${actual_ver:1}
+  # only update if we need to (or already have)
+  if [ ! $(command -v node) ] || [ -e "${HOME}/.local/bin/node" ] || [ $(version $actual_ver) -lt $(version $req_version) ]; then
+    curl -sL https://install-node.now.sh | bash -s -- --prefix="${HOME}/.local" -y
+  fi
 }
 
 install_pyenv() {
