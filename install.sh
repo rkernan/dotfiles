@@ -108,6 +108,10 @@ install_python_lsp() {
   pip install --user -U jedi pylint rope
 }
 
+install_rust_lsp() {
+  rustup component add rls rust-analysis rust-src
+}
+
 update_nvim_plugins() {
   # install plugins
   nvim +PlugUpdate +qall
@@ -157,6 +161,7 @@ for target in $targets; do
       # language servers
       install_go_lsp
       install_python_lsp
+      install_rust_lsp
       # neovim
       update_nvim_plugins
       ;;
