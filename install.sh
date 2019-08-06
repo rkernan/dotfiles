@@ -52,7 +52,7 @@ install_nvim() {
   rm -f nvim.appimage
   curl -LO https://github.com/neovim/neovim/releases/download/nightly/nvim.appimage
   chmod u+x nvim.appimage
-  ln -fs nvim.appimage nvim
+  ln -fsr nvim.appimage nvim
   popd
 }
 
