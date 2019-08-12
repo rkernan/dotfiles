@@ -43,7 +43,6 @@ set ttimeoutlen=100
 set ignorecase
 set smartcase
 set listchars=eol:¬,tab:»\ ,trail:·
-set clipboard+=unnamedplus
 set wildmode=longest:full,full
 set scrolloff=1
 set sidescrolloff=5
@@ -55,6 +54,21 @@ set splitright
 set signcolumn=yes
 set noshowmode
 set mouse=a
+
+" FIXME fix for xclip issue
+set clipboard+=unnamedplus
+let g:clipboard = {
+	\ 'name': 'xsel',
+	\ 'copy': {
+	\     '+': 'xsel -ib',
+	\     '*': 'xsel -ip'
+	\ },
+	\ 'paste': {
+	\     '+': 'xsel -ob',
+	\     '*': 'xsel -op'
+	\ },
+	\ 'cache_enabled': 1
+	\ }
 
 set cursorline
 " auto-enable based on window focus
