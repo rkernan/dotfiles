@@ -215,9 +215,13 @@ endfunction
 nnoremap <leader>b :Buffers<cr>
 nnoremap <leader>f :Files<cr>
 nnoremap <leader>/ :Rg<cr>
-" use floating 
+" top-to-bottom
 let $FZF_DEFAULT_OPTS='--layout=reverse'
-let g:fzf_layout = { 'window': 'call floating#small()' }
+
+if has('nvim-0.4.0')
+	" floating window
+	let g:fzf_layout = { 'window': 'call floating#small()' }
+endif
 
 """
 " Plugin - Modestatus
