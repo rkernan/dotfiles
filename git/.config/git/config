@@ -1,13 +1,12 @@
 [include]
 	# local/private config
-	path = ~/.gitconfig.sec
+	path = ~/.config/git/secure
 
 [user]
 	name = Robert Kernan
 
 [core]
 	editor = $EDITOR
-	excludesfile = ~/.gitignore
 
 [color]
 	branch = auto
