@@ -144,6 +144,7 @@ for target in $targets; do
       stow bin-arch
       ;;
     cli)
+      stow bin
       stow git
       stow nvim
       stow tmux
