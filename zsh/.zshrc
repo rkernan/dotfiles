@@ -1,3 +1,6 @@
+# zplugin
+source "${HOME}/.zplugin/bin/zplugin.zsh"
+
 # general options
 setopt no_flow_control # disable output flow control
 setopt long_list_jobs  # list jobs in the long format by defaut
@@ -5,46 +8,19 @@ setopt notify          # report the status of background processes immediately
 setopt hash_list_all   # hash entire command path before first completion
 setopt extended_glob   # treat #, ~, and ^ as part of patterns for filename completion
 
-setopt prompt_subst
+autoload -U promptinit
+promptinit
 
-# vcs_info
-zstyle ':vcs_info:*' enable bzr cdv cvs darcs fossil git tla hg mtn p4 svn svk
-zstyle ':vcs_info:*' stagedstr '%F{green}●%f'
-zstyle ':vcs_info:*' unstagedstr '%F{yellow}●%f'
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:*' formats ' %f[%F{cyan}%b%f%c%u%m%f]'
-zstyle ':vcs_info:*' actionformats ' %f[%F{cyan}%b!%a%f%c%u%m%f]'
+# ZSH_THEME_GIT_PROMPT_PREFIX=" %F{cyan}"
+# ZSH_THEME_GIT_PROMPT_SUFFIX="%b%f"
+# ZSH_THEME_GIT_PROMPT_AHEAD="↑"
+# ZSH_THEME_GIT_PROMPT_BEHIND="↓"
+# ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{red}●%f"
+# PROMPT='%F{green}%c%f${vcs_info_msg_0_} %F{yellow}%(1j.%j%D{ }.)%(?..%F{red}%? )%f%# '
 
-# python_info
-zstyle ':python_info:virtualenv' format 'pyenv:%v '
-
-python_info_virtualenv() {
-  unset python_info[virtualenv]
-  typeset -gA python_info
-  local virtualenv_format
-  zstyle -s ':python_info:virtualenv' format 'virtualenv_format'
-  if [[ -n $virtualenv_format && -n "$PYENV_VERSION" ]]; then
-    zformat -f python_info[virtualenv] "$virtualenv_format" "v:${PYENV_VERSION:t}"
-  fi
-}
-
-set_term_title() {
-  case $TERM in
-    xterm*)
-      print -Pn "\e];%~\a"
-      ;;
-  esac
-}
-
-# run on prompt refresh
-precmd() {
-  set_term_title
-  vcs_info
-  python_info_virtualenv
-}
-
-# set prompt
-PROMPT='%F{white}$python_info[virtualenv]%f%F{green}%c%f${vcs_info_msg_0_} %F{yellow}%(1j.%j%D{ }.)%(?..%F{red}%? )%f%# '
+# TODO git prompt
+PROMPT='%F{green}%c %f%# '
+RPROMPT=""
 
 # pushd settings
 setopt pushd_ignore_dups
@@ -85,7 +61,8 @@ setopt hist_verify            # dont execute immediately on completion
 setopt share_history          # share history between sessions
 
 # completion
-autoload -Uz compinit && compinit -i
+autoload -Uz compinit
+compinit
 setopt complete_in_word # allow completion inside word
 setopt auto_menu        # automatically use menu after second completion request
 setopt no_nomatch       # disable "No matches..." dialog
@@ -135,51 +112,6 @@ alias ll='ls --group-directories-first --color=auto -lh'
 alias ls='ls --group-directories-first --color=auto'
 alias p='$PAGER'
 alias path='echo -e ${PATH//:/\\n}'
-
-extract() {
-  if [ -f $1 ] ; then
-    case $1 in
-      *.tar.bz2)
-        tar -vxjf $1
-        ;;
-      *.tar.gz)
-        tar -vxzf $1
-        ;;
-      *.bz2)
-        bunzip2 -v $1
-        ;;
-      *.rar)
-        rar x $1
-        ;;
-      *.gz)
-        gunzip $1
-        ;;
-      *.tar)
-        tar -vxf $1
-        ;;
-      *.tbz2)
-        tar -vxjf $1
-        ;;
-      *.tgz)
-        tar -vxzf $1
-        ;;
-      *.zip)
-        unzip $1
-        ;;
-      *.Z)
-        uncompress $1
-        ;;
-      *.7z)
-        7z x $1
-        ;;
-      *)
-        echo "'$1' cannot be extracted"
-        ;;
-    esac
-  else
-    echo "'$1' is not a valid file"
-  fi
-}
 
 if (( $+commands[srm] )); then
   alias srm='nocorrect srm'

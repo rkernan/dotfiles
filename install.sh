@@ -100,6 +100,12 @@ install_pyenv() {
   pyenv install -s "$python3_ver"
 }
 
+install_zplugin() {
+  if [ ! -e ~/.zplugin ]; then
+    curl -sL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh | bash -s
+  fi
+}
+
 install_go_lsp() {
   go get -u golang.org/x/tools/gopls
 }
@@ -155,6 +161,7 @@ for target in $targets; do
       install_cargo
       install_nodejs
       install_pyenv
+      install_zplugin
       # utilities
       install_fzf
       install_nvim
