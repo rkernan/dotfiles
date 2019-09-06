@@ -19,7 +19,7 @@ promptinit
 # PROMPT='%F{green}%c%f${vcs_info_msg_0_} %F{yellow}%(1j.%j%D{ }.)%(?..%F{red}%? )%f%# '
 
 # TODO git prompt
-PROMPT='%F{green}%c %f%# '
+PROMPT='%F{green}%c %F{yellow}%(1j.%j%D{ }.)%(?..%F{red}%? )%f%# '
 RPROMPT=""
 
 # pushd settings
