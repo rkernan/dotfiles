@@ -1,26 +1,15 @@
 # zplugin
 source "${HOME}/.zplugin/bin/zplugin.zsh"
 
+zplugin load mafredri/zsh-async
+zplugin load starcraftman/zsh-git-prompt
+
 # general options
 setopt no_flow_control # disable output flow control
 setopt long_list_jobs  # list jobs in the long format by defaut
 setopt notify          # report the status of background processes immediately
 setopt hash_list_all   # hash entire command path before first completion
 setopt extended_glob   # treat #, ~, and ^ as part of patterns for filename completion
-
-autoload -U promptinit
-promptinit
-
-# ZSH_THEME_GIT_PROMPT_PREFIX=" %F{cyan}"
-# ZSH_THEME_GIT_PROMPT_SUFFIX="%b%f"
-# ZSH_THEME_GIT_PROMPT_AHEAD="↑"
-# ZSH_THEME_GIT_PROMPT_BEHIND="↓"
-# ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{red}●%f"
-# PROMPT='%F{green}%c%f${vcs_info_msg_0_} %F{yellow}%(1j.%j%D{ }.)%(?..%F{red}%? )%f%# '
-
-# TODO git prompt
-PROMPT='%F{green}%c %F{yellow}%(1j.%j%D{ }.)%(?..%F{red}%? )%f%# '
-RPROMPT=""
 
 # pushd settings
 setopt pushd_ignore_dups
@@ -47,6 +36,45 @@ cd() {
   builtin cd "$@" > /dev/null
   pwd_no_expand
 }
+
+# are we connected through ssh?
+is_ssh() {
+  [[ -n "${SSH_CONNECTION-}${SSH_CLIENT-}${SSH_TTY}" ]]
+}
+
+autoload -Uz colors
+colors
+
+prompt_precmd() {
+  # display username@hostname if we're remote
+  is_ssh && psvar[1]='%F{cyan}%n@%m%f ' || psvar[1]=''
+  # async git prompt
+  psvar[2]=''
+  async_start_worker async_prompt_worker -n
+  async_register_callback async_prompt_worker async_prompt_callback
+  async_job async_prompt_worker git_super_status
+}
+
+async_prompt_callback() {
+  psvar[2]=$3
+  zle && zle reset-prompt
+  async_stop_worker async_prompt_worker -n
+}
+
+ZSH_THEME_GIT_PROMPT_SUFFIX="] "
+ZSH_THEME_GIT_PROMPT_SEPARATOR=""
+ZSH_THEME_GIT_PROMPT_STAGED="%F{green}●"
+ZSH_THEME_GIT_PROMPT_CHANGED="%F{yellow}●"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{red}●"
+ZSH_THEME_GIT_PROMPT_CLEAN=""
+
+autoload -Uz add-zsh-hook
+add-zsh-hook precmd prompt_precmd
+
+setopt PROMPT_SUBST
+
+PROMPT="%(1j.%F{yellow}%j%D{ }%f.)%(?..%F{red}%?%f )\$psvar[1]%F{green}%c%f \$psvar[2]%f%# "
+RPROMPT=""
 
 # history
 export HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
