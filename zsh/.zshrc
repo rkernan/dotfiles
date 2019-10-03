@@ -61,12 +61,13 @@ async_prompt_callback() {
   async_stop_worker async_prompt_worker -n
 }
 
-ZSH_THEME_GIT_PROMPT_SUFFIX="] "
-ZSH_THEME_GIT_PROMPT_SEPARATOR=""
-ZSH_THEME_GIT_PROMPT_STAGED="%F{green}●"
-ZSH_THEME_GIT_PROMPT_CHANGED="%F{yellow}●"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{red}●"
-ZSH_THEME_GIT_PROMPT_CLEAN=""
+ZSH_THEME_GIT_PROMPT_STAGED="%F{green}%{●%G%}"
+ZSH_THEME_GIT_PROMPT_CONFLICTS="%F{red}%{✖%G%}"
+ZSH_THEME_GIT_PROMPT_CHANGED="%F{yellow}%{✚%G%}"
+ZSH_THEME_GIT_PROMPT_STASHED="%F{blue}%{⚑%G%}"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{red}%{…%G%}"
+ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}%{✔%G%}"
+ZSH_THEME_GIT_PROMPT_LOCAL=""
 
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd prompt_precmd
