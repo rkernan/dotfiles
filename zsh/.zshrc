@@ -61,6 +61,7 @@ async_prompt_callback() {
   async_stop_worker async_prompt_worker -n
 }
 
+ZSH_THEME_GIT_PROMPT_SUFFIX="] "
 ZSH_THEME_GIT_PROMPT_STAGED="%F{green}%{●%G%}"
 ZSH_THEME_GIT_PROMPT_CONFLICTS="%F{red}%{✖%G%}"
 ZSH_THEME_GIT_PROMPT_CHANGED="%F{yellow}%{✚%G%}"
