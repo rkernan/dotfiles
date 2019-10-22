@@ -30,6 +30,11 @@ Plug 'justinmk/vim-sneak'
 
 call plug#end()
 
+" make colors display properly when using tmux/screen over putty
+if &term == "screen"
+	set t_Co=256
+endif
+
 set termguicolors
 set background=dark
 try
