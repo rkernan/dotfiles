@@ -207,3 +207,15 @@ if [ -f ~/.fzf.zsh ]; then
     fi
   }
 fi
+
+if (( $+commands[tmux] )); then
+  case $- in *i*)
+    # auto-launch tmux - only in interactive shell
+    if [[ -z "$TMUX" && "${ZSH_TMUX_AUTOSTART:-false}" == "true" && "${ZSH_TMUX_AUTOSTARTED:-false}" == "false" && -z "$VIM" ]]; then
+      export ZSH_TMUX_AUTOSTARTED="true"
+      tmux attach || tmux new-session
+      # exit when done
+      exit
+    fi
+  esac
+fi

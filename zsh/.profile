@@ -19,3 +19,8 @@ export PATH="${HOME}/bin:${PATH}"
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
 export PAGER="less"
+
+# doesn't work in putty... disable for now
+if [ ! -f "${HOME}/.at_work" ]; then
+  export ZSH_TMUX_AUTOSTART="true"
+fi
