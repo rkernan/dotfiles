@@ -18,7 +18,7 @@ guess_target() {
     echo bin-arch cli gui
   elif [ $(command -v yum) ]; then
     # centos/rhel/fedora - work
-    echo bash-to-zsh cli
+    echo at-work bash-to-zsh cli
   else
     # other
     echo cli
@@ -140,6 +140,9 @@ mkdir -p ~/bin
 
 for target in $targets; do
   case $target in
+    at_work)
+      echo "true" > "${HOME}/.at_work"
+      ;;
     bash-to-zsh)
       if [ -f "${HOME}/.bashrc" ] && [ ! -L "${HOME}/.bashrc" ]; then
         mv "${HOME}/.bashrc" "${HOME}/.bashrc.backup.$(date +%F_%R)"
