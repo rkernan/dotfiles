@@ -94,7 +94,7 @@ case $CMD in
         exec $BIN -Qdt
         ;;
     provides)
-        exec $BIN -Fo $*
+        exec $BIN -F $*
         ;;
     provides-local)
         exec $BIN -Qo $*
