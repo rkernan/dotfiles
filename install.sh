@@ -140,7 +140,7 @@ mkdir -p ~/bin
 
 for target in $targets; do
   case $target in
-    at_work)
+    at-work)
       echo "true" > "${HOME}/.at_work"
       ;;
     bash-to-zsh)
