@@ -15,6 +15,7 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-bash' }
 Plug 'junegunn/fzf.vim'
 " other
 Plug 'cohama/lexima.vim'
+Plug 'lambdalisue/suda.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sleuth'
@@ -285,6 +286,11 @@ map f <Plug>Sneak_f
 map F <Plug>Sneak_F
 map t <Plug>Sneak_t
 map T <Plug>Sneak_T
+
+"""
+" Plugin - Suda
+"""
+let g:suda_smart_edit = 1
 
 """
 " Plugin - Targets
