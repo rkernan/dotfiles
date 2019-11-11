@@ -33,7 +33,7 @@ Plug 'justinmk/vim-sneak'
 
 call plug#end()
 
-if has("termguicolors") && ~g:at_work
+if has("termguicolors") && !g:at_work
 	set termguicolors
 endif
 
