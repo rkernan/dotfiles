@@ -1,5 +1,7 @@
 let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
 
+let g:at_work = filereadable(expand('~/.at_work'))
+
 call plug#begin()
 
 " appearance
@@ -31,7 +33,7 @@ Plug 'justinmk/vim-sneak'
 
 call plug#end()
 
-if has("termguicolors")
+if has("termguicolors") && !g:at_work
 	set termguicolors
 endif
 
