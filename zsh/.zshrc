@@ -19,7 +19,7 @@ ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 # pushd settings
 setopt pushd_ignore_dups
-export DIRSTACKSIZE=10
+DIRSTACKSIZE=10
 
 # don't expand ~
 pwd_no_expand() {
@@ -98,9 +98,9 @@ PROMPT="%(1j.%F{yellow}%j%D{ }%f.)%(?..%F{red}%?%f )\$psvar[1]%F{green}%c%f \$ps
 RPROMPT=""
 
 # history
-export HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
-export HISTSIZE=100000
-export SAVEHIST=100000
+HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"
+HISTSIZE=1000
+SAVEHIST=1000
 setopt extended_history       # write history with timestamps
 setopt append_history         # allow multiple sessions to write history
 setopt inc_append_history     # write to history immediately
