@@ -5,6 +5,12 @@ zplugin load mafredri/zsh-async
 zplugin load starcraftman/zsh-git-prompt
 zplugin light zsh-users/zsh-autosuggestions
 
+# vim mode
+bindkey -v
+bindkey '^ ' autosuggest-accept
+bindkey ' '  magic-space
+bindkey '^p' history-search-backward
+bindkey '^n' history-search-forward
 
 ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
 ZSH_AUTOSUGGEST_MANUAL_REBIND=true
@@ -53,6 +59,8 @@ prompt_precmd() {
   async_start_worker async_prompt_worker -n
   async_register_callback async_prompt_worker async_prompt_callback
   async_job async_prompt_worker git_super_status
+  # set default prompt mode
+  psvar[3]=$ZSH_PROMPT_MODE
 }
 
 async_prompt_callback() {
@@ -71,13 +79,22 @@ ZSH_THEME_GIT_PROMPT_STASHED="%F{blue}%{▲%G%}"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{red}%{…%G%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}%{✓%G%}"
 ZSH_THEME_GIT_PROMPT_LOCAL=""
+ZSH_PROMPT_MODE='❯'
+ZSH_PROMPT_VICMD_MODE='❮'
+
+function zle-keymap-select() {
+  # old fasioned way because this doesn't work on some systems, need zsh 5.3+
+  psvar[3]=${${KEYMAP/vicmd/${ZSH_PROMPT_VICMD_MODE}}/(main|viins)/${ZSH_PROMPT_MODE}}
+  zle && zle reset-prompt
+}
+zle -N zle-keymap-select
 
 autoload -Uz add-zsh-hook
 add-zsh-hook precmd prompt_precmd
 
 setopt PROMPT_SUBST
 
-PROMPT="%(1j.%F{yellow}%j%D{ }%f.)%(?..%F{red}%?%f )\$psvar[1]%F{green}%c%f \$psvar[2]%f%# "
+PROMPT="%(1j.%F{yellow}%j%D{ }%f.)%(?..%F{red}%?%f )\$psvar[1]%F{green}%c%f \$psvar[2]%f\$psvar[3]%f "
 RPROMPT=""
 
 # history
@@ -100,21 +117,6 @@ setopt auto_menu        # automatically use menu after second completion request
 setopt no_nomatch       # disable "No matches..." dialog
 # case insensitive when lowercase (smartcase)
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Z}'
-
-# emacs mode
-bindkey -e
-
-# edit current command in VISUAL
-autoload -U edit-command-line && zle -N edit-command-line
-bindkey '^x^e' edit-command-line
-
-# bindings
-bindkey -e
-bindkey '^r' history-incremental-pattern-search-backward
-bindkey '^p' history-search-backward
-bindkey '^n' history-search-forward
-bindkey ' ' magic-space
-autoload -Uz vcs_info
 
 # nocorrect
 alias ack='nocorrect ack'
