@@ -3,13 +3,13 @@ source "${HOME}/.zplugin/bin/zplugin.zsh"
 
 zplugin load mafredri/zsh-async
 zplugin load starcraftman/zsh-git-prompt
+zplugin light zsh-users/zsh-autosuggestions
 
-# general options
-setopt no_flow_control # disable output flow control
-setopt long_list_jobs  # list jobs in the long format by defaut
-setopt notify          # report the status of background processes immediately
-setopt hash_list_all   # hash entire command path before first completion
-setopt extended_glob   # treat #, ~, and ^ as part of patterns for filename completion
+
+ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE=20
+ZSH_AUTOSUGGEST_MANUAL_REBIND=true
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+ZSH_AUTOSUGGEST_USE_ASYNC=true
 
 # pushd settings
 setopt pushd_ignore_dups
