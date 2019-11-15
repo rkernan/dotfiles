@@ -217,7 +217,7 @@ if (( $+commands[tmux] )); then
   case $- in *i*)
     # auto-launch tmux - only in interactive shell
     if [[ -z "$TMUX" && "${ZSH_TMUX_AUTOSTART:-0}" == 1 && "${ZSH_TMUX_AUTOSTARTED:-0}" == 0 && -z "$VIM" ]]; then
-      export ZSH_TMUX_AUTOSTARTED="true"
+      export ZSH_TMUX_AUTOSTARTED=1
       tmux attach || tmux new-session
       # exit when done
       exit
