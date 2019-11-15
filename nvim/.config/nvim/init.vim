@@ -60,6 +60,7 @@ set splitright
 set signcolumn=yes
 set noshowmode
 set mouse=a
+set title
 
 " FIXME fix for xclip issue
 set clipboard+=unnamedplus

@@ -52,6 +52,9 @@ autoload -Uz colors
 colors
 
 prompt_precmd() {
+  # set window title
+  local window_title="\033k${${PWD/$HOME/~}##*/}\033\\"
+  printf "$window_title"
   # display username@hostname if we're remote
   is_ssh && psvar[1]='%F{cyan}%n@%m%f ' || psvar[1]=''
   # async git prompt
