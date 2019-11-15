@@ -28,4 +28,4 @@ if [ -e "${HOME}/.at_work" ]; then
 fi
 
 # always run tmux
-export ZSH_TMUX_AUTOSTART="true"
+export ZSH_TMUX_AUTOSTART=1
