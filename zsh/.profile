@@ -21,6 +21,10 @@ export VISUAL="$EDITOR"
 export PAGER="less"
 
 # doesn't work in putty... disable for now
-if [ ! -f "${HOME}/.at_work" ]; then
+if [ -e "${HOME}/.at_work" ]; then
+  # putty can't dislay the unicode properly, use simple symbols
+  export ZSH_PROMPT_MODE=">"
+  export ZSH_PROMPT_MODE="<"
+else
   export ZSH_TMUX_AUTOSTART="true"
 fi
