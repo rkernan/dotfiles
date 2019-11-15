@@ -82,8 +82,9 @@ ZSH_THEME_GIT_PROMPT_STASHED="%F{blue}%{▲%G%}"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{red}%{…%G%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}%{✓%G%}"
 ZSH_THEME_GIT_PROMPT_LOCAL=""
-ZSH_PROMPT_MODE='${ZSH_PROMPT_MODE:-❯}'
-ZSH_PROMPT_VICMD_MODE='${ZSH_PROMPT_VICMD_MODE:-❮}'
+
+ZSH_PROMPT_MODE="${ZSH_PROMPT_MODE:-❯}"
+ZSH_PROMPT_VICMD_MODE="${ZSH_PROMPT_VICMD_MODE:-❮}"
 
 function zle-keymap-select() {
   # old fasioned way because this doesn't work on some systems, need zsh 5.3+
