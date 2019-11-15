@@ -24,7 +24,8 @@ export PAGER="less"
 if [ -e "${HOME}/.at_work" ]; then
   # putty can't dislay the unicode properly, use simple symbols
   export ZSH_PROMPT_MODE=">"
-  export ZSH_PROMPT_MODE="<"
-else
-  export ZSH_TMUX_AUTOSTART="true"
+  export ZSH_PROMPT_VICMD_MODE="<"
 fi
+
+# always run tmux
+export ZSH_TMUX_AUTOSTART="true"
