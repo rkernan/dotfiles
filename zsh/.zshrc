@@ -82,8 +82,8 @@ ZSH_THEME_GIT_PROMPT_STASHED="%F{blue}%{▲%G%}"
 ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{red}%{…%G%}"
 ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}%{✓%G%}"
 ZSH_THEME_GIT_PROMPT_LOCAL=""
-ZSH_PROMPT_MODE='❯'
-ZSH_PROMPT_VICMD_MODE='❮'
+ZSH_PROMPT_MODE='${ZSH_PROMPT_MODE:-❯}'
+ZSH_PROMPT_VICMD_MODE='${ZSH_PROMPT_VICMD_MODE:-❮}'
 
 function zle-keymap-select() {
   # old fasioned way because this doesn't work on some systems, need zsh 5.3+
@@ -216,7 +216,7 @@ fi
 if (( $+commands[tmux] )); then
   case $- in *i*)
     # auto-launch tmux - only in interactive shell
-    if [[ -z "$TMUX" && "${ZSH_TMUX_AUTOSTART:-false}" == "true" && "${ZSH_TMUX_AUTOSTARTED:-false}" == "false" && -z "$VIM" ]]; then
+    if [[ -z "$TMUX" && "${ZSH_TMUX_AUTOSTART:-0}" == 1 && "${ZSH_TMUX_AUTOSTARTED:-0}" == 0 && -z "$VIM" ]]; then
       export ZSH_TMUX_AUTOSTARTED="true"
       tmux attach || tmux new-session
       # exit when done
