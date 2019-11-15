@@ -162,6 +162,10 @@ silent! call coc#add_extension('coc-rls')
 " quicker diagnostic messages
 set updatetime=300
 
+" disable backups - some servers have issues with backup files, issue #649
+set nobackup
+set nowritebackup
+
 " nagivate pum with tab
 inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : <SID>check_back_space() ? "\<Tab>" : coc#refresh()
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
@@ -187,8 +191,8 @@ augroup coc_highlight
 augroup END
 
 " [c and ]c to natigate diagnostics
-nmap [c <Plug>(coc-diagnostic-prev)
-nmap ]c <Plug>(coc-diagnostic-next)
+nmap [g <Plug>(coc-diagnostic-prev)
+nmap ]g <Plug>(coc-diagnostic-next)
 
 " remap keys for gotos
 nmap gd <Plug>(coc-definition)
@@ -205,6 +209,12 @@ nmap <leader>ac <Plug>(coc-codeaction)
 " autofix current line
 nmap <leader>qf <Plug>(coc-fix-current)
 
+" mappings for function text object (requires document symbols feature on srever
+xmap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
+nmap if <Plug>(coc-funcobj-i)
+nmap af <Plug>(coc-funcobj-a)
+
 " use K to show doc in preview window
 nnoremap K :call <SID>show_documentation()<CR>
 
@@ -215,6 +225,9 @@ function! s:show_documentation()
 		call CocAction('doHover')
 	endif
 endfunction
+
+" format current buffer
+command! -nargs=0 Format :call CocAction('format')
 
 """
 " Plugin - FZF
