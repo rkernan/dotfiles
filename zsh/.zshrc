@@ -1,3 +1,15 @@
+# start tmux first if we wwant it
+if (( $+commands[tmux] )); then
+  case $- in *i*)
+    # auto-launch tmux - only in interactive shell
+    if [[ -z "$TMUX" && "${ZSH_TMUX_AUTOSTART:-0}" == 1 && "${ZSH_TMUX_AUTOSTARTED:-0}" == 0 && -z "$VIM" ]]; then
+      export ZSH_TMUX_AUTOSTARTED=1
+      tmux attach || tmux new-session
+      # exit when done
+      exit
+    fi
+  esac
+fi
 # zplugin
 source "${HOME}/.zplugin/bin/zplugin.zsh"
 
@@ -212,16 +224,4 @@ if [ -f ~/.fzf.zsh ]; then
       echo $pid | xargs kill $code
     fi
   }
-fi
-
-if (( $+commands[tmux] )); then
-  case $- in *i*)
-    # auto-launch tmux - only in interactive shell
-    if [[ -z "$TMUX" && "${ZSH_TMUX_AUTOSTART:-0}" == 1 && "${ZSH_TMUX_AUTOSTARTED:-0}" == 0 && -z "$VIM" ]]; then
-      export ZSH_TMUX_AUTOSTARTED=1
-      tmux attach || tmux new-session
-      # exit when done
-      exit
-    fi
-  esac
 fi
