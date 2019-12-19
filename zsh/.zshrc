@@ -16,6 +16,7 @@ source "${HOME}/.zplugin/bin/zplugin.zsh"
 zplugin load mafredri/zsh-async
 zplugin load starcraftman/zsh-git-prompt
 zplugin light zsh-users/zsh-autosuggestions
+zplugin light zsh-users/zsh-completions
 
 # vim mode
 bindkey -v
