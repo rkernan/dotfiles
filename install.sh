@@ -101,9 +101,9 @@ install_pyenv() {
   pyenv install -s "$python3_ver"
 }
 
-install_zplugin() {
-  if [ ! -e ~/.zplugin ]; then
-    curl -sL https://raw.githubusercontent.com/zdharma/zplugin/master/doc/install.sh | bash -s
+install_zinit() {
+  if [ ! -e ~/.zinit ]; then
+    curl -sL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh | bash -s
   fi
 }
 
@@ -165,7 +165,7 @@ for target in $targets; do
       install_cargo
       install_nodejs
       install_pyenv
-      install_zplugin
+      install_zinit
       # utilities
       install_fzf
       install_nvim
