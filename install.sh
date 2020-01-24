@@ -112,7 +112,7 @@ install_go_lsp() {
 }
 
 install_python_lsp() {
-  pip install --user -U jedi pylint rope
+  python3 -m pip install --user -U jedi pylint rope
 }
 
 install_rust_lsp() {
