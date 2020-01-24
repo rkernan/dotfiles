@@ -34,7 +34,8 @@ install_fzf() {
 }
 
 install_ripgrep() {
-  cargo install-update ripgrep
+  local pkg="ripgrep"
+  cargo install-update "$pkg" || cargo install "$pkg"
 }
 
 install_nvim() {
