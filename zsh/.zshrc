@@ -184,17 +184,15 @@ if (( $+commands[pyenv] )); then
 fi
 
 if [ -f ~/.fzf.zsh ]; then
-  if (( $+commands[rg] )); then
-    # file list
-    _fzf_compgen_path() {
-      command rg --hidden --files $1
-    }
+  # file list
+  _fzf_compgen_path() {
+    command rg --hidden --files $1
+  }
 
-    # directory list
-    _fzf_compgen_dir() {
-      command rg --hidden --files --null $1 | xargs -0 dirname | uniq
-    }
-  fi
+  # directory list
+  _fzf_compgen_dir() {
+    command rg --hidden --files --null $1 | xargs -0 dirname | uniq
+  }
 
   export FZF_DEFAULT_COMMAND="rg --hidden --files"
   export FZF_DEFAULT_OPTS="--layout=reverse"
