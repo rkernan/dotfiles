@@ -10,8 +10,8 @@ if (( $+commands[tmux] )); then
     fi
   esac
 fi
-# zplugin
-source "${HOME}/.zplugin/bin/zplugin.zsh"
+# zinit
+source "${HOME}/.zinit/bin/zinit.zsh"
 
 zplugin load mafredri/zsh-async
 zplugin load starcraftman/zsh-git-prompt
