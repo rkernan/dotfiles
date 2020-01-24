@@ -62,20 +62,7 @@ set noshowmode
 set mouse=a
 set title
 
-" FIXME fix for xclip issue
 set clipboard+=unnamedplus
-let g:clipboard = {
-	\ 'name': 'xsel',
-	\ 'copy': {
-	\     '+': 'xsel -ib',
-	\     '*': 'xsel -ip'
-	\ },
-	\ 'paste': {
-	\     '+': 'xsel -ob',
-	\     '*': 'xsel -op'
-	\ },
-	\ 'cache_enabled': 1
-	\ }
 
 set cursorline
 " auto-enable based on window focus
