@@ -72,6 +72,7 @@ install_nodejs() {
   local actual_ver=${actual_ver:1}
   # only update if we need to (or already have)
   if [ ! $(command -v node) ] || [ -e "${HOME}/.local/bin/node" ] || [ $(version $actual_ver) -lt $(version $req_version) ]; then
+    mkdir -p "${HOME}/.local"
     curl -sL https://install-node.now.sh | bash -s -- --prefix="${HOME}/.local" -y
   fi
 }
