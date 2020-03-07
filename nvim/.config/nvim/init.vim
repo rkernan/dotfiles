@@ -199,8 +199,8 @@ nmap <leader>qf <Plug>(coc-fix-current)
 " mappings for function text object (requires document symbols feature on srever
 xmap if <Plug>(coc-funcobj-i)
 xmap af <Plug>(coc-funcobj-a)
-nmap if <Plug>(coc-funcobj-i)
-nmap af <Plug>(coc-funcobj-a)
+omap if <Plug>(coc-funcobj-i)
+omap af <Plug>(coc-funcobj-a)
 
 " use K to show doc in preview window
 nnoremap K :call <SID>show_documentation()<CR>
