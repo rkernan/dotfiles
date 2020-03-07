@@ -177,7 +177,7 @@ augroup coc_highlight
 	autocmd CursorHold * silent call CocActionAsync('highlight')
 augroup END
 
-" [c and ]c to natigate diagnostics
+" [g and ]g to natigate diagnostics
 nmap [g <Plug>(coc-diagnostic-prev)
 nmap ]g <Plug>(coc-diagnostic-next)
 
@@ -186,6 +186,10 @@ nmap gd <Plug>(coc-definition)
 nmap gt <Plug>(coc-type-definition)
 nmap gi <Plug>(coc-implementation)
 nmap gr <Plug>(coc-references)
+
+" do code action on selected region
+xmap <leader>a <Plug>(coc-codeaction-selected)
+nmap <leader>a <Plug>(coc-codeaction-selected)
 
 " rename current word
 nmap <leader>rn <Plug>(coc-rename)
@@ -215,6 +219,12 @@ endfunction
 
 " format current buffer
 command! -nargs=0 Format :call CocAction('format')
+
+" fold current buffer
+command! -nargs=? Fold :call CocAction('fold', <f-args>)
+
+" organize current buffer imports
+command! -nargs=0 OR :call CocAction('runCommand', 'editor.action.organizeImport')
 
 """
 " Plugin - FZF
