@@ -78,10 +78,7 @@ highlight! link TabLine     StatusLine
 highlight! link TabLineFill StatusLineNC
 highlight! link TabLineSel  ModestatusModeNormal
 
-" Neovim floating windows
-call s:hl('NormalFloat', s:fg1, s:bg2, 'none')
-
-" Coc warning signs
+" Coc signs
 highlight! link CocErrorSign GruvboxRedSign
 highlight! link CocWarningSign GruvboxYellowSign
 highlight! link CocInfoSign GruvboxWhiteSign
@@ -92,20 +89,3 @@ call s:hl('CocErrorFloat', s:red, s:bg2, 'none')
 call s:hl('CocWarningFloat', s:yellow, s:bg2, 'none')
 call s:hl('CocInfoFloat', s:fg1, s:bg2, 'none')
 call s:hl('CocHintFloat', s:blue, s:bg2, 'none')
-
-" FZF colors
-let g:fzf_colors = {
-  \ 'fg':      ['fg', 'Normal'],
-  \ 'bg':      ['bg', 'NormalFloat'],
-  \ 'hl':      ['fg', 'Comment'],
-  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-  \ 'hl+':     ['fg', 'Statement'],
-  \ 'info':    ['fg', 'PreProc'],
-  \ 'border':  ['fg', 'Ignore'],
-  \ 'prompt':  ['fg', 'Conditional'],
-  \ 'pointer': ['fg', 'Exception'],
-  \ 'marker':  ['fg', 'Keyword'],
-  \ 'spinner': ['fg', 'Label'],
-  \ 'header':  ['fg', 'Comment']
-  \ }

@@ -226,11 +226,8 @@ nnoremap <leader>/ :Rg<cr>
 let g:fzf_action = { 'ctrl-t': 'tab split', 'ctrl-s': 'split', 'ctrl-v': 'vsplit' }
 " top-to-bottom
 let $FZF_DEFAULT_OPTS='--layout=reverse'
-
-if has('nvim-0.4.0')
-	" floating window
-	let g:fzf_layout = { 'window': 'call floating#small()' }
-endif
+" floating window
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 
 """
 " Plugin - Modestatus
