@@ -13,10 +13,10 @@ fi
 # zinit
 source "${HOME}/.zinit/bin/zinit.zsh"
 
-zplugin load mafredri/zsh-async
-zplugin load starcraftman/zsh-git-prompt
-zplugin light zsh-users/zsh-autosuggestions
-zplugin light zsh-users/zsh-completions
+zinit load mafredri/zsh-async
+zinit load starcraftman/zsh-git-prompt
+zinit light zsh-users/zsh-autosuggestions
+zinit light zsh-users/zsh-completions
 
 # vim mode
 bindkey -v
