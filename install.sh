@@ -2,7 +2,7 @@
 
 set -e
 
-readonly python3_ver="3.7.2"
+readonly python3_ver="3.8.2"
 
 function stow {
   command stow -t "$HOME" -v "$1"
