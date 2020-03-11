@@ -10,6 +10,12 @@ if (( $+commands[tmux] )); then
     fi
   esac
 fi
+
+# install zinit
+if [ ! -e "${HOME}/.zinit" ]; then
+  curl -sL https://raw.githubusercontent.com/zdharma/zinit/master/doc/install.sh | bash -s
+fi
+
 # zinit
 source "${HOME}/.zinit/bin/zinit.zsh"
 
@@ -183,7 +189,10 @@ if (( $+commands[pyenv] )); then
   eval "$(pyenv virtualenv-init -)"
 fi
 
-if [ -f ~/.fzf.zsh ]; then
+if [ -e "${HOME}/.fzf.zsh" ]; then
+
+  source "${HOME}/.fzf.zsh"
+
   # file list
   _fzf_compgen_path() {
     command rg --hidden --files $1
@@ -196,8 +205,6 @@ if [ -f ~/.fzf.zsh ]; then
 
   export FZF_DEFAULT_COMMAND="rg --hidden --files"
   export FZF_DEFAULT_OPTS="--layout=reverse"
-
-  source ~/.fzf.zsh
 
   # fuzzy edit
   fe() {

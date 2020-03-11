@@ -1,5 +1,3 @@
-let g:python3_host_prog = expand('~/.pyenv/versions/neovim3/bin/python')
-
 let g:at_work = filereadable(expand('~/.at_work'))
 
 call plug#begin()

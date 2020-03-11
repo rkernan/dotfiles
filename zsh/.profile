@@ -7,11 +7,15 @@ export PATH="${HOME}/.cargo/bin:${PATH}"
 export GOPATH="${HOME}/workspace/go"
 export PATH="${GOPATH}/bin:${PATH}"
 
-# pyenv
-export PATH="${HOME}/.pyenv/bin:${PATH}"
-
 # local installs (pip, nodejs)
 export PATH="${HOME}/.local/bin:${PATH}"
+
+# linuxbrew, support local and system-wide
+if [ -e "/home/linuxbrew" ]; then
+  export PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
+elif [ -e "${HOME}/.linuxbrew" ]; then
+  export PATH="${HOME}/.linuxbrew/bin:${PATH}"
+fi
 
 # user bin
 export PATH="${HOME}/bin:${PATH}"
