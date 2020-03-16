@@ -11,7 +11,7 @@ Plug 'wellle/targets.vim'
 Plug 'mhinz/vim-signify'
 Plug 'tpope/vim-fugitive'
 " fzf integration
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-bash' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all --no-bash --no-update-rc' }
 Plug 'junegunn/fzf.vim'
 " other
 Plug 'cohama/lexima.vim'
