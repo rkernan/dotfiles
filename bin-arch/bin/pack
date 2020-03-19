@@ -66,8 +66,9 @@ case $CMD in
         ;;
     firmware-upgrade)
         no_params_or_die $*
-        sudo $(which fwupdmgr) refresh
-        exec sudo $(which fwupdmgr) update
+        fwupdmgr refresh --force
+        fwupdmgr get-updates
+        fwupdmgr update
         ;;
     info)
         exec $SU_BIN -Si $*
