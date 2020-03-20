@@ -66,9 +66,9 @@ case $CMD in
         ;;
     firmware-upgrade)
         no_params_or_die $*
-        fwupdmgr refresh --force
-        fwupdmgr get-updates
-        fwupdmgr update
+        $(which fwupdmgr) refresh --force
+        $(which fwupdmgr) get-updates
+        $(which fwupdmgr) update
         ;;
     info)
         exec $SU_BIN -Si $*
