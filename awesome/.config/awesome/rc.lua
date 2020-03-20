@@ -15,7 +15,6 @@ altkey       = "Mod1"
 terminal     = "kitty -1"
 editor       = os.getenv("EDITOR") or "vim"
 browser      = "google-chrome-stable"
-scrlocker    = "light-locker-command --lock"
 
 --------------------
 -- Error handling

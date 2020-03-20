@@ -49,7 +49,7 @@ globalkey({ modkey }, "Return", function () awful.spawn(terminal) end,
           { description = "open terminal", group = "awesome: launcher" })
 
 -- lock screen
-globalkey({ modkey }, "Escape", function () os.execute(scrlocker) end,
+globalkey({ modkey }, "Escape", function () os.execute("dm-tool lock") end,
           { description = "lock screen", group = "awesome: misc" })
 
 -- hotkey help
