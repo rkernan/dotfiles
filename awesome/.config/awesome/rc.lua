@@ -181,7 +181,6 @@ awful.util.mymainmenu = awful.menu(
         },
       },
       { "Terminal", terminal },
-      { "Files", "pcmanfm" },
       { "Web Browser", browser },
       { "Processes", string.format("%s htop", terminal) },
     },
