@@ -105,16 +105,6 @@ local mysep = wibox.widget.textbox(" ")
 local myclockicon = wibox.widget.imagebox(theme.widget_clock)
 local mytextclock = wibox.widget.textclock(lain.util.markup.fontfg(font_sans, "#7788af", "%A %d %B") .. lain.util.markup.fontfg(font_mono, "#de5e1e", " %H:%M"))
 
--- Calendar
-theme.cal = lain.widget.cal({
-  attach_to = { mytextclock },
-  notification_preset = {
-    fg = theme.fg_normal,
-    bg = theme.bg_normal,
-    font = font_mono -- must be monospace
-  }
-})
-
 -- CPU
 local mycpuicon = wibox.widget.imagebox(theme.widget_cpu)
 local mycpu = lain.widget.cpu({
