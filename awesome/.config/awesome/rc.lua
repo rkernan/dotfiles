@@ -23,7 +23,7 @@ browser      = "google-chrome-stable"
 -- Handle startup errors
 if awesome.startup_errors then
   naughty.notify({ preset = naughty.config.presets.critical,
-                   title = "Oops, there were errors during startup!",
+                   title = "An error occurred during startup!",
                    text = awesome.startup_errors })
 end
 
@@ -35,7 +35,7 @@ do
     in_error = true
 
     naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "Oops, an error happened!",
+                     title = "An error occurred!",
                      text = tostring(err) })
     in_error = false
   end)
