@@ -178,8 +178,6 @@ awful.util.mymainmenu = awful.menu(
         "Utilities", {
           { "Image Viewer", "gpicview" },
           { "Media Player", "smplayer" },
-          { "Google Play Music", "gpmdp" },
-          { "Discord", discord },
         },
       },
       { "Terminal", terminal },
