@@ -139,52 +139,12 @@ local myvol = lain.widget.pulse({
 
 theme.volume = myvol
 
-function volume_toggle_mute()
-  os.execute("pulseaudio-ctl mute")
-  theme.volume.update()
-end
-
-function volume_adjust(perc)
-  if perc > 0 then
-    os.execute(string.format("pulseaudio-ctl up +%d%%", perc))
-  else
-    os.execute(string.format("pulseaudio-ctl down -%d%%", math.abs(perc)))
-  end
-  theme.volume.update()
-end
-
 theme.volume.widget:buttons(awful.util.table.join(
     awful.button({}, 1, function() awful.spawn("pavucontrol") end),
     awful.button({}, 3, volume_toggle_mute),
     awful.button({}, 4, function() volume_adjust("+1") end),
     awful.button({}, 5, function() volume_adjust("-1") end)
 ))
-
--- Screen brightness
-screen_brightness_notification = nil
-
-function screen_brightness_adjust(perc)
-  if perc > 0 then
-    os.execute(string.format("xbacklight -inc %d", perc))
-  else
-    os.execute(string.format("xbacklight -dec %d", math.abs(perc)))
-  end
-  -- show a notification
-  awful.spawn.easy_async("xbacklight -get",
-    function (stdout, stderr, reason, exit_code)
-      local replaces = nil
-      if screen_brightness_notification then
-        replaces = screen_brightness_notification.id
-      end
-      screen_brightness_notification = naughty.notify({
-        replaces_id = replaces,
-        title = "Screen brightness",
-        text = string.format("%d%%", stdout),
-        destroy = function () screen_brightness_notification = nil end
-      })
-    end
-  )
-end
 
 -- Battery
 local mybaticon = wibox.widget.imagebox(theme.widget_batt)

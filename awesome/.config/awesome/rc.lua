@@ -5,6 +5,7 @@ gears = require("gears")
 hotkeys_popup = require("awful.hotkeys_popup").widget
 lain = require("lain")
 naughty = require("naughty")
+util = require("util")
 wibox = require("wibox")
 
 require("awful.autofocus")
