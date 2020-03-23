@@ -1,4 +1,4 @@
-local awful, gears, hotkeys_popup, lain = awful, gears, hotkeys_popup, lain
+local awful, gears, hotkeys_popup, lain, naughty = awful, gears, hotkeys_popup, lain, naughty
 
 --------------------
 -- Global keys
@@ -103,6 +103,34 @@ globalkey({ }, "XF86AudioLowerVolume", function () volume_adjust(-5) end,
           { description = "lower volume", group = "awesome: misc" })
 
 -- brightness control
+local mybacklight_n = nil
+
+function backlight_adjust(perc)
+  local cmd = nil
+  if perc > 0 then
+    cmd = string.format("xbacklight -inc %d", perc)
+  else
+    cmd = string.format("xbacklight -dec %d", math.abs(perc))
+  end
+
+  awful.spawn.easy_async(
+      cmd,
+      function (sdout, stderr, reason, exitcode)
+        awful.spawn.easy_async(
+            "xbacklight -get",
+            function (stdout, stderr, reason, exitcode)
+              mybacklight_n = naughty.notify({
+                  title = "Backlight",
+                  text = string.format("%d%%", stdout),
+                  replaces_id = mybacklight_n,
+                  destroy = function () mybacklight_n = nil end
+                }).id
+            end
+          )
+      end
+    )
+end
+
 globalkey({ }, "XF86MonBrightnessDown", function () backlight_adjust(-5) end,
           { description = "reduce screen brightness", group = "awesome: misc" })
 globalkey({ }, "XF86MonBrightnessUp", function () backlight_adjust(5) end,

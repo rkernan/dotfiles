@@ -138,9 +138,55 @@ local myvol = lain.widget.pulse({
     end
 })
 
-theme.volume = myvol
+local myvol_n = nil
 
-theme.volume.widget:buttons(awful.util.table.join(
+function volume_toggle_mute()
+  awful.spawn.easy_async(
+      "pamixer --toggle-mute --get-mute",
+      function (stdout, stderr, reason, exitcode)
+        myvol:update()
+        if string.gsub(stdout, '%s+', '') == "true" then
+          myvol_n = naughty.notify({
+              title = "Volume",
+              text = "Muted",
+              replaces_id = myvol_n,
+              destroy = function () myvol_n = nil end
+            }).id
+        else
+          myvol_n = naughty.notify({
+              title = "Volume",
+              text = "Unmuted",
+              replaces_id = myvol_n,
+              destroy = function () myvol_n = nil end
+            }).id
+        end
+      end
+    )
+end
+
+function volume_adjust(perc)
+  local cmd = nil
+  if perc > 0 then
+    cmd = string.format("pamixer --increase %d --get-volume", perc)
+  else
+    cmd = string.format("pamixer --decrease %d --get-volume", math.abs(perc))
+  end
+
+  awful.spawn.easy_async(
+      cmd,
+      function (stdout, stderr, reason, exitcode)
+        myvol:update()
+        myvol_n = naughty.notify({
+            title = "Volume",
+            text = string.format("%d%%", stdout),
+            replaces_id = myvol_n,
+            destroy = function () myvol_n = nil end
+          }).id
+      end
+    )
+end
+
+myvol.widget:buttons(awful.util.table.join(
     awful.button({}, 1, function() awful.spawn("pavucontrol") end),
     awful.button({}, 3, volume_toggle_mute),
     awful.button({}, 4, function() volume_adjust("+1") end),
