@@ -45,7 +45,8 @@ theme.widget_note_on                                  = theme.icon_dir .. "/widg
 theme.widget_netdown                                  = theme.icon_dir .. "/widget/net_down.png"
 theme.widget_netup                                    = theme.icon_dir .. "/widget/net_up.png"
 theme.widget_mail                                     = theme.icon_dir .. "/widget/mail.png"
-theme.widget_batt                                     = theme.icon_dir .. "/widget/bat.png"
+theme.widget_bat                                     = theme.icon_dir .. "/widget/bat.png"
+theme.widget_ac                                     = theme.icon_dir .. "/widget/ac.png"
 theme.widget_clock                                    = theme.icon_dir .. "/widget/clock.png"
 theme.widget_vol                                      = theme.icon_dir .. "/widget/spkr.png"
 theme.taglist_squares_sel                             = theme.icon_dir .. "/square_sel.png"
@@ -147,28 +148,32 @@ theme.volume.widget:buttons(awful.util.table.join(
 ))
 
 -- Battery
-local mybaticon = wibox.widget.imagebox(theme.widget_batt)
+local mybaticon = wibox.widget.imagebox(theme.widget_bat)
+local mybaticon_ac = false
 local mybat = lain.widget.bat({
-  timeout = 31,
   battery = "BAT0",
-  notify = "off",
+  ac = "AC",
   settings = function()
     widget:set_markup(lain.util.markup.fontfg(font_mono, theme.fg_normal, bat_now.perc .. "%"))
+    -- set icon if ac_status changed
+    if bat_now.ac_status ~= mybaticon_ac then
+      if bat_now.ac_status == true then
+        mybaticon.image = theme.widget_ac
+      else
+        mybaticon.image = theme.widget_bat
+      end
+      mybaticon_ac = bat_now.ac_status
+    end
   end
 })
 
 local mybat_t = awful.tooltip({ font = font_sans })
 mybat_t:add_to_object(mybat.widget)
 mybat.widget:connect_signal("mouse::enter",
-  function ()
-    awful.spawn.easy_async_with_shell("upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep -E 'state|percentage|to\\ full|to\\ empty' | awk '{$1=$1;print}'",
-      function (stdout, stderr, reason, exit_code)
-        mybat_t.text = stdout:gsub("^%s*(.-)%s*$", "%1")
-      end
-    )
-    return "loading..."
-  end
-)
+    function ()
+      mybat_t.text = string.format("%s %s%%\n%s remaining", bat_now.status, bat_now.perc, bat_now.time)
+    end
+  )
 
 --------------------
 -- Wibox setup
