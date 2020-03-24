@@ -209,24 +209,24 @@ vol:buttons(awful.util.table.join(
   ))
 
 -- Battery
-local bat_icon = wibox.widget.imagebox(theme.widget_bat)
-local last_ac_status = false
-local bat = lain.widget.bat({
-    battery = "BAT0",
-    ac = "AC",
-    settings = function()
-      widget:set_markup(lain.util.markup.fontfg(font_mono, theme.fg_normal, bat_now.perc .. "%"))
-      -- set icon if ac_status changed
-      if bat_now.ac_status ~= last_ac_status then
-        if bat_now.ac_status == true then
-          bat_icon.image = theme.widget_ac
-        else
-          bat_icon.image = theme.widget_bat
-        end
-        last_ac_status = bat_now.ac_status
-      end
+local bat_icon = wibox.widget.imagebox(nil)
+local last_ac_status = nil
+
+local function bat_refresh()
+  widget:set_markup(lain.util.markup.fontfg(font_mono, theme.fg_normal, bat_now.perc .. "%"))
+  -- set icon if ac_status changed
+  if bat_now.ac_status ~= last_ac_status then
+    if bat_now.ac_status == 1 then
+      bat_icon.image = theme.widget_ac
+    else
+      bat_icon.image = theme.widget_bat
     end
-  }).widget
+    bat_icon:emit_signal("widget::redraw_needed")
+    last_ac_status = bat_now.ac_status
+  end
+end
+
+local bat = lain.widget.bat({ battery = "BAT0", ac = "AC", settings = bat_refresh }).widget
 
 local mybat = wibox.layout.fixed.horizontal()
 mybat:add(bat_icon)
