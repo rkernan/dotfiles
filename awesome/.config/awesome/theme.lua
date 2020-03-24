@@ -147,11 +147,11 @@ local vol = lain.widget.pulse({
         end
         widget:set_markup(vlevel)
     end
-}).widget
+})
 
 local myvol = wibox.layout.fixed.horizontal()
 myvol:add(vol_icon)
-myvol:add(vol)
+myvol:add(vol.widget)
 
 local vol_notify = nil
 
@@ -201,7 +201,7 @@ function volume_adjust(perc)
     )
 end
 
-vol:buttons(awful.util.table.join(
+vol.widget:buttons(awful.util.table.join(
     awful.button({}, 1, function() awful.spawn("pavucontrol") end),
     awful.button({}, 3, volume_toggle_mute),
     awful.button({}, 4, function() volume_adjust("+1") end),
