@@ -45,8 +45,8 @@ theme.widget_note_on                                  = theme.icon_dir .. "/widg
 theme.widget_netdown                                  = theme.icon_dir .. "/widget/net_down.png"
 theme.widget_netup                                    = theme.icon_dir .. "/widget/net_up.png"
 theme.widget_mail                                     = theme.icon_dir .. "/widget/mail.png"
-theme.widget_bat                                     = theme.icon_dir .. "/widget/bat.png"
-theme.widget_ac                                     = theme.icon_dir .. "/widget/ac.png"
+theme.widget_bat                                      = theme.icon_dir .. "/widget/bat.png"
+theme.widget_ac                                       = theme.icon_dir .. "/widget/ac.png"
 theme.widget_clock                                    = theme.icon_dir .. "/widget/clock.png"
 theme.widget_vol                                      = theme.icon_dir .. "/widget/spkr.png"
 theme.taglist_squares_sel                             = theme.icon_dir .. "/square_sel.png"
@@ -103,30 +103,41 @@ theme.systray_icon_spacing = dpi(5)
 local mysep = wibox.widget.textbox(" ")
 
 -- Clock
-local myclockicon = wibox.widget.imagebox(theme.widget_clock)
-local mytextclock = wibox.widget.textclock(lain.util.markup.fontfg(font_sans, "#7788af", "%A %d %B") .. lain.util.markup.fontfg(font_mono, "#de5e1e", " %H:%M"))
+local clock_icon = wibox.widget.imagebox(theme.widget_clock)
+local clock = wibox.widget.textclock(lain.util.markup.fontfg(font_sans, "#7788af", "%A %d %B") .. lain.util.markup.fontfg(font_mono, "#de5e1e", " %H:%M"))
+local myclock = wibox.layout.fixed.horizontal()
+myclock:add(clock_icon)
+myclock:add(clock)
 
 -- CPU
-local mycpuicon = wibox.widget.imagebox(theme.widget_cpu)
-local mycpu = lain.widget.cpu({
+local cpu_icon = wibox.widget.imagebox(theme.widget_cpu)
+local cpu = lain.widget.cpu({
   timeout = 3,
   settings = function()
     widget:set_markup(lain.util.markup.fontfg(font_mono, "#e33a6e", cpu_now.usage .. "%"))
   end
-})
+}).widget
+
+local mycpu = wibox.layout.fixed.horizontal()
+mycpu:add(cpu_icon)
+mycpu:add(cpu)
 
 -- MEM
-local mymemicon = wibox.widget.imagebox(theme.widget_mem)
-local mymem = lain.widget.mem({
+local mem_icon = wibox.widget.imagebox(theme.widget_mem)
+local mem = lain.widget.mem({
   timeout = 3,
   settings = function()
     widget:set_markup(lain.util.markup.fontfg(font_mono, "#e0da37", mem_now.used .. "M"))
   end
-})
+}).widget
+
+local mymem = wibox.layout.fixed.horizontal()
+mymem:add(mem_icon)
+mymem:add(mem)
 
 -- Pulse volume
-local myvolicon = wibox.widget.imagebox(theme.widget_vol)
-local myvol = lain.widget.pulse({
+local vol_icon = wibox.widget.imagebox(theme.widget_vol)
+local vol = lain.widget.pulse({
     timeout = 7,
     settings = function()
         vlevel = lain.util.markup.fontfg(font_mono, "#7493d2", volume_now.left .. "%")
@@ -136,28 +147,32 @@ local myvol = lain.widget.pulse({
         end
         widget:set_markup(vlevel)
     end
-})
+}).widget
 
-local myvol_n = nil
+local myvol = wibox.layout.fixed.horizontal()
+myvol:add(vol_icon)
+myvol:add(vol)
+
+local vol_notify = nil
 
 function volume_toggle_mute()
   awful.spawn.easy_async(
       "pamixer --toggle-mute --get-mute",
       function (stdout, stderr, reason, exitcode)
-        myvol:update()
+        vol:update()
         if string.gsub(stdout, '%s+', '') == "true" then
-          myvol_n = naughty.notify({
+          vol_notify = naughty.notify({
               title = "Volume",
               text = "Muted",
-              replaces_id = myvol_n,
-              destroy = function () myvol_n = nil end
+              replaces_id = vol_notify,
+              destroy = function () vol_notify = nil end
             }).id
         else
-          myvol_n = naughty.notify({
+          vol_notify = naughty.notify({
               title = "Volume",
               text = "Unmuted",
-              replaces_id = myvol_n,
-              destroy = function () myvol_n = nil end
+              replaces_id = vol_notify,
+              destroy = function () vol_notify = nil end
             }).id
         end
       end
@@ -175,49 +190,53 @@ function volume_adjust(perc)
   awful.spawn.easy_async(
       cmd,
       function (stdout, stderr, reason, exitcode)
-        myvol:update()
-        myvol_n = naughty.notify({
+        vol:update()
+        vol_notify = naughty.notify({
             title = "Volume",
             text = string.format("%d%%", stdout),
-            replaces_id = myvol_n,
-            destroy = function () myvol_n = nil end
+            replaces_id = vol_notify,
+            destroy = function () vol_notify = nil end
           }).id
       end
     )
 end
 
-myvol.widget:buttons(awful.util.table.join(
+vol:buttons(awful.util.table.join(
     awful.button({}, 1, function() awful.spawn("pavucontrol") end),
     awful.button({}, 3, volume_toggle_mute),
     awful.button({}, 4, function() volume_adjust("+1") end),
     awful.button({}, 5, function() volume_adjust("-1") end)
-))
+  ))
 
 -- Battery
-local mybaticon = wibox.widget.imagebox(theme.widget_bat)
-local mybaticon_ac = false
-local mybat = lain.widget.bat({
-  battery = "BAT0",
-  ac = "AC",
-  settings = function()
-    widget:set_markup(lain.util.markup.fontfg(font_mono, theme.fg_normal, bat_now.perc .. "%"))
-    -- set icon if ac_status changed
-    if bat_now.ac_status ~= mybaticon_ac then
-      if bat_now.ac_status == true then
-        mybaticon.image = theme.widget_ac
-      else
-        mybaticon.image = theme.widget_bat
+local bat_icon = wibox.widget.imagebox(theme.widget_bat)
+local last_ac_status = false
+local bat = lain.widget.bat({
+    battery = "BAT0",
+    ac = "AC",
+    settings = function()
+      widget:set_markup(lain.util.markup.fontfg(font_mono, theme.fg_normal, bat_now.perc .. "%"))
+      -- set icon if ac_status changed
+      if bat_now.ac_status ~= last_ac_status then
+        if bat_now.ac_status == true then
+          bat_icon.image = theme.widget_ac
+        else
+          bat_icon.image = theme.widget_bat
+        end
+        last_ac_status = bat_now.ac_status
       end
-      mybaticon_ac = bat_now.ac_status
     end
-  end
-})
+  }).widget
 
-local mybat_t = awful.tooltip({ font = font_sans })
-mybat_t:add_to_object(mybat.widget)
-mybat.widget:connect_signal("mouse::enter",
+local mybat = wibox.layout.fixed.horizontal()
+mybat:add(bat_icon)
+mybat:add(bat)
+
+local bat_tt = awful.tooltip({ font = font_sans })
+bat_tt:add_to_object(mybat)
+mybat:connect_signal("mouse::enter",
     function ()
-      mybat_t.text = string.format("%s %s%%\n%s remaining", bat_now.status, bat_now.perc, bat_now.time)
+      bat_tt.text = string.format("%s %s%%\n%s remaining", bat_now.status, bat_now.perc, bat_now.time)
     end
   )
 
@@ -276,20 +295,15 @@ function theme.at_screen_connect(s)
       layout = wibox.layout.fixed.horizontal,
       s.mysystray,
       mysep,
-      myvolicon,
-      myvol.widget,
+      myvol,
       mysep,
-      mybaticon,
       mybat,
       mysep,
-      mymemicon,
       mymem,
       mysep,
-      mycpuicon,
       mycpu,
       mysep,
-      myclockicon,
-      mytextclock,
+      myclock,
       mysep,
     },
   }
@@ -339,7 +353,7 @@ client.connect_signal("request::titlebars", function(c)
         widget = awful.titlebar.widget.titlewidget(c),
       },
       buttons = buttons,
-      layout  = wibox.layout.flex.horizontal,
+      layout  = wibox.layout.fixed.horizontal,
     },
     { -- Right
       awful.titlebar.widget.maximizedbutton(c),
