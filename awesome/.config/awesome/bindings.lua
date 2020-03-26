@@ -93,6 +93,8 @@ globalkey({ modkey, "Shift" }, "k", function () awful.client.swap.bydirection("u
           { description = "swap up", group = "awesome: client" })
 globalkey({ modkey, "Shift" }, "l", function () awful.client.swap.bydirection("right") end,
           { description = "swap right", group = "awesome: client" })
+globalkey({ modkey }, "o", awful.client.movetoscreen, 
+          { description = "toggle display screen", group = "awesome: client" })
 
 -- volume control
 globalkey({ }, "XF86AudioMute", volume_toggle_mute,
