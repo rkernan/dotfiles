@@ -59,44 +59,23 @@ awful.layout.layouts = {
 --------------------
 -- Taglist
 --------------------
-awful.util.tagnames = { "1", "2", "3", "4", "5" }
+awful.util.tagnames = { "1", "2", "3" }
 awful.util.taglist_buttons = gears.table.join(
-  awful.button({ }, 1, function(t) t:view_only() end),
-  awful.button({ modkey }, 1, function(t)
+  awful.button({ }, 1, function (t) t:view_only() end),
+  awful.button({ modkey }, 1, function (t)
     if client.focus then
       client.focus:move_to_tag(t)
     end
   end),
   awful.button({ }, 3, awful.tag.viewtoggle),
-  awful.button({ modkey }, 3, function(t)
+  awful.button({ modkey }, 3, function (t)
     if client.focus then
       client.focus:toggle_tag(t)
     end
   end),
-  awful.button({ }, 4, function(t) awful.tag.viewnext(t.screen) end),
-  awful.button({ }, 5, function(t) awful.tag.viewprev(t.screen) end)
+  awful.button({ }, 4, function (t) awful.tag.viewnext(t.screen) end),
+  awful.button({ }, 5, function (t) awful.tag.viewprev(t.screen) end)
 )
-
-local function shorten_tag_name(name)
-  if name == "floating" then
-    name = "float"
-  elseif name == "magnifier" then
-    name = "mag"
-  end
-  return name
-end
-
-local function tagbox_update_tagname(t)
-  t.name = t.index .. ":" .. shorten_tag_name(t.layout.name)
-end
-
-awful.screen.connect_for_each_screen(
-  function(s)
-    awful.tag.attached_connect_signal(s, "tagged", tagbox_update_tagname)
-    awful.tag.attached_connect_signal(s, "property::layout", tagbox_update_tagname)
-  end
-)
-
 
 --------------------
 -- Tasklist
