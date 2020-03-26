@@ -4,7 +4,6 @@
 - Move all GUI configuration to common stow directory.
 - Awesome WM:
   - Better error handling
-  - Multi-monitor support
 - Autorandr -> autostart/autorandr-lid-listener.desktop
 
 ## Arch Setup

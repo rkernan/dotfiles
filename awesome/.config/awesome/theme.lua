@@ -100,7 +100,7 @@ theme.systray_icon_spacing = dpi(5)
 --------------------
 -- Widgets
 --------------------
-local mysep = wibox.widget.textbox(" ")
+local separator = wibox.widget.textbox(" ")
 
 -- Clock
 local clock_icon = wibox.widget.imagebox(theme.widget_clock)
@@ -244,8 +244,8 @@ mybat:connect_signal("mouse::enter",
 -- Wibox setup
 --------------------
 -- launcher
-local mylauncher = awful.widget.button({ image = theme.awesome_icon_launcher })
-mylauncher:connect_signal("button::press", function() awful.util.mymainmenu:toggle() end)
+local launcher = awful.widget.button({ image = theme.awesome_icon_launcher })
+launcher:connect_signal("button::press", function() awful.util.mymainmenu:toggle() end)
 
 function theme.at_screen_connect(s)
   -- If wallpaper is a function, call it with the screen
@@ -255,73 +255,87 @@ function theme.at_screen_connect(s)
   end
   gears.wallpaper.maximized(wallpaper, s, true)
 
-  -- Tags
-  awful.tag(awful.util.tagnames, s, awful.layout.layouts[1])
-
   -- Create a taglist widget
-  s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons)
-  mytaglistcont = wibox.container.background(s.mytaglist, theme.bg_focus, gears.shape.rectangle)
-  s.mytag = wibox.container.margin(mytaglistcont, dpi(0), dpi(0), dpi(5), dpi(5))
+  if s.taglist == nil then
+    awful.tag(awful.util.tagnames, s, awful.layout.layouts[1])
+    taglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, awful.util.taglist_buttons)
+    taglist_c = wibox.container.background(taglist, theme.bg_focus, gears.shape.rectangle)
+    s.taglist = wibox.container.margin(taglist_c, dpi(0), dpi(0), dpi(5), dpi(5))
+  end
 
   -- Create the layoutbox widget
-  s.mylayoutbox = awful.widget.layoutbox(s)
-  s.mylayoutbox:buttons(awful.util.table.join(
-                         awful.button({ }, 1, function () awful.layout.inc( 1) end),
-                         awful.button({ }, 3, function () awful.layout.inc(-1) end),
-                         awful.button({ }, 4, function () awful.layout.inc( 1) end),
-                         awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+  if s.layoutbox == nil then
+    s.layoutbox = awful.widget.layoutbox(s)
+    s.layoutbox:buttons(awful.util.table.join(
+                           awful.button({ }, 1, function () awful.layout.inc( 1) end),
+                           awful.button({ }, 3, function () awful.layout.inc(-1) end),
+                           awful.button({ }, 4, function () awful.layout.inc( 1) end),
+                           awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+  end
 
   -- Create a tasklist widget
-  mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons, { spacing = dpi(5) })
-  s.mytasklist = wibox.container.margin(mytasklist, dpi(5), dpi(5), dpi(5), dpi(5))
+  if s.tasklist == nil then
+    tasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons, { spacing = dpi(5) })
+    s.tasklist = wibox.container.margin(tasklist, dpi(5), dpi(5), dpi(5), dpi(5))
+  end
 
   -- create systray widget
-  mysystray = wibox.widget.systray(true)
-  s.mysystray = wibox.container.margin(mysystray, dpi(0), dpi(0), dpi(5), dpi(5))
+  if s.systray == nil then
+    systray = wibox.widget.systray(true)
+    s.systray = wibox.container.margin(systray, dpi(0), dpi(0), dpi(5), dpi(5))
+  end
 
-  -- Create the wibox
-  s.mywibox = awful.wibar({ position = "top", screen = s, height = dpi(28) })
-  -- Add widgets to the wibox
-  s.mywibox:setup {
-    layout = wibox.layout.align.horizontal,
-    { -- Left widgets
-      layout = wibox.layout.fixed.horizontal,
-      mysep,
-      s.mytag,
-      s.mylayoutbox,
-    },
-    nil, -- Middle widget
-    { -- Right widgets
-      layout = wibox.layout.fixed.horizontal,
-      s.mysystray,
-      mysep,
-      myvol,
-      mysep,
-      mybat,
-      mysep,
-      mymem,
-      mysep,
-      mycpu,
-      mysep,
-      myclock,
-      mysep,
-    },
-  }
+  if s.index == screen.primary.index then
+    -- Display notifications only on the primary screen
+    naughty.config.defaults.screen = s.index
+    -- Create the wibox
+    s.wibar_top = awful.wibar({ position = "top", screen = s, height = dpi(28) })
+    -- Add widgets to the wibox
+    s.wibar_top:setup({
+      layout = wibox.layout.align.horizontal,
+      { -- Left widgets
+        layout = wibox.layout.fixed.horizontal,
+      },
+      nil, -- Middle widget
+      { -- Right widgets
+        layout = wibox.layout.fixed.horizontal,
+        s.systray,
+        separator,
+        myvol,
+        separator,
+        mybat,
+        separator,
+        mymem,
+        separator,
+        mycpu,
+        separator,
+        myclock,
+        separator,
+      },
+    })
+  elseif s.wibar_top ~= nil then
+    s.wibar_top:remove()
+    s.wibar_top = nil
+  end
 
-  -- Create the bottom wibox
-  s.mybottomwibox = awful.wibar({ position = "bottom", screen = s, height = dpi(28) })
-  -- Add widgets to the bottom wibox
-  s.mybottomwibox:setup {
-    layout = wibox.layout.align.horizontal,
-    { -- Left widgets
-      layout = wibox.layout.fixed.horizontal,
-      mylauncher,
-    },
-    s.mytasklist, -- Middle widget
-    { -- Right widgets
-      layout = wibox.layout.fixed.horizontal,
-    },
-  }
+  if s.wibar_bottom == nil then
+    -- Create the bottom wibox
+    s.wibar_bottom = awful.wibar({ position = "bottom", ontop = true, screen = s, height = dpi(28) })
+    -- Add widgets to the bottom wibox
+    s.wibar_bottom:setup({
+      layout = wibox.layout.align.horizontal,
+      { -- Left widgets
+        layout = wibox.layout.fixed.horizontal,
+        launcher,
+        s.taglist,
+        s.layoutbox,
+      },
+      s.tasklist, -- Middle widget
+      { -- Right widgets
+        layout = wibox.layout.fixed.horizontal,
+      },
+    })
+  end
 end
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.

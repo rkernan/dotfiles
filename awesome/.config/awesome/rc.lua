@@ -201,10 +201,13 @@ screen.connect_signal("arrange", function (s)
       c.border_width = beautiful.border_width
     end
   end
-end)
+)
 
--- Create a wibox for each screen and add it
-awful.screen.connect_for_each_screen(function(s) beautiful.at_screen_connect(s) end)
+-- Setup each screen
+awful.screen.connect_for_each_screen(function (s) beautiful.at_screen_connect(s) end)
+
+-- Refresh screen setup if the primary screen changes
+screen.connect_signal("primary_changed", function (s) beautiful.at_screen_connect(s) end)
 
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
