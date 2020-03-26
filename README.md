@@ -5,6 +5,7 @@
 - Awesome WM:
   - Better error handling
   - Multi-monitor support
+- Autorandr -> autostart/autorandr-lid-listener.desktop
 
 ## Arch Setup
 - Base install: `base base-devel linux linux-firmware`
