@@ -2,7 +2,9 @@
 
 ## To-do
 - Move all GUI configuration to common stow directory.
-- Awesome WM -> Better error handling
+- Awesome WM:
+  - Better error handling
+  - Multi-monitor support
 
 ## Arch Setup
 - Base install: `base base-devel linux linux-firmware`
