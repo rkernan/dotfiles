@@ -179,26 +179,32 @@ require("rules")
 -- Signals
 --------------------
 -- Re-set wallpaper when a screen's geometry changes (e.g. different resolution)
-screen.connect_signal("property::geometry", function(s)
-  -- Wallpaper
-  if beautiful.wallpaper then
-    local wallpaper = beautiful.wallpaper
-    -- If wallpaper is a function, call it with the screen
-    if type(wallpaper) == "function" then
-      wallpaper = wallpaper(s)
+screen.connect_signal(
+  "property::geometry",
+  function (s)
+    -- Wallpaper
+    if beautiful.wallpaper then
+      local wallpaper = beautiful.wallpaper
+      -- If wallpaper is a function, call it with the screen
+      if type(wallpaper) == "function" then
+        wallpaper = wallpaper(s)
+      end
+      gears.wallpaper.maximized(wallpaper, s, true)
     end
-    gears.wallpaper.maximized(wallpaper, s, true)
   end
-end)
+)
 
 -- No borders when rearranging only 1 non-floating or maximized client
-screen.connect_signal("arrange", function (s)
-  local only_one = #s.tiled_clients == 1
-  for _, c in pairs(s.clients) do
-    if only_one and not c.floating or c.maximized then
-      c.border_width = 0
-    else
-      c.border_width = beautiful.border_width
+screen.connect_signal(
+  "arrange",
+  function (s)
+    local only_one = #s.tiled_clients == 1
+    for _, c in pairs(s.clients) do
+      if only_one and not c.floating or c.maximized then
+        c.border_width = 0
+      else
+        c.border_width = beautiful.border_width
+      end
     end
   end
 )
@@ -210,24 +216,30 @@ awful.screen.connect_for_each_screen(function (s) beautiful.at_screen_connect(s)
 screen.connect_signal("primary_changed", function (s) beautiful.at_screen_connect(s) end)
 
 -- Signal function to execute when a new client appears.
-client.connect_signal("manage", function (c)
-  -- Set the windows at the slave,
-  -- i.e. put it at the end of others instead of setting it master.
-  -- if not awesome.startup then awful.client.setslave(c) end
-  if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
-    -- Prevent clients from being unreachable after screen count changes.
-    awful.placement.no_offscreen(c)
+client.connect_signal(
+  "manage",
+  function (c)
+    -- Set the windows at the slave,
+    -- i.e. put it at the end of others instead of setting it master.
+    -- if not awesome.startup then awful.client.setslave(c) end
+    if awesome.startup and not c.size_hints.user_position and not c.size_hints.program_position then
+      -- Prevent clients from being unreachable after screen count changes.
+      awful.placement.no_offscreen(c)
+    end
   end
-end)
+)
 
 -- Only show titlebar on floating clients
-client.connect_signal("property::floating", function (c)
-  if c.floating then
-    awful.titlebar.show(c)
-  else
-    awful.titlebar.hide(c)
+client.connect_signal(
+  "property::floating",
+  function (c)
+    if c.floating then
+      awful.titlebar.show(c)
+    else
+      awful.titlebar.hide(c)
+    end
   end
-end)
+)
 
 -- No borders if only 1 non floating or maximised client visible
 function border_adjust(c)
@@ -242,8 +254,3 @@ end
 client.connect_signal("property::maximized", border_adjust)
 client.connect_signal("focus", border_adjust)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)
-
--- Enable sloppy focus, so that focus follows mouse.
--- client.connect_signal("mouse::enter", function(c)
---   c:emit_signal("request::activate", "mouse_enter", {raise = true})
--- end)
