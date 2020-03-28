@@ -78,17 +78,14 @@ readonly targets=${*:-$(guess_target)}
 git submodule init
 git submodule update --recursive
 
-# always make bin dir
+# don't clobber these directories
 mkdir -p ~/bin
+mkdir -p ~/.config
 
 for target in $targets; do
   case $target in
     cli)
-      stow bin
-      stow git
-      stow nvim
-      stow tmux
-      stow zsh
+      stow cli
       # install homebrew
       install_brew
       # source environment, may have changed
@@ -106,15 +103,11 @@ for target in $targets; do
       update_nvim_plugins
       ;;
     gui)
-      stow arch
+      stow gui
       setup_gpg_agent
       ;;
     work)
-      echo "true" > "${HOME}/.at_work"
-      if [ -f "${HOME}/.bashrc" ] && [ ! -L "${HOME}/.bashrc" ]; then
-        mv "${HOME}/.bashrc" "${HOME}/.bashrc.backup.$(date +%F_%R)"
-      fi
-      stow bash-to-zsh
+      stow work
       ;;
     *)
       echo "Unknown target $target" 2>&1
