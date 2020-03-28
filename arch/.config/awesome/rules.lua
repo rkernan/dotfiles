@@ -1,4 +1,5 @@
-local awful, beautiful = awful, beautiful
+local awful = require("awful")
+local beautiful = require("beautiful")
 
 awful.rules.rules = {
   {

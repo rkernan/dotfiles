@@ -1,4 +1,9 @@
-local awful, dpi, gears, lain, naughty, wibox = awful, dpi, gears, lain, naughty, wibox
+local awful = require("awful")
+local dpi = require("beautiful.xresources").apply_dpi
+local gears = require("gears")
+local lain = require("lain")
+local naughty = require("naughty")
+local wibox = require("wibox")
 
 local font_sans = "Fira Sans 10"
 local font_sans_bold = "Fira Sans Bold 10"

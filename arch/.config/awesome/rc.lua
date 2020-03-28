@@ -1,11 +1,9 @@
-awful = require("awful")
-beautiful = require("beautiful")
-dpi = require("beautiful.xresources").apply_dpi
-gears = require("gears")
-hotkeys_popup = require("awful.hotkeys_popup").widget
-lain = require("lain")
-naughty = require("naughty")
-wibox = require("wibox")
+local awful = require("awful")
+local beautiful = require("beautiful")
+local dpi = require("beautiful.xresources").apply_dpi
+local gears = require("gears")
+local hotkeys_popup = require("awful.hotkeys_popup").widget
+local naughty = require("naughty")
 
 require("awful.autofocus")
 require("awful.hotkeys_popup.keys")

@@ -1,4 +1,8 @@
-local awful, gears, hotkeys_popup, lain, naughty = awful, gears, hotkeys_popup, lain, naughty
+local awful = require("awful")
+local gears = require("gears")
+local hotkeys_popup = require("awful.hotkeys_popup").widget
+local lain = require("lain")
+local naughty = require("naughty")
 
 --------------------
 -- Global keys
