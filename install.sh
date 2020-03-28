@@ -27,7 +27,7 @@ guess_target() {
     echo cli gui
   elif [ $(command -v yum) ]; then
     # centos/rhel/fedora - work
-    echo at-work bash-to-zsh cli
+    echo cli work
   else
     # other
     echo cli
@@ -83,16 +83,6 @@ mkdir -p ~/bin
 
 for target in $targets; do
   case $target in
-    at-work)
-      echo "true" > "${HOME}/.at_work"
-      ;;
-    bash-to-zsh)
-      if [ -f "${HOME}/.bashrc" ] && [ ! -L "${HOME}/.bashrc" ]; then
-        mv "${HOME}/.bashrc" "${HOME}/.bashrc.backup.$(date +%F_%R)"
-      fi
-      stow bash-to-zsh
-      ;;
-      ;;
     cli)
       stow bin
       stow git
@@ -118,6 +108,13 @@ for target in $targets; do
     gui)
       stow arch
       setup_gpg_agent
+      ;;
+    work)
+      echo "true" > "${HOME}/.at_work"
+      if [ -f "${HOME}/.bashrc" ] && [ ! -L "${HOME}/.bashrc" ]; then
+        mv "${HOME}/.bashrc" "${HOME}/.bashrc.backup.$(date +%F_%R)"
+      fi
+      stow bash-to-zsh
       ;;
     *)
       echo "Unknown target $target" 2>&1
