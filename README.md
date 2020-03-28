@@ -27,6 +27,7 @@
 - `/etc/lightdm/lightdm.conf`
 - `/etc/lightdm/lightdm-gtk-greeter.conf`
 - `/etc/NetworkManager/dispatcher.d/timezone`
+- `/etc/pacman.d/hooks/dropbox.hook`
 - `/etc/pacman.d/hooks/systemd-boot.hook`
 - `/etc/systemd/sleep.conf`
 - `/etc/systemd/logind.conf`
