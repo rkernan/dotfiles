@@ -1,7 +1,6 @@
 # dotfiles
 
 ## To-do
-- Move all GUI configuration to common stow directory.
 - Awesome WM:
   - Better error handling
 - Autorandr -> autostart/autorandr-lid-listener.desktop

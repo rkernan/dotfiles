@@ -24,7 +24,7 @@ command_exists() {
 guess_target() {
   if [ $(command -v pacman) ]; then
     # arch linux
-    echo bin-arch cli gui
+    echo cli gui
   elif [ $(command -v yum) ]; then
     # centos/rhel/fedora - work
     echo at-work bash-to-zsh cli
@@ -92,8 +92,6 @@ for target in $targets; do
       fi
       stow bash-to-zsh
       ;;
-    bin-arch)
-      stow bin-arch
       ;;
     cli)
       stow bin
@@ -118,9 +116,7 @@ for target in $targets; do
       update_nvim_plugins
       ;;
     gui)
-      stow awesome
-      stow rofi
-      stow kitty
+      stow arch
       setup_gpg_agent
       ;;
     *)
