@@ -14,6 +14,7 @@ no_params_or_die() {
 
 usage() {
   echo "Pacman helper tool ('$BIN', '$SU_BIN')"
+  echo "If using 'yay' AUR helper, run the following first: yay --gendb && yay --devel --save"
   echo "Usage: $0 [sub-cmd] [options]"
   echo "  clean               : Clean the pacman cache, does not accept additional parameters"
   echo "  deptree             : List dependency tree of a given package"
