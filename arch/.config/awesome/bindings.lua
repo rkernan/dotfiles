@@ -1,7 +1,6 @@
 local awful = require("awful")
 local gears = require("gears")
 local hotkeys_popup = require("awful.hotkeys_popup").widget
-local lain = require("lain")
 local naughty = require("naughty")
 
 --------------------
@@ -100,14 +99,6 @@ globalkey({ modkey, "Shift" }, "l", function () awful.client.swap.bydirection("r
 globalkey({ modkey }, "o", awful.client.movetoscreen, 
           { description = "toggle display screen", group = "awesome: client" })
 
--- volume control
-globalkey({ }, "XF86AudioMute", volume_toggle_mute,
-          { description = "mute volume", group = "awesome: misc" })
-globalkey({ }, "XF86AudioRaiseVolume", function () volume_adjust(5) end,
-          { description = "raise volume", group = "awesome: misc" })
-globalkey({ }, "XF86AudioLowerVolume", function () volume_adjust(-5) end,
-          { description = "lower volume", group = "awesome: misc" })
-
 -- brightness control
 local mybacklight_n = nil
 
@@ -168,8 +159,6 @@ clientkey({ modkey }, "v", client_toggle_maximized_vertical,
           { description = "toggle vertical maximized", group = "awesome: client" })
 clientkey({ modkey }, "t", function (c) c.ontop = not c.ontop end,
           { description = "toggle keep on top", group = "awesome: client" })
-clientkey({ modkey, "Shift" }, "m", lain.util.magnify_client,
-          { description = "magnify client", group = "awesome: client"})
 
 --------------------
 -- Global buttons

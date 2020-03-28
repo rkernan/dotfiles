@@ -19,23 +19,21 @@ browser      = "google-chrome-stable"
 --------------------
 -- Handle startup errors
 if awesome.startup_errors then
-  naughty.notify({ preset = naughty.config.presets.critical,
-                   title = "An error occurred during startup!",
-                   text = awesome.startup_errors })
+  naughty.notify({ title = "An error occurred!", text = awesome.startup_errors, preset = naughty.conifg.presets.critical })
 end
 
 -- Handle runtime errors after startup
 do
   local in_error = false
-  awesome.connect_signal("debug::error", function (err)
-    if in_error then return end
-    in_error = true
-
-    naughty.notify({ preset = naughty.config.presets.critical,
-                     title = "An error occurred!",
-                     text = tostring(err) })
-    in_error = false
-  end)
+  awesome.connect_signal(
+    "debug::error",
+    function (s)
+      if in_error then return end
+      in_error = true
+      naughty.notify({ title = "An error occurred!", text = tostring(s), preset = naughty.conifg.presets.critical })
+      in_error = false
+    end
+  )
 end
 
 --------------------
