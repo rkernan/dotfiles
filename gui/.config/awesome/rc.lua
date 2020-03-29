@@ -50,6 +50,7 @@ awful.layout.layouts = {
   awful.layout.suit.tile,
   awful.layout.suit.max,
   awful.layout.suit.magnifier,
+  awful.layout.suit.floating,
 }
 
 --------------------
@@ -81,7 +82,7 @@ awful.util.tasklist_buttons = gears.table.join(
     if c == client.focus then
       c.minimized = true
     else
-      --c:emit_signal("request::activate", "tasklist", {raise = true})<Paste>
+      --c:emit_signal("request::activate", "tasklist", {raise = true})
 
       -- Without this, the following
       -- :isvisible() makes no sense
@@ -104,7 +105,7 @@ awful.util.tasklist_buttons = gears.table.join(
         instance:hide()
         instance = nil
       else
-        instance = awful.menu.clients({theme = {width = dpi(250)}})
+        instance = awful.menu.clients({ theme = { width = dpi(250) }})
       end
     end
   end),
@@ -115,8 +116,7 @@ awful.util.tasklist_buttons = gears.table.join(
 --------------------
 -- Theme
 --------------------
-theme = require("theme")
-beautiful.init(theme)
+beautiful.init(require("theme"))
 
 --------------------
 -- Menu
@@ -190,21 +190,6 @@ screen.connect_signal(
   end
 )
 
--- No borders when rearranging only 1 non-floating or maximized client
-screen.connect_signal(
-  "arrange",
-  function (s)
-    local only_one = #s.tiled_clients == 1
-    for _, c in pairs(s.clients) do
-      if only_one and not c.floating or c.maximized then
-        c.border_width = 0
-      else
-        c.border_width = beautiful.border_width
-      end
-    end
-  end
-)
-
 -- Setup each screen
 awful.screen.connect_for_each_screen(function (s) beautiful.at_screen_connect(s) end)
 
@@ -225,28 +210,4 @@ client.connect_signal(
   end
 )
 
--- Only show titlebar on floating clients
-client.connect_signal(
-  "property::floating",
-  function (c)
-    if c.floating then
-      awful.titlebar.show(c)
-    else
-      awful.titlebar.hide(c)
-    end
-  end
-)
-
--- No borders if only 1 non floating or maximised client visible
-function border_adjust(c)
-  if c.maximized or c.floating and #c.screen.clients == 1 then
-    c.border_width = 0
-  elseif #c.screen.clients > 1 then
-    c.border_width = beautiful.border_width
-    c.border_color = beautiful.border_focus
-  end
-end
-
-client.connect_signal("property::maximized", border_adjust)
-client.connect_signal("focus", border_adjust)
 client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_normal end)

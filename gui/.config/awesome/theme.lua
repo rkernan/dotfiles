@@ -6,14 +6,12 @@ local wibox = require("wibox")
 
 local font_sans = "Fira Sans 10"
 local font_sans_bold = "Fira Sans Bold 10"
-local font_mono = "Fira Code 10"
 
 local theme                                           = {}
 theme.default_dir                                     = awful.util.get_themes_dir() .. "default"
 theme.dir                                             = os.getenv("HOME") .. "/.config/awesome"
 theme.wallpaper                                       = theme.dir .. "/wall.png"
-theme.font                                            = font_mono
-theme.taglist_font                                    = font_sans
+theme.font                                            = font_sans
 theme.fg_normal                                       = "#ffffff"
 theme.fg_focus                                        = theme.fg_normal
 theme.bg_focus                                        = "#303030"
@@ -53,42 +51,43 @@ theme.layout_magnifier                                = theme.icon_dir .. "/layo
 theme.layout_floating                                 = theme.icon_dir .. "/layout/floating.png"
 theme.tasklist_plain_task_name                        = false
 theme.tasklist_disable_icon                           = false
-theme.useless_gap                                     = 0
+theme.useless_gap                                     = 1
 -- close button
-theme.titlebar_close_button_normal                    = theme.icon_dir .. "/titlebar/close.png"
-theme.titlebar_close_button_normal_hover              = theme.titlebar_close_button_normal
-theme.titlebar_close_button_normal_press              = theme.titlebar_close_button_normal
-theme.titlebar_close_button_focus                     = theme.titlebar_close_button_normal
-theme.titlebar_close_button_focus_hover               = theme.titlebar_close_button_normal
-theme.titlebar_close_button_focus_press               = theme.titlebar_close_button_normal
--- maximized button
-theme.titlebar_maximized_button_normal                = theme.icon_dir .. "/titlebar/maximized.png"
-theme.titlebar_maximized_button_focus                 = theme.titlebar_maximized_button_normal
-theme.titlebar_maximized_button_normal_active         = theme.titlebar_maximized_button_normal
-theme.titlebar_maximized_button_normal_active_hover   = theme.titlebar_maximized_button_normal
-theme.titlebar_maximized_button_normal_active_press   = theme.titlebar_maximized_button_normal
-theme.titlebar_maximized_button_focus_active          = theme.titlebar_maximized_button_normal
-theme.titlebar_maximized_button_focus_active_hover    = theme.titlebar_maximized_button_normal
-theme.titlebar_maximized_button_focus_active_press    = theme.titlebar_maximized_button_normal
-theme.titlebar_maximized_button_normal_inactive       = theme.titlebar_maximized_button_normal
-theme.titlebar_maximized_button_normal_inactive_hover = theme.titlebar_maximized_button_normal
-theme.titlebar_maximized_button_normal_inactive_press = theme.titlebar_maximized_button_normal
-theme.titlebar_maximized_button_focus_inactive        = theme.titlebar_maximized_button_normal
-theme.titlebar_maximized_button_focus_inactive_hover  = theme.titlebar_maximized_button_normal
-theme.titlebar_maximized_button_focus_inactive_press  = theme.titlebar_maximized_button_normal
+theme.titlebar_close_button_focus                     = theme.icon_dir .. "/titlebar/close_focus.svg"
+theme.titlebar_close_button_focus_hover               = theme.icon_dir .. "/titlebar/close_focus_hover.svg"
+theme.titlebar_close_button_focus_press               = theme.icon_dir .. "/titlebar/close_focus_press.svg"
+theme.titlebar_close_button_normal                    = theme.icon_dir .. "/titlebar/close_normal.svg"
+theme.titlebar_close_button_normal_hover              = theme.icon_dir .. "/titlebar/close_normal_hover.svg"
+theme.titlebar_close_button_normal_press              = theme.icon_dir .. "/titlebar/close_normal_press.svg"
+-- maximize button
+theme.titlebar_maximized_button_focus                 = theme.icon_dir .. "/titlebar/max_focus.svg"
+theme.titlebar_maximized_button_focus_active          = theme.icon_dir .. "/titlebar/max_focus.svg"
+theme.titlebar_maximized_button_focus_active_hover    = theme.icon_dir .. "/titlebar/max_focus_hover.svg"
+theme.titlebar_maximized_button_focus_active_press    = theme.icon_dir .. "/titlebar/max_focus_press.svg"
+theme.titlebar_maximized_button_focus_inactive        = theme.icon_dir .. "/titlebar/max_focus.svg"
+theme.titlebar_maximized_button_focus_inactive_hover  = theme.icon_dir .. "/titlebar/max_focus_hover.svg"
+theme.titlebar_maximized_button_focus_inactive_press  = theme.icon_dir .. "/titlebar/max_focus_press.svg"
+theme.titlebar_maximized_button_normal                = theme.icon_dir .. "/titlebar/max_normal.svg"
+theme.titlebar_maximized_button_normal_active         = theme.icon_dir .. "/titlebar/max_normal.svg"
+theme.titlebar_maximized_button_normal_active_hover   = theme.icon_dir .. "/titlebar/max_normal_hover.svg"
+theme.titlebar_maximized_button_normal_active_press   = theme.icon_dir .. "/titlebar/max_normal_press.svg"
+theme.titlebar_maximized_button_normal_inactive       = theme.icon_dir .. "/titlebar/max_normal.svg"
+theme.titlebar_maximized_button_normal_inactive_hover = theme.icon_dir .. "/titlebar/max_normal_hover.svg"
+theme.titlebar_maximized_button_normal_inactive_press = theme.icon_dir .. "/titlebar/max_normal_press.svg"
 -- minimize button
-theme.titlebar_minimize_button_normal                 = theme.icon_dir .. "/titlebar/minimize.png"
-theme.titlebar_minimize_button_normal_hover           = theme.titlebar_minimize_button_normal
-theme.titlebar_minimize_button_normal_press           = theme.titlebar_minimize_button_normal
-theme.titlebar_minimize_button_focus                  = theme.titlebar_minimize_button_normal
-theme.titlebar_minimize_button_focus_hover            = theme.titlebar_minimize_button_normal_hover
-theme.titlebar_minimize_button_focus_press            = theme.titlebar_minimize_button_normal
+theme.titlebar_minimize_button_focus                  = theme.icon_dir .. "/titlebar/min_focus.svg"
+theme.titlebar_minimize_button_focus_hover            = theme.icon_dir .. "/titlebar/min_focus_hover.svg"
+theme.titlebar_minimize_button_focus_press            = theme.icon_dir .. "/titlebar/min_focus_press.svg"
+theme.titlebar_minimize_button_normal                 = theme.icon_dir .. "/titlebar/min_normal.svg"
+theme.titlebar_minimize_button_normal_hover           = theme.icon_dir .. "/titlebar/min_normal_hover.svg"
+theme.titlebar_minimize_button_normal_press           = theme.icon_dir .. "/titlebar/min_normal_press.svg"
 
 theme.systray_icon_spacing = dpi(5)
 
---------------------
--- Widgets
---------------------
+-- Display notifications at botton left
+naughty.config.defaults.position = "bottom_right"
+
+-- Separator
 local sep = wibox.widget.textbox(" ")
 
 -- Clock
@@ -100,10 +99,6 @@ launcher:connect_signal("button::press", function() awful.util.mymainmenu:toggle
 
 -- System Tray
 local systray = wibox.container.margin(wibox.widget.systray(true), dpi(0), dpi(0), dpi(5), dpi(5))
-
---------------------
--- Wibox setup
---------------------
 
 function theme.at_screen_connect(s)
   -- If wallpaper is a function, call it with the screen
@@ -175,23 +170,22 @@ end
 
 -- Add a titlebar if titlebars_enabled is set to true in the rules.
 client.connect_signal("request::titlebars", function(c)
-
-  awful.titlebar.enable_tooltip = false
-
   local buttons = gears.table.join(
     awful.button({ }, 1, function()
       c:emit_signal("request::activate", "titlebar", { raise = true })
       awful.mouse.client.move(c)
     end),
-    awful.button({ }, 2, function() c:kill() end),
     awful.button({ }, 3, function()
       c:emit_signal("request::activate", "titlebar", { raise = true })
       awful.mouse.client.resize(c)
     end)
   )
 
+  title = awful.titlebar.widget.titlewidget(c)
+  -- title:set_markup_silently(string.format("<span font='%s'>This is a test!</span>", theme.font_sans))
+
   -- FIXME font not being used
-  awful.titlebar(c, { size = dpi(20), font = font_sans }):setup({
+  awful.titlebar(c):setup({
     { -- Left
       layout = wibox.layout.fixed.horizontal,
       buttons = buttons,
@@ -199,7 +193,7 @@ client.connect_signal("request::titlebars", function(c)
     },
     { -- Middle
       { -- Title
-        widget = awful.titlebar.widget.titlewidget(c),
+        widget = title,
       },
       buttons = buttons,
       layout  = wibox.layout.fixed.horizontal,
@@ -212,11 +206,6 @@ client.connect_signal("request::titlebars", function(c)
     },
     layout = wibox.layout.align.horizontal,
   })
-  -- Hide the titlebar if not floating
-  local l = awful.layout.get(c.screen)
-  if not c.floating then
-    awful.titlebar.hide(c)
-  end
 end)
 
 return theme
