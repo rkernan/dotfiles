@@ -19,9 +19,10 @@ usage() {
   echo "  clean               : Clean the pacman cache, does not accept additional parameters"
   echo "  deptree             : List dependency tree of a given package"
   echo "  diff                : Clean up pacnew files, does not accept addition parameters"
+  echo "  downgrade           : Downgrade a package"
   echo "  download            : Download a remote package"
   echo "  firmware-upgrade    : Upgrade the system firmware"
-  echo "  info                | Show info for a package or packages"
+  echo "  info                : Show info for a package or packages"
   echo "  info-local          : Show info for a local package or packages"
   echo "  install             : Install a remote package"
   echo "  install-local       : Install a local file"
@@ -58,6 +59,9 @@ case $CMD in
   diff)
     no_params_or_die $*
     exec sudo $(which pacdiff)
+    ;;
+  downgrade)
+    exec $(which downgrade) $*
     ;;
   download)
     exec $SU_BIN -Sw $*
