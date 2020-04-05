@@ -74,10 +74,6 @@ setup_gpg_agent() {
 
 readonly targets=${*:-$(guess_target)}
 
-# make sure submodules are up to date
-git submodule init
-git submodule update --recursive
-
 # don't clobber these directories
 mkdir -p ~/bin
 mkdir -p ~/.config
