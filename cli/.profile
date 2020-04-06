@@ -17,6 +17,11 @@ elif [ -e "${HOME}/.linuxbrew" ]; then
   export PATH="${HOME}/.linuxbrew/bin:${PATH}"
 fi
 
+# fzf
+if [ -e "${HOME}/.fzf" ]; then
+  export PATH="${HOME}/.fzf/bin:${PATH}"
+fi
+
 # user bin
 export PATH="${HOME}/bin:${PATH}"
 
