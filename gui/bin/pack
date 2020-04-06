@@ -1,9 +1,9 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 set -e
 
-readonly BIN=$(which yay 2>/dev/null || which pacman)
-readonly SU_BIN=$(which yay 2>/dev/null || echo "sudo $(which pacman)")
+BIN=$(which yay 2>/dev/null || which pacman)
+SU_BIN=$(which yay 2>/dev/null || echo "sudo $(which pacman)")
 
 no_params_or_die() {
   if [ $# -ne 0 ]; then
@@ -45,7 +45,7 @@ if (( EUID == 0 )); then
   exit 1
 fi
 
-readonly CMD=$1
+CMD=$1
 shift
 
 case $CMD in
