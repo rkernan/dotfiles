@@ -24,6 +24,7 @@ zinit light mafredri/zsh-async
 zinit light starcraftman/zsh-git-prompt
 zinit light zsh-users/zsh-autosuggestions
 zinit light zsh-users/zsh-completions
+# TODO use OMZ git prompt
 
 # vim mode
 bindkey -v
@@ -92,16 +93,17 @@ async_prompt_callback() {
   async_stop_worker async_prompt_worker -n
 }
 
-ZSH_THEME_GIT_PROMPT_SUFFIX="] "
-ZSH_THEME_GIT_PROMPT_STAGED="%F{green}%{●%G%}"
-ZSH_THEME_GIT_PROMPT_CONFLICTS="%F{red}%{╳%G%}"
-ZSH_THEME_GIT_PROMPT_CHANGED="%F{yellow}%{→%G%}"
-ZSH_THEME_GIT_PROMPT_BEHIND="%{↓%2G%}"
-ZSH_THEME_GIT_PROMPT_AHEAD="%{↑%2G%}"
-ZSH_THEME_GIT_PROMPT_STASHED="%F{blue}%{▲%G%}"
-ZSH_THEME_GIT_PROMPT_UNTRACKED="%F{red}%{…%G%}"
-ZSH_THEME_GIT_PROMPT_CLEAN="%F{green}%{✓%G%}"
-ZSH_THEME_GIT_PROMPT_LOCAL=""
+ZSH_THEME_GIT_PROMPT_PREFIX="("
+ZSH_THEME_GIT_PROMPT_SUFFIX=") "
+ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
+ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
+ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[green]%}%{●%G%}"
+ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{✖%G%}"
+ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[yellow]%}%{✚%G%}"
+ZSH_THEME_GIT_PROMPT_BEHIND="%{↓%G%}"
+ZSH_THEME_GIT_PROMPT_AHEAD="%{↑%G%}"
+ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[red]…%G%}"
+ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}%{✔%G%}"
 
 ZSH_PROMPT_MODE="${ZSH_PROMPT_MODE:-❯}"
 ZSH_PROMPT_VICMD_MODE="${ZSH_PROMPT_VICMD_MODE:-❮}"
