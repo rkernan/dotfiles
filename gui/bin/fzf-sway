@@ -1,0 +1,57 @@
+#!/usr/bin/env sh
+
+set -e
+
+FZF="${HOME}/.fzf/bin/fzf --layout=reverse"
+
+usage() {
+  echo "FZF Sway launcher"
+  echo "Usage: $0 [command]"
+  echo "  pass : Copy password"
+  echo "  run  : Launch program"
+}
+
+list_pass() {
+  find "${HOME}/.password-store" -name '*.gpg' -printf '%P\n' | sed 's/\.gpg$//1' | sort -u
+}
+
+do_pass() {
+  # swaymsg exec "pass --clip $1"
+  swaymsg exec -- pass --clip $1
+}
+
+list_run() {
+  IFS=':'
+  for p in $PATH; do
+    find -L "$p" -maxdepth 1 -mindepth 1 -type f -executable -printf '%P\n'
+  done | sort -u
+}
+
+do_run() {
+  swaymsg exec $1
+}
+
+if [ $# -ne 1 ]; then
+  (>&2 echo "Missing command argument.")
+  (>&2 usage)
+  exit 1
+fi
+
+CMD=$1
+shift
+
+case $CMD in
+  pass|run)
+    if SEL=$(list_${CMD} | $FZF); then
+      do_${CMD} $SEL
+    fi
+    ;;
+  -h|--help)
+    usage
+    ;;
+  *)
+    (>&2 echo "Unrecognized command: '$CMD'")
+    (>&2 usage)
+    exit 1
+    ;;
+esac
