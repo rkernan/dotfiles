@@ -65,6 +65,7 @@ update_nvim_plugins() {
 }
 
 setup_gpg_agent() {
+  mkdir -p "${HOME}/.config/systemd/user"
   pushd "${HOME}/.config/systemd/user"
   cp -f /usr/share/doc/gnupg/examples/systemd-user/* .
   systemctl --user daemon-reload
