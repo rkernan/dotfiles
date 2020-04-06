@@ -19,6 +19,7 @@ fi
 # zinit
 source "${HOME}/.zinit/bin/zinit.zsh"
 
+zinit light aloxaf/fzf-tab
 zinit light mafredri/zsh-async
 zinit light starcraftman/zsh-git-prompt
 zinit light zsh-users/zsh-autosuggestions
