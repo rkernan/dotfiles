@@ -1,0 +1,9 @@
+# touchpad config
+input 1739:30383:DLL075B:01_06CB:76AF_Touchpad {
+    tap enabled
+    tap_button_map lmr
+}
+
+input 1133:16492:Logitech_G603 {
+    accel_profile flat
+}

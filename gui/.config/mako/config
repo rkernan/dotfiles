@@ -1,0 +1,9 @@
+font=Fira Sans 11
+background-color=#000000
+text-color=#ffffff
+
+[hidden]
+format=(and %h more)
+
+[urgency=high]
+background-color=#c00000
