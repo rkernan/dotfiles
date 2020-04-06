@@ -76,8 +76,8 @@ setup_gpg_agent() {
 readonly targets=${*:-$(guess_target)}
 
 # don't clobber these directories
-mkdir -p ~/bin
-mkdir -p ~/.config
+mkdir -p "${HOME}/bin"
+mkdir -p "${HOME}/config"
 
 for target in $targets; do
   case $target in
