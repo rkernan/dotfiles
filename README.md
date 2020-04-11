@@ -1,9 +1,8 @@
 # dotfiles
 
 ## To-do
-- Awesome WM:
-  - Better error handling
-- Autorandr -> autostart/autorandr-lid-listener.desktop
+- Switch from rofi to fzf for GUI launcher. Need pass support. Require single instance.
+- Switch to Wayland -> sway, waybar, kanshi
 
 ## Arch Setup
 - Base install: `base base-devel linux linux-firmware`
