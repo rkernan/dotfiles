@@ -19,7 +19,7 @@ set $up    k
 set $right l
 
 # wallpaper
-set $wallpaper ~/wallpaper.png
+set $wallpaper ~/Pictures/wallpaper.png
 
 # terminal
 set $term kitty
