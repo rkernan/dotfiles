@@ -175,11 +175,6 @@ if (( $+commands[srm] )); then
   alias srm='nocorrect srm'
 fi
 
-if (( $+commands[xsel] )); then
-  alias clip='xsel --clipboard --input'
-  alias paste='xsel --clipboard --output'
-fi
-
 if (( $+commands[xdg-open] )); then
   alias open='xdg-open'
 fi
