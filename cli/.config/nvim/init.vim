@@ -146,6 +146,7 @@ silent! call coc#add_extension('coc-highlight')
 silent! call coc#add_extension('coc-json')
 silent! call coc#add_extension('coc-python')
 silent! call coc#add_extension('coc-rls')
+silent! call coc#add_extension('coc-texlab')
 
 " quicker diagnostic messages
 set updatetime=300
