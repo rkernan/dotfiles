@@ -139,6 +139,8 @@ map gz# <Plug>(asterisk-gz#)
 """
 " Plugin - Coc
 """
+silent! call coc#add_extension('coc-clangd')
+silent! call coc#add_extension('coc-cmake')
 silent! call coc#add_extension('coc-go')
 silent! call coc#add_extension('coc-highlight')
 silent! call coc#add_extension('coc-json')
