@@ -1,25 +1,30 @@
 #!/usr/bin/env sh
 
+append_to_path() {
+  local dir re
+  for dir; do
+    re="(^dir:|:$dir:|:$dir$)"
+    if ! [[ $PATH =~ $re ]]; then
+      export PATH="$PATH:$dir"
+    fi
+  done
+}
+
 # cargo (rust)
-export PATH="${HOME}/.cargo/bin:${PATH}"
+append_to_path "${HOME}/.cargo/bin"
 
 # go
 export GOPATH="${HOME}/workspace/go"
-export PATH="${GOPATH}/bin:${PATH}"
+append_to_path "${GOPATH}/bin"
 
-# local installs (pip, nodejs)
-export PATH="${HOME}/.local/bin:${PATH}"
+# local installs
+append_to_path "${HOME}/.local/bin"
 
 # linuxbrew, support local and system-wide
 if [ -e "/home/linuxbrew" ]; then
-  export PATH="/home/linuxbrew/.linuxbrew/bin:${PATH}"
+  append_to_path "/home/linuxbrew/.linuxbrew/bin"
 elif [ -e "${HOME}/.linuxbrew" ]; then
-  export PATH="${HOME}/.linuxbrew/bin:${PATH}"
-fi
-
-# fzf
-if [ -e "${HOME}/.fzf" ]; then
-  export PATH="${HOME}/.fzf/bin:${PATH}"
+  append_to_path "${HOME}/.linuxbrew/bin"
 fi
 
 export EDITOR="nvim"
