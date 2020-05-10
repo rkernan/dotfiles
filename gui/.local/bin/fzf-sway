@@ -2,7 +2,11 @@
 
 set -e
 
-FZF="${HOME}/.fzf/bin/fzf --layout=reverse"
+FZF=$(which fzf)
+if [ -z "$FZF" ]; then
+  (>&2 echo "FZF command not found.")
+  exit 1
+fi
 
 usage() {
   echo "FZF Sway launcher"
