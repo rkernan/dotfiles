@@ -48,17 +48,10 @@
 	cob = checkout -b
 	# commit
 	ci = commit
-	# update local
-	up = !git pull --rebase --prune $@ && git submodule update --init --recursive
-	# stash
-	save = stash save --include-untracked
-	pop = stash pop
-	# fix local
-	undo = reset HEAD~1 --mixed
+	# amend previous commit
 	amend = commit --amend
-	wipe = !git stash save --include-untracked && git reset HEAD --hard
-	# remove merged branches
-	rmb = "!f() { git branch --merged ${1-master} | grep -v " ${1-master}$" | xargs git branch -d; }; f"
+	# undo previous commit
+	undo = reset HEAD~1 --mixed
 	# one-line log
 	lg = log --graph --oneline --decorate
 	# short status
