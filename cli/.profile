@@ -14,7 +14,7 @@ append_to_path() {
 append_to_path "${HOME}/.cargo/bin"
 
 # go
-export GOPATH="${HOME}/workspace/go"
+export GOPATH="${HOME}/Workspace/go"
 append_to_path "${GOPATH}/bin"
 
 # local installs
