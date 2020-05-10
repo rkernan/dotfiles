@@ -52,6 +52,8 @@
 	amend = commit --amend
 	# undo previous commit
 	undo = reset HEAD~1 --mixed
+	# unstage changes
+	unstage = restore --staged
 	# one-line log
 	lg = log --graph --oneline --decorate
 	# short status
