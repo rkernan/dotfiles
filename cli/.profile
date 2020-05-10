@@ -22,9 +22,6 @@ if [ -e "${HOME}/.fzf" ]; then
   export PATH="${HOME}/.fzf/bin:${PATH}"
 fi
 
-# user bin
-export PATH="${HOME}/bin:${PATH}"
-
 export EDITOR="nvim"
 export VISUAL="$EDITOR"
 export PAGER="less"
