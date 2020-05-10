@@ -11,7 +11,7 @@ function! s:pack_init() abort
     call minpac#add('mhinz/vim-signify')
     call minpac#add('tpope/vim-fugitive')
     " fzf - installed separately from system
-    call minpac#add('junegunn/fzf', {'do': {-> system('./install --all --no-bash --no-update-rc')}})
+    call minpac#add('junegunn/fzf', {'do': {-> system('./install --all --no-update-rc')}})
     call minpac#add('junegunn/fzf.vim')
     " other
     call minpac#add('cohama/lexima.vim')
