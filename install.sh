@@ -77,7 +77,7 @@ readonly targets=${*:-$(guess_target)}
 
 # don't clobber these directories
 mkdir -p "${HOME}/bin"
-mkdir -p "${HOME}/config"
+mkdir -p "${HOME}/.config"
 
 for target in $targets; do
   case $target in
