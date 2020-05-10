@@ -58,10 +58,16 @@ install_neovim() {
 }
 
 update_nvim_plugins() {
-  # install plugins
-  nvim +PlugUpdate +qall
-  # force update Coc extensions
-  nvim +CocUpdate +qall
+  # install minpac
+  local minpac_dir="${HOME}/.config/nvim/pack/minpac/opt/minpac"
+  if [ ! -e "$minpac_dir" ]; then
+    mkdir -p "$minpac_dir"
+    git clone "https://github.com/k-takata/minpac.git" "$minpac_dir"
+  fi
+  # update plugins
+  # FIXME PackUpdate failing
+  # nvim --headless +PackUpdate +qall
+  # nvim --headless +CocUpdate +qall
 }
 
 setup_gpg_agent() {
