@@ -1,5 +1,4 @@
-let g:at_work = filereadable(expand('~/.at_work'))
-if has("termguicolors") && !g:at_work
+if has("termguicolors") && !$AT_WORK
     set termguicolors
 endif
 

@@ -1,0 +1,2 @@
+export AT_WORK=1
+export ZSH_UNICODE_SYMBOLS=0
