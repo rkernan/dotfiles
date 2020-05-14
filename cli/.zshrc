@@ -26,7 +26,7 @@ zinit light zsh-users/zsh-completions
 
 # vim mode
 bindkey -v
-bindkey '^ ' autosuggest-accept
+bindkey '^f' autosuggest-accept
 bindkey ' '  magic-space
 bindkey '^p' history-search-backward
 bindkey '^n' history-search-forward
