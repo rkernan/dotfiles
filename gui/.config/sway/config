@@ -25,8 +25,8 @@ set $wallpaper ~/Pictures/wallpaper.png
 set $term kitty
 
 # launcher
-set $menu $term --detach --class='launcher' ~/.local/bin/fzf-sway run
-set $pass $term --detach --class='launcher' ~/.local/bin/fzf-sway pass
+set $menu $term --detach --class='launcher' ~/.local/bin/fzf_sway run
+set $pass $term --detach --class='launcher' ~/.local/bin/fzf_sway pass
 for_window [app_id="^launcher$"] {
     floating enable
     resize set 640 480
