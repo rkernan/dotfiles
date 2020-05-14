@@ -1,61 +1,63 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
 set -e
 
-FZF=$(which fzf)
-if [ -z "$FZF" ]; then
-  (>&2 echo "FZF command not found.")
-  exit 1
-fi
+FZF_DEFAULT_OPTS="--layout=reverse --prompt='❯ ' --pointer='❯' --marker='❯'"
 
 usage() {
-  echo "FZF Sway launcher"
-  echo "Usage: $0 [command]"
-  echo "  pass : Copy password"
-  echo "  run  : Launch program"
+    echo "FZF Sway launcher"
+    echo "Usage: $0 [command]"
+    echo "  pass : Copy password"
+    echo "  run  : Launch program"
 }
 
 list_pass() {
-  find "${HOME}/.password-store" -name '*.gpg' -printf '%P\n' | sed 's/\.gpg$//1' | sort -u
+    find "${HOME}/.password-store" -name '*.gpg' -printf '%P\n' | sed 's/\.gpg$//1' | sort -u
 }
 
 do_pass() {
-  # swaymsg exec "pass --clip $1"
-  swaymsg exec -- pass --clip $1
+    swaymsg exec -- pass --clip $1
 }
 
 list_run() {
-  IFS=':'
-  for p in $PATH; do
-    find -L "$p" -maxdepth 1 -mindepth 1 -type f -executable -printf '%P\n'
-  done | sort -u
+    IFS=':'
+    for p in $PATH; do
+        find -L "$p" -maxdepth 1 -mindepth 1 -type f -executable -printf '%P\n'
+    done | sort -u
 }
 
 do_run() {
-  swaymsg exec $1
+    swaymsg exec -- $1
 }
 
-if [ $# -ne 1 ]; then
-  (>&2 echo "Missing command argument.")
-  (>&2 usage)
-  exit 1
+fzf_bash="${HOME}/.fzf.bash"
+if [ ! -e "$fzf_bash" ]; then
+    (>&2 echo "'$fzf_bash' not found. Is fzf installed?")
+    exit 1
 fi
+source "$fzf_bash"
 
-CMD=$1
-shift
-
-case $CMD in
-  pass|run)
-    if SEL=$(list_${CMD} | $FZF); then
-      do_${CMD} $SEL
-    fi
-    ;;
-  -h|--help)
-    usage
-    ;;
-  *)
-    (>&2 echo "Unrecognized command: '$CMD'")
+if [ $# -ne 1 ]; then
+    (>&2 echo "Missing command argument.")
     (>&2 usage)
     exit 1
+fi
+
+cmd=$1
+shift
+
+case $cmd in
+    pass|run)
+        if sel=$(list_${cmd} | FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS fzf); then
+            do_${cmd} $sel
+        fi
     ;;
+        -h|--help)
+        usage
+        ;;
+    *)
+        (>&2 echo "Unrecognized command: '$cmd'")
+        (>&2 usage)
+        exit 1
+        ;;
 esac
