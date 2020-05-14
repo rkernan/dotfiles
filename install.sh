@@ -87,6 +87,7 @@ for target in $targets; do
       check_command cargo  || true
       check_command clangd || true # coc-clangd
       check_command ctags  || true # coc-fzf (uses for outline)
+      check_command fish   || true
       check_command go     || true
       check_command gopls  || true # coc-go
       check_command fzf    || true
