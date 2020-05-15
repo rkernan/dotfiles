@@ -117,6 +117,7 @@ for target in $targets; do
       ;;
     work)
       stow work
+      check_command fish >/dev/null 2>&1 && fish -c "set -Ux NO_UNICODE 1" || true
       ;;
     *)
       (>&2 echo "Unknown target $target")
