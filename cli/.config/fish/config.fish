@@ -5,7 +5,13 @@ set -g fish_user_paths ~/.local/bin ~/.linuxbrew/bin /home/linuxbrew/.linuxbrew/
 set -x EDITOR nvim
 set -x PAGER less
 
-set -x FZF_DEFAULT_OPTS --layout=reverse --prompt="❯ " --pointer="❯" --marker="❯"
+set -q NO_UNICODE || set -x NO_UNICODE 0
+
+if test $NO_UNICODE -gt 0
+    set -x FZF_DEFAULT_OPTS --layout=reverse --prompt="> " --pointer=">" --marker="<"
+else
+    set -x FZF_DEFAULT_OPTS --layout=reverse --prompt="❯ " --pointer="❯" --marker="❯"
+end
 set -x FZF_DEFAULT_COMMAND "rg --files --no-ignore --hidden --follow"
 
 abbr e $EDITOR

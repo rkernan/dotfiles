@@ -2,7 +2,7 @@ emulate sh -c "source ${HOME}/.profile"
 
 typeset -Ug path
 
-if [ -e "${HOME}/.at_work" ]; then
+if [[ $NO_UNICODE -gt 0 ]]; then
   export ZSH_PROMPT_MODE=">"
   export ZSH_PROMPT_VICMD_MODE="<"
 fi

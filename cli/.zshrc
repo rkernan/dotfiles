@@ -91,19 +91,19 @@ async_prompt_callback() {
   async_stop_worker async_prompt_worker -n
 }
 
-if [[ "${ZSH_UNICODE_SYMBOLS:-1}" == 0 ]]; then
+if [[ "${NO_UNICODE:-0}" != 0 ]]; then
   ZSH_PROMPT_MODE=">"
   ZSH_PROMPT_VICMD_MODE="<"
   ZSH_THEME_GIT_PROMPT_PREFIX="("
   ZSH_THEME_GIT_PROMPT_SUFFIX=") "
   ZSH_THEME_GIT_PROMPT_SEPARATOR="|"
   ZSH_THEME_GIT_PROMPT_BRANCH="%{$fg_bold[magenta]%}"
-  ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[green]%}%{!%G%}"
+  ZSH_THEME_GIT_PROMPT_STAGED="%{$fg[green]%}%{+%G%}"
   ZSH_THEME_GIT_PROMPT_CONFLICTS="%{$fg[red]%}%{x!%G%}"
   ZSH_THEME_GIT_PROMPT_CHANGED="%{$fg[yellow]%}%{+%G%}"
   ZSH_THEME_GIT_PROMPT_BEHIND="%{↓%G%}"
   ZSH_THEME_GIT_PROMPT_AHEAD="%{↑%G%}"
-  ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[red]...%G%}"
+  ZSH_THEME_GIT_PROMPT_UNTRACKED="%{$fg[red]??%G%}"
   ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg_bold[green]%}%{!%G%}"
 else
   ZSH_PROMPT_MODE="❯"

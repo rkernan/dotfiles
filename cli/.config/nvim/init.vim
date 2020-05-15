@@ -1,4 +1,4 @@
-if has("termguicolors") && !$AT_WORK
+if has("termguicolors") && !$NO_UNICODE
     set termguicolors
 endif
 
