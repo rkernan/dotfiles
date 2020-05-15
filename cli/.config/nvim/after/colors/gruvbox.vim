@@ -32,9 +32,6 @@ let s:status_bg = s:bg2
 let s:status_nc_fg = s:bg4
 let s:status_nc_bg = s:bg1
 
-" EasyMotion colors
-highlight! link EasyMotionTarget EasyMotionTarget2First
-
 " Signify colors
 highlight! link SignifyLineAdd             GruvboxGreenSign
 highlight! link SignifyLineChange          GruvboxAquaSign
