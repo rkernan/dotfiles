@@ -22,7 +22,9 @@ do_pass() {
 list_run() {
     IFS=':'
     for p in $PATH; do
-        find -L "$p" -maxdepth 1 -mindepth 1 -type f -executable -printf '%P\n'
+        if [ -d "$p" ]; then
+            find -L "$p" -maxdepth 1 -mindepth 1 -type f -executable -printf '%P\n'
+        fi
     done | sort -u
 }
 
