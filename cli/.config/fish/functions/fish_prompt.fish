@@ -1,4 +1,4 @@
-function fish_prompt --description 'Write out the prompt'
+function fish_prompt --description "Write out the prompt"
     set -l last_pipestatus $pipestatus
 
     set -g __fish_git_prompt_show_informative_status 1
