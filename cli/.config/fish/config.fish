@@ -15,4 +15,7 @@ abbr fcd    fzf_cd
 abbr fe     fzf_edit
 abbr fkill  fzf_kill
 
-set -e fish_mode_prompt
+set fish_color_command normal
+set fish_color_redirection brblack --bold
+set fish_color_end brblack --bold
+set fish_color_param normal
