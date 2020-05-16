@@ -47,14 +47,17 @@ function fish_prompt --description "Write out the prompt"
         set prompt_jobs (set_color --bold yellow)$num_jobs" "
     end
     echo -n $prompt_jobs
+    set_color normal
 
     set -l prompt_status (__fish_print_pipestatus "" " " "|" (set_color $fish_color_status) (set_color --bold $fish_color_status) $last_pipestatus)
     echo -n $prompt_status
+    set_color normal
 
     # TODO if ssh -> user@hostname:
 
     set_color $fish_color_cwd
     echo -n (prompt_pwd)
+    set_color normal
 
     printf "%s " (fish_vcs_prompt)
 
