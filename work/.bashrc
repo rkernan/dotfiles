@@ -4,4 +4,5 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # exec fish only if this is a login shell
-shopt -q login_shell && exec fish
+fish_cmd="${HOME}/.linuxbrew/bin/fish"
+shopt -q login_shell && [ -e "$fish_cmd" ] && exec $fish_cmd
