@@ -1,9 +1,9 @@
 let g:modestatus#statusline = [
     \  ['mode'],
     \  ['fugitive_branch', 'signify_added', 'signify_modified', 'signify_removed'],
-    \  'filename_short', 'modified', 'readonly', '%<', 'filetype',
-    \  '%=',
-    \  'expandtab', 'shiftwidth', 'encoding', 'bomb', 'fileformat',
+    \  'filename_short', 'modified', 'readonly',
+    \  '%<', '%=',
+    \  'filetype', 'encoding', 'bomb', 'fileformat',
     \  ['line', 'column', 'line_percent'],
     \  ['coc_errors'], ['coc_warnings']
     \ ]
@@ -28,14 +28,12 @@ silent! call modestatus#options#add('filename_short', 'color', ['ModestatusBold'
 silent! call modestatus#options#add('modified', 'color', ['ModestatusRedBold', 'ModestatusNCRedBold'])
 silent! call modestatus#options#add('readonly', 'color', ['ModestatusRed', 'ModestatusNCRed'])
 
-silent! call modestatus#options#add('expandtab', 'format', '[%s')
-silent! call modestatus#options#add('shiftwidth', 'format', '%s]')
-
-silent! call modestatus#options#add('encoding', 'format', '[%s')
+silent! call modestatus#options#add('filetype', 'format', '%s')
+silent! call modestatus#options#add('encoding', 'format', '%s')
 silent! call modestatus#options#add('encoding', 'separator', '')
 silent! call modestatus#options#add('bomb', 'format', '-%s')
 silent! call modestatus#options#add('bomb', 'separator', '')
-silent! call modestatus#options#add('fileformat', 'format', ':%s]')
+silent! call modestatus#options#add('fileformat', 'format', '[%s]')
 
 silent! call modestatus#options#add('line', 'color', ['Modestatus2', 'Modestatus2NC'])
 silent! call modestatus#options#add('line', 'separator', '')
