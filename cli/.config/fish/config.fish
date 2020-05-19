@@ -22,6 +22,11 @@ end
 abbr e $EDITOR
 abbr p $PAGER
 
+abbr cp cp -i
+abbr ln ln -i
+abbr mv mv -i
+abbr rm rm -i
+
 abbr fcd    fzf-cd
 abbr fe     fzf-edit
 abbr fkill  fzf-kill
