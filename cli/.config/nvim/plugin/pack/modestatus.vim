@@ -1,7 +1,7 @@
 let g:modestatus#statusline = [
     \  ['mode'],
     \  ['fugitive_branch', 'signify_added', 'signify_modified', 'signify_removed'],
-    \  'filename', 'modified', 'readonly', '%<', 'filetype',
+    \  'filename_short', 'modified', 'readonly', '%<', 'filetype',
     \  '%=',
     \  'expandtab', 'shiftwidth', 'encoding', 'bomb', 'fileformat',
     \  ['line', 'column', 'line_percent'],
@@ -24,7 +24,7 @@ silent! call modestatus#options#add('fugitive_branch', 'color', ['Modestatus2', 
 silent! call modestatus#options#add('signify_added', 'color', ['Modestatus2Green', 'Modestatus2NCGreen'])
 silent! call modestatus#options#add('signify_modified', 'color', ['Modestatus2Aqua', 'Modestatus2NCAqua'])
 silent! call modestatus#options#add('signify_removed', 'color', ['Modestatus2Red', 'Modestatus2NCRed'])
-silent! call modestatus#options#add('filename', 'color', ['ModestatusBold', 'ModestatusNC'])
+silent! call modestatus#options#add('filename_short', 'color', ['ModestatusBold', 'ModestatusNC'])
 silent! call modestatus#options#add('modified', 'color', ['ModestatusRedBold', 'ModestatusNCRedBold'])
 silent! call modestatus#options#add('readonly', 'color', ['ModestatusRed', 'ModestatusNCRed'])
 silent! call modestatus#options#add('expandtab', 'format', '[%s')
