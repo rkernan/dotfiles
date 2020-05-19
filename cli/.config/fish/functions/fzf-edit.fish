@@ -1,4 +1,4 @@
-function fzf_edit --description "Fuzzy edit file(s)"
+function fzf-edit --description "Fuzzy edit file(s)"
     set -l preview
     if __fzf_show_preview
         set preview "head -"(__fzf_preview_height)" {}"

@@ -22,9 +22,9 @@ end
 abbr e $EDITOR
 abbr p $PAGER
 
-abbr fcd    fzf_cd
-abbr fe     fzf_edit
-abbr fkill  fzf_kill
+abbr fcd    fzf-cd
+abbr fe     fzf-edit
+abbr fkill  fzf-kill
 
 set fish_color_command normal
 set fish_color_redirection brblack --bold
