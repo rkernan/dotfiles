@@ -32,6 +32,10 @@ let s:status_bg = s:bg2
 let s:status_nc_fg = s:bg4
 let s:status_nc_bg = s:bg1
 
+" CoC colors
+silent! call s:hl('ModestatusCocError',   s:bg1, s:red, 'bold')
+silent! call s:hl('ModestatusCocWarning', s:bg1, s:yellow, 'bold')
+
 " Signify colors
 highlight! link SignifyLineAdd             GruvboxGreenSign
 highlight! link SignifyLineChange          GruvboxAquaSign

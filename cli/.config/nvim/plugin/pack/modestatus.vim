@@ -1,10 +1,11 @@
 let g:modestatus#statusline = [
     \  ['mode'],
     \  ['fugitive_branch', 'signify_added', 'signify_modified', 'signify_removed'],
-    \  'filename', 'modified', 'readonly', '%<', 'filetype', 'coc_errors', 'coc_warnings',
+    \  'filename', 'modified', 'readonly', '%<', 'filetype',
     \  '%=',
     \  'expandtab', 'shiftwidth', 'encoding', 'bomb', 'fileformat',
-    \  ['line', 'column', 'line_percent']
+    \  ['line', 'column', 'line_percent'],
+    \  ['coc_errors'], ['coc_warnings']
     \ ]
 let g:modestatus#statusline_override_fugitiveblame = ['filetype', '%=', ['line', 'line_max', 'line_percent']]
 let g:modestatus#statusline_override_qf = [['mode'], 'buftype', 'filetype', '%=', ['line', 'line_max', 'line_percent']]
@@ -16,10 +17,8 @@ augroup modestatus_custom
     autocmd FileType qf silent! call modestatus#setlocal('qf')
 augroup END
 " settings
-silent! call modestatus#options#add('coc_errors', 'color', ['ModestatusRed', 'ModestatusNCRed'])
-silent! call modestatus#options#add('coc_errors', 'format', '▸%s')
-silent! call modestatus#options#add('coc_warnings', 'color', ['ModestatusYellow', 'ModestatusNCYellow'])
-silent! call modestatus#options#add('coc_warnings', 'format', '▸%s')
+silent! call modestatus#options#add('coc_errors', 'color', ['ModestatusCocError', 'ModestatusCocError'])
+silent! call modestatus#options#add('coc_warnings', 'color', ['ModestatusCocWarning', 'ModestatusCocWarning'])
 silent! call modestatus#options#add('mode', 'color', 'ModestatusMode')
 silent! call modestatus#options#add('fugitive_branch', 'color', ['Modestatus2', 'Modestatus2NC'])
 silent! call modestatus#options#add('signify_added', 'color', ['Modestatus2Green', 'Modestatus2NCGreen'])
