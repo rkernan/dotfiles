@@ -1,7 +1,7 @@
 let g:modestatus#statusline = [
     \  ['mode'],
     \  ['fugitive_branch', 'signify_added', 'signify_modified', 'signify_removed'],
-    \  'filename', 'modified', 'readonly', 'filetype', 'coc_errors', 'coc_warnings',
+    \  'filename', 'modified', 'readonly', '%<', 'filetype', 'coc_errors', 'coc_warnings',
     \  '%=',
     \  'expandtab', 'shiftwidth', 'encoding', 'bomb', 'fileformat',
     \  ['line', 'column', 'line_percent']
