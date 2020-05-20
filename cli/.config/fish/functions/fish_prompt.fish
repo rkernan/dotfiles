@@ -53,7 +53,9 @@ function fish_prompt --description "Write out the prompt"
     echo -n $prompt_status
     set_color normal
 
-    # TODO if ssh -> user@hostname:
+    if set -q SSH_CLIENT || set -q SSH_TTY
+        echo -n (set_color $fish_color_host_remote)(prompt_hostname)(set_color normal)":"
+    end
 
     set_color $fish_color_cwd
     echo -n (prompt_pwd)
