@@ -8,7 +8,7 @@ set -x PAGER less
 set -q NO_UNICODE || set -x NO_UNICODE 0
 
 if test $NO_UNICODE -gt 0
-    set -x FZF_DEFAULT_OPTS "--layout=reverse --prompt='> ' --pointer='>' --marker='<'"
+    set -x FZF_DEFAULT_OPTS "--layout=reverse --prompt='> ' --pointer='>' --marker='>'"
 else
     set -x FZF_DEFAULT_OPTS "--layout=reverse --prompt='❯ ' --pointer='❯' --marker='❯'"
 end
