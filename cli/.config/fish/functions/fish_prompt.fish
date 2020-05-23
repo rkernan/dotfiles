@@ -43,18 +43,18 @@ function fish_prompt --description "Write out the prompt"
 
     set -l num_jobs (jobs | wc -l | tr -d '[:space:]')
     if test $num_jobs -gt 0
-        echo -n (set_color --bold yellow)$num_jobs" "
+        echo -n (set_color --bold yellow)$num_jobs" "(set_color normal)
     end
 
-    echo -n (__fish_print_pipestatus "" " " "|" (set_color $fish_color_status) (set_color --bold $fish_color_status) $last_pipestatus)
+    echo -n (__fish_print_pipestatus "" " " "|" (set_color $fish_color_status) (set_color --bold $fish_color_status) $last_pipestatus)(set_color normal)
 
     if set -q SSH_CLIENT || set -q SSH_TTY
-        echo -n (set_color $fish_color_host_remote)(prompt_hostname)(set_color normal)":"
+        echo -n (set_color $fish_color_host_remote)(prompt_hostname)(set_color normal)":"(set_color normal)
     end
 
-    echo -n (set_color $fish_color_cwd)(prompt_pwd)
+    echo -n (set_color $fish_color_cwd)(prompt_pwd)(set_color normal)
 
-    echo -n (set_color normal)(fish_vcs_prompt)
+    echo -n (set_color normal)(fish_vcs_prompt)(set_color normal)
 
     set -l prompt_suffix
     switch $fish_bind_mode
@@ -70,5 +70,5 @@ function fish_prompt --description "Write out the prompt"
             set prompt_suffix $__fish_vi_prompt_visual_suffix
     end
 
-    echo -n (set_color normal)" $prompt_suffix "
+    echo -n (set_color normal)" $prompt_suffix "(set_color normal)
 end
