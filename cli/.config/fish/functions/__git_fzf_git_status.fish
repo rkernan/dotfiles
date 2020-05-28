@@ -5,9 +5,17 @@ function __git_fzf_git_status --description "Fuzzy select git unstaged and untra
 
     set -l preview
     if __fzf_show_preview
-        set preview "git --no-color diff HEAD -- {-1} | head -"(__fzf_preview_height)
+        set preview "git diff HEAD -- {-1} | head -"(__fzf_preview_height)
     end
 
-    git -c color.status=always status --short | fzf -m --ansi --preview "$preview" | cut -c4- | sed 's/.* -> //'
+    set -l res (git -c color.status=always status --short | \
+                fzf -m --ansi --preview "$preview" | \
+                awk '{print $2}')
+
+    if test -z "$res"
+        return 1
+    end
+
+    commandline -i -- (printf '%s ' (string join ' ' $res))
     commandline -f repaint
 end

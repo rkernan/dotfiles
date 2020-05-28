@@ -8,6 +8,13 @@ function __git_fzf_git_tag --description "Fuzzy select git tags"
         set "git show {} | head -"(__fzf_num_preview_lines)
     end
 
-    git tag --sort -version:refname | fzf -m --ansi --preview "$preview"
+    set -l res (git tag --sort -version:refname | \
+                fzf -m --ansi --preview "$preview")
+
+    if test -z "$res"
+        return 1
+    end
+
+    commandline -i -- (printf '%s ' (string join ' ' $res))
     commandline -f repaint
 end
