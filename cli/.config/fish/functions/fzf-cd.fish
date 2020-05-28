@@ -5,7 +5,7 @@ function fzf-cd --description "Fuzzy change directory"
     end
 
     set -l destdir (find $searchdir -mindepth 1 -type d 2>/dev/null | uniq | fzf)
-    if test -z $destdir
+    if test -z "$destdir"
         return 1
     end
 

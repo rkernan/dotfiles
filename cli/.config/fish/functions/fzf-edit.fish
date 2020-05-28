@@ -5,7 +5,7 @@ function fzf-edit --description "Fuzzy edit file(s)"
     end
 
     set -l destfiles (fzf -m --preview="$preview")
-    if test -z $destfiles
+    if test -z "$destfiles"
         return 1
     end
     $EDITOR $destfiles

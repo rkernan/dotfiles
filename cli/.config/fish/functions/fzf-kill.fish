@@ -6,7 +6,7 @@ function fzf-kill --description "Fuzzy kill processes"
         set procs (ps -f -u $uid | sed 1d | fzf -m | awk '{print $2}')
     end
 
-    if test -z $procs
+    if test -z "$procs"
         return 1
     end
 
