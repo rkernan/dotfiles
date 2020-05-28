@@ -5,7 +5,7 @@ function __git_fzf_git_tag --description "Fuzzy select git tags"
 
     set -l preview
     if __fzf_show_preview
-        set "git show {} | head -"(__fzf_num_preview_lines)
+        set preview "git show {} | head -"(__fzf_preview_height)
     end
 
     set -l res (git tag --sort -version:refname | \
