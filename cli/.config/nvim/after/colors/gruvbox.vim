@@ -32,16 +32,9 @@ let s:status_bg = s:bg2
 let s:status_nc_fg = s:bg4
 let s:status_nc_bg = s:bg1
 
-" CoC colors
-silent! call s:hl('ModestatusCocError',   s:bg1, s:red, 'bold')
-silent! call s:hl('ModestatusCocWarning', s:bg1, s:yellow, 'bold')
-
-" Signify colors
-highlight! link SignifyLineAdd             GruvboxGreenSign
-highlight! link SignifyLineChange          GruvboxAquaSign
-highlight! link SignifyLineDelete          GruvboxRedSign
-highlight! link SignifyLineChangeDelete    SignifyLineChange
-highlight! link SignifyLineDeleteFirstLine SignifyLineDelete
+" Additional sign colors
+silent! call s:hl('GruvboxBlueSign', s:blue, s:bg1, 'none')
+silent! call s:hl('GruvboxWhiteSign', s:fg1, s:bg1, 'none')
 
 " Modestatus colors
 silent! call s:hl('StatusLine', s:fg4, s:bg2, 'none')
@@ -80,10 +73,10 @@ highlight! link TabLineFill StatusLineNC
 highlight! link TabLineSel  ModestatusModeNormal
 
 " Coc signs
-highlight! link CocErrorSign GruvboxRedSign
+highlight! link CocErrorSign   GruvboxRedSign
+highlight! link CocHintSign    GruvboxBlueSign
+highlight! link CocInfoSign    GruvboxWhiteSign
 highlight! link CocWarningSign GruvboxYellowSign
-highlight! link CocInfoSign GruvboxWhiteSign
-highlight! link CocHintSign GruvboxBlueSign
 
 " Coc floating windows
 silent! call s:hl('CocErrorFloat', s:red, s:bg2, 'none')
