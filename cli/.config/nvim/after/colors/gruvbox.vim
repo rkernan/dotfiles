@@ -26,15 +26,17 @@ let s:aqua = s:get_gruvbox_color('GruvboxAqua')
 let s:blue = s:get_gruvbox_color('GruvboxBlue')
 let s:purple = s:get_gruvbox_color('GruvboxPurple')
 let s:orange = s:get_gruvbox_color('GruvboxOrange')
+let s:white = s:fg1
 
+let s:sign_bg = s:bg1
 let s:status_fg = s:fg4
 let s:status_bg = s:bg2
 let s:status_nc_fg = s:bg4
 let s:status_nc_bg = s:bg1
 
 " Additional sign colors
-silent! call s:hl('GruvboxBlueSign', s:blue, s:bg1, 'none')
-silent! call s:hl('GruvboxWhiteSign', s:fg1, s:bg1, 'none')
+silent! call s:hl('GruvboxBlueSign',  s:blue,  s:sign_bg, 'none')
+silent! call s:hl('GruvboxWhiteSign', s:white, s:sign_bg, 'none')
 
 " Modestatus colors
 silent! call s:hl('StatusLine', s:fg4, s:bg2, 'none')
@@ -83,7 +85,7 @@ highlight! link CocInfoSign    GruvboxWhiteSign
 highlight! link CocWarningSign GruvboxYellowSign
 
 " Coc floating windows
-silent! call s:hl('CocErrorFloat', s:red, s:bg2, 'none')
+silent! call s:hl('CocErrorFloat',   s:red,    s:bg2, 'none')
 silent! call s:hl('CocWarningFloat', s:yellow, s:bg2, 'none')
-silent! call s:hl('CocInfoFloat', s:fg1, s:bg2, 'none')
-silent! call s:hl('CocHintFloat', s:blue, s:bg2, 'none')
+silent! call s:hl('CocInfoFloat',    s:white,  s:bg2, 'none')
+silent! call s:hl('CocHintFloat',    s:blue,   s:bg2, 'none')
