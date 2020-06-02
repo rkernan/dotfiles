@@ -72,7 +72,11 @@ highlight! link TabLine     StatusLine
 highlight! link TabLineFill StatusLineNC
 highlight! link TabLineSel  ModestatusModeNormal
 
-" Coc signs
+" CoC statusline
+silent! call s:hl('ModestatusCocError',   s:bg1, s:red,    'bold')
+silent! call s:hl('ModestatusCocWarning', s:bg1, s:yellow, 'bold')
+
+" CoC signs
 highlight! link CocErrorSign   GruvboxRedSign
 highlight! link CocHintSign    GruvboxBlueSign
 highlight! link CocInfoSign    GruvboxWhiteSign
