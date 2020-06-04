@@ -10,7 +10,7 @@ function! s:pack_init() abort
     " vcs integration
     call minpac#add('mhinz/vim-signify')
     call minpac#add('tpope/vim-fugitive')
-    " fzf - installed separately from system
+    " fzf
     call minpac#add('junegunn/fzf', {'do': {-> system('./install --all --no-update-rc')}})
     call minpac#add('junegunn/fzf.vim')
     " other
