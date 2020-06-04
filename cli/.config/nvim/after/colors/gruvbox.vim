@@ -28,6 +28,7 @@ let s:purple = s:get_gruvbox_color('GruvboxPurple')
 let s:orange = s:get_gruvbox_color('GruvboxOrange')
 let s:white = s:fg1
 
+let s:float_bg = s:bg2
 let s:sign_bg = s:bg1
 let s:status_fg = s:fg4
 let s:status_bg = s:bg2
@@ -84,8 +85,8 @@ highlight! link CocHintSign    GruvboxBlueSign
 highlight! link CocInfoSign    GruvboxWhiteSign
 highlight! link CocWarningSign GruvboxYellowSign
 
-" Coc floating windows
-silent! call s:hl('CocErrorFloat',   s:red,    s:bg2, 'none')
-silent! call s:hl('CocWarningFloat', s:yellow, s:bg2, 'none')
-silent! call s:hl('CocInfoFloat',    s:white,  s:bg2, 'none')
-silent! call s:hl('CocHintFloat',    s:blue,   s:bg2, 'none')
+" " Coc floating windows
+silent! call s:hl('CocErrorFloat',   s:red,    s:float_bg, 'none')
+silent! call s:hl('CocWarningFloat', s:yellow, s:float_bg, 'none')
+silent! call s:hl('CocInfoFloat',    s:white,  s:float_bg, 'none')
+silent! call s:hl('CocHintFloat',    s:blue,   s:float_bg, 'none')
