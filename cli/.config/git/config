@@ -9,6 +9,9 @@
     editor = $EDITOR
     excludefiles = ~/.config/git/ignore
 
+[branch]
+    autosetuprebase = always
+
 [color]
     branch = auto
     diff = auto
@@ -21,24 +24,24 @@
     changed = yellow
     untracked = red
 
-[status]
-    short = true
-    showUntrackedFiles = all
-
-[push]
-    default = simple
-
-[branch]
-    autosetuprebase = always
-
 [merge]
     tool = nvim.fugitive
 
 [mergetool "nvim.fugitive"]
     cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 
+[pull]
+    rebase = true
+
+[push]
+    default = simple
+
 [rerere]
     enabled = 1
+
+[status]
+    short = true
+    showUntrackedFiles = all
 
 [alias]
     # stage changes
