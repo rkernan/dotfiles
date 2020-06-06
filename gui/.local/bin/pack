@@ -16,9 +16,9 @@ usage() {
   echo "Pacman helper tool ('$BIN', '$SU_BIN')"
   echo "If using 'yay' AUR helper, run the following first: yay --gendb && yay --devel --save"
   echo "Usage: $0 [command] [options]"
-  echo "  clean               : Clean the pacman cache, does not accept additional parameters"
+  echo "  clean               : Clean the pacman cache"
   echo "  deptree             : List dependency tree of a given package"
-  echo "  diff                : Clean up pacnew files, does not accept addition parameters"
+  echo "  diff                : Clean up pacnew files"
   echo "  downgrade           : Downgrade a package"
   echo "  download            : Download a remote package"
   echo "  firmware-upgrade    : Upgrade the system firmware"
@@ -26,16 +26,17 @@ usage() {
   echo "  info-local          : Show info for a local package or packages"
   echo "  install             : Install a remote package"
   echo "  install-local       : Install a local file"
-  echo "  list-deps           : List all packages intalled as dependencies, does not accept additional parameters"
-  echo "  list-explicit       : List all explicitly install packages, does not accept additional parameters"
-  echo "  list-orphans        : List all installed orphan packages, does not accept additional parameters"
+  echo "  list-deps           : List all packages intalled as dependencies"
+  echo "  list-explicit       : List all explicitly install packages"
+  echo "  list-orphans        : List all installed orphan packages"
+  echo "  lostfiles           : List all orphaned files not owned by a package"
   echo "  provides            : Query which remote package provides a specified file"
   echo "  provides-local      : Query which local package provides a specified file"
   echo "  provides-what       : List all files provided by the given package or all packages if none are specified"
   echo "  remove              : Uninstall a local package"
   echo "  search              : Search for the specified remote package or list all remote packages if none are specified"
   echo "  search-local        : Search for the specified local package or list all local packages if none are specified"
-  echo "  sync                : Sync the package file database, does not accept additional parameters"
+  echo "  sync                : Sync the package file database"
   echo "  upgrade             : Update the specified packages or all packages if none are specified"
   echo "  verify              : Validate the specified packages or all packages if none are specified"
 }
@@ -95,6 +96,10 @@ case $CMD in
   list-orphans)
     no_params_or_die $*
     exec $BIN -Qdt
+    ;;
+  lostfiles)
+    no_params_or_die $*
+    exec sudo $(which lostfiles)
     ;;
   provides)
     exec $BIN -F $*
