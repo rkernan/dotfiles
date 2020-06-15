@@ -99,7 +99,6 @@ for target in $targets; do
       check_command rustup || true
       check_command texlab || true # coc-texlab
       check_command tmux   || true
-      check_command zsh    || true
       ;;
     cli)
       stow cli
