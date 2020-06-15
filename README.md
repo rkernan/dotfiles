@@ -48,3 +48,6 @@ Services:
 - `xorg-fonts-alias`
 - `xorg-fonts-encoding`
 - `xorg-mkfontscale`
+
+## Credits
+- Sway Gnome + SystemD integration: https://github.com/Drakulix/sway-gnome
