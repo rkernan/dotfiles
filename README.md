@@ -11,6 +11,7 @@
 - `systemd-resolvconf.service`
 - `aur/reflector-timer`
 - `tlp` + `tlp-rdw`
+- `polkit-gnome` - provides `polkit` support for `sway-gnome` setup
 
 ### GUI applications
 - `bluez`
