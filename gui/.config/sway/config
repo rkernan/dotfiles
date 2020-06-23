@@ -4,11 +4,6 @@ exec_always ~/.local/bin/import-gsettings \
     icon-theme:gtk-icon-theme-name \
     cursor-theme:gtk-cursor-theme-name
 
-# autostart
-exec autotiling
-exec mako
-exec kanshi
-
 # logo key
 set $mod Mod4
 
@@ -22,7 +17,7 @@ set $right l
 set $wallpaper ~/Pictures/wallpaper.png
 
 # terminal
-set $term kitty
+set $term kitty -1
 
 # launcher
 set $menu $term --detach --class='launcher' ~/.local/bin/fzf-sway run
@@ -181,4 +176,6 @@ bar {
 # load system-specific config
 include ~/.config/sway/`hostname`/*
 
-exec systemd-notify --ready || true
+exec /usr/lib/xdg-desktop-portal -r
+exec sh -c 'systemctl --user import-environment; systemctl --user start sway-session.target'
+# exec systemd-notify --ready || true
