@@ -22,6 +22,7 @@ usage() {
   echo "  downgrade           : Downgrade a package"
   echo "  download            : Download a remote package"
   echo "  firmware-upgrade    : Upgrade the system firmware"
+  echo "  hardcode-tray       : Apply icons using the hardcode-tray utility"
   echo "  info                : Show info for a package or packages"
   echo "  info-local          : Show info for a local package or packages"
   echo "  install             : Install a remote package"
@@ -72,6 +73,9 @@ case $CMD in
     $(which fwupdmgr) refresh --force
     $(which fwupdmgr) get-updates
     $(which fwupdmgr) update
+    ;;
+  hardcode-tray)
+    exec sudo -E hardcode-tray --apply
     ;;
   info)
     exec $SU_BIN -Si $*
