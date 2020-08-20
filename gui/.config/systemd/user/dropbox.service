@@ -1,0 +1,10 @@
+[Unit]
+Description=Dropbox
+PartOf=graphical-session.target
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/dropbox
+
+[Install]
+WantedBy=sway-session.target
