@@ -2,6 +2,18 @@ set -x GOPATH ~/Workspace/go
 
 set -g fish_user_paths ~/.local/bin ~/.linuxbrew/bin /home/linuxbrew/.linuxbrew/bin ~/.cargo/bin $GOPATH/bin $fish_user_paths
 
+if set -q AUTOSTART_TMUX
+and test $AUTOSTART_TMUX -gt 0
+and status is-interactive
+and not set -q TMUX
+    set --local session base
+
+    if not tmux has-session -t $session
+        tmux new-session -s $session
+    end
+    exec tmux attach-session -t $session
+end
+
 set -x EDITOR nvim
 set -x PAGER less
 
