@@ -1,6 +1,6 @@
 set -x GOPATH ~/Workspace/go
 
-set -g fish_user_paths ~/.local/bin ~/.linuxbrew/bin /home/linuxbrew/.linuxbrew/bin ~/.cargo.bin $GOPATH/bin $fish_user_paths
+set -g fish_user_paths ~/.local/bin ~/.linuxbrew/bin /home/linuxbrew/.linuxbrew/bin ~/.cargo/bin $GOPATH/bin $fish_user_paths
 
 set -x EDITOR nvim
 set -x PAGER less
