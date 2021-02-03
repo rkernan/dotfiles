@@ -4,6 +4,7 @@ set -g fish_user_paths ~/.local/bin ~/.linuxbrew/bin /home/linuxbrew/.linuxbrew/
 
 if set -q AUTOSTART_TMUX
 and test $AUTOSTART_TMUX -gt 0
+and type -q tmux
 and status is-interactive
 and not set -q TMUX
     set --local session base
