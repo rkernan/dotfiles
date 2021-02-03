@@ -2,8 +2,6 @@
 
 set -e
 
-readonly python3_ver="3.7.2"
-
 stow() {
   command stow -t "$HOME" -v "$1"
 }
