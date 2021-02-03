@@ -8,10 +8,6 @@ stow() {
   command stow -t "$HOME" -v "$1"
 }
 
-version() {
-  echo "$@" | awk -F. '{ printf("%d%03d%03d%03d\n", $1,$2,$3,$4); }'
-}
-
 check_command() {
   local cmd="$1"
   local exec="$(which "$cmd" 2>/dev/null || true)"
