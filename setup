@@ -83,11 +83,9 @@ for target in $targets; do
       check_command ctags  || true # coc-fzf (uses for outline)
       check_command fish   || true
       check_command go     || true
-      check_command gopls  || true # coc-go
       check_command fzf    || true
       check_command npm    || true
       check_command nvim   || true
-      check_command pylint || true # coc-python (linter, uses mpls as server)
       check_command rg     || true
       check_command rls    || true # coc-rls
       check_command rustup || true
