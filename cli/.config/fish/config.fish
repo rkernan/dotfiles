@@ -17,6 +17,7 @@ end
 set -x EDITOR nvim
 set -x PAGER less
 
+# export environment - we're not the only one that needs this
 set -q NO_UNICODE || set -x NO_UNICODE 0
 
 if test $NO_UNICODE -gt 0
