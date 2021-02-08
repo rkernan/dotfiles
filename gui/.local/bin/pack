@@ -63,7 +63,7 @@ case $CMD in
     exec sudo $(which pacdiff)
     ;;
   downgrade)
-    exec $(which downgrade) $*
+    exec sudo $(which downgrade) $*
     ;;
   download)
     exec $SU_BIN -Sw $*
