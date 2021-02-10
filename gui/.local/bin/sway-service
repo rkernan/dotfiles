@@ -1,6 +1,0 @@
-#!/usr/bin/env sh
-
-# import login-manager environment
-systemctl --user import-environment
-# start service
-exec systemctl --wait --user start sway.service
