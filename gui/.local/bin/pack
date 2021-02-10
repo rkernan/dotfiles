@@ -24,7 +24,6 @@ usage() {
   echo "  firmware-upgrade    : Upgrade the system firmware"
   echo "  hardcode-tray       : Apply icons using the hardcode-tray utility"
   echo "  info                : Show info for a package or packages"
-  echo "  info-local          : Show info for a local package or packages"
   echo "  install             : Install a remote package"
   echo "  install-local       : Install a local file"
   echo "  list-deps           : List all packages intalled as dependencies"
@@ -32,7 +31,6 @@ usage() {
   echo "  list-orphans        : List all installed orphan packages"
   echo "  lostfiles           : List all orphaned files not owned by a package"
   echo "  provides            : Query which remote package provides a specified file"
-  echo "  provides-local      : Query which local package provides a specified file"
   echo "  provides-what       : List all files provided by the given package or all packages if none are specified"
   echo "  remove              : Uninstall a local package"
   echo "  search              : Search for the specified remote package or list all remote packages if none are specified"
@@ -80,9 +78,6 @@ case $CMD in
   info)
     exec $SU_BIN -Si $*
     ;;
-  info-local)
-    exec $SU_BIN -Qi $*
-    ;;
   install)
     exec $SU_BIN -S $*
     ;;
@@ -107,9 +102,6 @@ case $CMD in
     ;;
   provides)
     exec $BIN -F $*
-    ;;
-  provides-local)
-    exec $BIN -Qo $*
     ;;
   provides-what)
     exec $BIN -Ql $*
