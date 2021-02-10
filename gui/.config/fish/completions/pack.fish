@@ -4,7 +4,7 @@ set -l listinstalled "(pacman -Q | string replace ' ' \t)"
 set -l listall "(__fish_print_packages)"
 set -l listgroups "(pacman -Sg)\t'Package Group'"
 
-set -l noopt 'not __fish_seen_subcommand_from clean deptree diff downgrade download firmware-upgrade hardcode-tray info install install-local list-deps list-explicit list-orphans lostfiles provides provides-what remove search search-local sync upgrade verify'
+set -l noopt 'not __fish_seen_subcommand_from clean deptree diff downgrade download firmware-upgrade hardcode-tray info install list-deps list-explicit list-orphans lostfiles provides provides-what remove search search-local sync upgrade verify'
 
 complete -c $progname -e
 complete -c $progname -f
@@ -18,7 +18,6 @@ complete -c $progname -n "$noopt" -f -a firmware-upgrade -d "Upgrade the system 
 complete -c $progname -n "$noopt" -f -a hardcode-tray -d "Apply icons using the hardcode-tray utility"
 complete -c $progname -n "$noopt" -f -a info -d "Show info for a package or packages"
 complete -c $progname -n "$noopt" -f -a install -d "Install a remote package"
-complete -c $progname -n "$noopt" -f -a install-local -d "Install a local file"
 complete -c $progname -n "$noopt" -f -a list-deps -d "List all packages intalled as dependencies"
 complete -c $progname -n "$noopt" -f -a list-explicit -d "List all explicitly install packages"
 complete -c $progname -n "$noopt" -f -a list-orphans -d "List all installed orphan packages"

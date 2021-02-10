@@ -25,7 +25,6 @@ usage() {
   echo "  hardcode-tray       : Apply icons using the hardcode-tray utility"
   echo "  info                : Show info for a package or packages"
   echo "  install             : Install a remote package"
-  echo "  install-local       : Install a local file"
   echo "  list-deps           : List all packages intalled as dependencies"
   echo "  list-explicit       : List all explicitly install packages"
   echo "  list-orphans        : List all installed orphan packages"
@@ -80,9 +79,6 @@ case $CMD in
     ;;
   install)
     exec $SU_BIN -S $*
-    ;;
-  install-local)
-    exec $SU_BIN -U $*
     ;;
   list-deps)
     no_params_or_die $*
