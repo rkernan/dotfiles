@@ -35,4 +35,3 @@ complete -c $progname -n "$noopt" -f -a verify -d "Validate the specified packag
 complete -c $progname -n "__fish_seen_subcommand_from deptree downgrade remove search-local upgrade verify" -d 'Installed package' -xa "$listinstalled"
 complete -c $progname -n "__fish_seen_subcommand_from info provides-what search" -d 'Package' -xa "$listall"
 complete -c $progname -n "__fish_seen_subcommand_from download install" -xa "$listall $listgroups"
-complete -c $progname -n "__fish_seen_subcommand_from install-local" -xa '(__fish_complete_suffix pkg.tar.zst; __fish_complete_suffix pkg.tar.xz; __fish_complete_suffix pkg.tar.gz)'
