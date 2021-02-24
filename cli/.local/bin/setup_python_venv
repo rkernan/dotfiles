@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+requirements="${1:-"requirements.txt"}"
+mkdir -p ".vim"
+echo '{ "python.pythonPath": "./.venv/bin/python" }' > ".vim/coc-settings.json"
+python3 -m venv ".venv"
+.venv/bin/python -m pip install jedi mypy pylint
+.venv/bin/python -m pip install -r "$requirements"
