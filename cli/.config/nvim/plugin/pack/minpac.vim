@@ -18,6 +18,7 @@ function! s:pack_init() abort
     call minpac#add('lambdalisue/suda.vim')
     call minpac#add('tpope/vim-commentary')
     call minpac#add('tpope/vim-repeat')
+    call minpac#add('tpope/vim-surround')
     call minpac#add('tpope/vim-unimpaired')
     " languages
     call minpac#add('sheerun/vim-polyglot')
