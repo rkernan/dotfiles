@@ -7,15 +7,10 @@ font:
     family: 'Fira Code'
     style: 'Bold'
 
-#   italic:
-#     family: 'Fira Code Regular'
-#     style: 'Italic'
-
-#   bold_italic:
-#     family: 'Fira Code Regular'
-#     style: 'Bold Italic'
-
   size: 10.0
+
+scrolling:
+  history: 5000
 
 schemes:
   gruvbox_light: &light
@@ -81,6 +76,3 @@ schemes:
       white:   '#928374'
 
 colors: *dark
-
-# key_bindings:
-#   # TODO
