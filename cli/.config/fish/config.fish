@@ -7,7 +7,7 @@ and test $AUTOSTART_TMUX -gt 0
 and type -q tmux
 and status is-interactive
 and not set -q TMUX
-    set --local session base
+    set --local session 0
 
     if not tmux has-session -t $session
         tmux new-session -s $session
