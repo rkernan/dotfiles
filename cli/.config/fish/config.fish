@@ -44,6 +44,7 @@ abbr rm rm -i
 abbr fcd    fzf-cd
 abbr fe     fzf-edit
 abbr fkill  fzf-kill
+abbr fssh   fzf-ssh
 
 set fish_color_command normal
 set fish_color_redirection brblack --bold
