@@ -25,6 +25,9 @@ guess_target() {
   elif [ $(command -v yum) ]; then
     # centos/rhel/fedora - work
     echo "cli work"
+  elif [ $(command -v wsl.exe) ]; then
+    # WSL
+    echo "cli wsl"
   else
     # other
     echo "cli"
@@ -110,6 +113,9 @@ for target in $targets; do
     work)
       stow work
       check_command fish >/dev/null 2>&1 && fish -c "set -Ux NO_UNICODE 1" || true
+      ;;
+    wsl)
+      check_command fish >/dev/null 2>&1 && fish -c "set -Ux AUTOSTART_TMUX 1" || true
       ;;
     *)
       (>&2 echo "Unknown target $target")
