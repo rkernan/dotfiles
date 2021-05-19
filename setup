@@ -89,6 +89,7 @@ for target in $targets; do
       check_command rg     || true
       check_command rls    || true # coc-rls
       check_command rustup || true
+      check_command stow   || true
       check_command texlab || true # coc-texlab
       check_command tmux   || true
       ;;
