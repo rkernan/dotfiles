@@ -82,8 +82,8 @@ for target in $targets; do
       check_command clangd || true # coc-clangd
       check_command ctags  || true # coc-fzf (uses for outline)
       check_command fish   || true
-      check_command go     || true
       check_command fzf    || true
+      check_command go     || true
       check_command npm    || true
       check_command nvim   || true
       check_command rg     || true
