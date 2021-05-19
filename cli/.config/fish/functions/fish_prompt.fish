@@ -11,7 +11,8 @@ function fish_prompt --description "Write out the prompt"
     set -g __fish_git_prompt_color_invalidstate red
     set -g __fish_git_prompt_color_untrackedfiles red
 
-    if test $NO_UNICODE -gt 0
+    if set -q NO_UNICODE
+    and test $NO_UNICODE -gt 0
         set -g __fish_git_prompt_char_upstream_ahead "↑"
         set -g __fish_git_prompt_char_upstream_behind "↓"
         set -g __fish_git_prompt_char_cleanstate "!"
