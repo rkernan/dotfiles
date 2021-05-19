@@ -49,3 +49,6 @@ set fish_color_command normal
 set fish_color_redirection brblack --bold
 set fish_color_end brblack --bold
 set fish_color_param normal
+
+# sane umask
+umask 0022
