@@ -3,9 +3,9 @@ let g:modestatus#statusline = [
     \  ['fugitive_branch', 'signify_added', 'signify_modified', 'signify_removed'],
     \  'filename_short', 'modified', 'readonly',
     \  '%<', '%=',
+    \  ['coc_errors'], ['coc_warnings'],
     \  'filetype', 'encoding', 'bomb', 'fileformat',
-    \  ['line', 'column', 'line_percent'],
-    \  ['coc_errors'], ['coc_warnings']
+    \  ['line', 'column', 'line_percent']
     \ ]
 let g:modestatus#statusline_override_fugitiveblame = ['filetype', '%=', ['line', 'line_max', 'line_percent']]
 let g:modestatus#statusline_override_qf = [['mode'], 'buftype', 'filetype', '%=', ['line', 'line_max', 'line_percent']]
