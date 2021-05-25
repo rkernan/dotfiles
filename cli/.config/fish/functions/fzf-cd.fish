@@ -1,4 +1,4 @@
-function fzf-cd --description "Fuzzy change directory"
+function fzf-cd -d "Fuzzy change directory"
     set -l searchdir "."
     if set -q argv[1]
         set searchdir $argv[1]

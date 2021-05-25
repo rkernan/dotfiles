@@ -1,4 +1,4 @@
-function fzf-kill --description "Fuzzy kill processes"
+function fzf-kill -d "Fuzzy kill processes"
     set -l uid (id -u)
     if test $uid -eq 0
         set procs (ps -ef | sed 1d | fzf -m | awk '{print $2}')
