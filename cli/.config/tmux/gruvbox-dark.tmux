@@ -30,5 +30,5 @@ set-option -g status-right-length 80
 set-window-option -g window-status-separator ""
 set-option -g status-left "#[bg=colour248,fg=colour237] #S "
 set-option -g status-right "#[bg=colour248,fg=colour237] #h "
-set-window-option -g window-status-current-format "#[bg=colour214,fg=colour239] #I#{?window_name,:,}#[bold]#{?window_name,#{window_name},} "
-set-window-option -g window-status-format "#[bg=colour239,fg=colour223] #I#{?window_name,:,}#[bold]#{?window_name,#{window_name},} "
+set-window-option -g window-status-current-format "#[bg=colour214,fg=colour239] #I#{?window_name,: ,}#[bold]#{?window_name,#{window_name},} "
+set-window-option -g window-status-format "#[bg=colour239,fg=colour223] #I#{?window_name,: ,}#[bold]#{?window_name,#{window_name},} "
