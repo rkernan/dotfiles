@@ -1,4 +1,4 @@
-function git_fzf_key_bindings --description "Set custom key bindings for git+fzf"
+function git_fzf_key_bindings
     bind \cg\cf __git_fzf_git_status
     bind \cg\cb __git_fzf_git_branch
     bind \cg\ct __git_fzf_git_tag
