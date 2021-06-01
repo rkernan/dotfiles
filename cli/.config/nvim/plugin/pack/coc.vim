@@ -32,51 +32,82 @@ inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>"
 " ctrl+c for esc
 inoremap <C-c> <Esc>
 
+" [g and ]g to natigate diagnostics
+nmap [g <Plug>(coc-diagnostic-prev)
+nmap ]g <Plug>(coc-diagnostic-next)
+
+" goto code navigation
+nmap gd <Plug>(coc-definition)
+nmap gy <Plug>(coc-type-definition)
+nmap gi <Plug>(coc-implementation)
+nmap gr <Plug>(coc-references)
+
+" use K to show doc in preview window
+nnoremap K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+    if (index(['vim','help'], &filetype) >= 0)
+        execute 'h '.expand('<cword>')
+    elseif (coc#rpc#ready())
+        call CocActionAsync('doHover')
+    else
+        execute '!' . &keywordprg . " " . expand('<cword>')
+    endif
+endfunction
+
 " highlight current symbol on CursorHold
 augroup coc_highlight
     autocmd!
     autocmd CursorHold * silent! call CocActionAsync('highlight')
 augroup END
 
-" [g and ]g to natigate diagnostics
-nmap [g <Plug>(coc-diagnostic-prev)
-nmap ]g <Plug>(coc-diagnostic-next)
+" rename current word
+nmap <leader>rn <Plug>(coc-rename)
 
-" remap keys for gotos
-nmap gd <Plug>(coc-definition)
-nmap gt <Plug>(coc-type-definition)
-nmap gi <Plug>(coc-implementation)
-nmap gr <Plug>(coc-references)
+" format selected code
+xmap <leader>f <Plug>(coc-format-selected)
+nmap <leader>f <Plug>(coc-format-selected)
+
+augroup coc_addi
+    autocmd!
+    " set formatexpr
+    autocmd FileType typescript,json setlocal formatexpr=CocAction('formatSelected')
+    " update signature help on jump placeholder
+    autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup END
 
 " do code action on selected region
 xmap <leader>a <Plug>(coc-codeaction-selected)
 nmap <leader>a <Plug>(coc-codeaction-selected)
 
-" rename current word
-nmap <leader>rn <Plug>(coc-rename)
-
-" do code action on current line
+" do code action on current buffer
 nmap <leader>ac <Plug>(coc-codeaction)
-
 " autofix current line
 nmap <leader>qf <Plug>(coc-fix-current)
 
-" mappings for function text object (requires document symbols feature on srever
+" mappings for function text object
 xmap if <Plug>(coc-funcobj-i)
-xmap af <Plug>(coc-funcobj-a)
 omap if <Plug>(coc-funcobj-i)
+xmap af <Plug>(coc-funcobj-a)
 omap af <Plug>(coc-funcobj-a)
+xmap ic <Plug>(coc-classobj-i)
+omap ic <Plug>(coc-classobj-i)
+xmap ac <Plug>(coc-classobj-a)
+omap ac <Plug>(coc-classobj-a)
 
-" use K to show doc in preview window
-nnoremap K :call <SID>show_documentation()<CR>
+" remap <c-f> and <c-b> to scroll floating windows/popups
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+    nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+    nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+    inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+    inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+    vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+    vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
 
-function! s:show_documentation()
-    if index(['vim', 'help'], &filetype) >= 0
-        execute 'h '.expand('<cword>')
-    else
-        call CocAction('doHover')
-    endif
-endfunction
+" use <C-s> for selection ranges
+nmap <silent> <C-s> <Plug>(coc-range-select)
+xmap <silent> <C-s> <Plug>(coc-range-select)
 
 " format current buffer
 command! -nargs=0 Format call CocAction('format')
