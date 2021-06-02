@@ -63,5 +63,3 @@
     amend  = commit --amend
     # one-line log
     lg = log --color=always --oneline --graph --date=short --pretty='format:%C(auto)%cd %h%d %s %C(magenta)[%an]%Creset'
-[init]
-	defaultBranch = develop
