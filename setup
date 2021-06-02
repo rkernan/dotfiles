@@ -110,14 +110,6 @@ for target in $targets; do
     install_rustup)
       install_rustup
       ;;
-    setup_brew_fzf)
-      fzf_install=$(brew --prefix)/opt/fzf/install
-      if [ -e $fzf_install ]; then
-        $fzf_install --no-update-rc --key-bindings --no-completion --no-bash --no-fish
-      else
-        "Is fzf installed via brew? $fzf_install not found."
-      fi
-      ;;
     work)
       stow work
       check_command fish >/dev/null 2>&1 && fish -c "set -Ux NO_UNICODE 1" || true
