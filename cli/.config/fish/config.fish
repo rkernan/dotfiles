@@ -1,6 +1,10 @@
 set -x GOPATH ~/Workspace/go
 
-set -g fish_user_paths ~/.local/bin ~/.linuxbrew/bin /home/linuxbrew/.linuxbrew/bin ~/.cargo/bin $GOPATH/bin $fish_user_paths
+fish_add_path $GOPATH/bin
+fish_add_path $HOME/.cargo/bin
+fish_add_path /home/linuxbrew/.linuxbrew/sbin
+fish_add_path /home/linuxbrew/.linuxbrew/bin
+fish_add_path $HOME/.local/bin
 
 if set -q AUTOSTART_TMUX
 and test $AUTOSTART_TMUX -gt 0

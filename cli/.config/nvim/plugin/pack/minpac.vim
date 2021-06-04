@@ -13,7 +13,7 @@ function! s:pack_init() abort
     " tmux seamless navigation
     call minpac#add('christoomey/vim-tmux-navigator')
     " fzf
-    call minpac#add('junegunn/fzf', {'do': {-> system('./install --all --no-update-rc')}})
+    call minpac#add('junegunn/fzf')
     call minpac#add('junegunn/fzf.vim')
     " other
     call minpac#add('cohama/lexima.vim')
