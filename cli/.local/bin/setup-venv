@@ -6,5 +6,5 @@ python=${2:-"python3"}
 mkdir -p ".vim"
 echo '{ "python.pythonPath": "./.venv/bin/python" }' > ".vim/coc-settings.json"
 $python -m venv ".venv"
-.venv/bin/python -m pip install jedi mypy pylint
+.venv/bin/python -m pip install jedi mypy pylint wheel
 .venv/bin/python -m pip install -r "$requirements"
