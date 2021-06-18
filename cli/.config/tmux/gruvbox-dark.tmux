@@ -22,6 +22,7 @@ set-option -g clock-mode-colour "colour109"
 set-option -g window-status-bell-style "bg=colour167,fg=colour235"
 # theme settings
 set-option -g status on
+set-option -g monitor-activity on
 set-option -g status-justify "left"
 set-option -g status-left-style none
 set-option -g status-left-length 80
@@ -30,5 +31,5 @@ set-option -g status-right-length 80
 set-window-option -g window-status-separator ""
 set-option -g status-left "#[bg=colour248,fg=colour237] #S "
 set-option -g status-right "#[bg=colour248,fg=colour237] #h "
-set-window-option -g window-status-current-format "#[bg=colour214,fg=colour239] #I#{?window_name,: ,}#[bold]#{?window_name,#{window_name},} "
-set-window-option -g window-status-format "#[bg=colour239,fg=colour223] #I#{?window_name,: ,}#[bold]#{?window_name,#{window_name},} "
+set-window-option -g window-status-current-format "#[bg=colour214,fg=colour239] #I#{?window_zoomed_flag,#[bold]+,}#[nobold]#{?window_name,: ,}#[bold]#{?window_name,#{window_name},} "
+set-window-option -g window-status-format "#[bg=colour239,fg=colour223]#{?window_activity_flag,#[bg=red],} #I#{?window_name,: ,}#[bold]#{?window_name,#{window_name},} "
