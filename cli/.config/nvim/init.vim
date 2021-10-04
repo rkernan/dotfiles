@@ -48,6 +48,9 @@ vnoremap y y`]
 vnoremap p p`]
 nnoremap p p`]
 
+" disable highlighting until the next search
+nnoremap <nowait><silent> noh :noh<CR>
+
 " execute macro over visual range
 function! s:execute_macro_over_visual_range()
     echo "@".getcmdline()
