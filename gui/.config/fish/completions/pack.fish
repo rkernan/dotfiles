@@ -4,7 +4,7 @@ set -l listinstalled "(pacman -Q | string replace ' ' \t)"
 set -l listall "(__fish_print_packages)"
 set -l listgroups "(pacman -Sg)\t'Package Group'"
 
-set -l noopt 'not __fish_seen_subcommand_from clean deptree diff downgrade download firmware-upgrade hardcode-tray info install list-deps list-explicit list-orphans lostfiles provides provides-what remove search search-local sync upgrade verify'
+set -l noopt 'not __fish_seen_subcommand_from clean deptree diff downgrade download hardcode-tray info install list-deps list-explicit list-orphans lostfiles provides provides-what remove search search-local sync upgrade upgrade-firmware upgrade-keyring verify'
 
 complete -c $progname -e
 complete -c $progname -f
@@ -14,7 +14,6 @@ complete -c $progname -n "$noopt" -f -a deptree -d "List dependency tree of a gi
 complete -c $progname -n "$noopt" -f -a diff -d "Clean up pacnew files"
 complete -c $progname -n "$noopt" -f -a downgrade -d "Downgrade a package"
 complete -c $progname -n "$noopt" -f -a download -d "Download a remote package"
-complete -c $progname -n "$noopt" -f -a firmware-upgrade -d "Upgrade the system firmware"
 complete -c $progname -n "$noopt" -f -a hardcode-tray -d "Apply icons using the hardcode-tray utility"
 complete -c $progname -n "$noopt" -f -a info -d "Show info for a package or packages"
 complete -c $progname -n "$noopt" -f -a install -d "Install a remote package"
@@ -29,6 +28,8 @@ complete -c $progname -n "$noopt" -f -a search -d "Search for the specified remo
 complete -c $progname -n "$noopt" -f -a search-local -d "Search for the specified local package or list all local packages if none are specified"
 complete -c $progname -n "$noopt" -f -a sync -d "Sync the package file database"
 complete -c $progname -n "$noopt" -f -a upgrade -d "Update the specified packages or all packages if none are specified"
+complete -c $progname -n "$noopt" -f -a upgrade-firmware -d "Update the system firmware"
+complete -c $progname -n "$noopt" -f -a upgrade-keyring -d "Update the pacman keyring"
 complete -c $progname -n "$noopt" -f -a verify -d "Validate the specified packages or all packages if none are specified"
 
 complete -c $progname -n "__fish_seen_subcommand_from deptree downgrade remove search-local upgrade verify" -d 'Installed package' -xa "$listinstalled"

@@ -21,7 +21,6 @@ usage() {
   echo "  diff                : Clean up pacnew files"
   echo "  downgrade           : Downgrade a package"
   echo "  download            : Download a remote package"
-  echo "  firmware-upgrade    : Upgrade the system firmware"
   echo "  hardcode-tray       : Apply icons using the hardcode-tray utility"
   echo "  info                : Show info for a package or packages"
   echo "  install             : Install a remote package"
@@ -36,6 +35,8 @@ usage() {
   echo "  search-local        : Search for the specified local package or list all local packages if none are specified"
   echo "  sync                : Sync the package file database"
   echo "  upgrade             : Update the specified packages or all packages if none are specified"
+  echo "  upgrade-firmware    : Update the system firmware"
+  echo "  upgrade-keyring     : Update the pacman keyring"
   echo "  verify              : Validate the specified packages or all packages if none are specified"
 }
 
@@ -64,12 +65,6 @@ case $CMD in
     ;;
   download)
     exec $SU_BIN -Sw $*
-    ;;
-  firmware-upgrade)
-    no_params_or_die $*
-    $(which fwupdmgr) refresh --force
-    $(which fwupdmgr) get-updates
-    $(which fwupdmgr) update
     ;;
   hardcode-tray)
     exec sudo -E hardcode-tray --apply
@@ -117,6 +112,16 @@ case $CMD in
     ;;
   upgrade)
     exec $SU_BIN -Syyu $*
+    ;;
+  upgrade-firmware)
+    no_params_or_die $*
+    $(which fwupdmgr) refresh --force
+    $(which fwupdmgr) get-updates
+    $(which fwupdmgr) update
+    ;;
+  upgrade-keyring)
+    no_params_or_die $*
+    exec $SU_BIN -Syyu archlinux-keyring
     ;;
   verify)
     exec $BIN -Qkk $*
