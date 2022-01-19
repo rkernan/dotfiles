@@ -1,68 +1,74 @@
 [include]
-    # local/private config
-    path = ~/.config/git/secure
+  # local/private config
+  path = ~/.config/git/secure
 
 [user]
-    name = Robert Kernan
+  name = Robert Kernan
 
 [core]
-    editor = $EDITOR
-    excludefiles = ~/.config/git/ignore
+  editor = $EDITOR
+  excludefiles = ~/.config/git/ignore
 
 [branch]
-    autosetuprebase = always
+  autosetuprebase = always
 
 [color]
-    branch = auto
-    diff = auto
-    status = auto
-    showbranch = auto
-    ui = auto
+  branch = auto
+  diff = auto
+  status = auto
+  showbranch = auto
+  ui = auto
 
 [color "status"]
-    added = green
-    changed = yellow
-    untracked = red
+  added = green
+  changed = yellow
+  untracked = red
 
 [merge]
-    tool = nvim.fugitive
+  tool = nvim.fugitive
 
 [mergetool "nvim.fugitive"]
-    cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
+  cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 
 [pull]
-    rebase = true
+  rebase = true
 
 [push]
-    default = simple
+  default = simple
 
 [rerere]
-    enabled = 1
+  enabled = 1
 
 [status]
-    short = true
-    showUntrackedFiles = all
+  short = true
+  showUntrackedFiles = all
 
 [alias]
-    # stage changes
-    a  = add
-    aa = add --all
-    ap = add --patch
-    # unstage changes
-    unstage = restore --staged
-    # checkout
-    co  = checkout
-    cob = checkout -b
-    # commit
-    ci = commit
-    # unwind previous commit
-    unwind = reset --soft HEAD^
-    # scrap previous commit
-    scrap  = reset --hard HEAD^
-    # amend previous commit
-    amend  = commit --amend
-    # one-line log
-    lg = log --color=always --oneline --graph --date=short --pretty='format:%C(auto)%cd %h%d %s %C(magenta)[%an]%Creset'
+  # stage changes
+  a  = add
+  aa = add --all
+  ap = add --patch
+  # unstage changes
+  unstage = restore --staged
+  # checkout
+  co  = checkout
+  cob = checkout -b
+  # commit
+  ci = commit
+  # unwind previous commit
+  unwind = reset --soft HEAD^
+  # scrap previous commit
+  scrap  = reset --hard HEAD^
+  # amend previous commit
+  amend  = commit --amend
+  # one-line log
+  lg = log --color=always --oneline --graph --date=short --pretty='format:%C(auto)%cd %h%d %s %C(magenta)[%an]%Creset'
 
 [init]
 	defaultBranch = develop
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
