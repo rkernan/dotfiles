@@ -1,4 +1,4 @@
-function __git_fzf_git_tag -d "Fuzzy select git tags"
+function __fzf_git_tag -d "Fuzzy select git tags"
     if ! __fish_is_git_repository
         return
     end

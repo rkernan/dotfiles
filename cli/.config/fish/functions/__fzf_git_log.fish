@@ -1,4 +1,4 @@
-function __git_fzf_git_log -d "Fuzzy select git commits"
+function __fzf_git_log -d "Fuzzy select git commits"
     if ! __fish_is_git_repository
         return
     end

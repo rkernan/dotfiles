@@ -1,4 +1,4 @@
-function __git_fzf_git_status -d "Fuzzy select git unstaged and untracked changes"
+function __fzf_git_status -d "Fuzzy select git unstaged and untracked changes"
     if ! __fish_is_git_repository
         return
     end

@@ -1,4 +1,4 @@
-function __hosts_fzf -d "Fuzzy select hosts"
+function __fzf_hosts -d "Fuzzy select hosts"
 	set -l res (cat ~/.hosts | grep -v "^#" | column -t | fzf | awk '{print $1}')
 
 	if test -z "$res"

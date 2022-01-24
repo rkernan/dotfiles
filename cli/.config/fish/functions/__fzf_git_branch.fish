@@ -1,4 +1,4 @@
-function __git_fzf_git_branch -d "Fuzzy select git branch"
+function __fzf_git_branch -d "Fuzzy select git branch"
     if ! __fish_is_git_repository
         return
     end
