@@ -37,7 +37,7 @@ guess_target() {
 }
 
 install_brew() {
-  if ! check_command brew >/dev/null 2>&1; then
+  if ! check_command brew &> /dev/null; then
     curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s
   else
     brew update
@@ -63,11 +63,11 @@ setup_minpac() {
 
 setup_gpg_agent() {
   mkdir -p "${HOME}/.config/systemd/user"
-  pushd "${HOME}/.config/systemd/user" >/dev/null
+  pushd "${HOME}/.config/systemd/user" > /dev/null
   cp -f /usr/share/doc/gnupg/examples/systemd-user/* .
   systemctl --user daemon-reload
   systemctl --user enable *.socket
-  popd >/dev/null
+  popd > /dev/null
 }
 
 readonly targets=${*:-$(guess_target)}
@@ -112,10 +112,10 @@ for target in $targets; do
       ;;
     work)
       stow work
-      check_command fish >/dev/null 2>&1 && fish -c "set -Ux NO_UNICODE 1" || true
+      check_command fish &> /dev/null && fish -c "set -Ux NO_UNICODE 1" || true
       ;;
     wsl)
-      check_command fish >/dev/null 2>&1 && fish -c "set -Ux AUTOSTART_TMUX 1" || true
+      check_command fish &> /dev/null && fish -c "set -Ux AUTOSTART_TMUX 1" || true
       ;;
     *)
       (>&2 echo "Unknown target $target")
