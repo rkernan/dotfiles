@@ -52,6 +52,19 @@ install_rustup() {
   fi
 }
 
+setup_brew_fzf() {
+  if ! check_command brew &> /dev/null; then
+    (>&2 echo "Brew isn't installed!")
+    exit 1
+  fi
+
+  local installer=$(brew --prefix)/opt/fzf/install
+  if ! -e $installer; then
+    (>&2 echo "FZF installer not found!")
+  fi
+  $installer --key-bindings --completion --no-update-rc --xdg
+}
+
 setup_minpac() {
   # install minpac
   local minpac_dir="${HOME}/.config/nvim/pack/minpac/opt/minpac"
@@ -109,6 +122,9 @@ for target in $targets; do
       ;;
     install_rustup)
       install_rustup
+      ;;
+    setup_brew_fzf)
+      setup_brew_fzf
       ;;
     work)
       stow work
