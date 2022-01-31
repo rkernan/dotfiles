@@ -93,21 +93,22 @@ for target in $targets; do
   case $target in
     checkhealth)
       # commands
-      check_command brew   || true
-      check_command cargo  || true
-      check_command clangd || true # coc-clangd
-      check_command ctags  || true # coc-fzf (uses for outline)
-      check_command fish   || true
-      check_command fzf    || true
-      check_command go     || true
-      check_command npm    || true
-      check_command nvim   || true
-      check_command rg     || true
-      check_command rls    || true # coc-rls
-      check_command rustup || true
-      check_command stow   || true
-      check_command texlab || true # coc-texlab
-      check_command tmux   || true
+      check_command brew    || true
+      check_command cargo   || true
+      check_command clangd  || true # coc-clangd
+      check_command ctags   || true # coc-fzf (uses for outline)
+      check_command fish    || true
+      check_command fzf     || true
+      check_command git-lfs || true
+      check_command go      || true
+      check_command npm     || true
+      check_command nvim    || true
+      check_command rg      || true
+      check_command rls     || true # coc-rls
+      check_command rustup  || true
+      check_command stow    || true
+      check_command texlab  || true # coc-texlab
+      check_command tmux    || true
       ;;
     cli)
       stow cli
