@@ -27,6 +27,12 @@
   changed = yellow
   untracked = red
 
+[log]
+  date = short
+
+[format]
+  pretty = format:%C(yellow)%h %C(bold blue)%cd %C(bold magenta)%G? %C(bold green)%aN%C(bold red)%d %C(reset)%s
+
 [merge]
   tool = nvim.fugitive
 
@@ -64,8 +70,6 @@
   scrap  = reset --hard HEAD^
   # amend previous commit
   amend  = commit --amend
-  # one-line log
-  lg = log --color=always --oneline --graph --date=short --pretty='format:%C(auto)%cd %h%d %s %C(magenta)[%an]%Creset'
 
 [init]
 	defaultBranch = develop
