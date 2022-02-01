@@ -25,17 +25,22 @@ set -x PAGER less
 # export environment - we're not the only one that needs this
 set -q NO_UNICODE || set -x NO_UNICODE 0
 
+# setup unicode characters for fzf display
 if test $NO_UNICODE -gt 0
     set -x FZF_DEFAULT_OPTS "--layout=reverse --prompt='> ' --pointer='>' --marker='>'"
 else
     set -x FZF_DEFAULT_OPTS "--layout=reverse --prompt='❯ ' --pointer='❯' --marker='❯'"
 end
 
+# use ripgrep if it's installed
 if type -q rg
-    set -x FZF_DEFAULT_COMMAND "rg --files --no-ignore --hidden --follow"
+    set -x FZF_DEFAULT_COMMAND "rg --files --no-ignore --hidden --follow \$dir"
 else
-    set -x FZF_DEFAULT_COMMAND "find -L . -type f"
+    set -x FZF_DEFAULT_COMMAND "find -L \$dir -type f"
 end
+
+# use default command for ctrl+t
+set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 
 abbr e $EDITOR
 abbr p $PAGER
