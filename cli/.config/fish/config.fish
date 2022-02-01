@@ -10,7 +10,7 @@ if set -q AUTOSTART_TMUX
 and test $AUTOSTART_TMUX -gt 0
 and type -q tmux
 and status is-interactive
-and not set -q TMUX
+and test -z "$TMUX"
     set --local session 0
 
     if not tmux has-session -t $session
