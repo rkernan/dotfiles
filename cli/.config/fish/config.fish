@@ -44,7 +44,7 @@ set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 
 # preview files bat if it's installed
 if type -q bat
-    set -x FZF_CTRL_T_OPTS ' --no-height --preview="bat --style=numbers --color=always {}"'
+    set -x FZF_CTRL_T_OPTS ' --no-height --preview="bat --style=numbers --color=always --line-range :500 {}"'
 else
     set -x FZF_CTRL_T_OPTS ' --no-height'
 end
