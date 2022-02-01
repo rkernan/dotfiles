@@ -32,9 +32,9 @@ else
     set -x FZF_DEFAULT_OPTS "--layout=reverse --prompt='❯ ' --pointer='❯' --marker='❯'"
 end
 
-# use ripgrep if it's installed
-if type -q rg
-    set -x FZF_DEFAULT_COMMAND "rg --files --no-ignore --hidden --follow \$dir"
+# use fd if it's installed
+if type -q fd
+    set -x FZF_DEFAULT_COMMAND "fd --type f --hidden --follow --exclude .git \$dir"
 else
     set -x FZF_DEFAULT_COMMAND "find -L \$dir -type f"
 end
