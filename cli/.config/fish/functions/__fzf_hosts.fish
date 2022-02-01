@@ -1,10 +1,12 @@
 function __fzf_hosts -d "Fuzzy select hosts"
-	set -l res (cat ~/.hosts | grep -v "^#" | column -t | fzf | awk '{print $1}')
+	set -l fzf_hosts_file ~/.hosts
+	set -l fzf_hosts_command "cat $fzf_hosts_file 2> /dev/null | grep -v '^#' | column -t"
 
-	if test -z "$res"
-		return 1
-	end
+	eval $fzf_hosts_command | eval (__fzfcmd)' -m' | awk '{print $1}' |
+		while read -l r
+			set result $result (string escape $r)
+		end
 
-	commandline -i -- (printf '%s' $res)
+	commandline -it -- (string join ' ' $result)
 	commandline -f repaint
 end

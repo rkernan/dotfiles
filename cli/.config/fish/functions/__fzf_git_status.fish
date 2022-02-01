@@ -3,19 +3,14 @@ function __fzf_git_status -d "Fuzzy select git unstaged and untracked changes"
         return
     end
 
-    set -l preview
-    if __fzf_show_preview
-        set preview "git diff HEAD -- {-1} | head -"(__fzf_preview_height)
-    end
+    set -l fzf_git_status_command 'git -c color.status=always status --short'
+    set -l fzf_preview 'git diff --color HEAD -- {-1}'
 
-    set -l res (git -c color.status=always status --short | \
-                fzf -m --ansi --preview "$preview" | \
-                awk '{print $2}')
+    eval $fzf_git_status_command | eval (__fzfcmd_with_preview $fzf_preview)' -m --ansi' | awk '{print $2}' |
+        while read -l r
+            set result $result (string escape $r)
+        end
 
-    if test -z "$res"
-        return 1
-    end
-
-    commandline -i -- (printf '%s ' (string join ' ' $res))
+    commandline -it -- (string join ' ' $result)
     commandline -f repaint
 end

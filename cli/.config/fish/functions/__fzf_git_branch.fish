@@ -3,22 +3,15 @@ function __fzf_git_branch -d "Fuzzy select git branch"
         return
     end
 
-    set -l preview
-    if __fzf_show_preview
-        set preview "git log --oneline --graph --date=short --pretty='format:%cd %h%d %s [%an]t' (echo {} | sed s/^..// | cut -d' ' -f1) | head -"(__fzf_preview_height)
-    end
+    set -l fzf_query (__fzf_parse_commandline)[2]
+    set -l fzf_git_branch_command 'git branch --format "%(refname:short)"'
+    set -l fzf_preview 'git log --color --all --graph --oneline {} 2> /dev/null'
 
-    set -l res (git branch -a | \
-                grep -v '/HEAD\s' | \
-                fzf -m --ansi --preview "$preview" | \
-                sed 's/^..//' | \
-                cut -d' ' -f1 | \
-                sed 's#^remotes/##')
+    eval $fzf_git_branch_command | eval (__fzfcmd_with_preview $fzf_preview)' -m --query="'$fzf_query'"' | 
+        while read -l r
+            set result $result (string escape $r)
+        end
 
-    if test -z "$res"
-        return 1
-    end
-
-    commandline -i -- (printf '%s ' (string join ' ' $res))
+    commandline -it -- (string join ' ' $result)
     commandline -f repaint
 end

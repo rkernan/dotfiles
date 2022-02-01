@@ -1,20 +1,14 @@
 function __fzf_git_tag -d "Fuzzy select git tags"
-    if ! __fish_is_git_repository
-        return
-    end
+    __fish_is_git_repository; or return
 
-    set -l preview
-    if __fzf_show_preview
-        set preview "git show {} | head -"(__fzf_preview_height)
-    end
+    set -l fzf_git_tag_command 'git tag --sort -version:refname'
+    set -l fzf_preview 'git show --color {}'
 
-    set -l res (git tag --sort -version:refname | \
-                fzf -m --ansi --preview "$preview")
+    eval $fzf_git_tag_command | eval (__fzfcmd_with_preview $fzf_preview)' -m' |
+        while read -l r
+            set result $result (string escape $r)
+        end
 
-    if test -z "$res"
-        return 1
-    end
-
-    commandline -i -- (printf '%s ' (string join ' ' $res))
+    commandline -it -- (string join ' ' $result)
     commandline -f repaint
 end

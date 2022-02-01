@@ -3,19 +3,14 @@ function __fzf_git_log -d "Fuzzy select git commits"
         return
     end
 
-    set -l preview
-    if __fzf_show_preview
-        set preview "git show (echo {} | grep -o '[a-f0-9]\{7,\}' | head -1) | head -"(__fzf_preview_height)
-    end
+    set -l fzf_git_log_command 'git log --color --oneline'
+    set -l fzf_preview 'git show --color {1}'
 
-    set -l res (git log --color=always --graph --date=short --format="%C(auto)%cd %h%d %s %C(magenta)[%an]%Creset" | \
-                fzf -m --ansi --preview "$preview" | \
-                sed -E 's/.*([a-f0-9]{7,}).*/\1/')
+    eval $fzf_git_log_command | eval (__fzfcmd_with_preview $fzf_preview)' -m --ansi' | awk '{print $1}' |
+        while read -l r
+            set result $result (string escape $r)
+        end
 
-    if test -z "$res"
-        return 1
-    end
-
-    commandline -i -- (printf '%s ' (string join ' ' $res))
+    commandline -it -- (string join ' ' $result)
     commandline -f repaint
 end
