@@ -93,6 +93,7 @@ for target in $targets; do
   case $target in
     checkhealth)
       # commands
+      check_command bat     || true
       check_command brew    || true
       check_command cargo   || true
       check_command clangd  || true # coc-clangd
