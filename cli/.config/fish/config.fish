@@ -16,21 +16,21 @@ set -q NO_UNICODE || set -x NO_UNICODE 0
 
 # setup unicode characters for fzf display
 if test $NO_UNICODE -gt 0
-    set fzf_prompt  '> '
-    set fzf_pointer '>'
-    set fzf_marker  '>'
+  set fzf_prompt  '> '
+  set fzf_pointer '>'
+  set fzf_marker  '>'
 else
-    set fzf_prompt  '❯ '
-    set fzf_pointer '❯'
-    set fzf_marker  '❯'
+  set fzf_prompt  '❯ '
+  set fzf_pointer '❯'
+  set fzf_marker  '❯'
 end
 set -x FZF_DEFAULT_OPTS "--cycle --layout=reverse --border --height=90% --prompt='$fzf_prompt' --pointer='$fzf_pointer' --marker='$fzf_marker'"
 
 # use fd if it's installed
 if type -q fd
-    set -x FZF_DEFAULT_COMMAND "fd --type f --hidden --strip-cwd-prefix \$dir"
+  set -x FZF_DEFAULT_COMMAND "fd --type f --hidden --follow --strip-cwd-prefix \$dir"
 else
-    set -x FZF_DEFAULT_COMMAND "find -L \$dir -type f"
+  set -x FZF_DEFAULT_COMMAND "find -L \$dir -type f"
 end
 
 # use default command for ctrl+t
@@ -38,9 +38,9 @@ set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 
 # preview files bat if it's installed
 if type -q bat
-    set -x FZF_CTRL_T_OPTS ' --preview="bat --style=numbers --color=always --line-range :500 {}"'
+  set -x FZF_CTRL_T_OPTS ' --preview="bat --style=numbers --color=always --line-range :500 {}"'
 else
-    set -x FZF_CTRL_T_OPTS ' --preview="head -500 {}"'
+  set -x FZF_CTRL_T_OPTS ' --preview="head -500 {}"'
 end
 
 abbr e $EDITOR
