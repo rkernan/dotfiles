@@ -12,9 +12,6 @@
 [credential]
 	helper = cache --timeout=3600
 
-[branch]
-  autosetuprebase = always
-
 [color]
   branch = auto
   diff = auto
@@ -27,17 +24,18 @@
   changed = yellow
   untracked = red
 
+[status]
+  short = true
+  showUntrackedFiles = all
+
 [log]
   date = short
 
 [format]
   pretty = format:%C(yellow)%h %C(blue)%cd %C(magenta)%G? %C(green)%aN%C(red)%d %C(reset)%s
 
-[merge]
-  tool = nvim.fugitive
-
-[mergetool "nvim.fugitive"]
-  cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
+[fetch]
+	prune = true
 
 [pull]
   rebase = true
@@ -48,9 +46,14 @@
 [rerere]
   enabled = 1
 
-[status]
-  short = true
-  showUntrackedFiles = all
+[branch]
+  autosetuprebase = always
+
+[merge]
+  tool = nvim.fugitive
+
+[mergetool "nvim.fugitive"]
+  cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
 
 [alias]
   # stage changes
