@@ -33,15 +33,8 @@ else
   set -x FZF_DEFAULT_COMMAND "find -L \$dir -type f"
 end
 
-# use default command for ctrl+t
 set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
-
-# preview files bat if it's installed
-if type -q bat
-  set -x FZF_CTRL_T_OPTS ' --preview="bat --style=numbers --color=always --line-range :500 {}"'
-else
-  set -x FZF_CTRL_T_OPTS ' --preview="head -500 {}"'
-end
+set -x FZF_CTRL_T_OPTS "--preview='_fzf_file_preview {}'"
 
 abbr e $EDITOR
 abbr p $PAGER
