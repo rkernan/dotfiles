@@ -8,33 +8,57 @@ fish_add_path $HOME/.local/bin
 
 _autostart_tmux
 
-set -x EDITOR nvim
-set -x PAGER less
-
-# export environment - we're not the only one that needs this
 set -q NO_UNICODE || set -x NO_UNICODE 0
 
-# setup unicode characters for fzf display
-if test $NO_UNICODE -gt 0
-  set fzf_prompt  '> '
-  set fzf_pointer '>'
-  set fzf_marker  '>'
-else
-  set fzf_prompt  '❯ '
-  set fzf_pointer '❯'
-  set fzf_marker  '❯'
-end
-set -x FZF_DEFAULT_OPTS "--cycle --layout=reverse --border --height=90% --prompt='$fzf_prompt' --pointer='$fzf_pointer' --marker='$fzf_marker'"
+set -g __fish_git_prompt_show_informative_status 1
+set -g __fish_git_prompt_color_branch magenta --bold
+set -g __fish_git_prompt_showupstream "informative"
+set -g __fish_git_prompt_char_upstream_prefix ""
+set -g __fish_git_prompt_color_cleanstate green --bold
+set -g __fish_git_prompt_color_stagedstate green
+set -g __fish_git_prompt_color_dirtystate yellow
+set -g __fish_git_prompt_color_invalidstate red
+set -g __fish_git_prompt_color_untrackedfiles red
 
-# use fd if it's installed
-if type -q fd
-  set -x FZF_DEFAULT_COMMAND "fd --type f --hidden --follow --strip-cwd-prefix \$dir"
+if set -q NO_UNICODE; and test $NO_UNICODE -gt 0
+  set -g __fish_git_prompt_char_upstream_ahead "↑"
+  set -g __fish_git_prompt_char_upstream_behind "↓"
+  set -g __fish_git_prompt_char_cleanstate "!"
+  set -g __fish_git_prompt_char_stagedstate "+"
+  set -g __fish_git_prompt_char_dirtystate "+"
+  set -g __fish_git_prompt_char_invalidstate "x"
+  set -g __fish_git_prompt_char_untrackedfiles "??"
+
+  set -g __fish_vi_prompt_default_suffix "<"
+  set -g __fish_vi_prompt_insert_suffix ">"
+  set -g __fish_vi_prompt_replace_one_suffix "<"
+  set -g __fish_vi_prompt_replace_suffix "<"
+  set -g __fish_vi_prompt_visual_suffix "<"
 else
-  set -x FZF_DEFAULT_COMMAND "find -L \$dir -type f"
+  set -g __fish_git_prompt_char_upstream_ahead "↑"
+  set -g __fish_git_prompt_char_upstream_behind "↓"
+  set -g __fish_git_prompt_char_cleanstate "✓"
+  set -g __fish_git_prompt_char_stagedstate "·"
+  set -g __fish_git_prompt_char_dirtystate "+"
+  set -g __fish_git_prompt_char_invalidstate "⨯"
+  set -g __fish_git_prompt_char_untrackedfiles "…"
+
+  set -g __fish_vi_prompt_default_suffix "❮"
+  set -g __fish_vi_prompt_insert_suffix "❯"
+  set -g __fish_vi_prompt_replace_one_suffix "❮"
+  set -g __fish_vi_prompt_replace_suffix "❮"
+  set -g __fish_vi_prompt_visual_suffix "❮"
 end
 
+set -x FZF_DEFAULT_OPTS "--cycle --layout=reverse --border --height=90% --prompt='$__fish_vi_prompt_insert_suffix ' --pointer='$__fish_vi_prompt_insert_suffix' --marker='$__fish_vi_prompt_insert_suffix'"
+
+set -x FZF_DEFAULT_COMMAND "_fzf_list_files \$dir"
 set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -x FZF_CTRL_T_OPTS "--preview='_fzf_file_preview {}'"
+set -x FZF_ALT_C_COMMAND "_fzf_list_dirs \$dir"
+
+set -x EDITOR nvim
+set -x PAGER less
 
 abbr e $EDITOR
 abbr p $PAGER
