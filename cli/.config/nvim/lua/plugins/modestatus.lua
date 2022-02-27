@@ -1,20 +1,24 @@
-let g:modestatus#statusline = [
-    \  ['mode'],
-    \  ['fugitive_branch', 'signify_added', 'signify_modified', 'signify_removed'],
-    \  'filename', 'modified', 'readonly',
-    \  '%<', '%=',
-    \  ['coc_errors'], ['coc_warnings'],
-    \  'filetype', 'encoding', 'bomb', 'fileformat',
-    \  ['line', 'column', 'line_percent']
-    \ ]
-let g:modestatus#statusline_override_fugitiveblame = ['filetype', '%=', ['line', 'line_max', 'line_percent']]
-let g:modestatus#statusline_override_qf = [['mode'], 'buftype', 'filetype', '%=', ['line', 'line_max', 'line_percent']]
+vim.g['modestatus#statusline'] = {
+  { 'mode' },
+  { 'fugitive_branch', 'signify_added', 'signify_modified', 'signify_removed' },
+  'filename', 'modified', 'readonly',
+  '%<', '%=',
+  { 'coc_errors', 'coc_warnings' },
+  'filetype', 'encoding', 'bomb', 'fileformat',
+  { 'line', 'column', 'line_percent' }}
+vim.g['modestatus#statusline_override_fugitiveblame'] = {
+  'filetype', '%=',
+  { 'line', 'line_max', 'line_percent'}}
+vim.g['modestatus#statusline_override_qf'] = {
+  { 'mode' },
+  'buftype', 'filetype', '%=',
+  { 'line', 'line_max', 'line_percent' }}
 
-" overrides
+vim.cmd([[
 augroup modestatus_custom
-    autocmd!
-    autocmd FileType fugitiveblame silent! call modestatus#setlocal('fugitiveblame')
-    autocmd FileType qf silent! call modestatus#setlocal('qf')
+  autocmd!
+  autocmd FileType fugitiveblame silent! call modestatus#setlocal('fugitiveblame')
+  autocmd FileType qf silent! call modestatus#setlocal('qf')
 augroup END
 
 silent! call modestatus#options#add('mode', 'color', 'ModestatusMode')
@@ -45,3 +49,4 @@ silent! call modestatus#options#add('line_percent', 'color', ['Modestatus2', 'Mo
 
 silent! call modestatus#options#add('coc_errors', 'color', ['ModestatusCocError', 'ModestatusCocError'])
 silent! call modestatus#options#add('coc_warnings', 'color', ['ModestatusCocWarning', 'ModestatusCocWarning'])
+]])

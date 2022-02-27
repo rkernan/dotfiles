@@ -83,3 +83,4 @@ augroup END
 ]])
 
 require('tabs')
+require('plugins')
