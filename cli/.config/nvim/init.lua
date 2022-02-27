@@ -62,15 +62,22 @@ vim.api.nvim_set_keymap('n', 'p', 'p`]', {['noremap'] = true})
 -- disable highlighting until the next search
 vim.api.nvim_set_keymap('n', 'noh', ':noh<CR>', {['noremap'] = true, ['nowait'] = true, ['silent'] = true})
 
-local u = require('util')
+-- resize windows automatically
+vim.cmd([[
+	augroup vimrc_resize_windows
+		autocmd!
+		autocmd VimResized * wincmd =
+	augroup END
+]])
 
-u.create_augroup({
-		-- auto-switch to/from relative line numbers based on mode
-		{'InsertLeave', '*', 'setlocal', 'relativenumber'},
-		{'InsertEnter', '*', 'setlocal', 'norelativenumber'},
-		-- auto-switch to/from relative line numbers based on window focus
-		{'BufEnter,FocusGained', '*', 'setlocal', 'relativenumber', 'cursorline'},
-		{'BufLeave,FocusLost', '*', 'setlocal', 'norelativenumber', 'nocursorline'},
-		-- resize windows automatically
-		{'VimResized', '*', 'wincmd', '='}
-	}, 'vimrc')
+-- auto-switch to/from relative line numbers based on mode and window focus
+-- FIXME doesn't work with fzf
+vim.cmd([[
+	augroup vimrc_switch_line_numbers
+		autocmd!
+		autocmd InsertLeave * setlocal relativenumber
+		autocmd InsertEnter * setlocal norelativenumber
+		autocmd BufEnter,FocusGained * setlocal relativenumber cursorline
+		autocmd BufLeave,FocusLost * setlocal norelativenumber nocursorline
+	augroup END
+]])
