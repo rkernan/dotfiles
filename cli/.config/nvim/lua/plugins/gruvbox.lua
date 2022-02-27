@@ -1,3 +1,5 @@
+vim.cmd([[ colorscheme gruvbox ]])
+vim.cmd([[
 function! s:get_gruvbox_color(group)
   let gui_color = synIDattr(hlID(a:group), 'fg', 'gui')
   let term_color = synIDattr(hlID(a:group), 'fg', 'cterm')
@@ -90,3 +92,4 @@ silent! call s:hl('CocErrorFloat',   s:red,    s:float_bg, 'none')
 silent! call s:hl('CocWarningFloat', s:yellow, s:float_bg, 'none')
 silent! call s:hl('CocInfoFloat',    s:white,  s:float_bg, 'none')
 silent! call s:hl('CocHintFloat',    s:blue,   s:float_bg, 'none')
+]])
