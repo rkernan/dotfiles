@@ -1,9 +1,14 @@
+local no_unicode = tonumber(os.getenv('NO_UNICODE'))
+
+-- enable 24-bit colors
+if no_unicode == 0 then vim.o.termguicolors = true end
+-- enable undo file
 vim.o.undofile = true
 -- ignorecase unless pattern contains uppercase letters
 vim.o.ignorecase = true
 vim.o.smartcase = true
 -- unicode hidden characters
-vim.o.listchars = 'eol:¬,tab:» ,trail:·'
+if no_unicode == 0 then vim.o.listchars = 'eol:¬,tab:» ,trail:·' end
 -- complete longest common string, then list alternatives
 vim.o.wildmode = 'longest:full,full'
 -- keep 1 line above and below cursor on screen
