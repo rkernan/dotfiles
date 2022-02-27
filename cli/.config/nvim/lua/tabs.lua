@@ -1,9 +1,5 @@
-if exists('g:loaded_tabs')
-  finish
-endif
-let g:loaded_tabs = 1
-
-function! tabs#set()
+vim.cmd([[
+function! TabsSet()
   echohl Question
   let l:tabstop = 1 * input('setlocal tabstop = softtabstop = shiftwidth = ')
   let l:et = input('setlocal expandtab [y/N] ')
@@ -20,14 +16,15 @@ function! tabs#set()
   end
   echo
   echo "\r"
-  call tabs#summarize()
+  call TabsSummarize()
 endfunction
 
-function! tabs#summarize()
+function! TabsSummarize()
   try
     echomsg 'tabstop=' . &l:ts . ' softtabstop=' . &l:sts . ' shiftwidth=' . &l:sw . ' ' . ((&l:et) ? 'expandtab' : 'noexpandtab')
   endtry
 endfunction
 
-command! -nargs=0 SetTabs call tabs#set()
-command! -nargs=0 SummarizeTabs call tabs#summarize()
+command! -nargs=0 SetTabs call TabsSet()
+command! -nargs=0 SummarizeTabs call TabsSummarize()
+]])

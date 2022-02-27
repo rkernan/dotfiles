@@ -81,3 +81,5 @@ augroup vimrc_switch_line_numbers
   autocmd BufLeave,FocusLost * setlocal norelativenumber nocursorline
 augroup END
 ]])
+
+require('tabs')
