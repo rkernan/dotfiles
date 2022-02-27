@@ -39,7 +39,10 @@ return packer.startup(function(use)
   use 'wellle/targets.vim'
   -- vcs integration
   -- FIXME signify alternative?
-  use 'mhinz/vim-signify'
+  use {
+    'mhinz/vim-signify',
+    config = function() require('plugins.signify') end
+  }
   use 'tpope/vim-fugitive'
   -- tmux seamless navigation
   use {
