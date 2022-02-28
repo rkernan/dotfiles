@@ -1,30 +1,27 @@
-vim.cmd([[
-function! TabsSet()
-  echohl Question
-  let l:tabstop = 1 * input('setlocal tabstop = softtabstop = shiftwidth = ')
-  let l:et = input('setlocal expandtab [y/N] ')
-  echohl None
-  if l:tabstop > 0
-    let &l:ts = l:tabstop
-    let &l:sts = l:tabstop
-    let &l:sw = l:tabstop
-  endif
-  if l:et == "y"
-    setlocal expandtab
-  else
-    setlocal noexpandtab
-  end
-  echo
-  echo "\r"
-  call TabsSummarize()
-endfunction
+local M = {}
 
-function! TabsSummarize()
-  try
-    echomsg 'tabstop=' . &l:ts . ' softtabstop=' . &l:sts . ' shiftwidth=' . &l:sw . ' ' . ((&l:et) ? 'expandtab' : 'noexpandtab')
-  endtry
-endfunction
+function M.summarize_tabs()
+  vim.notify('tabstop = ' .. vim.bo.tabstop)
+  if vim.bo.softtabstop > 0 then vim.notify('softtabstop = ' .. vim.bo.softtabstop) end
+  if vim.bo.shiftwidth > 0 then vim.notify('shiftwidth = ' .. vim.bo.shiftwidth) end
+  vim.notify('expandtab = ' .. tostring(vim.bo.expandtab))
+end
 
-command! -nargs=0 SetTabs call TabsSet()
-command! -nargs=0 SummarizeTabs call TabsSummarize()
-]])
+function M.set_tabs()
+  -- set tabs
+  vim.bo.tabstop = tonumber(vim.fn.input('tabstop = softtabstop = shiftwidth = '))
+  vim.notify('\n\r')
+  vim.bo.softtabstop = 0
+  vim.bo.shiftwidth = 0
+  -- set expandtab
+  vim.bo.expandtab = (vim.fn.input('expandtab = [y/N] ') == 'y')
+  vim.notify('\n\r')
+  -- print summary
+  M.summarize_tabs()
+end
+
+-- register vim commands
+vim.cmd([[ command! -nargs=0 SummarizeTabs lua require('tabs').summarize_tabs() ]])
+vim.cmd([[ command! -nargs=0 SetTabs lua require('tabs').set_tabs() ]])
+
+return M

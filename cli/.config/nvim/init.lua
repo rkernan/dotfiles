@@ -7,6 +7,8 @@ vim.o.undofile = true
 -- ignorecase unless pattern contains uppercase letters
 vim.o.ignorecase = true
 vim.o.smartcase = true
+-- use tabstop value for shiftwidth
+vim.o.shiftwidth = 0
 -- unicode hidden characters
 if no_unicode == 0 then vim.o.listchars = 'eol:¬,tab:» ,trail:·' end
 -- complete longest common string, then list alternatives
