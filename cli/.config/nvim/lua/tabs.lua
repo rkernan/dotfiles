@@ -2,8 +2,8 @@ local M = {}
 
 function M.summarize_tabs()
   vim.notify('tabstop = ' .. vim.bo.tabstop)
-  if vim.bo.softtabstop > 0 then vim.notify('softtabstop = ' .. vim.bo.softtabstop) end
-  if vim.bo.shiftwidth > 0 then vim.notify('shiftwidth = ' .. vim.bo.shiftwidth) end
+  vim.notify('softtabstop = ' .. vim.bo.softtabstop)
+  vim.notify('shiftwidth = ' .. vim.bo.shiftwidth)
   vim.notify('expandtab = ' .. tostring(vim.bo.expandtab))
 end
 
