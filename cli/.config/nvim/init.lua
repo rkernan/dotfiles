@@ -7,8 +7,6 @@ vim.o.undofile = true
 -- ignorecase unless pattern contains uppercase letters
 vim.o.ignorecase = true
 vim.o.smartcase = true
--- use tabstop value for shiftwidth
--- vim.o.shiftwidth = 0
 -- unicode hidden characters
 if no_unicode == 0 then vim.o.listchars = 'eol:¬,tab:» ,trail:·' end
 -- complete longest common string, then list alternatives
@@ -64,25 +62,18 @@ vim.api.nvim_set_keymap('n', 'p', 'p`]', { noremap = true })
 -- disable highlighting until the next search
 vim.api.nvim_set_keymap('n', 'noh', ':noh<CR>', { noremap = true, nowait = true, silent = true })
 
--- resize windows automatically
-vim.cmd([[
-augroup vimrc_resize_windows
-  autocmd!
-  autocmd VimResized * wincmd =
-augroup END
-]])
-
--- auto-switch to/from relative line numbers based on mode and window focus
--- FIXME doesn't work with fzf
-vim.cmd([[
-augroup vimrc_switch_line_numbers
-  autocmd!
-  autocmd InsertLeave * setlocal relativenumber
-  autocmd InsertEnter * setlocal norelativenumber
-  autocmd BufEnter,FocusGained * setlocal relativenumber cursorline
-  autocmd BufLeave,FocusLost * setlocal norelativenumber nocursorline
-augroup END
-]])
+local utils = require('utils')
+utils.create_augroup({
+  -- resize windows automatically
+  { 'VimResized', '*', 'wincmd =' },
+  -- auto-switch to/from relative line numbers based on mode and window focus
+  { 'InsertLeave', '*', 'setlocal relativenumber' },
+  { 'InsertEnter', '*', 'setlocal norelativenumber' },
+  { 'BufEnter,FocusGained', '*', 'setlocal relativenumber cursorline' },
+  { 'BufLeave,FocusLost', '*', 'setlocal norelativenumber nocursorline' },
+  -- enable spell checker
+  { 'FileType', 'gitcommit,markdown,rst,tex', 'setlocal spell' }
+}, 'vimrc')
 
 require('tabs')
 require('plugins')
