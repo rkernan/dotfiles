@@ -1,14 +1,15 @@
-local no_unicode = tonumber(os.getenv('NO_UNICODE'))
+local utils = require('utils')
 
 -- enable 24-bit colors
-if no_unicode == 0 then vim.o.termguicolors = true end
+-- FIXME fix TERM
+if utils.enable_unicode() then vim.o.termguicolors = true end
 -- enable undo file
 vim.o.undofile = true
 -- ignorecase unless pattern contains uppercase letters
 vim.o.ignorecase = true
 vim.o.smartcase = true
 -- unicode hidden characters
-if no_unicode == 0 then vim.o.listchars = 'eol:¬,tab:» ,trail:·' end
+if utils.enable_unicode() then vim.o.listchars = 'eol:¬,tab:» ,trail:·' end
 -- always show completion, don't select by default
 vim.o.completeopt = 'menu,menuone,noselect'
 -- complete longest common string, then list alternatives
