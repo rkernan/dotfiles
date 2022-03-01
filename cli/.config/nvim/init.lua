@@ -25,8 +25,6 @@ vim.o.splitright = true
 vim.o.shortmess = 'actWIFS'
 -- show line numbers
 vim.o.number = true
--- always show sign column
--- vim.o.signcolumn = 'yes'
 -- don't print mode in cmd area
 vim.o.showmode = false
 -- enable mouse
