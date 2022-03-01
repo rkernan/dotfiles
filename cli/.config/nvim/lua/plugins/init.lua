@@ -18,7 +18,6 @@ return packer.startup(function(use)
   -- let packer manage itself
   use('wbthomason/packer.nvim')
   -- appearance
-  -- FIXME replace statusline
   use({
     'rkernan/vim-modestatus',
     config = function() require('plugins.modestatus') end
