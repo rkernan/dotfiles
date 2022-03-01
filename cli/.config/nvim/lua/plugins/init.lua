@@ -16,50 +16,50 @@ packer.init({
 -- install plugins
 return packer.startup(function(use)
   -- let packer manage itself
-  use 'wbthomason/packer.nvim'
+  use('wbthomason/packer.nvim')
   -- appearance
   -- FIXME replace statusline
-  use {
+  use({
     'rkernan/vim-modestatus',
     config = function() require('plugins.modestatus') end
-  }
-  use {
+  })
+  use({
     'gruvbox-community/gruvbox',
     config = function() require('plugins.gruvbox') end
-  }
+  })
   -- text objects
-  use 'wellle/targets.vim'
+  use('wellle/targets.vim')
   -- vcs integration
   -- FIXME signify alternative?
-  use {
+  use({
     'mhinz/vim-signify',
     config = function() require('plugins.signify') end
-  }
+  })
   use 'tpope/vim-fugitive'
   -- tmux integration
-  use {
+  use({
     'christoomey/vim-tmux-navigator',
     config = function() require('plugins.tmux-navigator') end
-  }
+  })
   -- fzf integration
-  use {
+  use({
     'ibhagwan/fzf-lua',
     config = function() require('plugins.fzf') end
-  }
+  })
   -- other
-  use {
+  use({
     'windwp/nvim-autopairs',
     config = function() require('nvim-autopairs').setup({}) end
-  }
-  use {
+  })
+  use({
     'lambdalisue/suda.vim',
     config = function() vim.g.suda_smart_edit = 1 end
-  }
-  use 'tpope/vim-commentary'
-  use 'tpope/vim-repeat'
-  use 'tpope/vim-surround'
-  use 'tpope/vim-sleuth'
-  use 'tpope/vim-unimpaired'
+  })
+  use('tpope/vim-commentary')
+  use('tpope/vim-repeat')
+  use('tpope/vim-surround')
+  use('tpope/vim-sleuth')
+  use('tpope/vim-unimpaired')
   -- completion
   use({
     'neovim/nvim-lspconfig',
@@ -74,12 +74,12 @@ return packer.startup(function(use)
     config = function() require('plugins.cmp') end
   })
   -- searching/movement
-  use {
+  use({
     'haya14busa/vim-asterisk',
     config = function() require('plugins.asterisk') end
-  }
-  use {
+  })
+  use({
     'justinmk/vim-sneak',
     config = function() require('plugins.sneak') end
-  }
+  })
 end)
