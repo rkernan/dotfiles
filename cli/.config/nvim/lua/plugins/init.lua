@@ -42,10 +42,9 @@ return packer.startup(function(use)
     config = function() require('plugins.fzf') end
   }
   -- other
-  use 'cohama/lexima.vim'
   use {
-    'lambdalisue/suda.vim',
-    config = function() require('plugins.suda') end
+    'windwp/nvim-autopairs',
+    config = function() require('nvim-autopairs').setup({}) end
   }
   use 'tpope/vim-commentary'
   use 'tpope/vim-repeat'
