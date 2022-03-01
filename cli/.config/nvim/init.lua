@@ -71,8 +71,6 @@ utils.create_augroup({
   { 'InsertEnter', '*', 'setlocal norelativenumber' },
   { 'BufEnter,FocusGained', '*', 'setlocal relativenumber cursorline' },
   { 'BufLeave,FocusLost', '*', 'setlocal norelativenumber nocursorline' },
-  -- enable spell checker
-  { 'FileType', 'gitcommit,markdown,rst,tex', 'setlocal spell' }
 }, 'vimrc')
 
 require('tabs')
