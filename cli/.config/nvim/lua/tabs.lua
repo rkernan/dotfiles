@@ -24,7 +24,7 @@ function M.set_tabs()
 end
 
 -- register vim commands
-vim.cmd([[ command! -nargs=0 SummarizeTabs lua require('tabs').summarize_tabs() ]])
-vim.cmd([[ command! -nargs=0 SetTabs lua require('tabs').set_tabs() ]])
+vim.cmd("command! -nargs=0 SummarizeTabs lua require('tabs').summarize_tabs()")
+vim.cmd("command! -nargs=0 SetTabs lua require('tabs').set_tabs()")
 
 return M

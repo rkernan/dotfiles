@@ -3,7 +3,7 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 local opts = { noremap = true }
-vim.api.nvim_set_keymap('n', '<space>e', [[ <cmd>lua require('fzf-lua').lsp_document_diagnostics()<CR> ]], opts)
+vim.api.nvim_set_keymap('n', '<space>e', "<cmd>lua require('fzf-lua').lsp_document_diagnostics()<CR>", opts)
 vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostics.goto_prev()<CR>', opts)
 vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostics.goto_next()<CR>', opts)
 
