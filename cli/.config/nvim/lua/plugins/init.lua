@@ -73,13 +73,4 @@ return packer.startup(function(use)
     'hrsh7th/nvim-cmp',
     config = function() require('plugins.cmp') end
   })
-  -- searching/movement
-  use({
-    'haya14busa/vim-asterisk',
-    config = function() require('plugins.asterisk') end
-  })
-  use({
-    'justinmk/vim-sneak',
-    config = function() require('plugins.sneak') end
-  })
 end)
