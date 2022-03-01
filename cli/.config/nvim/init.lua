@@ -9,6 +9,8 @@ vim.o.ignorecase = true
 vim.o.smartcase = true
 -- unicode hidden characters
 if no_unicode == 0 then vim.o.listchars = 'eol:¬,tab:» ,trail:·' end
+-- always show completion, don't select by default
+vim.o.completeopt = 'menu,menuone,noselect'
 -- complete longest common string, then list alternatives
 vim.o.wildmode = 'longest:full,full'
 -- keep 1 line above and below cursor on screen

@@ -61,7 +61,18 @@ return packer.startup(function(use)
   use 'tpope/vim-sleuth'
   use 'tpope/vim-unimpaired'
   -- completion
-  -- TODO use built-in LSP
+  use({
+    'neovim/nvim-lspconfig',
+    config = function() require('plugins.lspconfig') end
+  })
+  use('hrsh7th/cmp-nvim-lsp')
+  use('hrsh7th/cmp-buffer')
+  use('hrsh7th/cmp-path')
+  use('hrsh7th/cmp-cmdline')
+  use({
+    'hrsh7th/nvim-cmp',
+    config = function() require('plugins.cmp') end
+  })
   -- searching/movement
   use {
     'haya14busa/vim-asterisk',

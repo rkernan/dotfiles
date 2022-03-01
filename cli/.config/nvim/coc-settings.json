@@ -1,5 +1,0 @@
-{
-	"coc.preferences.colorSupport": false,
-	"diagnostic.warningSign": ">>",
-	"python.linting.mypyEnabled": true
-}
