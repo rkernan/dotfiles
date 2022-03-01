@@ -19,26 +19,31 @@ return packer.startup(function(use)
   use 'wbthomason/packer.nvim'
   -- appearance
   -- FIXME replace statusline
-  use { 'rkernan/vim-modestatus',
+  use {
+    'rkernan/vim-modestatus',
     config = function() require('plugins.modestatus') end
   }
-  use { 'gruvbox-community/gruvbox',
+  use {
+    'gruvbox-community/gruvbox',
     config = function() require('plugins.gruvbox') end
   }
   -- text objects
   use 'wellle/targets.vim'
   -- vcs integration
   -- FIXME signify alternative?
-  use { 'mhinz/vim-signify',
+  use {
+    'mhinz/vim-signify',
     config = function() require('plugins.signify') end
   }
   use 'tpope/vim-fugitive'
-  -- tmux seamless navigation
-  use { 'christoomey/vim-tmux-navigator',
+  -- tmux integration
+  use {
+    'christoomey/vim-tmux-navigator',
     config = function() require('plugins.tmux-navigator') end
   }
-  -- fzf
-  use { 'ibhagwan/fzf-lua',
+  -- fzf integration
+  use {
+    'ibhagwan/fzf-lua',
     config = function() require('plugins.fzf') end
   }
   -- other
@@ -46,6 +51,10 @@ return packer.startup(function(use)
     'windwp/nvim-autopairs',
     config = function() require('nvim-autopairs').setup({}) end
   }
+  -- use {
+  --   'lambdalisue/suda.vim',
+  --   config = function() require('plugins.suda') end
+  -- }
   use 'tpope/vim-commentary'
   use 'tpope/vim-repeat'
   use 'tpope/vim-surround'
@@ -53,14 +62,16 @@ return packer.startup(function(use)
   use 'tpope/vim-unimpaired'
   -- completion
   -- TODO switch to built-in LSP
-  use { 'neoclide/coc.nvim', branch = 'release',
-    config = function() require('plugins.coc') end
-  }
+  -- use { 'neoclide/coc.nvim', branch = 'release',
+  --   config = function() require('plugins.coc') end
+  -- }
   -- searching/movement
-  use { 'haya14busa/vim-asterisk',
+  use {
+    'haya14busa/vim-asterisk',
     config = function() require('plugins.asterisk') end
   }
-  use { 'justinmk/vim-sneak',
+  use {
+    'justinmk/vim-sneak',
     config = function() require('plugins.sneak') end
   }
 end)
