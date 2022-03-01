@@ -68,10 +68,8 @@ utils.create_augroup({
   -- resize windows automatically
   { 'VimResized', '*', 'wincmd =' },
   -- auto-switch to/from relative line numbers based on mode and window focus
-  { 'InsertLeave', '*', 'setlocal relativenumber' },
-  { 'InsertEnter', '*', 'setlocal norelativenumber' },
-  { 'BufEnter,FocusGained', '*', 'setlocal relativenumber cursorline' },
-  { 'BufLeave,FocusLost', '*', 'setlocal norelativenumber nocursorline' },
+  { 'BufEnter,FocusGained,InsertEnter,WinEnter', '*', 'setlocal relativenumber cursorline'    },
+  { 'BufLeave,FocusLost,InsertLeave,WinLeave',   '*', 'setlocal norelativenumber nocursorline'}
 }, 'vimrc')
 
 require('tabs')
