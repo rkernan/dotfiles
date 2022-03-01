@@ -1,21 +1,24 @@
 local M = {}
 
 function M.summarize_tabs()
-  vim.notify('tabstop = ' .. vim.bo.tabstop)
-  vim.notify('softtabstop = ' .. vim.bo.softtabstop)
   vim.notify('shiftwidth = ' .. vim.bo.shiftwidth)
+  vim.notify('tabstop = ' .. vim.bo.tabstop)
   vim.notify('expandtab = ' .. tostring(vim.bo.expandtab))
 end
 
 function M.set_tabs()
-  -- set tabs
-  vim.bo.tabstop = tonumber(vim.fn.input('tabstop = softtabstop = shiftwidth = '))
+  -- set shiftwidth
+  vim.bo.shiftwidth = tonumber(vim.fn.input('shiftwidth = '))
   vim.notify('\n\r')
-  vim.bo.softtabstop = 0
-  vim.bo.shiftwidth = 0
   -- set expandtab
   vim.bo.expandtab = (vim.fn.input('expandtab = [y/N] ') == 'y')
   vim.notify('\n\r')
+  -- set tabstop - 8 for soft-tabs, shiftwidth for hard-tabs
+  if vim.bo.expandtab then
+    vim.bo.tabstop= 8
+  else
+    vim.bo.tabstop = vim.bo.shiftwidth
+  end
   -- print summary
   M.summarize_tabs()
 end

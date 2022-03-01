@@ -50,6 +50,7 @@ return packer.startup(function(use)
   use 'tpope/vim-commentary'
   use 'tpope/vim-repeat'
   use 'tpope/vim-surround'
+  use 'tpope/vim-sleuth'
   use 'tpope/vim-unimpaired'
   -- completion
   -- TODO switch to built-in LSP
