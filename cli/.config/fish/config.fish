@@ -50,12 +50,13 @@ else
   set -g __fish_vi_prompt_visual_suffix "❮"
 end
 
-set -x FZF_DEFAULT_OPTS "--cycle --layout=reverse --border --height=90% --prompt='$__fish_vi_prompt_insert_suffix ' --pointer='$__fish_vi_prompt_insert_suffix' --marker='$__fish_vi_prompt_insert_suffix'"
+set -x FZF_DEFAULT_OPTS "--cycle --layout=reverse --border --height=75% --info=inline"
 
 set -x FZF_DEFAULT_COMMAND "_fzf_list_files \$dir"
 set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -x FZF_CTRL_T_OPTS "--preview='_fzf_file_preview {}'"
 set -x FZF_ALT_C_COMMAND "_fzf_list_dirs \$dir"
+set -x FZF_ALT_C_OPTS "$FZF_DEFAULT_COMMAND --prompt='Dirs> '"
 
 set -x EDITOR nvim
 set -x PAGER less
