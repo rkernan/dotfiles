@@ -51,10 +51,10 @@ return packer.startup(function(use)
     'windwp/nvim-autopairs',
     config = function() require('nvim-autopairs').setup({}) end
   }
-  -- use {
-  --   'lambdalisue/suda.vim',
-  --   config = function() require('plugins.suda') end
-  -- }
+  use {
+    'lambdalisue/suda.vim',
+    config = function() vim.g.suda_smart_edit = 1 end
+  }
   use 'tpope/vim-commentary'
   use 'tpope/vim-repeat'
   use 'tpope/vim-surround'
