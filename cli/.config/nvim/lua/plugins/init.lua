@@ -30,12 +30,11 @@ return packer.startup(function(use)
   -- text objects
   use('wellle/targets.vim')
   -- vcs integration
-  -- FIXME signify alternative?
   use({
-    'mhinz/vim-signify',
-    config = function() require('plugins.signify') end
+    'lewis6991/gitsigns.nvim',
+    requires = { 'nvim-lua/plenary.nvim' },
+    config = function() require('plugins.gitsigns') end
   })
-  use 'tpope/vim-fugitive'
   -- tmux integration
   use({
     'christoomey/vim-tmux-navigator',
