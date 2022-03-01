@@ -61,10 +61,7 @@ return packer.startup(function(use)
   use 'tpope/vim-sleuth'
   use 'tpope/vim-unimpaired'
   -- completion
-  -- TODO switch to built-in LSP
-  -- use { 'neoclide/coc.nvim', branch = 'release',
-  --   config = function() require('plugins.coc') end
-  -- }
+  -- TODO use built-in LSP
   -- searching/movement
   use {
     'haya14busa/vim-asterisk',

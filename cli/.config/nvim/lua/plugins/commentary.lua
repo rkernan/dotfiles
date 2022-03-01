@@ -1,7 +1,5 @@
--- use # for specfile comments
-vim.cmd([[
-  augroup commentary_custom
-    autocmd!
-    autocmd FileType spec setlocal commentstring=#\ %s
-  augroup END
-]])
+local utils = require('utils')
+utils.create_augroup({
+  -- use # for specfile comments
+  { 'FileType', 'spec', [[ setlocal commentstring=#\ %s ]] }
+}, 'vimrc_commentary')
