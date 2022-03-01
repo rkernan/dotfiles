@@ -1,5 +1,3 @@
-require('fzf-lua').setup({})
-
 -- search files
 vim.api.nvim_set_keymap('n', '<leader>b',
   [[ <cmd>lua require('fzf-lua').buffers()<cr> ]],
