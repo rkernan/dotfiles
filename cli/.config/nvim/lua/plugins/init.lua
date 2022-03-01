@@ -10,7 +10,8 @@ packer.init({
     open_fn = function()
       return require('packer.util').float({ border = 'single' })
     end
-  }
+  },
+  tabline = {}
 })
 
 -- install plugins
@@ -19,12 +20,12 @@ return packer.startup(function(use)
   use('wbthomason/packer.nvim')
   -- appearance
   use({
-    'rkernan/vim-modestatus',
-    config = function() require('plugins.modestatus') end
+    'nvim-lualine/lualine.nvim',
+    config = function() require('plugins.lualine') end
   })
   use({
     'gruvbox-community/gruvbox',
-    config = function() require('plugins.gruvbox') end
+    config = function() vim.cmd('colorscheme gruvbox') end
   })
   -- text objects
   use('wellle/targets.vim')
