@@ -44,14 +44,6 @@ install_brew() {
   fi
 }
 
-install_rustup() {
-  if [ ! -e "${HOME}/.rustup" ] || [ ! -e "${HOME}/.cargo" ]; then
-    curl -sL https://sh.rustup.rs | bash -s -- --no-modify-path -y
-  else
-    rustup update
-  fi
-}
-
 setup_brew_fzf() {
   if ! check_command brew &> /dev/null; then
     (>&2 echo "Brew isn't installed!")
@@ -95,21 +87,14 @@ for target in $targets; do
       # commands
       check_command bat     || true
       check_command brew    || true
-      check_command cargo   || true
-      check_command clangd  || true # coc-clangd
-      check_command ctags   || true # coc-fzf (uses for outline)
       check_command fd      || true
       check_command fish    || true
       check_command fzf     || true
       check_command git-lfs || true
       check_command go      || true
-      check_command npm     || true
       check_command nvim    || true
       check_command rg      || true
-      check_command rls     || true # coc-rls
-      check_command rustup  || true
       check_command stow    || true
-      check_command texlab  || true # coc-texlab
       check_command tmux    || true
       ;;
     cli)
@@ -122,9 +107,6 @@ for target in $targets; do
       ;;
     install_brew)
       install_brew
-      ;;
-    install_rustup)
-      install_rustup
       ;;
     setup_brew_fzf)
       setup_brew_fzf
