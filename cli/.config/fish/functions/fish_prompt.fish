@@ -9,7 +9,7 @@ function fish_prompt
   echo -n -s (__fish_print_pipestatus "" " " "|" (set_color $fish_color_status) (set_color --bold $fish_color_status) $last_pipestatus)
 
   if set -q VIRTUAL_ENV
-    echo -n -s (set_color blue white) "(" (basename $VIRTUAL_ENV) ")" (set_color normal) " "
+    echo -n -s (set_color blue white) "(venv)" (set_color normal) " "
   end
 
   if set -q SSH_CLIENT || set -q SSH_TTY
