@@ -3,11 +3,13 @@
 requirements=${1:-"requirements.txt"}
 python=${2:-"python3"}
 
-mkdir -p ".vim"
-echo '{ "python.pythonPath": "./.venv/bin/python" }' > ".vim/coc-settings.json"
 $python -m venv ".venv"
-.venv/bin/python -m pip install jedi mypy pylint wheel
-.venv/bin/python -m pip install -r "$requirements"
+.venv/bin/python -m pip install pyright
+
+if [[ -f $requirements ]]; then
+	.venv/bin/python -m pip install -r "$requirements"
+fi
+
 if [ -e "setup.py" ]; then
 	.venv/bin/python -m pip install -e .
 fi
