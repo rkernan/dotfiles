@@ -44,6 +44,13 @@ install_brew() {
   fi
 }
 
+install_virtualfish() {
+  if ! check_command vf &> /dev/null; then
+    python3 -m pip install --user virtualfish
+  fi
+  vf install auto_activation global_requirements
+}
+
 setup_brew_fzf() {
   if ! check_command brew &> /dev/null; then
     (>&2 echo "Brew isn't installed!")
@@ -78,8 +85,9 @@ setup_gpg_agent() {
 readonly targets=${*:-$(guess_target)}
 
 # don't clobber these directories
-mkdir -p "${HOME}/.local/bin"
 mkdir -p "${HOME}/.config"
+mkdir -p "${HOME}/.local/bin"
+mkdir -p "${HOME}/.virtualenvs"
 
 for target in $targets; do
   case $target in
@@ -96,6 +104,7 @@ for target in $targets; do
       check_command rg      || true
       check_command stow    || true
       check_command tmux    || true
+      check_command vf      || true
       ;;
     cli)
       stow cli
@@ -110,6 +119,9 @@ for target in $targets; do
       ;;
     setup_brew_fzf)
       setup_brew_fzf
+      ;;
+    install_virtualfish)
+      install_virtualfish
       ;;
     work)
       stow work
