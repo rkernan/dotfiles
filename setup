@@ -44,7 +44,7 @@ install_brew() {
   fi
 }
 
-install_virtualfish() {
+install_vf() {
   if ! check_command vf &> /dev/null; then
     python3 -m pip install --user virtualfish
   fi
@@ -120,8 +120,8 @@ for target in $targets; do
     setup_brew_fzf)
       setup_brew_fzf
       ;;
-    install_virtualfish)
-      install_virtualfish
+    install_vf)
+      install_vf
       ;;
     work)
       stow work
