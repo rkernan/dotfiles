@@ -67,8 +67,13 @@ local utils = require('utils')
 utils.create_augroup({
   -- resize windows automatically
   { 'VimResized', '*', 'wincmd =' },
+  -- cursorline and relative line numbers for active buffer
+  { 'BufWinEnter,VimEnter,WinEnter', '*', ":lua require('utils').setlocal_no_float({ 'cursorline', 'relativenumber' })" },
+  { 'WinLeave', '*', ":lua require('utils').setlocal_no_float({ 'nocursorline', 'norelativenumber' })" },
+  -- no relative line numbers in insert mode
+  { 'InsertEnter', '*', ":lua require('utils').setlocal_no_float({ 'norelativenumber' })" },
+  { 'InsertLeave', '*', ":lua require('utils').setlocal_no_float({ 'relativenumber' })" }
 }, 'vimrc')
 
-require('autonum')
 require('tabs')
 require('plugins')

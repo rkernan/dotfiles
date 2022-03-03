@@ -23,4 +23,10 @@ function M.is_win_floating(winnr)
   return not (cfg.relative == nil or cfg.relative == '')
 end
 
+function M.setlocal_no_float(opts)
+  local winnr = 0
+  if M.is_win_floating(winnr) then return end
+  vim.cmd('setlocal ' .. table.concat(opts, ' '))
+end
+
 return M
