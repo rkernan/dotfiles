@@ -73,5 +73,8 @@ return packer.startup(function(use)
     config = function() require('plugins.cmp') end
   })
   -- languages
-  use('sheerun/vim-polyglot')
+  use({
+    'sheerun/vim-polyglot',
+    setup = function() vim.g.polyglot_disabled = { 'autoindent', 'sensible'} end
+  })
 end)
