@@ -25,7 +25,7 @@ return packer.startup(function(use)
   })
   use({
     'gruvbox-community/gruvbox',
-    config = function() vim.cmd('colorscheme gruvbox') end
+    config = function() require('plugins.gruvbox') end
   })
   -- text objects
   use('wellle/targets.vim')
@@ -49,11 +49,11 @@ return packer.startup(function(use)
   -- other
   use({
     'windwp/nvim-autopairs',
-    config = function() require('nvim-autopairs').setup({}) end
+    config = function() require('plugins.autopairs') end
   })
   use({
     'lambdalisue/suda.vim',
-    config = function() vim.g.suda_smart_edit = 1 end
+    setup = function() require('plugins.suda') end
   })
   use('tpope/vim-commentary')
   use('tpope/vim-repeat')
@@ -76,6 +76,6 @@ return packer.startup(function(use)
   -- languages
   use({
     'sheerun/vim-polyglot',
-    setup = function() vim.g.polyglot_disabled = { 'autoindent', 'sensible'} end
+    setup = function() require('plugins.polyglot') end
   })
 end)
