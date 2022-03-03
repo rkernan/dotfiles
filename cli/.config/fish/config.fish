@@ -1,7 +1,3 @@
-set -x GOPATH ~/Workspace/go
-
-fish_add_path $GOPATH/bin
-
 set -l brew_prefix /home/linuxbrew/.linux
 if test -d $brew_prefix
   # path
@@ -12,7 +8,10 @@ if test -d $brew_prefix
   set -gx fish_complete_path $fish_complete_path $brew_prefix"/share/fish/vendor_completions.d"
 end
 
-fish_add_path $HOME/.local/bin
+set -x GOPATH ~/Workspace/go
+fish_add_path $GOPATH"/bin"
+
+fish_add_path $HOME"/.local/bin"
 
 _autostart_tmux
 
