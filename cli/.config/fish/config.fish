@@ -1,9 +1,17 @@
 set -x GOPATH ~/Workspace/go
 
 fish_add_path $GOPATH/bin
-fish_add_path $HOME/.cargo/bin
-fish_add_path /home/linuxbrew/.linuxbrew/sbin
-fish_add_path /home/linuxbrew/.linuxbrew/bin
+
+set -l brew_prefix /home/linuxbrew/.linux
+if test -d $brew_prefix
+  # path
+  fish_add_path $brew_prefix"/sbin"
+  fish_add_path $brew_prefix"/bin"
+  # completions
+  set -gx fish_complete_path $fish_complete_path $brew_prefix"/share/fish/completions"
+  set -gx fish_complete_path $fish_complete_path $brew_prefix"/share/fish/vendor_completions.d"
+end
+
 fish_add_path $HOME/.local/bin
 
 _autostart_tmux
