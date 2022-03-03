@@ -10,7 +10,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_set_keymap('n', '<leader><leader>a', "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   vim.api.nvim_set_keymap('v', '<leader><leader>a', "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
   -- diagnostics - buffer
-  vim.api.nvim_set_keymap('n', '<space>d', "<cmd>lua require('fzf-lua').lsp_document_diagnostics()<CR>", opts)
+  vim.api.nvim_set_keymap('n', '<space>e', "<cmd>lua require('fzf-lua').lsp_document_diagnostics()<CR>", opts)
   vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostics.goto_prev()<CR>', opts)
   vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostics.goto_next()<CR>', opts)
   -- format
