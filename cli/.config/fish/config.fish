@@ -1,11 +1,5 @@
 fish_add_path $HOME"/.local/bin"
 
-# asdf
-set -l asdf_path $HOME"/.asdf"
-if test -d $asdf_path
-  source $asdf_path"/asdf.fish"
-end
-
 # brew
 set -l brew_prefix /home/linuxbrew/.linux
 if test -d $brew_prefix
@@ -15,6 +9,12 @@ if test -d $brew_prefix
   # completions
   set -gx fish_complete_path $fish_complete_path $brew_prefix"/share/fish/completions"
   set -gx fish_complete_path $fish_complete_path $brew_prefix"/share/fish/vendor_completions.d"
+end
+
+# asdf
+set -l asdf_brew_path $brew_prefix"/opt/asdf"
+if test -d $asdf_brew_path
+  source $asdf_brew_path"/opt/asdf/libexec/asdf.fish"
 end
 
 # go
