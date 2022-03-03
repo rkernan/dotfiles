@@ -27,6 +27,12 @@ set -g __fish_git_prompt_color_dirtystate yellow
 set -g __fish_git_prompt_color_invalidstate red
 set -g __fish_git_prompt_color_untrackedfiles red
 
+set -g __fish_vi_prompt_default_suffix "<"
+set -g __fish_vi_prompt_insert_suffix ">"
+set -g __fish_vi_prompt_replace_one_suffix "<"
+set -g __fish_vi_prompt_replace_suffix "<"
+set -g __fish_vi_prompt_visual_suffix "<"
+
 if set -q NO_UNICODE; and test $NO_UNICODE -gt 0
   set -g __fish_git_prompt_char_upstream_ahead "↑"
   set -g __fish_git_prompt_char_upstream_behind "↓"
@@ -35,12 +41,6 @@ if set -q NO_UNICODE; and test $NO_UNICODE -gt 0
   set -g __fish_git_prompt_char_dirtystate "+"
   set -g __fish_git_prompt_char_invalidstate "x"
   set -g __fish_git_prompt_char_untrackedfiles "??"
-
-  set -g __fish_vi_prompt_default_suffix "<"
-  set -g __fish_vi_prompt_insert_suffix ">"
-  set -g __fish_vi_prompt_replace_one_suffix "<"
-  set -g __fish_vi_prompt_replace_suffix "<"
-  set -g __fish_vi_prompt_visual_suffix "<"
 else
   set -g __fish_git_prompt_char_upstream_ahead "↑"
   set -g __fish_git_prompt_char_upstream_behind "↓"
@@ -49,12 +49,6 @@ else
   set -g __fish_git_prompt_char_dirtystate "+"
   set -g __fish_git_prompt_char_invalidstate "⨯"
   set -g __fish_git_prompt_char_untrackedfiles "…"
-
-  set -g __fish_vi_prompt_default_suffix "❮"
-  set -g __fish_vi_prompt_insert_suffix "❯"
-  set -g __fish_vi_prompt_replace_one_suffix "❮"
-  set -g __fish_vi_prompt_replace_suffix "❮"
-  set -g __fish_vi_prompt_visual_suffix "❮"
 end
 
 set -x FZF_DEFAULT_OPTS "--cycle --layout=reverse --border --height=75% --info=inline"

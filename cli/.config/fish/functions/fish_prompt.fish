@@ -30,5 +30,5 @@ function fish_prompt
       set prompt_suffix $__fish_vi_prompt_visual_suffix
   end
 
-  echo -n -s (set_color $fish_color_cwd) (prompt_pwd) (set_color normal) (fish_vcs_prompt) (set_color normal) " $prompt_suffix "
+  echo -n -s (set_color $fish_color_cwd) (prompt_pwd) (set_color normal) (fish_vcs_prompt) (set_color --bold white) " $prompt_suffix " (set_color normal)
 end
