@@ -1,9 +1,24 @@
 local actions = require('fzf-lua.actions')
 require('fzf-lua').setup({
+  winopts = {
+    border = 'single',
+    preview = {
+      title = false,
+      scrollbar = false
+    }
+  },
   files = {
     actions = {
       ['default'] = actions.file_edit
     }
+  },
+  lsp = {
+    icons = {
+      ["Error"] = { icon = "E", color = "red" },
+      ["Warning"] = { icon = "W", color = "yellow" },
+      ["Information"] = { icon = "I", color = "blue" },
+      ["Hint"] = { icon = "H", color = "magenta" }
+    },
   }
 })
 
