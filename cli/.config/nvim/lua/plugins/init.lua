@@ -38,7 +38,8 @@ return packer.startup(function(use)
   -- tmux integration
   use({
     'christoomey/vim-tmux-navigator',
-    config = function() require('plugins.tmux-navigator') end
+    setup = require('plugins.tmux-navigator').setup,
+    config = require('plugins.tmux-navigator').config,
   })
   -- fzf integration
   use({
