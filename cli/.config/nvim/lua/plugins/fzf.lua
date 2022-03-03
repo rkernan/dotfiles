@@ -1,4 +1,3 @@
-local actions = require('fzf-lua.actions')
 require('fzf-lua').setup({
   winopts = {
     border = 'single',
@@ -9,7 +8,7 @@ require('fzf-lua').setup({
   },
   files = {
     actions = {
-      ['default'] = actions.file_edit
+      ['default'] = require('fzf-lua.actions').file_edit
     }
   },
   lsp = {

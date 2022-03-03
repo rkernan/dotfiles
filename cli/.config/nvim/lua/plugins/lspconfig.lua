@@ -2,10 +2,10 @@
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-local opts = { noremap = true }
 
 -- setup buffer when language server starts
 local on_attach = function(client, bufnr)
+  local opts = { noremap = true }
   -- code actions
   vim.api.nvim_set_keymap('n', '<leader><leader>a', "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   vim.api.nvim_set_keymap('v', '<leader><leader>a', "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
@@ -37,6 +37,3 @@ for _, lsp in ipairs(servers) do
     flags = { debounce_text_changes = 150 }
   })
 end
-
--- nvim-cmp setup
-local cmp = require('cmp')
