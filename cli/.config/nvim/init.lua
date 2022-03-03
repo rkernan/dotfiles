@@ -67,10 +67,8 @@ local utils = require('utils')
 utils.create_augroup({
   -- resize windows automatically
   { 'VimResized', '*', 'wincmd =' },
-  -- auto-switch to/from relative line numbers based on mode and window focus
-  { 'BufEnter,FocusGained,InsertEnter,WinEnter', '*', 'setlocal relativenumber cursorline'    },
-  { 'BufLeave,FocusLost,InsertLeave,WinLeave',   '*', 'setlocal norelativenumber nocursorline'}
 }, 'vimrc')
 
+require('autonum')
 require('tabs')
 require('plugins')

@@ -18,4 +18,9 @@ function M.enable_unicode()
   end
 end
 
+function M.is_win_floating(winnr)
+  local cfg = vim.api.nvim_win_get_config(winnr)
+  return not (cfg.relative == nil or cfg.relative == '')
+end
+
 return M
