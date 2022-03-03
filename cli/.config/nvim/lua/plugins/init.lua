@@ -56,6 +56,7 @@ return packer.startup(function(use)
     setup = function() require('plugins.suda') end
   })
   use('tpope/vim-commentary')
+  use('tpope/vim-endwise')
   use('tpope/vim-repeat')
   use('tpope/vim-surround')
   use('tpope/vim-sleuth')
