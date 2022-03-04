@@ -36,8 +36,12 @@ vim.o.title = true
 vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
 
 -- space as leader
-vim.api.nvim_set_keymap('n', '<Space>', '', {})
 vim.g.mapleader = ' '
+-- disable <space> mapping in normal mode
+vim.api.nvim_set_keymap('n', '<Space>', '', {})
+
+-- TODO neovim 0.7.0 - bind multiple modes at once
+-- TODO neovim 0.7.0 - pass lua functions to map
 
 -- disable ex mode
 vim.api.nvim_set_keymap('n', 'Q', '<nop>', { noremap = true })

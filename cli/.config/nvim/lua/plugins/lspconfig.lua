@@ -6,6 +6,8 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- setup buffer when language server starts
 local on_attach = function(client, bufnr)
   local opts = { noremap = true }
+  -- TODO neovim 0.7.0 - bind multiple modes at once
+  -- TODO neovim 0.7.0 - pass lua functions to map
   -- code actions
   vim.api.nvim_set_keymap('n', '<leader><leader>a', "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
   vim.api.nvim_set_keymap('v', '<leader><leader>a', "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
