@@ -53,7 +53,7 @@ return packer.startup(function(use)
   })
   use({
     'lambdalisue/suda.vim',
-    setup = function() require('plugins.suda') end
+    setup = function() vim.g.suda_smart_edit = 1 end
   })
   use('tpope/vim-commentary')
   use('tpope/vim-endwise')
