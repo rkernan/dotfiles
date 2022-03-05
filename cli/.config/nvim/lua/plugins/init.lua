@@ -49,7 +49,7 @@ return packer.startup(function(use)
   -- other
   use({
     'windwp/nvim-autopairs',
-    config = function() require('plugins.autopairs') end
+    config = function() require('nvim-autopairs').setup({}) end
   })
   use({
     'lambdalisue/suda.vim',
