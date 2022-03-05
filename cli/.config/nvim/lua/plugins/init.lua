@@ -25,7 +25,7 @@ return packer.startup(function(use)
   })
   use({
     'gruvbox-community/gruvbox',
-    config = function() require('plugins.gruvbox') end
+    config = function() vim.cmd('colorscheme gruvbox') end
   })
   -- text objects
   use('wellle/targets.vim')
