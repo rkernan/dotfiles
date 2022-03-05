@@ -76,7 +76,7 @@ set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -x FZF_CTRL_T_OPTS "--preview='_fzf_file_preview {}'"
 set -x FZF_CTRL_R_OPTS "$FZF_DEFAULT_OPTS --prompt='History> '"
 set -x FZF_ALT_C_COMMAND "_fzf_list_dirs \$dir"
-set -x FZF_ALT_C_OPTS "$FZF_DEFAULT_COMMAND --prompt='Dirs> '"
+set -x FZF_ALT_C_OPTS "$FZF_DEFAULT_OPTS --prompt='Dirs> '"
 
 # env
 set -x EDITOR nvim
