@@ -17,12 +17,10 @@ require('lualine').setup({
       'mode',
       fmt = function(str) return str:sub(1, 1) end
     }},
-    lualine_b = { 'branch', 'diff', 'diagnostics' },
     lualine_c = {{
       'filename',
       path = 1 -- relative path
     }},
-    lualing_x = { 'encoding', 'fileformat', 'filetype' }
     lualine_y = { 'location', 'progress' },
     lualine_z = {}
   },
