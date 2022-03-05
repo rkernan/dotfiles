@@ -27,6 +27,7 @@ return packer.startup(function(use)
     'gruvbox-community/gruvbox',
     config = function() vim.cmd('colorscheme gruvbox') end
   })
+  use('kyazdani42/nvim-web-devicons')
   -- text objects
   use('wellle/targets.vim')
   -- vcs integration

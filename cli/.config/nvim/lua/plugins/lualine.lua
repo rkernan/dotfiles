@@ -8,7 +8,6 @@ custom_gruvbox.command.c = custom_gruvbox.normal.c
 require('lualine').setup({
   options = {
     theme = custom_gruvbox,
-    icons_enabled = false,
     component_separators = { left = '', right = '|'},
     section_separators = { left = '', right = ''}
   },
@@ -17,6 +16,7 @@ require('lualine').setup({
       'mode',
       fmt = function(str) return str:sub(1, 1) end
     }},
+    -- TODO disable branch icon
     lualine_c = {{
       'filename',
       path = 1 -- relative path
