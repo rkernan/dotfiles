@@ -1,8 +1,7 @@
 local utils = require('utils')
 
 -- enable 24-bit colors
--- FIXME fix TERM
-if utils.enable_unicode() then vim.o.termguicolors = true end
+vim.o.termguicolors = true
 -- enable undo file
 vim.o.undofile = true
 -- ignorecase unless pattern contains uppercase letters
