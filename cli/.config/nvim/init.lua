@@ -63,9 +63,6 @@ vim.api.nvim_set_keymap('v', 'y', 'y`]', { noremap = true })
 vim.api.nvim_set_keymap('v', 'p', 'p`]', { noremap = true })
 vim.api.nvim_set_keymap('n', 'p', 'p`]', { noremap = true })
 
--- disable highlighting until the next search
-vim.api.nvim_set_keymap('n', 'noh', ':noh<CR>', { noremap = true, nowait = true, silent = true })
-
 local utils = require('utils')
 utils.create_augroup({
   -- resize windows automatically
