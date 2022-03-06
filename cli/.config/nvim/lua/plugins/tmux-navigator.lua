@@ -6,12 +6,11 @@ function M.setup()
 end
 
 function M.config()
-  local opts = { noremap = true, silent = true }
-  vim.api.nvim_set_keymap('n', '<M-h>',  '<cmd>TmuxNavigateLeft<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<M-j>',  '<cmd>TmuxNavigateDown<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<M-k>',  '<cmd>TmuxNavigateUp<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<M-l>',  '<cmd>TmuxNavigateRight<CR>', opts)
-  vim.api.nvim_set_keymap('n', '<M-\\>', '<cmd>TmuxNavigatePrevious<CR>', opts)
+  vim.api.nvim_set_keymap('n', '<m-h>',  '<cmd>TmuxNavigateLeft<cr>', { noremap = true })
+  vim.api.nvim_set_keymap('n', '<m-j>',  '<cmd>TmuxNavigateDown<cr>', { noremap = true })
+  vim.api.nvim_set_keymap('n', '<m-k>',  '<cmd>TmuxNavigateUp<cr>', { noremap = true })
+  vim.api.nvim_set_keymap('n', '<m-l>',  '<cmd>TmuxNavigateRight<cr>', { noremap = true })
+  vim.api.nvim_set_keymap('n', '<m-\\>', '<cmd>TmuxNavigatePrevious<cr>', { noremap = true })
 end
 
 return M

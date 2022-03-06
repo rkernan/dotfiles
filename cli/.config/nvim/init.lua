@@ -33,11 +33,11 @@ vim.o.mouse = 'a'
 vim.o.title = true
 -- always copy to system clipboard
 vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
+-- timeout maps faster
+vim.o.timeoutlen = 500
 
 -- space as leader
 vim.g.mapleader = ' '
--- disable <space> mapping in normal mode
-vim.api.nvim_set_keymap('n', '<Space>', '', {})
 
 -- TODO neovim 0.7.0 - bind multiple modes at once
 -- TODO neovim 0.7.0 - pass lua functions to map

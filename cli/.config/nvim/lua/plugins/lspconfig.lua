@@ -5,29 +5,28 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
 -- setup buffer when language server starts
 local on_attach = function(client, bufnr)
-  local opts = { noremap = true }
   -- TODO neovim 0.7.0 - bind multiple modes at once
   -- TODO neovim 0.7.0 - pass lua functions to map
   -- code actions
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>a', "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader><leader>a', "<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>a', "<cmd>lua vim.lsp.buf.code_action()<cr>", { noremap = true })
+  vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader><leader>a', "<cmd>lua vim.lsp.buf.range_code_action()<cr>", { noremap = true })
   -- diagnostics - buffer
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<space>e', "<cmd>lua require('fzf-lua').lsp_document_diagnostics()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostics.goto_prev()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostics.goto_next()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', "<cmd>FzfLua lsp_document_diagnostics<cr>", { noremap = true })
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostics.goto_prev()<cr>', { noremap = true })
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostics.goto_next()<cr>', { noremap = true })
   -- format
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>a', "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader><leader>a', "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>a', "<cmd>lua vim.lsp.buf.formatting()<cr>", { noremap = true })
+  vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader><leader>a', "<cmd>lua vim.lsp.buf.range_formatting()<cr>", { noremap = true })
   -- goto
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>r', "<cmd>lua require('fzf-lua').lsp_references()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>i', "<cmd>lua require('fzf-lua').lsp_implementations()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>d', "<cmd>lua require('fzf-lua').lsp_definitions()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>D', "<cmd>lua require('fzf-lua').lsp_declarations()<CR>", opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>t', "<cmd>lua require('fzf-lua').lsp_typedefs()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>r', "<cmd>FzfLua lsp_references<cr>", { noremap = true })
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>i', "<cmd>FzfLua lsp_implementations<cr>", { noremap = true })
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>d', "<cmd>FzfLua lsp_definitions<cr>", { noremap = true })
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>D', "<cmd>FzfLua lsp_declarations<cr>", { noremap = true })
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>t', "<cmd>FzfLua lsp_typedefs<cr>", { noremap = true })
   -- hover doc
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', { noremap = true })
   -- symbols
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>s', "<cmd>lua require('fzf-lua').lsp_document_symbols()<CR>", opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>s', "<cmd>FzfLua lsp_document_symbols<cr>", { noremap = true })
 end
 
 -- enable language servers

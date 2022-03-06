@@ -27,6 +27,11 @@ return packer.startup(function(use)
     'gruvbox-community/gruvbox',
     config = function() vim.cmd('colorscheme gruvbox') end
   })
+  -- help popup for mappings, etc
+  use({
+    "folke/which-key.nvim",
+    config = function() require("which-key").setup({}) end
+  })
   -- text objects
   use('wellle/targets.vim')
   -- vcs integration

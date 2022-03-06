@@ -1,33 +1,26 @@
 require('gitsigns').setup({
   on_attach = function(bufnr)
-    local function map(mode, lhs, rhs, opts)
-      opts = vim.tbl_extend('force', { noremap = true }, opts or {})
-      -- TODO neovim 0.7.0 - use vim.keymap.set
-      vim.api.nvim_buf_set_keymap(bufnr, mode, lhs, rhs, opts)
-    end
-
-    -- navigation
-    map('n', '[c', "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
-    map('n', ']c', "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
-
-    -- actions
     -- TODO neovim 0.7.0 - bind multiple modes at once
     -- TODO neovim 0.7.0 - pass lua functions to map
-    map('n', '<leader>hs', '<cmd>Gitsigns stage_hunk<CR>')
-    map('v', '<leader>hs', '<cmd>Gitsigns stage_hunk<CR>')
-    map('n', '<leader>hr', '<cmd>Gitsigns reset_hunk<CR>')
-    map('n', '<leader>hS', '<cmd>Gitsigns stage_buffer<CR>')
-    map('n', '<leader>hu', '<cmd>Gitsigns undo_stage_hunk<CR>')
-    map('n', '<leader>hR', '<cmd>Gitsigns reset_buffer<CR>')
-    map('n', '<leader>hp', '<cmd>Gitsigns preview_hunk<CR>')
-    map('n', '<leader>hb', "<cmd>lua require('gitsigns').blame_line({ full=true })<CR>")
-    map('n', '<leader>tb', '<cmd>Gitsigns toggle_current_line_blame<CR>')
-    map('n', '<leader>hd', '<cmd>Gitsigns diffthis<CR>')
-    map('n', '<leader>hD', "<cmd>lua require('gitsigns').diffthis('~')<CR>")
-    map('n', '<leader>td', '<cmd>Gitsigns toggle_deleted<CR>')
+
+    -- navigation
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[h', '<cmd>Gitsigns prev_hunk<cr>', { noremap = true })
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']h', '<cmd>Gitsigns next_hunk<cr>', { noremap = true })
+
+    -- actions
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hs', '<cmd>Gitsigns stage_hunk<cr>', { noremap = true })
+    vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader>hs', '<cmd>Gitsigns stage_hunk<cr>', { noremap = true })
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hr', '<cmd>Gitsigns reset_hunk<cr>', { noremap = true })
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hS', '<cmd>Gitsigns stage_buffer<cr>', { noremap = true })
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hu', '<cmd>Gitsigns undo_stage_hunk<cr>', { noremap = true })
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hR', '<cmd>Gitsigns reset_buffer<cr>', { noremap = true })
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hp', '<cmd>Gitsigns preview_hunk<cr>', { noremap = true })
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hb', "<cmd>lua require('gitsigns').blame_line({ full=true })<cr>", { noremap = true })
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>tb', '<cmd>Gitsigns toggle_current_line_blame<cr>', { noremap = true })
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hd', '<cmd>Gitsigns diffthis<cr>', { noremap = true })
 
     -- text object
-    map('o', 'ih', ':<C-u>Gitsigns select_hunk<CR>')
-    map('x', 'ih', ':<C-u>Gitsigns select_hunk<CR>')
+    vim.api.nvim_buf_set_keymap(bufnr, 'o', 'ih', ':<C-u>Gitsigns select_hunk<cr>', { noremap = true })
+    vim.api.nvim_buf_set_keymap(bufnr, 'x', 'ih', ':<C-u>Gitsigns select_hunk<cr>', { noremap = true })
   end
 })
