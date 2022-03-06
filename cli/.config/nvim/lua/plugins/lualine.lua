@@ -17,11 +17,18 @@ require('lualine').setup({
       'mode',
       fmt = function(str) return str:sub(1, 1) end
     }},
-    lualine_c = {{
-      'filename',
-      path = 1 -- relative path
-    }},
+    lualine_b = { 'branch', 'diff', 'diagnostics' },
+    lualine_c = {{ 'filename', path = 1 }},
+    lualine_x = { 'encoding', 'fileformat', 'filetype' },
     lualine_y = { 'location', 'progress' },
+    lualine_z = {}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {{ 'filename', path = 1 }},
+    lualine_x = {},
+    lualine_y = {},
     lualine_z = {}
   },
   tabline = {},
