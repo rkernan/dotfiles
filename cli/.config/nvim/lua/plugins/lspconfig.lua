@@ -29,12 +29,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>s', "<cmd>FzfLua lsp_document_symbols<cr>", { noremap = true })
 end
 
--- enable language servers
-local servers = { 'pyright' }
-for _, lsp in ipairs(servers) do
-  require('lspconfig')[lsp].setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-    flags = { debounce_text_changes = 150 }
-  })
-end
+local lspconfig = require('lspconfig')
+lspconfig.pyright.setup({ on_attach = on_attach, capabilities = capabilities})
+-- custom server for sumneko
+require('plugins.lspconfig-sumneko')
