@@ -2,7 +2,6 @@
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-
 -- setup buffer when language server starts
 local on_attach = function(client, bufnr)
   -- TODO neovim 0.7.0 - bind multiple modes at once
