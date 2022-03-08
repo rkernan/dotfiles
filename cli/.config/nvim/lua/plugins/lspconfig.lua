@@ -24,6 +24,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>t', "<cmd>FzfLua lsp_typedefs<cr>", { noremap = true })
   -- hover doc
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<cr>', { noremap = true })
+  vim.api.nvim_buf_set_keymap(bufnr, 'i', '<c-k>', "<cmd>lua vim.lsp.buf.signature_help()<cr>", { noremap = true })
   -- symbols
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>s', "<cmd>FzfLua lsp_document_symbols<cr>", { noremap = true })
 end
