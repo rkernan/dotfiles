@@ -16,7 +16,7 @@ require('gitsigns').setup({
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hR', '<cmd>Gitsigns reset_buffer<cr>', { noremap = true })
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hp', '<cmd>Gitsigns preview_hunk<cr>', { noremap = true })
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hb', "<cmd>lua require('gitsigns').blame_line({ full=true })<cr>", { noremap = true })
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>tb', '<cmd>Gitsigns toggle_current_line_blame<cr>', { noremap = true })
+    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ht', '<cmd>Gitsigns toggle_current_line_blame<cr>', { noremap = true })
     vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hd', '<cmd>Gitsigns diffthis<cr>', { noremap = true })
 
     -- text object
