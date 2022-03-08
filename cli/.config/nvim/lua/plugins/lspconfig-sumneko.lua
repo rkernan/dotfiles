@@ -1,7 +1,7 @@
 local lspconfig = require('lspconfig')
 
 local sumneko_binary_path = vim.fn.exepath('lua-language-server')
-if not sumneko_binary_path then return end -- get out early
+if sumneko_binary_path == nil or sumneko_binary_path == '' then return end
 local sumneko_root_path = vim.fn.fnamemodify(sumneko_binary_path, ':p:h')
 
 local runtime_path = vim.split(package.path, ';')
