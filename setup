@@ -45,9 +45,7 @@ install_brew() {
 }
 
 install_vf() {
-  if ! check_command vf &> /dev/null; then
-    python3 -m pip install --user virtualfish
-  fi
+  python3 -m pip install --upgrade --user virtualfish
   vf install auto_activation global_requirements
 }
 
