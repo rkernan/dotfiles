@@ -78,9 +78,9 @@ return packer.startup(function(use)
     'hrsh7th/nvim-cmp',
     config = function() require('plugins.cmp') end
   })
-  -- languages
   use({
-    'sheerun/vim-polyglot',
-    setup = function() vim.g.polyglot_disabled = { 'autoindent', 'sensible'} end
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
+    config = function() require('plugins.tree-sitter') end
   })
 end)
