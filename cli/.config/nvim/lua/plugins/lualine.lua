@@ -5,6 +5,8 @@ custom_gruvbox.visual.c = custom_gruvbox.normal.c
 custom_gruvbox.replace.c = custom_gruvbox.normal.c
 custom_gruvbox.command.c = custom_gruvbox.normal.c
 
+-- FIXME diagnostics colors don't match signcolumn
+-- FIXME diff colors don't match signcolumn
 require('lualine').setup({
   options = {
     theme = custom_gruvbox,
