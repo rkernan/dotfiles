@@ -40,12 +40,6 @@ return packer.startup(function(use)
     requires = { 'nvim-lua/plenary.nvim' },
     config = function() require('plugins.gitsigns') end
   })
-  -- tmux integration
-  use({
-    'christoomey/vim-tmux-navigator',
-    setup = require('plugins.tmux-navigator').setup,
-    config = require('plugins.tmux-navigator').config,
-  })
   -- fzf integration
   use({
     'ibhagwan/fzf-lua',
