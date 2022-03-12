@@ -24,6 +24,15 @@ if test -d $go_path
   fish_add_path $GOPATH"/bin"
 end
 
+# env
+set -x EDITOR nvim
+set -x PAGER less
+
+#=========================#
+# interactive mode config #
+#=========================#
+status is-interactive || exit
+
 _autostart_tmux
 
 set -q NO_UNICODE || set -x NO_UNICODE 0
@@ -78,10 +87,6 @@ set -x FZF_CTRL_R_OPTS "$FZF_DEFAULT_OPTS --prompt='History> '"
 set -x FZF_ALT_C_COMMAND "_fzf_list_dirs \$dir"
 set -x FZF_ALT_C_OPTS "$FZF_DEFAULT_OPTS --prompt='Dirs> '"
 
-# env
-set -x EDITOR nvim
-set -x PAGER less
-
 # aliases
 abbr e $EDITOR
 abbr p $PAGER
@@ -90,6 +95,3 @@ abbr cp cp -i
 abbr ln ln -i
 abbr mv mv -i
 abbr rm rm -i
-
-# sane umask
-umask 0022
