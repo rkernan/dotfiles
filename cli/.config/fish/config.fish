@@ -28,6 +28,9 @@ end
 set -x EDITOR nvim
 set -x PAGER less
 
+# install fisher to custom directory
+set -U fisher_path $HOME"/.config/fisher"
+
 #=========================#
 # interactive mode config #
 #=========================#
