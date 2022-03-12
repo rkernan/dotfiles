@@ -63,7 +63,6 @@ vim.api.nvim_set_keymap('v', 'y', 'y`]', { noremap = true })
 vim.api.nvim_set_keymap('v', 'p', 'p`]', { noremap = true })
 vim.api.nvim_set_keymap('n', 'p', 'p`]', { noremap = true })
 
-local utils = require('utils')
 utils.create_augroup({
   -- resize windows automatically
   { 'VimResized', '*', 'wincmd =' },
