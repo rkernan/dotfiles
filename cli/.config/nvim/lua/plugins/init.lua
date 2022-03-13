@@ -33,7 +33,6 @@ return packer.startup(function(use)
   use({ 'windwp/nvim-autopairs', config = function() require('nvim-autopairs').setup({}) end })
   use({ 'lambdalisue/suda.vim', setup = function() vim.g.suda_smart_edit = 1 end })
   use('tpope/vim-commentary')
-  use('tpope/vim-endwise')
   use('tpope/vim-repeat')
   use('tpope/vim-surround')
   use('tpope/vim-sleuth')
@@ -48,6 +47,7 @@ return packer.startup(function(use)
   use('L3MON4D3/LuaSnip')
   use('saadparwaiz1/cmp_luasnip')
   -- languages
-  use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = function() require('plugins.tree-sitter') end
+  use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = function() require('plugins.tree-sitter') end,
+  use('RRethy/nvim-treesitter-endwise')
   })
 end)
