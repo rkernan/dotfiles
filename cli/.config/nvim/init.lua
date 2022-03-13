@@ -63,6 +63,9 @@ vim.api.nvim_set_keymap('v', 'y', 'y`]', { noremap = true })
 vim.api.nvim_set_keymap('v', 'p', 'p`]', { noremap = true })
 vim.api.nvim_set_keymap('n', 'p', 'p`]', { noremap = true })
 
+-- see :h last-position-jump
+vim.cmd([[autocmd BufRead * autocmd FileType <buffer> ++once if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]])
+
 utils.create_augroup({
   -- resize windows automatically
   { 'VimResized', '*', 'wincmd =' },
