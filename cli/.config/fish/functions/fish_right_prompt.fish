@@ -4,7 +4,7 @@ function _prompt_cmd_duration
     echo "["(math --scale 3 $CMD_DURATION / 1000)"s]"
     set_color normal
     # only print duration once
-    set CMD_DURATION 0
+    set -g CMD_DURATION 0
   end
 end
 
