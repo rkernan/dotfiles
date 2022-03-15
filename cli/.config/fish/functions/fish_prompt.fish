@@ -24,7 +24,7 @@ function _prompt_hostname
     set_color $fish_color_host_remote
     prompt_hostname
     set_color normal
-    echo ':'
+    echo -n ':'
   end
 end
 
@@ -36,11 +36,11 @@ end
 
 function fish_prompt
   set -l last_pipestatus $pipestatus
-  echo -ns (_prompt_jobs)
-  echo -ns (_prompt_last_pipestatus $last_pipestatus)
-  echo -ns (_prompt_virtualenv)
-  echo -ns (_prompt_hostname)
-  echo -ns (_prompt_pwd)
-  echo -ns (fish_vcs_prompt)
-  echo -ns (set_color --bold white) ' > ' (set_color normal)
+  echo -n (_prompt_jobs)
+  echo -n (_prompt_last_pipestatus $last_pipestatus)
+  echo -n (_prompt_virtualenv)
+  echo -n (_prompt_hostname)
+  echo -n (_prompt_pwd)
+  echo -n (fish_vcs_prompt)
+  echo -n (set_color --bold white) '>' (set_color normal)
 end
