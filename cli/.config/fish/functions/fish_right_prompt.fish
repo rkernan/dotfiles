@@ -9,5 +9,5 @@ function _prompt_cmd_duration
 end
 
 function fish_right_prompt
-  echo -n (_prompt_cmd_duration)
+  echo -ns (_prompt_cmd_duration)
 end
