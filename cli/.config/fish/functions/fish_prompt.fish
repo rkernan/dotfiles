@@ -34,6 +34,23 @@ function _prompt_pwd
   set_color normal
 end
 
+function _prompt_mode
+  set_color --bold brwhite
+  switch $fish_bind_mode
+    case default
+      echo ' < '
+    case insert
+      echo ' > '
+    case replace_one
+      echo ' > '
+    case replace
+      echo ' < '
+    case visual
+      echo ' < '
+  end
+  set_color normal
+end
+
 function fish_prompt
   set -l last_pipestatus $pipestatus
   echo -ns (_prompt_jobs)
@@ -42,5 +59,5 @@ function fish_prompt
   echo -ns (_prompt_hostname)
   echo -ns (_prompt_pwd)
   echo -ns (fish_vcs_prompt)
-  echo -ns (set_color --bold white) ' > ' (set_color normal)
+  echo -ns (_prompt_mode)
 end
