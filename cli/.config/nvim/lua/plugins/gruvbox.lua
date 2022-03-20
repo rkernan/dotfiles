@@ -4,7 +4,7 @@ M.setup = function()
   vim.cmd('colorscheme gruvbox')
 end
 
-local status_ok, lualine_theme = pcall(require, 'lualine.themes.gruvbox')
+local status_ok, _ = pcall(require, 'lualine.themes.gruvbox')
 if status_ok then
   -- semi-custom lualine theme
   M.lualine_theme = require('lualine.themes.gruvbox')
