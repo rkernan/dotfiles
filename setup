@@ -6,6 +6,10 @@ stow() {
   command stow -t "$HOME" -v "$1"
 }
 
+unstow() {
+  command stow -t "$HOME" -vD "$1"
+}
+
 check_command() {
   local cmd="$1"
   local exec="$(which "$cmd" 2>/dev/null || true)"
@@ -117,6 +121,11 @@ for target in $targets; do
       ;;
     install_vf)
       install_vf
+      ;;
+    unstow)
+      for d in $(find . -mindepth 1 -maxdepth 1 -type d -not -path '*/\.git/*' -printf '%P\n'); do
+        unstow $d
+      done
       ;;
     work)
       stow work
