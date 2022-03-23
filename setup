@@ -22,9 +22,6 @@ guess_target() {
   if [ $(command -v pacman) ]; then
     # arch linux
     echo "cli gui"
-  elif [ $(command -v yum) ]; then
-    # centos/rhel/fedora - work
-    echo "cli work"
   elif [ $(command -v wsl.exe) ]; then
     # WSL
     echo "cli wsl"
