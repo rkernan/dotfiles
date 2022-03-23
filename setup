@@ -124,7 +124,7 @@ for target in $targets; do
       ;;
     unstow)
       for d in $(find . -mindepth 1 -maxdepth 1 -type d -not -path '*/\.git/*' -printf '%P\n'); do
-        unstow $d
+        unstow $d || true
       done
       ;;
     work)
