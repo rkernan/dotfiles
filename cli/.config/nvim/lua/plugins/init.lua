@@ -21,6 +21,7 @@ return packer.startup(function(use)
   -- general
   use({ "folke/which-key.nvim", config = function() require("which-key").setup({}) end })
   use({ 'gruvbox-community/gruvbox', config = require('plugins.gruvbox').setup })
+  use({ 'haya14busa/vim-asterisk', config = function() require('plugins.asterisk') end })
   use({ 'ibhagwan/fzf-lua', config = function() require('plugins.fzf') end })
   use({ 'lambdalisue/suda.vim', setup = function() vim.g.suda_smart_edit = 1 end })
   use({ 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' }, config = function() require('plugins.gitsigns') end })
