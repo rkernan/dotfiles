@@ -2,6 +2,9 @@
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
+-- sort diagnostics by severity
+vim.diagnostic.config({ severity_sort = true })
+
 -- setup buffer when language server starts
 local on_attach = function(client, bufnr)
   -- TODO neovim 0.7.0 - bind multiple modes at once
@@ -11,6 +14,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader><leader>a', "<cmd>lua vim.lsp.buf.range_code_action()<cr>", { noremap = true })
   -- diagnostics - buffer
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>e', "<cmd>FzfLua lsp_document_diagnostics<cr>", { noremap = true })
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<c-e>', "<cmd>lua vim.diagnostic.open_float(nil, { focus = false })<cr>", { noremap = true })
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '[d', '<cmd>lua vim.diagnostics.goto_prev()<cr>', { noremap = true })
   vim.api.nvim_buf_set_keymap(bufnr, 'n', ']d', '<cmd>lua vim.diagnostics.goto_next()<cr>', { noremap = true })
   -- format
