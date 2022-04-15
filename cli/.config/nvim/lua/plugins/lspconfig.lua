@@ -33,7 +33,7 @@ local on_attach = function(client, bufnr)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><leader>s', "<cmd>FzfLua lsp_document_symbols<cr>", { noremap = true })
 end
 
-local servers = { 'bashls', 'pyright' }
+local servers = { 'bashls', 'jsonls', 'pyright' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup({
     on_attach = on_attach,
