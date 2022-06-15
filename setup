@@ -127,10 +127,6 @@ for target in $targets; do
         unstow $d || true
       done
       ;;
-    work)
-      stow work
-      check_command fish &> /dev/null && fish -c "set -Ux NO_UNICODE 1" || true
-      ;;
     wsl)
       stow wsl
       check_command fish &> /dev/null && fish -c "set -Ux AUTOSTART_TMUX 1" || true
