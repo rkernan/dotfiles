@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -e
+
+workspace="${HOME}/workspace"
+remote_workspace="${HOME}/.remote-workspace"
+relpath=$(realpath --relative-to="$workspace" $(pwd))
+
+set -x
+
+rsync -rv --delete --exclude='.git/' "${workspace}/${relpath}/" "${remote_workspace}/${relpath}/"

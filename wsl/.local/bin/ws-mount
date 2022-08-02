@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -e
+
+remote=$1
+
+workspace="${HOME}/workspace"
+remote_workspace="${HOME}/.remote-workspace"
+
+set -x
+
+mkdir -p "$remote_workspace"
+sshfs $remote:"${workspace}/" "$remote_workspace"
