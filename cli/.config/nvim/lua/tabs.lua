@@ -23,7 +23,7 @@ function M.set_tabs()
   M.summarize_tabs()
 end
 
-vim.cmd("command! -nargs=0 SummarizeTabs lua require('tabs').summarize_tabs()")
-vim.cmd("command! -nargs=0 SetTabs lua require('tabs').set_tabs()")
+vim.api.nvim_create_user_command('SummarizeTabs', M.summarize_tabs, { nargs = 0, bang = true})
+vim.api.nvim_create_user_command('SetTabs', M.set_tabs, { nargs = 0, bang = true })
 
 return M
