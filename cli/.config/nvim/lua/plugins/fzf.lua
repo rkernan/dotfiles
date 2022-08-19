@@ -1,4 +1,6 @@
-require('fzf-lua').setup({
+local fzf = require('fzf-lua')
+
+fzf.setup({
   winopts = {
     border = 'single',
     preview = {
@@ -21,6 +23,6 @@ require('fzf-lua').setup({
   }
 })
 
-vim.api.nvim_set_keymap('n', '<leader>b', "<cmd>FzfLua buffers<cr>", { noremap = true})
-vim.api.nvim_set_keymap('n', '<leader>f', "<cmd>FzfLua files<cr>", { noremap = true})
-vim.api.nvim_set_keymap('n', '<leader>/', "<cmd>FzfLua live_grep<cr>", { noremap = true})
+vim.keymap.set('n', '<leader>b', fzf.buffers)
+vim.keymap.set('n', '<leader>f', fzf.files)
+vim.keymap.set('n', '<leader>/', fzf.live_grep)

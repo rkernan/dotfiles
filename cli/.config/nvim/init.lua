@@ -39,29 +39,25 @@ vim.o.timeoutlen = 500
 -- space as leader
 vim.g.mapleader = ' '
 
--- TODO neovim 0.7.0 - bind multiple modes at once
--- TODO neovim 0.7.0 - pass lua functions to map
-
 -- disable ex mode
-vim.api.nvim_set_keymap('n', 'Q', '<nop>', { noremap = true })
+vim.keymap.set('n', 'Q', '<nop>')
 
 -- yank to end of line
-vim.api.nvim_set_keymap('n', 'Y', 'y$', { noremap = true })
+vim.keymap.set('n', 'Y', 'y$')
 
 -- treat lines wraps as real lines
-vim.api.nvim_set_keymap('n', 'j', 'gj', { noremap = true })
-vim.api.nvim_set_keymap('n', 'k', 'gk', { noremap = true })
-vim.api.nvim_set_keymap('n', 'gj', 'j', { noremap = true })
-vim.api.nvim_set_keymap('n', 'gk', 'k', { noremap = true })
+vim.keymap.set('n', 'j', 'gj')
+vim.keymap.set('n', 'k', 'gk')
+vim.keymap.set('n', 'gj', 'j')
+vim.keymap.set('n', 'gk', 'k')
 
 -- keep highlight after changing indent
-vim.api.nvim_set_keymap('v', '>', '>gv', { noremap = true })
-vim.api.nvim_set_keymap('v', '<', '<gv', { noremap = true })
+vim.keymap.set('v', '>', '>gv')
+vim.keymap.set('v', '<', '<gv')
 
 -- automatically jump to the end of the last paste
-vim.api.nvim_set_keymap('v', 'y', 'y`]', { noremap = true })
-vim.api.nvim_set_keymap('v', 'p', 'p`]', { noremap = true })
-vim.api.nvim_set_keymap('n', 'p', 'p`]', { noremap = true })
+vim.keymap.set('v', 'y', 'y`]')
+vim.keymap.set({ 'n', 'v' }, 'p', 'p`]')
 
 -- see :h last-position-jump
 vim.cmd([[autocmd BufRead * autocmd FileType <buffer> ++once if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]])

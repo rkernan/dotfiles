@@ -1,26 +1,25 @@
 require('gitsigns').setup({
-  on_attach = function(bufnr)
-    -- TODO neovim 0.7.0 - bind multiple modes at once
-    -- TODO neovim 0.7.0 - pass lua functions to map
+  on_attach = function(buffer)
+    local gs = package.loaded.gitsigns
 
     -- navigation
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '[h', '<cmd>Gitsigns prev_hunk<cr>', { noremap = true })
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', ']h', '<cmd>Gitsigns next_hunk<cr>', { noremap = true })
+    vim.keymap.set('n', '[h', gs.prev_hunk, { buffer = buffer })
+    vim.keymap.set('n', ']h', gs.next_hunk, { buffer = buffer })
 
     -- actions
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hs', '<cmd>Gitsigns stage_hunk<cr>', { noremap = true })
-    vim.api.nvim_buf_set_keymap(bufnr, 'v', '<leader>hs', '<cmd>Gitsigns stage_hunk<cr>', { noremap = true })
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hr', '<cmd>Gitsigns reset_hunk<cr>', { noremap = true })
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hS', '<cmd>Gitsigns stage_buffer<cr>', { noremap = true })
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hu', '<cmd>Gitsigns undo_stage_hunk<cr>', { noremap = true })
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hR', '<cmd>Gitsigns reset_buffer<cr>', { noremap = true })
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hp', '<cmd>Gitsigns preview_hunk<cr>', { noremap = true })
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hb', "<cmd>lua require('gitsigns').blame_line({ full=true })<cr>", { noremap = true })
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>ht', '<cmd>Gitsigns toggle_current_line_blame<cr>', { noremap = true })
-    vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>hd', '<cmd>Gitsigns diffthis<cr>', { noremap = true })
+    vim.keymap.set({ 'n', 'v' }, '<leader>hs', gs.stage_hunk, { buffer = buffer })
+    vim.keymap.set({ 'n', 'v' }, '<leader>hr', gs.reset_hunk, { buffer = buffer })
+    vim.keymap.set('n', '<leader>hS', gs.stage_buffer, { buffer = buffer})
+    vim.keymap.set('n', '<leader>hu', gs.undo_stage_hunk, { buffer = buffer})
+    vim.keymap.set('n', '<leader>hR', gs.reset_buffer, { buffer = buffer})
+    vim.keymap.set('n', '<leader>hp', gs.preview_hunk, { buffer = buffer})
+    vim.keymap.set('n', '<leader>hb', function () gs.blame_line({ full = true }) end, { buffer = buffer})
+    vim.keymap.set('n', '<leader>ht', gs.toggle_current_line_blame, { buffer = buffer})
+    vim.keymap.set('n', '<leader>hd', gs.diffthis, { buffer = buffer})
+    vim.keymap.set('n', '<leader>hD', function () gs.diffthis('~') end, { buffer = buffer })
+    vim.keymap.set('n', '<leader>td', gs.toggle_deleted, { buffer = buffer})
 
     -- text object
-    vim.api.nvim_buf_set_keymap(bufnr, 'o', 'ih', ':<C-u>Gitsigns select_hunk<cr>', { noremap = true })
-    vim.api.nvim_buf_set_keymap(bufnr, 'x', 'ih', ':<C-u>Gitsigns select_hunk<cr>', { noremap = true })
+    vim.keymap.set({ 'o', 'x' }, 'ih', ':<C-u>Gitsigns select_hunk<cr>', { buffer = buffer })
   end
 })
