@@ -39,7 +39,7 @@ status is-interactive || exit
 _autostart_tmux
 
 # fzf config
-set -x FZF_DEFAULT_OPTS "--cycle --layout=reverse --preview-window=default,border-sharp --height=75% --info=inline"
+set -x FZF_DEFAULT_OPTS "--cycle --layout=reverse --border=none --preview-window=border-sharp,right:60% --height=60% --info=inline"
 set -x FZF_DEFAULT_COMMAND "_fzf_list_files \$dir"
 set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
 set -x FZF_CTRL_T_OPTS "--preview='_fzf_file_preview {}'"
