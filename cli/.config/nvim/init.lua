@@ -59,19 +59,28 @@ vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', 'y', 'y`]')
 vim.keymap.set({ 'n', 'v' }, 'p', 'p`]')
 
--- see :h last-position-jump
-vim.cmd([[autocmd BufRead * autocmd FileType <buffer> ++once if &ft !~# 'commit\|rebase' && line("'\"") > 1 && line("'\"") <= line("$") | exe 'normal! g`"' | endif]])
-
-utils.create_augroup({
-  -- resize windows automatically
-  { 'VimResized', '*', 'wincmd =' },
-  -- cursorline and relative line numbers for active buffer
-  { 'BufWinEnter,VimEnter,WinEnter', '*', ":lua require('utils').setlocal_no_float({ 'cursorline', 'relativenumber' })" },
-  { 'WinLeave', '*', ":lua require('utils').setlocal_no_float({ 'nocursorline', 'norelativenumber' })" },
-  -- no relative line numbers in insert mode
-  { 'InsertEnter', '*', ":lua require('utils').setlocal_no_float({ 'norelativenumber' })" },
-  { 'InsertLeave', '*', ":lua require('utils').setlocal_no_float({ 'relativenumber' })" }
-}, 'vimrc')
+local group = vim.api.nvim_create_augroup('vimrc', {})
+-- jump to last-position on start, replaces last-position-jump
+vim.api.nvim_create_autocmd('BufReadPost', { group = group,
+  callback = function ()
+    local row, col = unpack(vim.api.nvim_buf_get_mark(0, '"'))
+    if { row, col } ~= { 0, 0 } then
+      vim.api.nvim_win_set_cursor(0, { row, 0 })
+    end
+  end
+})
+-- resize windows automatically
+vim.api.nvim_create_autocmd('VimResized', { group = group, pattern = '*', command = 'wincmd =' })
+-- cursorline and relative line numbers of active buffers
+vim.api.nvim_create_autocmd({ 'BufWinEnter', 'VimEnter', 'WinEnter' }, { group = group, pattern = '*',
+  callback = function () utils.setlocal_no_float({ 'cursorline', 'relativenumber' }) end })
+vim.api.nvim_create_autocmd('WinLeave', { group = group, pattern = '*',
+  callback = function () utils.setlocal_no_float({ 'nocursorline', 'norelativenumber' }) end })
+-- no relative line numbers in insert mode
+vim.api.nvim_create_autocmd('InsertEnter', { group = group, pattern = '*',
+  callback = function () utils.setlocal_no_float({ 'norelativenumber' }) end })
+vim.api.nvim_create_autocmd('InsertLeave', { group = group, pattern = '*',
+  callback = function () utils.setlocal_no_float({ 'relativenumber' }) end })
 
 require('tabs')
 require('plugins')
