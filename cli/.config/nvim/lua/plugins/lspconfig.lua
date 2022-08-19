@@ -10,11 +10,12 @@ vim.diagnostic.config({ severity_sort = true })
 
 -- setup buffer when language server starts
 local on_attach = function(client, buffer)
+  local fzf_winopts = { preview = { layout = 'vertical', vertical = 'down:60%' }}
   -- code actions
   vim.keymap.set('n', '<leader><leader>a', vim.lsp.buf.code_action, { buffer = buffer })
   vim.keymap.set('v', '<leader><leader>a', vim.lsp.buf.range_code_action, { buffer = buffer })
   -- diagnostics - buffer
-  vim.keymap.set('n', '<leader>e', fzf.lsp_document_diagnostics, { buffer = buffer })
+  vim.keymap.set('n', '<leader>e', function () fzf.lsp_document_diagnostics({ winopts = fzf_winopts }) end, { buffer = buffer })
   vim.keymap.set('n', '<c-e>', function () vim.diagnostic.open_float(nil, { focus = false }) end, { buffer = buffer })
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = buffer })
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = buffer })
@@ -22,11 +23,11 @@ local on_attach = function(client, buffer)
   vim.keymap.set('n', '<leader><leader>a', vim.lsp.buf.formatting, { buffer = buffer })
   vim.keymap.set('v', '<leader><leader>a', vim.lsp.buf.range_formatting, { buffer = buffer })
   -- goto
-  vim.keymap.set('n', '<leader><leader>r', fzf.lsp_references, { buffer = buffer })
-  vim.keymap.set('n', '<leader><leader>i', fzf.lsp_implementations, { buffer = buffer })
-  vim.keymap.set('n', '<leader><leader>d', fzf.lsp_definitions, { buffer = buffer })
-  vim.keymap.set('n', '<leader><leader>D', fzf.lsp_declarations, { buffer = buffer })
-  vim.keymap.set('n', '<leader><leader>t', fzf.lsp_typedefs, { buffer = buffer })
+  vim.keymap.set('n', '<leader><leader>r', function () fzf.lsp_references({ winopts = fzf_winopts  }) end, { buffer = buffer })
+  vim.keymap.set('n', '<leader><leader>i', function () fzf.lsp_implementations({ winopts = fzf_winopts }) end, { buffer = buffer })
+  vim.keymap.set('n', '<leader><leader>d', function () fzf.lsp_definitions({ winopts = fzf_winopts }) end, { buffer = buffer })
+  vim.keymap.set('n', '<leader><leader>D', function () fzf.lsp_declarations({ winopts = fzf_winopts }) end, { buffer = buffer })
+  vim.keymap.set('n', '<leader><leader>t', function () fzf.lsp_typedefs({ winopts = fzf_winopts }) end, { buffer = buffer })
   -- hover doc
   vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = buffer })
   vim.keymap.set('i', '<c-k>', vim.lsp.buf.signature_help, { buffer = buffer })
