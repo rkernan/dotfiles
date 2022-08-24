@@ -63,10 +63,9 @@ local group = vim.api.nvim_create_augroup('vimrc', {})
 -- jump to last-position on start, replaces last-position-jump
 vim.api.nvim_create_autocmd('BufReadPost', { group = group,
   callback = function ()
-    local row, col = unpack(vim.api.nvim_buf_get_mark(0, '"'))
-    if { row, col } ~= { 0, 0 } then
-      vim.api.nvim_win_set_cursor(0, { row, 0 })
-    end
+    local row, _ = unpack(vim.api.nvim_buf_get_mark(0, '"'))
+    local max_row = vim.fn.line('$')
+    vim.api.nvim_win_set_cursor(0, { row <= max_row and row or max_row, 0 })
   end
 })
 -- resize windows automatically
