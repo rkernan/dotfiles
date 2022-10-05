@@ -10,6 +10,17 @@ vim.diagnostic.config({ severity_sort = true })
 
 -- setup buffer when language server starts
 local on_attach = function(client, buffer)
+  -- setup signature
+  local lsp_sig_cfg = {
+    bind = true,
+    hint_enable = false,
+    hi_parameter = 'IncSearch',
+    handler_opts = {
+      border = 'none'
+    }
+  }
+  require('lsp_signature').on_attach(lsp_sig_cfg, buffer)
+
   local fzf_winopts = { preview = { layout = 'vertical', vertical = 'down:60%' }}
   -- code actions
   vim.keymap.set('n', '<leader><leader>a', vim.lsp.buf.code_action, { buffer = buffer })
