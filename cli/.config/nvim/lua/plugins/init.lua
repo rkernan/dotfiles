@@ -18,22 +18,25 @@ packer.init({
 return packer.startup(function(use)
   -- let packer manage itself
   use({ 'wbthomason/packer.nvim' })
+  -- appearance
+  use({ 'gruvbox-community/gruvbox', config = require('plugins.gruvbox').setup })
+  use({ 'nvim-lualine/lualine.nvim', config = function() require('plugins.lualine') end })
   -- general
   use({ "folke/which-key.nvim", config = function() require("which-key").setup({}) end })
-  use({ 'gruvbox-community/gruvbox', config = require('plugins.gruvbox').setup })
   use({ 'haya14busa/vim-asterisk', config = function() require('plugins.asterisk') end })
   use({ 'ibhagwan/fzf-lua', config = function() require('plugins.fzf') end })
   use({ 'lambdalisue/suda.vim', setup = function() vim.g.suda_smart_edit = 1 end })
   use({ 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' }, config = function() require('plugins.gitsigns') end })
-  use({ 'nvim-lualine/lualine.nvim', config = function() require('plugins.lualine') end })
   use({ 'tpope/vim-commentary' })
   use({ 'tpope/vim-repeat' })
   use({ 'tpope/vim-surround' })
   use({ 'tpope/vim-sleuth' })
   use({ 'tpope/vim-unimpaired' })
-  use({ 'windwp/nvim-autopairs', config = function() require('plugins.autopairs') end })
   use({ 'wellle/targets.vim' })
-  -- lspconfig
+  -- pairs and tags
+  use({ 'windwp/nvim-autopairs', config = function() require('plugins.autopairs') end })
+  use({ 'windwp/nvim-ts-autotag', config = function() require('nvim-ts-autotag').setup() end })
+  -- lsp
   use({ 'neovim/nvim-lspconfig', config = function() require('plugins.lspconfig') end })
   use({ 'hrsh7th/cmp-nvim-lsp' })
   use({ 'hrsh7th/cmp-buffer' })
