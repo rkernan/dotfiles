@@ -38,6 +38,9 @@ return packer.startup(function(use)
   use({ 'windwp/nvim-ts-autotag', config = function() require('nvim-ts-autotag').setup() end })
   -- lsp
   use({ 'neovim/nvim-lspconfig', config = function() require('plugins.lspconfig') end })
+  use({ 'ray-x/lsp_signature.nvim' })
+  use({ 'https://git.sr.ht/~whynothugo/lsp_lines.nvim', config = function() require('lsp_lines').setup() end })
+  -- completion engine
   use({ 'hrsh7th/cmp-nvim-lsp' })
   use({ 'hrsh7th/cmp-buffer' })
   use({ 'hrsh7th/cmp-cmdline' })
@@ -45,7 +48,6 @@ return packer.startup(function(use)
   use({ 'hrsh7th/nvim-cmp', config = function() require('plugins.cmp') end })
   use({ 'L3MON4D3/LuaSnip' })
   use({ 'saadparwaiz1/cmp_luasnip' })
-  use({ 'ray-x/lsp_signature.nvim' })
   -- treesitter
   use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = function() require('plugins.tree-sitter') end })
 end)

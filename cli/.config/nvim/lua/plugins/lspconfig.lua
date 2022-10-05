@@ -6,7 +6,10 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 local fzf = require('fzf-lua')
 
 -- sort diagnostics by severity
-vim.diagnostic.config({ severity_sort = true })
+vim.diagnostic.config({
+  severity_sort = true,
+  virtual_text = false,
+})
 
 -- setup buffer when language server starts
 local on_attach = function(client, buffer)
@@ -50,7 +53,7 @@ local servers = { 'bashls', 'jsonls', 'pyright', 'yamlls' }
 for _, lsp in pairs(servers) do
   require('lspconfig')[lsp].setup({
     on_attach = on_attach,
-    capabilities = capabilities
+    capabilities = capabilities,
   })
 end
 
