@@ -41,6 +41,6 @@ return packer.startup(function(use)
   use({ 'hrsh7th/nvim-cmp', config = function() require('plugins.cmp') end })
   use({ 'L3MON4D3/LuaSnip' })
   use({ 'saadparwaiz1/cmp_luasnip' })
-  -- treesitter - requires nvim 0.6, experimental
+  -- treesitter
   use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = function() require('plugins.tree-sitter') end })
 end)
