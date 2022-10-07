@@ -21,6 +21,7 @@ return packer.startup(function(use)
   -- appearance
   use({ 'ellisonleao/gruvbox.nvim', config = require('plugins.theme').setup })
   use({ 'nvim-lualine/lualine.nvim', config = function() require('plugins.lualine') end })
+  use({ 'petertriho/nvim-scrollbar', config = function() require('scrollbar').setup() end })
   -- general
   use({ "folke/which-key.nvim", config = function() require("which-key").setup({}) end })
   use({ 'haya14busa/vim-asterisk', config = function() require('plugins.asterisk') end })
