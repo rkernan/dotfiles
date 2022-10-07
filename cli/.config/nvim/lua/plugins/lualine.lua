@@ -39,9 +39,15 @@ local function fileformat()
   return ''
 end
 
+local gruvbox_mod = require('lualine.themes.gruvbox')
+gruvbox_mod.insert.c = gruvbox_mod.normal.c
+gruvbox_mod.visual.c = gruvbox_mod.normal.c
+gruvbox_mod.replace.c = gruvbox_mod.normal.c
+gruvbox_mod.command.c = gruvbox_mod.normal.c
+
 require('lualine').setup({
   options = {
-    theme = 'tokyonight',
+    theme = gruvbox_mod,
     icons_enabled = true,
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''}

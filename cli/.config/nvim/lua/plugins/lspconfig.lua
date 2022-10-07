@@ -14,14 +14,11 @@ vim.diagnostic.config({
 -- setup buffer when language server starts
 local on_attach = function(_, buffer)
   -- setup signature
-  local lsp_sig_cfg = {
+  require('lsp_signature').on_attach({
     bind = true,
     hint_enable = false,
-    handler_opts = {
-      border = 'none'
-    }
-  }
-  require('lsp_signature').on_attach(lsp_sig_cfg, buffer)
+    handler_opts = { border = 'none' }
+  }, buffer)
 
   local fzf_winopts = { preview = { layout = 'vertical', vertical = 'down:60%' }}
   -- code actions

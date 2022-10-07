@@ -19,11 +19,11 @@ return packer.startup(function(use)
   -- let packer manage itself
   use({ 'wbthomason/packer.nvim' })
   -- appearance
-  use({ 'folke/tokyonight.nvim', config = function() require('plugins.theme') end })
+  use({ 'ellisonleao/gruvbox.nvim', config = function() require('plugins.gruvbox') end })
   use({ 'nvim-lualine/lualine.nvim', config = function() require('plugins.lualine') end })
   use({ 'petertriho/nvim-scrollbar', config = function() require('scrollbar').setup() end })
   -- general
-  use({ "folke/which-key.nvim", config = function() require("which-key").setup({}) end })
+  use({ 'folke/which-key.nvim', config = function() require("which-key").setup({}) end })
   use({ 'haya14busa/vim-asterisk', config = function() require('plugins.asterisk') end })
   use({ 'ibhagwan/fzf-lua', config = function() require('plugins.fzf') end })
   use({ 'lambdalisue/suda.vim', setup = function() vim.g.suda_smart_edit = 1 end })
