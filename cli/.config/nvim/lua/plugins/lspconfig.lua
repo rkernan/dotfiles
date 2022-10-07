@@ -17,7 +17,6 @@ local on_attach = function(_, buffer)
   local lsp_sig_cfg = {
     bind = true,
     hint_enable = false,
-    hi_parameter = 'IncSearch',
     handler_opts = {
       border = 'none'
     }

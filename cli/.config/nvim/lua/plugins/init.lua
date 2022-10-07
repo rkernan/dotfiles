@@ -19,7 +19,7 @@ return packer.startup(function(use)
   -- let packer manage itself
   use({ 'wbthomason/packer.nvim' })
   -- appearance
-  use({ 'ellisonleao/gruvbox.nvim', config = require('plugins.theme').setup })
+  use({ 'folke/tokyonight.nvim', config = function() require('plugins.theme') end })
   use({ 'nvim-lualine/lualine.nvim', config = function() require('plugins.lualine') end })
   use({ 'petertriho/nvim-scrollbar', config = function() require('scrollbar').setup() end })
   -- general
