@@ -19,7 +19,7 @@ return packer.startup(function(use)
   -- let packer manage itself
   use({ 'wbthomason/packer.nvim' })
   -- appearance
-  use({ 'gruvbox-community/gruvbox', config = require('plugins.gruvbox').setup })
+  use({ 'ellisonleao/gruvbox.nvim', config = require('plugins.theme').setup })
   use({ 'nvim-lualine/lualine.nvim', config = function() require('plugins.lualine') end })
   -- general
   use({ "folke/which-key.nvim", config = function() require("which-key").setup({}) end })

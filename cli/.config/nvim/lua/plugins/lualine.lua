@@ -41,7 +41,7 @@ end
 
 require('lualine').setup({
   options = {
-    theme = require('plugins.gruvbox').lualine_theme,
+    theme = require('plugins.theme').lualine,
     icons_enabled = true,
     component_separators = { left = '', right = ''},
     section_separators = { left = '', right = ''}
