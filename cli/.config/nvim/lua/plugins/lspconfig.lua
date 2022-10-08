@@ -12,7 +12,7 @@ vim.diagnostic.config({
 })
 
 -- setup buffer when language server starts
-local on_attach = function(_, buffer)
+local function on_attach(_, buffer)
   -- setup signature
   require('lsp_signature').on_attach({
     bind = true,

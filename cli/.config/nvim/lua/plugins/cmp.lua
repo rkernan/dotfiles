@@ -1,12 +1,16 @@
 local cmp = require('cmp')
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local luasnip = require('luasnip')
+local lspkind = require('lspkind')
 
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' }}))
 
 cmp.setup({
+  formatting = {
+    format = lspkind.cmp_format(),
+  },
   snippet = {
-    expand = function(args)
+    expand = function (args)
       luasnip.lsp_expand(args.body)
     end
   },
@@ -22,7 +26,7 @@ cmp.setup({
       behavior = cmp.ConfirmBehavior.Replace,
       select = false
     }),
-    ['<tab>'] = cmp.mapping(function(fallback)
+    ['<tab>'] = cmp.mapping(function (fallback)
       if cmp.visible() then
         cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
@@ -31,7 +35,7 @@ cmp.setup({
         fallback()
       end
     end, { 'i', 'c' }),
-    ['<s-tab>'] = cmp.mapping(function(fallback)
+    ['<s-tab>'] = cmp.mapping(function (fallback)
       if cmp.visible() then
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then

@@ -1,5 +1,5 @@
 require('gitsigns').setup({
-  on_attach = function(buffer)
+  on_attach = function (buffer)
     local gs = package.loaded.gitsigns
 
     -- navigation
