@@ -1,6 +1,9 @@
 -- add additional caps supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+
+if pcall(require, 'cmp_nvim_lsp') then
+  capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
+end
 
 -- for keybindings
 local fzf = require('fzf-lua')
@@ -14,11 +17,13 @@ vim.diagnostic.config({
 -- setup buffer when language server starts
 local function on_attach(_, buffer)
   -- setup signature
-  require('lsp_signature').on_attach({
-    bind = true,
-    hint_enable = false,
-    handler_opts = { border = 'none' }
-  }, buffer)
+  if pcall(require, 'lsp_signature') then
+    require('lsp_signature').on_attach({
+      bind = true,
+      hint_enable = false,
+      handler_opts = { border = 'none' }
+    }, buffer)
+  end
 
   local fzf_winopts = { preview = { layout = 'vertical', vertical = 'down:60%' }}
   -- code actions
