@@ -44,10 +44,11 @@ return packer.startup(function (use)
   use({ 'windwp/nvim-ts-autotag', config = function () require('nvim-ts-autotag').setup() end })
   -- lsp
   use({ 'neovim/nvim-lspconfig', config = function () require('plugins.lspconfig') end })
-  use({ 'ray-x/lsp_signature.nvim' })
+  -- use({ 'ray-x/lsp_signature.nvim' })
   use({ 'https://git.sr.ht/~whynothugo/lsp_lines.nvim', config = function () require('lsp_lines').setup() end })
   -- completion engine
   use({ 'hrsh7th/cmp-nvim-lsp' })
+  use({ 'hrsh7th/cmp-nvim-lsp-signature-help' })
   use({ 'hrsh7th/cmp-buffer' })
   use({ 'hrsh7th/cmp-cmdline' })
   use({ 'hrsh7th/cmp-path' })

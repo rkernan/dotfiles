@@ -10,7 +10,6 @@ require('gruvbox').setup({
     Keyword = { fg = palette.bright_red, italic = true },
     Exception = { fg = palette.bright_red, italic = true },
     String = { italic = false },
-    LspSignatureActiveParameter = { underline = true },
   }
 })
 vim.cmd('colorscheme gruvbox')
