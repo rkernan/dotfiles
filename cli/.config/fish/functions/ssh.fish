@@ -1,11 +1,18 @@
 function ssh
-  if not test -z $TMUX
-    set -l orig (tmux display-message -p '#W')
-    tmux rename-window "$argv"
+  if test -n $TMUX
+    set -f last_window_name (tmux display-message -p '#W')
+    tmux set-window-option automatic-rename "off"
+    tmux rename-window "ssh:$argv"
+  end
+
+  begin
+    # set a conservative TERM
+    set -lx TERM xterm
     command ssh $argv
-    tmux rename-window "$orig"
+  end
+
+  if test -n $last_window_name
+    tmux rename-window "$last_window_name"
     tmux set-window-option automatic-rename "on"
-  else
-    command ssh $argv
   end
 end
