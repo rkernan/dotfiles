@@ -103,7 +103,7 @@ local components = {
           type = 'relative',
         },
       },
-      left_sep = ' ',
+      left_sep = '  ',
       hl = { fg = palette.light0 },
     },
     position = {
@@ -114,11 +114,10 @@ local components = {
         }
       },
       icon = ' ',
-      right_sep = ' ',
+      left_sep = ' ',
     },
     position_percent = {
       provider = 'line_percentage',
-      right_sep = ' ',
     },
   },
   git = {
@@ -188,7 +187,6 @@ local components = {
         bg = vi_mode.get_mode_color(),
       }
     end,
-    right_sep = ' ',
   },
 }
 
