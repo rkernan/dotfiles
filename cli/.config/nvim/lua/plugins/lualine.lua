@@ -49,12 +49,13 @@ require('lualine').setup({
   options = {
     theme = gruvbox_mod,
     icons_enabled = true,
+    ignore_focus = { 'fzf' },
     component_separators = { left = '', right = ''},
-    section_separators = { left = '', right = ''}
+    section_separators = { left = '', right = ''},
   },
   sections = {
     lualine_a = {
-      { 'mode', fmt = function (str) return str:sub(1, 1) end }
+      { 'mode', fmt = function (str) return str:sub(1, 1) end },
     },
     lualine_b = {
       { 'b:gitsigns_head', icon = '' },
@@ -62,9 +63,9 @@ require('lualine').setup({
     },
     lualine_c = {
       { 'filename', path = 1 },
+      { 'diagnostics', symbols = { error = 'E:', warn = 'W:', info = 'I:', hint = 'H:' }},
     },
     lualine_x = {
-      { 'diagnostics', symbols = { error = 'E:', warn = 'W:', info = 'I:', hint = 'H:' }},
       { lsp_server, icon = ' ' },
       { fileencoding, fmt = string.lower, icon = '' },
       { fileformat, fmt = string.lower, icon = '' },
@@ -81,8 +82,8 @@ require('lualine').setup({
     lualine_c = {{ 'filename', path = 1 }},
     lualine_x = {},
     lualine_y = {},
-    lualine_z = {}
+    lualine_z = {},
   },
   tabline = {},
-  extensions = {}
+  extensions = {},
 })
