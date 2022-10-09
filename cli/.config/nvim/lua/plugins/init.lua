@@ -20,9 +20,10 @@ return packer.startup(function (use)
   use({ 'wbthomason/packer.nvim' })
   -- appearance
   use({ 'ellisonleao/gruvbox.nvim', config = function () require('plugins.gruvbox') end })
-  use({ 'nvim-lualine/lualine.nvim', config = function () require('plugins.lualine') end })
-  use({ 'ibhagwan/fzf-lua', config = function () require('plugins.fzf') end })
   use({ 'folke/which-key.nvim', config = function () require("which-key").setup({}) end })
+  use({ 'ibhagwan/fzf-lua', config = function () require('plugins.fzf') end })
+  use({ 'kyazdani42/nvim-web-devicons' })
+  use({ 'nvim-lualine/lualine.nvim', config = function () require('plugins.lualine') end })
   -- vcs
   use({ 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' }, config = function () require('plugins.gitsigns') end })
   -- search
