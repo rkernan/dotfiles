@@ -2,6 +2,7 @@ local palette = require('gruvbox.palette')
 
 require('gruvbox').setup({
   overrides = {
+    Comment = { italic = false },
     Conditional = { fg = palette.bright_red, italic = true },
     Repeat = { fg = palette.bright_red, italic = true },
     Label = { fg = palette.bright_red, italic = true },
@@ -9,7 +10,7 @@ require('gruvbox').setup({
     Keyword = { fg = palette.bright_red, italic = true },
     Exception = { fg = palette.bright_red, italic = true },
     String = { italic = false },
-    LspSignatureActiveParameter = { fg = palette.bright_aqua, bold = true}
+    LspSignatureActiveParameter = { underline = true },
   }
 })
 vim.cmd('colorscheme gruvbox')
