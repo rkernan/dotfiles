@@ -40,10 +40,12 @@ local function fileformat()
 end
 
 local gruvbox_mod = require('lualine.themes.gruvbox')
+local gruvbox_palette = require('gruvbox.palette')
 gruvbox_mod.insert.c = gruvbox_mod.normal.c
 gruvbox_mod.visual.c = gruvbox_mod.normal.c
 gruvbox_mod.replace.c = gruvbox_mod.normal.c
 gruvbox_mod.command.c = gruvbox_mod.normal.c
+gruvbox_mod.terminal = { a = { fg = gruvbox_mod.insert.a.fg, bg = gruvbox_palette.bright_yellow, gui = gruvbox_mod.insert.a.gui } }
 
 require('lualine').setup({
   options = {
