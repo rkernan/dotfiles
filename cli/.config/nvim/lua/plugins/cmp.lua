@@ -1,13 +1,59 @@
 local cmp = require('cmp')
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local luasnip = require('luasnip')
-local lspkind = require('lspkind')
+
+local kind_icons = {
+  Text = "",
+  Method = "",
+  Function = "",
+  Constructor = "",
+  Field = "",
+  Variable = "",
+  Class = "ﴯ",
+  Interface = "",
+  Module = "",
+  Property = "ﰠ",
+  Unit = "",
+  Value = "",
+  Enum = "",
+  Keyword = "",
+  Snippet = "",
+  Color = "",
+  File = "",
+  Reference = "",
+  Folder = "",
+  EnumMember = "",
+  Constant = "",
+  Struct = "",
+  Event = "",
+  Operator = "",
+  TypeParameter = ""
+}
 
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' }}))
 
 cmp.setup({
+  enabled = function ()
+    -- disable completion in comments
+    if vim.api.nvim_get_mode().mode == 'c' then
+      -- keep command mode completion when cursor is in comment
+      return true
+    else
+      local context = require('cmp.config.context')
+      return not context.in_treesitter_capture('comment') and not context.in_syntax_group('Comment')
+    end
+  end,
   formatting = {
-    format = lspkind.cmp_format(),
+    format = function (entry, vim_item)
+      -- kind icons
+      vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
+      -- kind icons - force File icon for path
+      if entry.source.name == 'path' then
+        vim_item.kind = string.format('%s %s', kind_icons['File'], 'File')
+      end
+
+      return vim_item
+    end
   },
   snippet = {
     expand = function (args)
@@ -17,14 +63,14 @@ cmp.setup({
   mapping = {
     ['<c-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4),  { 'i', 'c' }),
     ['<c-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-    ['<c-space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<c-space>'] = cmp.mapping(cmp.mapping.complete({}), { 'i', 'c' }),
     ['<c-e'] = cmp.mapping({
       i = cmp.mapping.abort(),
-      c = cmp.mapping.close()
+      c = cmp.mapping.close(),
     }),
     ['<cr>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Replace,
-      select = false
+      select = false,
     }),
     ['<tab>'] = cmp.mapping(function (fallback)
       if cmp.visible() then
@@ -43,28 +89,28 @@ cmp.setup({
       else
         fallback()
       end
-    end, { 'i', 'c' })
+    end, { 'i', 'c' }),
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'luasnip'}
+    { name = 'luasnip'},
   }, {
-    { name = 'buffer' }
+    { name = 'buffer' },
   })
 })
 
 cmp.setup.cmdline({ '/', '?' }, {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
-    { name = 'buffer' }
+    { name = 'buffer' },
   }
 })
 
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({
-    { name = 'path' }
+    { name = 'path' },
   }, {
-    { name = 'cmdline' }
+    { name = 'cmdline' },
   })
 })
