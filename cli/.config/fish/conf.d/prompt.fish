@@ -8,10 +8,10 @@ set fish_color_param normal
 
 # git prompt colors and symbols
 set -g __fish_git_prompt_show_informative_status true
-set -g __fish_git_prompt_color_branch magenta --bold
+set -g __fish_git_prompt_color_branch magenta
 set -g __fish_git_prompt_showupstream "informative"
 set -g __fish_git_prompt_char_upstream_prefix ""
-set -g __fish_git_prompt_color_cleanstate green --bold
+set -g __fish_git_prompt_color_cleanstate green
 set -g __fish_git_prompt_color_stagedstate green
 set -g __fish_git_prompt_color_dirtystate yellow
 set -g __fish_git_prompt_color_invalidstate red

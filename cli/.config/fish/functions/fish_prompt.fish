@@ -58,6 +58,6 @@ function fish_prompt
   echo -ns (_prompt_virtualenv)
   echo -ns (_prompt_hostname)
   echo -ns (_prompt_pwd)
-  echo -ns (fish_vcs_prompt)
+  echo -ns (fish_git_prompt)
   echo -ns (_prompt_mode)
 end
