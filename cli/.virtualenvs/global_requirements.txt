@@ -1,5 +1,5 @@
 black
-flake8
 isort
-mypy
-python-lsp-server
+pycodestyle
+pydocstyle
+pyright
