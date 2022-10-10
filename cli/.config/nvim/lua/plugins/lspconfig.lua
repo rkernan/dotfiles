@@ -18,16 +18,14 @@ vim.diagnostic.config({
 local function on_attach(_, buffer)
   local fzf_winopts = { preview = { layout = 'vertical', vertical = 'down:60%' }}
   -- code actions
-  vim.keymap.set('n', '<leader><leader>a', vim.lsp.buf.code_action, { buffer = buffer })
-  vim.keymap.set('v', '<leader><leader>a', vim.lsp.buf.range_code_action, { buffer = buffer })
+  vim.keymap.set('n', '<leader><leader>a', function () fzf.lsp_code_actions() end, { buffer = buffer })
   -- diagnostics - buffer
   vim.keymap.set('n', '<leader>e', function () fzf.lsp_document_diagnostics({ winopts = fzf_winopts }) end, { buffer = buffer })
   vim.keymap.set('n', '<c-e>', function () vim.diagnostic.open_float(nil, { focus = false }) end, { buffer = buffer })
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = buffer })
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = buffer })
   -- format
-  vim.keymap.set('n', '<leader><leader>a', vim.lsp.buf.formatting, { buffer = buffer })
-  vim.keymap.set('v', '<leader><leader>a', vim.lsp.buf.range_formatting, { buffer = buffer })
+  vim.keymap.set('n', '<leader><leader>f', vim.lsp.buf.format, { buffer = buffer })
   -- goto
   vim.keymap.set('n', '<leader><leader>r', function () fzf.lsp_references({ winopts = fzf_winopts  }) end, { buffer = buffer })
   vim.keymap.set('n', '<leader><leader>i', function () fzf.lsp_implementations({ winopts = fzf_winopts }) end, { buffer = buffer })
