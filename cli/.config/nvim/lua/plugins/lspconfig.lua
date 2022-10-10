@@ -1,12 +1,12 @@
+local lspconfig = require('lspconfig')
+local fzf = require('fzf-lua')
+
 -- add additional caps supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 if pcall(require, 'cmp_nvim_lsp') then
   capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 end
-
--- for keybindings
-local fzf = require('fzf-lua')
 
 -- sort diagnostics by severity
 vim.diagnostic.config({
@@ -41,19 +41,16 @@ local function on_attach(_, buffer)
   vim.keymap.set('n', '<leader><leader>s', fzf.lsp_document_symbols, { buffer = buffer })
 end
 
-local servers = { 'bashls', 'jsonls', 'pyright', 'yamlls' }
-for _, lsp in pairs(servers) do
-  require('lspconfig')[lsp].setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-  })
-end
+lspconfig.bashls.setup({ on_attach = on_attach, capabilities = capabilities })
+lspconfig.jsonls.setup({ on_attach = on_attach, capabilities = capabilities })
+lspconfig.pyright.setup({ on_attach = on_attach, capabilities = capabilities })
+lspconfig.yamlls.setup({ on_attach = on_attach, capabilities = capabilities })
 
 -- custom sumneko server
 local runtime_path = vim.split(package.path, ';')
 table.insert(runtime_path, "lua/?.lua")
 table.insert(runtime_path, "lua/?/init.lua")
-require('lspconfig').sumneko_lua.setup({
+lspconfig.sumneko_lua.setup({
   on_attach = on_attach,
   capabilities = capabilities,
   settings = {
