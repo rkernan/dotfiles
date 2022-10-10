@@ -42,11 +42,9 @@ return packer.startup(function (use)
   use({ 'RRethy/nvim-treesitter-endwise' })
   use({ 'windwp/nvim-autopairs', config = function () require('plugins.autopairs') end })
   use({ 'windwp/nvim-ts-autotag', config = function () require('nvim-ts-autotag').setup() end })
-  -- linting and static actions
-  use({ 'jose-elias-alvarez/null-ls.nvim', config = function () require('plugins.null-ls') end })
   -- lsp
   use({ 'neovim/nvim-lspconfig', config = function () require('plugins.lspconfig') end })
-  -- use({ 'ray-x/lsp_signature.nvim' })
+  use({ 'jose-elias-alvarez/null-ls.nvim', requires = { 'nvim-lua/plenary.nvim' } })
   use({ 'https://git.sr.ht/~whynothugo/lsp_lines.nvim', config = function () require('lsp_lines').setup() end })
   -- completion engine
   use({ 'hrsh7th/cmp-nvim-lsp' })

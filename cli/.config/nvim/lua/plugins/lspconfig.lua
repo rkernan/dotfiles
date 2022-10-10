@@ -1,5 +1,5 @@
-local lspconfig = require('lspconfig')
 local fzf = require('fzf-lua')
+local lspconfig = require('lspconfig')
 
 -- add additional caps supported by nvim-cmp
 local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -25,7 +25,7 @@ local function on_attach(_, buffer)
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = buffer })
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = buffer })
   -- format
-  vim.keymap.set('n', '<leader><leader>f', vim.lsp.buf.format, { buffer = buffer })
+  -- vim.keymap.set('n', '<leader><leader>f', vim.lsp.buf.format, { buffer = buffer })
   -- goto
   vim.keymap.set('n', '<leader><leader>r', function () fzf.lsp_references({ winopts = fzf_winopts  }) end, { buffer = buffer })
   vim.keymap.set('n', '<leader><leader>i', function () fzf.lsp_implementations({ winopts = fzf_winopts }) end, { buffer = buffer })
@@ -43,6 +43,7 @@ lspconfig.bashls.setup({ on_attach = on_attach, capabilities = capabilities })
 lspconfig.jsonls.setup({ on_attach = on_attach, capabilities = capabilities })
 lspconfig.yamlls.setup({ on_attach = on_attach, capabilities = capabilities })
 
+-- python-lsp-server - completion only
 lspconfig.pylsp.setup({
   on_attach = on_attach,
   capabilities = capabilities,
@@ -99,3 +100,19 @@ lspconfig.sumneko_lua.setup({
     },
   },
 })
+
+if pcall(require, 'null-ls') then
+  local null_ls = require('null-ls')
+  null_ls.setup({
+    on_attach = on_attach,
+    sources = {
+      -- python
+      null_ls.builtins.formatting.black,
+      null_ls.builtins.formatting.isort,
+      null_ls.builtins.diagnostics.flake8,
+      null_ls.builtins.diagnostics.mypy,
+      -- fish
+      null_ls.builtins.diagnostics.fish,
+    }
+  })
+end
