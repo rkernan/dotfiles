@@ -8,20 +8,13 @@ if pcall(require, 'cmp_nvim_lsp') then
   capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 end
 
--- sort diagnostics by severity
-vim.diagnostic.config({
-  severity_sort = true,
-  virtual_text = false,
-  virtual_lines = { only_current_line = true },
-})
-
 -- setup buffer when language server starts
 local function on_attach(_, buffer)
   local fzf_winopts = { preview = { layout = 'vertical', vertical = 'down:60%' }}
   -- code actions
   vim.keymap.set('n', '<leader><leader>a', function () fzf.lsp_code_actions() end, { buffer = buffer })
   -- diagnostics - buffer
-  vim.keymap.set('n', '<leader>e', function () fzf.lsp_document_diagnostics({ winopts = fzf_winopts }) end, { buffer = buffer })
+  vim.keymap.set('n', '<leader>e', function () fzf.diagnostics_document({ winopts = fzf_winopts }) end, { buffer = buffer })
   vim.keymap.set('n', '<c-e>', function () vim.diagnostic.open_float(nil, { focus = false }) end, { buffer = buffer })
   vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { buffer = buffer })
   vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { buffer = buffer })
@@ -40,6 +33,17 @@ local function on_attach(_, buffer)
   vim.keymap.set('n', '<leader><leader>s', fzf.lsp_document_symbols, { buffer = buffer })
 end
 
+vim.diagnostic.config({
+  virtual_text = false,
+  severity_sort = true,
+})
+
+local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
+for type, icon in pairs(signs) do
+  local hl = 'DiagnosticSign' .. type
+  vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = '' })
+end
+
 lspconfig.bashls.setup({ on_attach = on_attach, capabilities = capabilities })
 lspconfig.jsonls.setup({ on_attach = on_attach, capabilities = capabilities })
 lspconfig.pyright.setup({ on_attach = on_attach, capabilities = capabilities })
@@ -47,8 +51,8 @@ lspconfig.yamlls.setup({ on_attach = on_attach, capabilities = capabilities })
 
 -- custom sumneko server
 local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, "lua/?.lua")
-table.insert(runtime_path, "lua/?/init.lua")
+table.insert(runtime_path, 'lua/?.lua')
+table.insert(runtime_path, 'lua/?/init.lua')
 lspconfig.sumneko_lua.setup({
   on_attach = on_attach,
   capabilities = capabilities,

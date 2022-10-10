@@ -15,25 +15,38 @@ fzf.setup({
     }
   },
   git = {
-    files = { file_icons = false },
-    status = { file_icons = false },
-  },
-  grep = { file_icons = false },
-  buffers = { file_icons = false },
-  tabs = { file_icons = false },
-  tags = { file_icons = false },
-  btags = { file_icons = false },
-  quickfix = { file_icons = false },
-  lsp = {
-    file_icons = false,
-    icons = {
-      ["Error"] = { icon = "E", color = "red" },
-      ["Warning"] = { icon = "W", color = "yellow" },
-      ["Information"] = { icon = "I", color = "blue" },
-      ["Hint"] = { icon = "H", color = "magenta" }
+    files = {
+      file_icons = false,
+    },
+    status = {
+      file_icons = false,
     },
   },
-  diagnostics = { file_icons = false },
+  grep = {
+    file_icons = false,
+  },
+  buffers = {
+    file_icons = false,
+  },
+  tabs = {
+    file_icons = false,
+  },
+  tags = {
+    file_icons = false,
+  },
+  btags = {
+    file_icons = false,
+  },
+  quickfix = {
+    file_icons = false,
+  },
+  lsp = {
+    file_icons = false,
+  },
+  diagnostics = {
+    file_icons = false,
+    icon_padding = ' ',
+  },
 })
 
 vim.keymap.set('n', '<leader>b', fzf.buffers)

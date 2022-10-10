@@ -23,9 +23,9 @@ return packer.startup(function (use)
   use({ 'feline-nvim/feline.nvim', config = function () require('plugins.feline') end })
   use({ 'folke/which-key.nvim', config = function () require("which-key").setup({}) end })
   use({ 'ibhagwan/fzf-lua', config = function () require('plugins.fzf') end })
-  use({ 'kyazdani42/nvim-web-devicons' })
+  use({ 'kyazdani42/nvim-web-devicons', config = function () require('nvim-web-devicons').setup({ color_icons = false }) end })
   -- vcs
-  use({ 'lewis6991/gitsigns.nvim', requires = { 'nvim-lua/plenary.nvim' }, config = function () require('plugins.gitsigns') end })
+  use({ 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim', config = function () require('plugins.gitsigns') end })
   -- search
   use({ 'haya14busa/vim-asterisk' })
   use({ 'kevinhwang91/nvim-hlslens', config = function () require('plugins.hlslens') end })
@@ -44,8 +44,7 @@ return packer.startup(function (use)
   use({ 'windwp/nvim-ts-autotag', config = function () require('nvim-ts-autotag').setup() end })
   -- lsp
   use({ 'neovim/nvim-lspconfig', config = function () require('plugins.lsp') end })
-  use({ 'jose-elias-alvarez/null-ls.nvim', requires = { 'nvim-lua/plenary.nvim' } })
-  use({ 'https://git.sr.ht/~whynothugo/lsp_lines.nvim', config = function () require('lsp_lines').setup() end })
+  use({ 'jose-elias-alvarez/null-ls.nvim', requires = 'nvim-lua/plenary.nvim' })
   -- completion engine
   use({ 'hrsh7th/cmp-nvim-lsp' })
   use({ 'hrsh7th/cmp-nvim-lsp-signature-help' })
