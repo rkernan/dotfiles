@@ -43,8 +43,33 @@ end
 
 lspconfig.bashls.setup({ on_attach = on_attach, capabilities = capabilities })
 lspconfig.jsonls.setup({ on_attach = on_attach, capabilities = capabilities })
-lspconfig.pyright.setup({ on_attach = on_attach, capabilities = capabilities })
 lspconfig.yamlls.setup({ on_attach = on_attach, capabilities = capabilities })
+
+lspconfig.pylsp.setup({
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    pylsp = {
+      plugins = {
+        jedi_completion = { fuzzy = true, eager = true },
+        -- disable everything else
+        autopep8 = { enabled = false },
+        flake8 = { enabled = false },
+        mccabe = { enabled = false },
+        pycodestyle = { enabled = false },
+        pydocstyle = { enabled = false },
+        pyflakes = { enabled = false },
+        pylint = { enabled = false },
+        pyls_isort = { enabled = false },
+        pyls_memestra = { enabled = false },
+        pylsp_mypy = { enabled = false },
+        pylsp_rope = { enabled = false },
+        python_lsp_black = { enabled = false },
+        yapf = { enabled = false },
+      }
+    }
+  }
+})
 
 -- custom sumneko server
 local runtime_path = vim.split(package.path, ';')

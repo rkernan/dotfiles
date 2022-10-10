@@ -1,2 +1,3 @@
-pycodestyle
-pyright
+flake8
+mypy
+python-lsp-server

@@ -42,6 +42,8 @@ return packer.startup(function (use)
   use({ 'RRethy/nvim-treesitter-endwise' })
   use({ 'windwp/nvim-autopairs', config = function () require('plugins.autopairs') end })
   use({ 'windwp/nvim-ts-autotag', config = function () require('nvim-ts-autotag').setup() end })
+  -- linting and static actions
+  use({ 'jose-elias-alvarez/null-ls.nvim', config = function () require('plugins.null-ls') end })
   -- lsp
   use({ 'neovim/nvim-lspconfig', config = function () require('plugins.lspconfig') end })
   -- use({ 'ray-x/lsp_signature.nvim' })
