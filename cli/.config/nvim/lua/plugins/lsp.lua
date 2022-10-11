@@ -33,9 +33,13 @@ local function on_attach(_, buffer)
   vim.keymap.set('n', '<leader><leader>s', fzf.lsp_document_symbols, { buffer = buffer })
 end
 
+if pcall(require, 'lsp_lines') then
+  require('lsp_lines').setup()
+end
+
 vim.diagnostic.config({
   virtual_text = false,
-  severity_sort = true,
+  virtual_lines = true,
 })
 
 local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
