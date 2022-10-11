@@ -92,7 +92,7 @@ if pcall(require, 'null-ls') then
       -- python
       -- null_ls.builtins.formatting.black,
       null_ls.builtins.formatting.isort,
-      null_ls.builtins.diagnostics.pycodestyle,
+      null_ls.builtins.diagnostics.pycodestyle.with({ extra_args = { '--max-line-length=119' }}),
       null_ls.builtins.diagnostics.pydocstyle,
       -- fish
       null_ls.builtins.diagnostics.fish,
