@@ -150,21 +150,25 @@ local components = {
     diagnostics = {
       err  = {
         provider = 'diagnostic_errors',
+        icon = ' ',
         left_sep = ' ',
         hl = { fg = palette.bright_red },
       },
       warn = {
         provider = 'diagnostic_warnings',
+        icon = ' ',
         left_sep = ' ',
         hl = { fg = palette.bright_yellow },
       },
-      info = {
-        provider = 'diagnostic_info',
+      hint = {
+        provider = 'diagnostic_hints',
+        icon = ' ',
         left_sep = ' ',
         hl = { fg = palette.bright_aqua },
       },
-      hint = {
-        provider = 'diagnostic_hints',
+      info = {
+        provider = 'diagnostic_info',
+        icon = ' ',
         left_sep = ' ',
         hl = { fg = palette.light0 },
       },
