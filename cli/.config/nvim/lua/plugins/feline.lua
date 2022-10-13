@@ -1,6 +1,24 @@
-local feline = require('feline')
-local palette = require('gruvbox.palette')
-local vi_mode = require('feline.providers.vi_mode')
+local feline = require('feline') local vi_mode =
+require('feline.providers.vi_mode')
+
+local function get_theme()
+  local palette = require('gruvbox.palette')
+  return {
+    fg = palette.light4,
+    bg = palette.dark2,
+    aqua = palette.bright_aqua,
+    black = palette.dark0,
+    green = palette.bright_green,
+    blue = palette.bright_blue,
+    orange = palette.bright_orange,
+    purple = palette.bright_purple,
+    red = palette.bright_red,
+    white = palette.light0,
+    yellow = palette.bright_yellow,
+  }
+end
+
+local theme = get_theme()
 
 local vi_mode_text = {
   ['n']     = 'NORMAL',
@@ -59,20 +77,6 @@ local vi_mode_colors = {
   ['NONE'] = 'yellow',
 }
 
-local theme = {
-  fg = palette.light4,
-  bg = palette.dark2,
-  aqua = palette.bright_aqua,
-  black = palette.dark0,
-  green = palette.bright_green,
-  blue = palette.bright_blue,
-  orange = palette.bright_orange,
-  purple = palette.bright_purple,
-  red = palette.bright_red,
-  white = palette.light1,
-  yellow = palette.bright_yellow,
-}
-
 local components = {
   file = {
     encoding = {
@@ -104,7 +108,7 @@ local components = {
         },
       },
       left_sep = '  ',
-      hl = { fg = palette.light0 },
+      hl = { fg = theme.white },
     },
     position = {
       provider = {
@@ -125,25 +129,25 @@ local components = {
       provider = 'git_branch',
       icon = ' ',
       left_sep = '  ',
-      hl = { fg = palette.bright_purple },
+      hl = { fg = theme.purple },
     },
     diff_added = {
       provider = 'git_diff_added',
       icon = '+',
       left_sep = ' ',
-      hl = { fg = palette.bright_green },
+      hl = { fg = theme.green },
     },
     diff_changed = {
       provider = 'git_diff_changed',
       icon = '~',
       left_sep = ' ',
-      hl = { fg = palette.bright_aqua },
+      hl = { fg = theme.aqua },
     },
     diff_removed = {
       provider = 'git_diff_removed',
       icon = '-',
       left_sep = ' ',
-      hl = { fg = palette.bright_red },
+      hl = { fg = theme.red },
     },
   },
   lsp = {
@@ -152,25 +156,25 @@ local components = {
         provider = 'diagnostic_errors',
         icon = ' ',
         left_sep = ' ',
-        hl = { fg = palette.bright_red },
+        hl = { fg = theme.red },
       },
       warn = {
         provider = 'diagnostic_warnings',
         icon = ' ',
         left_sep = ' ',
-        hl = { fg = palette.bright_yellow },
+        hl = { fg = theme.yellow },
       },
       hint = {
         provider = 'diagnostic_hints',
         icon = ' ',
         left_sep = ' ',
-        hl = { fg = palette.bright_aqua },
+        hl = { fg = theme.aqua },
       },
       info = {
         provider = 'diagnostic_info',
         icon = ' ',
         left_sep = ' ',
-        hl = { fg = palette.light0 },
+        hl = { fg = theme.white },
       },
     },
     name = {
@@ -183,7 +187,7 @@ local components = {
     hl = function ()
       return {
         name = vi_mode.get_mode_highlight_name(),
-        fg = palette.dark0,
+        fg = theme.black,
         bg = vi_mode.get_mode_color(),
       }
     end,
