@@ -25,7 +25,6 @@ return packer.startup(function (use)
   use({ 'ibhagwan/fzf-lua', config = function () require('plugins.fzf') end })
   -- statusline - last so we can get colors
   use({ 'feline-nvim/feline.nvim', config = function () require('plugins.feline') end })
-  -- statusline
   -- vcs
   use({ 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim', config = function () require('plugins.gitsigns') end })
   -- search
