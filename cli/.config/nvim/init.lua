@@ -1,4 +1,4 @@
-local utils = require('utils')
+local utils = require('user.utils')
 
 -- enable 24-bit colors
 vim.o.termguicolors = true
@@ -81,5 +81,5 @@ vim.api.nvim_create_autocmd('InsertEnter', { group = group, pattern = '*',
 vim.api.nvim_create_autocmd('InsertLeave', { group = group, pattern = '*',
   callback = function () utils.setlocal_no_float({ 'relativenumber' }) end })
 
-require('tabs')
-require('plugins')
+require('user.tabs')
+require('user.plugins')

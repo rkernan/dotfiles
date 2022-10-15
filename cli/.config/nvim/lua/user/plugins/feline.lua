@@ -1,4 +1,4 @@
-local utils = require('utils')
+local utils = require('user.utils')
 local feline = require('feline') local vi_mode =
 require('feline.providers.vi_mode')
 
