@@ -221,8 +221,8 @@ feline.setup({
         components.lsp.name,
         components.lsp.diagnostics.err,
         components.lsp.diagnostics.warn,
-        components.lsp.diagnostics.info,
         components.lsp.diagnostics.hint,
+        components.lsp.diagnostics.info,
       }
     },
   },
