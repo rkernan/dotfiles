@@ -1,84 +1,88 @@
 [include]
-# local/private config
-path = ~/.config/git/secure
+	# local/private config
+	path = ~/.config/git/secure
 
 [user]
-name = Robert Kernan
+	name = Robert Kernan
 
 [core]
-editor = $EDITOR
-excludefiles = ~/.config/git/ignore
+	editor = $EDITOR
+	excludefiles = ~/.config/git/ignore
 
 [credential]
-helper = cache --timeout=3600
+	helper = cache --timeout=3600
 
 [color]
-branch = auto
-diff = auto
-status = auto
-showbranch = auto
-ui = auto
+	branch = auto
+	diff = auto
+	status = auto
+	showbranch = auto
+	ui = auto
 
 [color "status"]
-added = green
-changed = yellow
-untracked = red
+	added = green
+	changed = blue
+	untracked = red
 
 [status]
-short = true
-showUntrackedFiles = all
+	short = true
+	showUntrackedFiles = all
 
 [log]
-date = short
+	date = short
 
 [format]
-pretty = format:%C(yellow)%h %C(blue)%cd %C(magenta)%G? %C(green)%aN%C(red)%d %C(reset)%s
+	pretty = format:%C(yellow)%h %C(blue)%cd %C(magenta)%G? %C(green)%aN%C(red)%d %C(reset)%s
 
 [fetch]
-prune = true
+	prune = true
 
 [pull]
-rebase = true
+	rebase = true
 
 [push]
-default = simple
+	default = simple
 
 [rerere]
-enabled = 1
+	enabled = 1
 
 [branch]
-autosetuprebase = always
+	autosetuprebase = always
 
 [merge]
-tool = nvim.fugitive
+	tool = nvim
 
-[mergetool "nvim.fugitive"]
-cmd = nvim -f -c \"Gdiff\" \"$MERGED\"
+[mergetool]
+	keepBackup = false
+	prompt = false
+
+[mergetool "nvim"]
+	cmd = nvim -d -c 'wincmd l' -c 'norm ]c' $LOCAL $MERGED $REMOTE
 
 [alias]
-# stage changes
-a  = add
-aa = add --all
-ap = add --patch
-# unstage changes
-unstage = restore --staged
-# checkout
-co  = checkout
-cob = checkout -b
-# commit
-ci = commit
-# unwind previous commit
-unwind = reset --soft HEAD^
-# scrap previous commit
-scrap  = reset --hard HEAD^
-# amend previous commit
-amend  = commit --amend
+	# stage changes
+	a  = add
+	aa = add --all
+	ap = add --patch
+	# unstage changes
+	unstage = restore --staged
+	# checkout
+	co  = checkout
+	cob = checkout -b
+	# commit
+	ci = commit
+	# unwind previous commit
+	unwind = reset --soft HEAD^
+	# scrap previous commit
+	scrap  = reset --hard HEAD^
+	# amend previous commit
+	amend  = commit --amend
 
 [init]
-defaultBranch = develop
+	defaultBranch = develop
 
 [filter "lfs"]
-clean = git-lfs clean -- %f
-smudge = git-lfs smudge -- %f
-process = git-lfs filter-process
-required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
