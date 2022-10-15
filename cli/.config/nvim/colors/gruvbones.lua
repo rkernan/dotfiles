@@ -54,8 +54,8 @@ local specs = lush.extends({ base_specs }).with(function ()
     -- underline errors
     DiagnosticUnderlineError({ base_specs.DiagnosticUnderlineError, gui = 'underline' }),
     DiagnosticUnderlineWarn({ base_specs.DiagnosticUnderlineWarn, gui = 'underline' }),
-    DiagnosticUnderlineHint({ base_specs.DiagnosticUnderlineHint, gui = 'underline' }),
-    DiagnosticUnderlineInfo({ base_specs.DiagnosticUnderlineInfo, gui = 'underline' }),
+    -- DiagnosticUnderlineHint({ base_specs.DiagnosticUnderlineHint, gui = 'underline' }),
+    -- DiagnosticUnderlineInfo({ base_specs.DiagnosticUnderlineInfo, gui = 'underline' }),
   }
 end)
 
