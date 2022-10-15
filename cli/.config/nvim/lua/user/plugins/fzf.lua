@@ -48,7 +48,6 @@ fzf.setup({
     icon_padding = ' ',
   },
 })
-
 vim.keymap.set('n', '<leader>b', fzf.buffers)
 vim.keymap.set('n', '<leader>f', fzf.files)
 vim.keymap.set('n', '<leader>/', fzf.live_grep)

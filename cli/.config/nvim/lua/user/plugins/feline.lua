@@ -4,26 +4,26 @@ require('feline.providers.vi_mode')
 
 local function get_theme()
   return {
-    fg = utils.fromhl('StatusLine').fg,
-    bg = utils.fromhl('StatusLine').bg,
+    fg = utils.get_hl('StatusLine').fg,
+    bg = utils.get_hl('StatusLine').bg,
     -- terminal colors
-    black = utils.termhl(0),
-    red = utils.termhl(1),
-    green = utils.termhl(2),
-    yellow = utils.termhl(3),
-    blue = utils.termhl(4),
-    magenta = utils.termhl(5),
-    cyan = utils.termhl(6),
-    white = utils.termhl(7),
+    black = utils.get_termhl(0),
+    red = utils.get_termhl(1),
+    green = utils.get_termhl(2),
+    yellow = utils.get_termhl(3),
+    blue = utils.get_termhl(4),
+    magenta = utils.get_termhl(5),
+    cyan = utils.get_termhl(6),
+    white = utils.get_termhl(7),
     -- diagnostic colors
-    diagnostic_errors = utils.fromhl('DiagnosticSignError').fg,
-    diagnostic_warnings = utils.fromhl('DiagnosticSignWarn').fg,
-    diagnostic_hints = utils.fromhl('DiagnosticSignHint').fg,
-    diagnostic_info = utils.fromhl('DiagnosticSignInfo').fg,
+    diagnostic_errors = utils.get_hl('DiagnosticSignError').fg,
+    diagnostic_warnings = utils.get_hl('DiagnosticSignWarn').fg,
+    diagnostic_hints = utils.get_hl('DiagnosticSignHint').fg,
+    diagnostic_info = utils.get_hl('DiagnosticSignInfo').fg,
     -- gitsigns colors
-    git_diff_added = utils.fromhl('GitSignsAdd').fg,
-    git_diff_changed = utils.fromhl('GitSignsChange').fg,
-    git_diff_removed = utils.fromhl('GitSignsDelete').fg,
+    git_diff_added = utils.get_hl('GitSignsAdd').fg,
+    git_diff_changed = utils.get_hl('GitSignsChange').fg,
+    git_diff_removed = utils.get_hl('GitSignsDelete').fg,
   }
 end
 

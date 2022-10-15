@@ -20,11 +20,9 @@ return packer.startup(function (use)
   use({ 'wbthomason/packer.nvim' })
   -- theme
   use({ 'mcchrish/zenbones.nvim', requires = 'rktjmp/lush.nvim', config = function () require('user.plugins.zenbones') end })
-  use({ 'kyazdani42/nvim-web-devicons', config = function () require('nvim-web-devicons').setup({ color_icons = false }) end })
-  use({ 'folke/which-key.nvim', config = function () require("which-key").setup({}) end })
+  use({ 'kyazdani42/nvim-web-devicons', config = function () require('user.plugins.web-devicons') end })
+  use({ 'folke/which-key.nvim', config = function () require("user.plugins.which-key") end })
   use({ 'ibhagwan/fzf-lua', config = function () require('user.plugins.fzf') end })
-  -- statusline - last so we can get colors
-  use({ 'feline-nvim/feline.nvim', config = function () require('user.plugins.feline') end })
   -- vcs
   use({ 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim', config = function () require('user.plugins.gitsigns') end })
   -- search
@@ -33,7 +31,7 @@ return packer.startup(function (use)
   -- targets
   use({ 'wellle/targets.vim' })
   -- utilities
-  use({ 'lambdalisue/suda.vim', setup = function () vim.g.suda_smart_edit = 1 end })
+  use({ 'lambdalisue/suda.vim', setup = function () require('user.plugins.suda') end })
   use({ 'tpope/vim-commentary' })
   use({ 'tpope/vim-repeat' })
   use({ 'tpope/vim-surround' })
@@ -42,20 +40,22 @@ return packer.startup(function (use)
   -- pairs and tags
   use({ 'RRethy/nvim-treesitter-endwise' })
   use({ 'windwp/nvim-autopairs', config = function () require('user.plugins.autopairs') end })
-  use({ 'windwp/nvim-ts-autotag', config = function () require('nvim-ts-autotag').setup() end })
+  use({ 'windwp/nvim-ts-autotag', config = function () require('user.plugins.tree-sitter.autotag') end })
   -- lsp
   use({ 'jose-elias-alvarez/null-ls.nvim', requires = 'nvim-lua/plenary.nvim' })
-  use({ 'neovim/nvim-lspconfig', config = function () require('user.plugins.lsp') end })
-  use({ 'https://git.sr.ht/~whynothugo/lsp_lines.nvim' })
+  use({ 'neovim/nvim-lspconfig', config = function () require('user.plugins.lsp.lspconfig') end })
+  -- use({ 'https://git.sr.ht/~whynothugo/lsp_lines.nvim' })
   -- completion engine
   use({ 'hrsh7th/cmp-nvim-lsp' })
   use({ 'hrsh7th/cmp-buffer' })
   use({ 'hrsh7th/cmp-cmdline' })
   use({ 'hrsh7th/cmp-path' })
-  use({ 'hrsh7th/nvim-cmp', config = function () require('user.plugins.cmp') end })
+  use({ 'hrsh7th/nvim-cmp', config = function () require('user.plugins.lsp.cmp') end })
   use({ 'L3MON4D3/LuaSnip' })
   use({ 'saadparwaiz1/cmp_luasnip' })
   -- treesitter
   use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = function () require('user.plugins.tree-sitter') end })
-  use({ 'nvim-treesitter/nvim-treesitter-context', config = function () require('treesitter-context').setup() end })
+  use({ 'nvim-treesitter/nvim-treesitter-context', config = function () require('user.plugins.tree-sitter.context') end })
+  -- statusline - last so we can get colors
+  use({ 'feline-nvim/feline.nvim', config = function () require('user.plugins.feline') end })
 end)
