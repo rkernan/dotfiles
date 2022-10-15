@@ -1,6 +1,7 @@
 local utils = require('user.utils')
-local feline = require('feline') local vi_mode =
-require('feline.providers.vi_mode')
+local diagnostic_icons = require('user.plugins.lsp.diagnostics').icons
+local feline = require('feline')
+local vi_mode = require('feline.providers.vi_mode')
 
 local function get_theme()
   return {
@@ -163,25 +164,25 @@ local components = {
     diagnostics = {
       err  = {
         provider = 'diagnostic_errors',
-        icon = ' ',
+        icon = diagnostic_icons.error,
         left_sep = ' ',
         hl = { fg = theme.diagnostic_errors },
       },
       warn = {
         provider = 'diagnostic_warnings',
-        icon = ' ',
+        icon = diagnostic_icons.warn,
         left_sep = ' ',
         hl = { fg = theme.diagnostic_warnings },
       },
       hint = {
         provider = 'diagnostic_hints',
-        icon = ' ',
+        icon = diagnostic_icons.hint,
         left_sep = ' ',
         hl = { fg = theme.diagnostic_hints },
       },
       info = {
         provider = 'diagnostic_info',
-        icon = ' ',
+        icon = diagnostic_icons.info,
         left_sep = ' ',
         hl = { fg = theme.diagnostic_info },
       },
@@ -249,4 +250,4 @@ feline.winbar.setup({
   },
   theme = theme,
   force_inactive = {},
-})
+} )

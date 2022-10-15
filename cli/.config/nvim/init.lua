@@ -35,6 +35,8 @@ vim.o.title = true
 vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
 -- timeout maps faster
 vim.o.timeoutlen = 500
+-- trigger CursorHold faster
+vim.o.updatetime = 250
 
 -- space as leader
 vim.g.mapleader = ' '

@@ -43,14 +43,13 @@ return packer.startup(function (use)
   use({ 'windwp/nvim-ts-autotag', config = function () require('user.plugins.tree-sitter.autotag') end })
   -- lsp
   use({ 'jose-elias-alvarez/null-ls.nvim', requires = 'nvim-lua/plenary.nvim' })
-  use({ 'neovim/nvim-lspconfig', config = function () require('user.plugins.lsp.lspconfig') end })
-  -- use({ 'https://git.sr.ht/~whynothugo/lsp_lines.nvim' })
+  use({ 'neovim/nvim-lspconfig', config = function () require('user.plugins.lsp') end })
   -- completion engine
   use({ 'hrsh7th/cmp-nvim-lsp' })
   use({ 'hrsh7th/cmp-buffer' })
   use({ 'hrsh7th/cmp-cmdline' })
   use({ 'hrsh7th/cmp-path' })
-  use({ 'hrsh7th/nvim-cmp', config = function () require('user.plugins.lsp.cmp') end })
+  use({ 'hrsh7th/nvim-cmp', config = function () require('user.plugins.cmp') end })
   use({ 'L3MON4D3/LuaSnip' })
   use({ 'saadparwaiz1/cmp_luasnip' })
   -- treesitter

@@ -2,33 +2,7 @@ local cmp = require('cmp')
 local cmp_autopairs = require('nvim-autopairs.completion.cmp')
 local luasnip = require('luasnip')
 
-local kind_icons = {
-  Text = "",
-  Method = "",
-  Function = "",
-  Constructor = "",
-  Field = "",
-  Variable = "",
-  Class = "ﴯ",
-  Interface = "",
-  Module = "",
-  Property = "ﰠ",
-  Unit = "",
-  Value = "",
-  Enum = "",
-  Keyword = "",
-  Snippet = "",
-  Color = "",
-  File = "",
-  Reference = "",
-  Folder = "",
-  EnumMember = "",
-  Constant = "",
-  Struct = "",
-  Event = "",
-  Operator = "",
-  TypeParameter = ""
-}
+local kind_icons = require('user.plugins.lsp.kind').icons
 
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({ map_char = { tex = '' }}))
 
@@ -93,7 +67,6 @@ cmp.setup({
   },
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
-    { name = 'nvim_lsp_signature_help' },
     { name = 'luasnip'},
   }, {
     { name = 'buffer' },
