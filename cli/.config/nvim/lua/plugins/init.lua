@@ -18,12 +18,14 @@ packer.init({
 return packer.startup(function (use)
   -- let packer manage itself
   use({ 'wbthomason/packer.nvim' })
-  -- appearance
-  use({ 'ellisonleao/gruvbox.nvim', config = function () require('plugins.gruvbox') end })
-  use({ 'feline-nvim/feline.nvim', config = function () require('plugins.feline') end })
+  -- theme
+  use({ 'mcchrish/zenbones.nvim', requires = 'rktjmp/lush.nvim', config = function () require('plugins.zenbones') end })
+  use({ 'kyazdani42/nvim-web-devicons', config = function () require('nvim-web-devicons').setup({ color_icons = false }) end })
   use({ 'folke/which-key.nvim', config = function () require("which-key").setup({}) end })
   use({ 'ibhagwan/fzf-lua', config = function () require('plugins.fzf') end })
-  use({ 'kyazdani42/nvim-web-devicons', config = function () require('nvim-web-devicons').setup({ color_icons = false }) end })
+  -- statusline - last so we can get colors
+  use({ 'feline-nvim/feline.nvim', config = function () require('plugins.feline') end })
+  -- statusline
   -- vcs
   use({ 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim', config = function () require('plugins.gitsigns') end })
   -- search

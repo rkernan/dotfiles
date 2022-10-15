@@ -1,20 +1,29 @@
+local utils = require('utils')
 local feline = require('feline') local vi_mode =
 require('feline.providers.vi_mode')
 
 local function get_theme()
-  local palette = require('gruvbox.palette')
   return {
-    fg = palette.light4,
-    bg = palette.dark2,
-    aqua = palette.bright_aqua,
-    black = palette.dark0,
-    green = palette.bright_green,
-    blue = palette.bright_blue,
-    orange = palette.bright_orange,
-    purple = palette.bright_purple,
-    red = palette.bright_red,
-    white = palette.light0,
-    yellow = palette.bright_yellow,
+    fg = utils.fromhl('StatusLine').fg,
+    bg = utils.fromhl('StatusLine').bg,
+    -- terminal colors
+    black = utils.termhl(0),
+    red = utils.termhl(1),
+    green = utils.termhl(2),
+    yellow = utils.termhl(3),
+    blue = utils.termhl(4),
+    magenta = utils.termhl(5),
+    cyan = utils.termhl(6),
+    white = utils.termhl(7),
+    -- diagnostic colors
+    diagnostic_errors = utils.fromhl('DiagnosticSignError').fg,
+    diagnostic_warnings = utils.fromhl('DiagnosticSignWarn').fg,
+    diagnostic_hints = utils.fromhl('DiagnosticSignHint').fg,
+    diagnostic_info = utils.fromhl('DiagnosticSignInfo').fg,
+    -- gitsigns colors
+    git_diff_added = utils.fromhl('GitSignsAdd').fg,
+    git_diff_changed = utils.fromhl('GitSignsChange').fg,
+    git_diff_removed = utils.fromhl('GitSignsDelete').fg,
   }
 end
 
@@ -129,25 +138,25 @@ local components = {
       provider = 'git_branch',
       icon = ' ',
       left_sep = '  ',
-      hl = { fg = theme.purple },
+      hl = { fg = theme.magenta },
     },
     diff_added = {
       provider = 'git_diff_added',
       icon = '+',
       left_sep = ' ',
-      hl = { fg = theme.green },
+      hl = { fg = theme.git_diff_added },
     },
     diff_changed = {
       provider = 'git_diff_changed',
       icon = '~',
       left_sep = ' ',
-      hl = { fg = theme.aqua },
+      hl = { fg = theme.git_diff_changed },
     },
     diff_removed = {
       provider = 'git_diff_removed',
       icon = '-',
       left_sep = ' ',
-      hl = { fg = theme.red },
+      hl = { fg = theme.git_diff_removed },
     },
   },
   lsp = {
@@ -156,25 +165,25 @@ local components = {
         provider = 'diagnostic_errors',
         icon = ' ',
         left_sep = ' ',
-        hl = { fg = theme.red },
+        hl = { fg = theme.diagnostic_errors },
       },
       warn = {
         provider = 'diagnostic_warnings',
         icon = ' ',
         left_sep = ' ',
-        hl = { fg = theme.yellow },
+        hl = { fg = theme.diagnostic_warnings },
       },
       hint = {
         provider = 'diagnostic_hints',
         icon = ' ',
         left_sep = ' ',
-        hl = { fg = theme.aqua },
+        hl = { fg = theme.diagnostic_hints },
       },
       info = {
         provider = 'diagnostic_info',
         icon = ' ',
         left_sep = ' ',
-        hl = { fg = theme.white },
+        hl = { fg = theme.diagnostic_info },
       },
     },
     name = {

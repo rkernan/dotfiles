@@ -20,4 +20,19 @@ function M.setlocal_no_float(opts)
   vim.cmd('setlocal ' .. table.concat(opts, ' '))
 end
 
+function M.fromhl(hl)
+  local list = vim.api.nvim_get_hl_by_name(hl, true)
+  local result = {}
+  for key, val in pairs(list) do
+    local name = key == 'background' and 'bg' or 'fg'
+    result[name] = string.format("#%06x", val)
+  end
+  return result
+end
+
+function M.termhl(num)
+  local key = 'terminal_color_' .. num
+  return vim.g[key] and vim.g[key] or nil
+end
+
 return M
