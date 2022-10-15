@@ -49,10 +49,13 @@ local specs = lush.extends({ base_specs }).with(function ()
     Operator({ base_specs.Statement, fg = palette.rose, gui = 'none' }),
     -- water specials
     Special({ fg = palette.water }),
-    -- sky types
-    -- Type({ fg = palette.sky, gui = 'italic' }),
     -- no italic strings
     String({ base_specs.Constant, gui = 'none' }),
+    -- underline errors
+    DiagnosticUnderlineError({ base_specs.DiagnosticUnderlineError, gui = 'underline' }),
+    DiagnosticUnderlineWarn({ base_specs.DiagnosticUnderlineWarn, gui = 'underline' }),
+    DiagnosticUnderlineHint({ base_specs.DiagnosticUnderlineHint, gui = 'underline' }),
+    DiagnosticUnderlineInfo({ base_specs.DiagnosticUnderlineInfo, gui = 'underline' }),
   }
 end)
 

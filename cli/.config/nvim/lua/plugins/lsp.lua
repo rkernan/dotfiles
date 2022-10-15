@@ -38,8 +38,10 @@ if pcall(require, 'lsp_lines') then
 end
 
 vim.diagnostic.config({
+  severity_sort = true,
   virtual_text = false,
   virtual_lines = true,
+  underline = true,
 })
 
 local signs = { Error = ' ', Warn = ' ', Hint = ' ', Info = ' ' }
