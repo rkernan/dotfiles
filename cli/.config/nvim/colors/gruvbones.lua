@@ -36,8 +36,10 @@ end
 local generator = require('zenbones.specs')
 local base_specs = generator.generate(palette, bg, generator.get_global_config(colors_name, bg))
 
+
 local specs = lush.extends({ base_specs }).with(function ()
   return {
+    ---@diagnostic disable: undefined-global
     -- no italic comments
     Comment({ base_specs.Comment, gui = 'none' }),
     -- no italic numbers
@@ -57,6 +59,7 @@ local specs = lush.extends({ base_specs }).with(function ()
     -- lightbulb hightlights
     LightBulbFloatWin({ base_specs.Float, fg = base_specs.DiagnosticWarn.fg }),
     LightbulbVirtualText({ base_specs.CursorLine, fg = base_specs.DiagnosticWarn.fg }),
+    ---@diagnostic enable: undefined-global
   }
 end)
 
