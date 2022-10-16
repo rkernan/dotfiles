@@ -22,7 +22,6 @@ M.on_attach = function(client, buffer)
   local group = vim.api.nvim_create_augroup('user.plugins.lsp.diagnostics', {})
   vim.api.nvim_clear_autocmds({ buffer = buffer, group = group })
   vim.api.nvim_create_autocmd('CursorHold', { buffer = buffer, callback = M.open_float, group = group })
-  vim.keymap.set('n', '<c-e>', M.open_float, { buffer = buffer })
 end
 
 M.setup = function()

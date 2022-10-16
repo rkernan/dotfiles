@@ -50,8 +50,8 @@ vim.keymap.set('n', 'Y', 'y$')
 -- treat lines wraps as real lines
 vim.keymap.set('n', 'j', 'gj')
 vim.keymap.set('n', 'k', 'gk')
-vim.keymap.set('n', 'gj', 'j')
-vim.keymap.set('n', 'gk', 'k')
+vim.keymap.set('n', 'gj', 'j', { desc = 'Next line' })
+vim.keymap.set('n', 'gk', 'k', { desc = 'Prev line' })
 
 -- keep highlight after changing indent
 vim.keymap.set('v', '>', '>gv')
