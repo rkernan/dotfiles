@@ -85,3 +85,6 @@ vim.api.nvim_create_autocmd('InsertLeave', { group = group, pattern = '*',
 
 require('user.tabs')
 require('user.plugins')
+
+vim.cmd([[set background=dark]])
+vim.cmd([[colorscheme gruvbones]])

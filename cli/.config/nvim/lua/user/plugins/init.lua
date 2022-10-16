@@ -19,10 +19,11 @@ return packer.startup(function (use)
   -- let packer manage itself
   use({ 'wbthomason/packer.nvim' })
   -- theme
-  use({ 'mcchrish/zenbones.nvim', requires = 'rktjmp/lush.nvim', config = function () require('user.plugins.zenbones') end })
-  use({ 'kyazdani42/nvim-web-devicons', config = function () require('user.plugins.web-devicons') end })
+  use({ 'feline-nvim/feline.nvim', config = function () require('user.plugins.feline') end })
   use({ 'folke/which-key.nvim', config = function () require("user.plugins.which-key") end })
   use({ 'ibhagwan/fzf-lua', config = function () require('user.plugins.fzf') end })
+  use({ 'kyazdani42/nvim-web-devicons', config = function () require('user.plugins.web-devicons') end })
+  use({ 'mcchrish/zenbones.nvim', requires = 'rktjmp/lush.nvim' })
   -- vcs
   use({ 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim', config = function () require('user.plugins.gitsigns') end })
   -- search
@@ -56,6 +57,4 @@ return packer.startup(function (use)
   -- treesitter
   use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = function () require('user.plugins.tree-sitter') end })
   use({ 'nvim-treesitter/nvim-treesitter-context', config = function () require('user.plugins.tree-sitter.context') end })
-  -- statusline - last so we can get colors
-  use({ 'feline-nvim/feline.nvim', config = function () require('user.plugins.feline') end })
 end)

@@ -22,9 +22,9 @@ local function get_theme()
     diagnostic_hints = utils.get_hl('DiagnosticSignHint').fg,
     diagnostic_info = utils.get_hl('DiagnosticSignInfo').fg,
     -- gitsigns colors
-    git_diff_added = utils.get_hl('GitSignsAddNr').fg,
-    git_diff_changed = utils.get_hl('GitSignsChangeNr').fg,
-    git_diff_removed = utils.get_hl('GitSignsDeleteNr').fg,
+    git_diff_added = utils.get_hl('GitSignsAdd').fg,
+    git_diff_changed = utils.get_hl('GitSignsChange').fg,
+    git_diff_removed = utils.get_hl('GitSignsDelete').fg,
   }
 end
 
