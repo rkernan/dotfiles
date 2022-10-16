@@ -21,10 +21,10 @@ function M.setlocal_no_float(opts)
 end
 
 function M.get_hl(hlname)
-  local hl = vim.api.nvim_get_hl_by_name(hlname, true)
+  local _, hl = pcall(function () vim.api.nvim_get_hl_by_name(hlname, true) end)
   return {
-    bg = hl.background and string.format("#%06x", hl.background) or nil,
-    fg = hl.foreground and string.format("#%06x", hl.foreground) or nil,
+    bg = (hl and hl.background) and string.format("#%06x", hl.background) or nil,
+    fg = (hl and hl.foreground) and string.format("#%06x", hl.foreground) or nil,
   }
 end
 
