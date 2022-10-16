@@ -29,8 +29,6 @@ return packer.startup(function (use)
   -- search
   use({ 'haya14busa/vim-asterisk' })
   use({ 'kevinhwang91/nvim-hlslens', config = function () require('user.plugins.hlslens') end })
-  -- targets
-  use({ 'wellle/targets.vim' })
   -- utilities
   use({ 'lambdalisue/suda.vim', setup = function () require('user.plugins.suda') end })
   use({ 'tpope/vim-commentary' })
@@ -56,5 +54,5 @@ return packer.startup(function (use)
   use({ 'saadparwaiz1/cmp_luasnip' })
   -- treesitter
   use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = function () require('user.plugins.tree-sitter') end })
-  use({ 'nvim-treesitter/nvim-treesitter-context', config = function () require('user.plugins.tree-sitter.context') end })
+  use({ 'nvim-treesitter/nvim-treesitter-textobjects' })
 end)
