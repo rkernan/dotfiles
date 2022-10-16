@@ -1,11 +1,5 @@
 local lspconfig = require('lspconfig')
-
-local capabilities
-if pcall(require, 'cmp_nvim_lsp') then
-  capabilities = require('cmp_nvim_lsp').default_capabilities()
-else
-  capabilities = vim.lsp.protocol.make_client_capabilities()
-end
+local capabilities = require('user.plugins.lsp.cmp').get_capabilities()
 
 -- setup buffer when language server starts
 local function on_attach(client, buffer)
