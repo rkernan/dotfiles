@@ -61,7 +61,7 @@ vim.keymap.set('v', '<', '<gv')
 vim.keymap.set('v', 'y', 'y`]')
 vim.keymap.set({ 'n', 'v' }, 'p', 'p`]')
 
-local group = vim.api.nvim_create_augroup('vimrc', {})
+local group = vim.api.nvim_create_augroup('vimrc', { clear = true })
 -- jump to last-position on start, replaces last-position-jump
 vim.api.nvim_create_autocmd('BufReadPost', { group = group,
   callback = function ()
