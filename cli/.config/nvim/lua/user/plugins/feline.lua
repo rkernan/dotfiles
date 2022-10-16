@@ -22,13 +22,11 @@ local function get_theme()
     diagnostic_hints = utils.get_hl('DiagnosticSignHint').fg,
     diagnostic_info = utils.get_hl('DiagnosticSignInfo').fg,
     -- gitsigns colors
-    git_diff_added = utils.get_hl('GitSignsAdd').fg,
-    git_diff_changed = utils.get_hl('GitSignsChange').fg,
-    git_diff_removed = utils.get_hl('GitSignsDelete').fg,
+    git_diff_added = utils.get_hl('GitSignsAddNr').fg,
+    git_diff_changed = utils.get_hl('GitSignsChangeNr').fg,
+    git_diff_removed = utils.get_hl('GitSignsDeleteNr').fg,
   }
 end
-
-local theme = get_theme()
 
 local vi_mode_text = {
   ['n']     = 'NORMAL',
@@ -118,7 +116,7 @@ local components = {
         },
       },
       left_sep = '  ',
-      hl = { fg = theme.white },
+      hl = { fg = 'white' },
     },
     position = {
       provider = {
@@ -139,25 +137,25 @@ local components = {
       provider = 'git_branch',
       icon = ' ',
       left_sep = '  ',
-      hl = { fg = theme.magenta },
+      hl = { fg = 'magenta' },
     },
     diff_added = {
       provider = 'git_diff_added',
       icon = '+',
       left_sep = ' ',
-      hl = { fg = theme.git_diff_added },
+      hl = { fg = 'git_diff_added' },
     },
     diff_changed = {
       provider = 'git_diff_changed',
       icon = '~',
       left_sep = ' ',
-      hl = { fg = theme.git_diff_changed },
+      hl = { fg = 'git_diff_changed' },
     },
     diff_removed = {
       provider = 'git_diff_removed',
       icon = '-',
       left_sep = ' ',
-      hl = { fg = theme.git_diff_removed },
+      hl = { fg = 'git_diff_removed' },
     },
   },
   lsp = {
@@ -166,25 +164,25 @@ local components = {
         provider = 'diagnostic_errors',
         icon = diagnostic_icons.error,
         left_sep = ' ',
-        hl = { fg = theme.diagnostic_errors },
+        hl = { fg = 'diagnostic_errors' },
       },
       warn = {
         provider = 'diagnostic_warnings',
         icon = diagnostic_icons.warn,
         left_sep = ' ',
-        hl = { fg = theme.diagnostic_warnings },
+        hl = { fg = 'diagnostic_warnings' },
       },
       hint = {
         provider = 'diagnostic_hints',
         icon = diagnostic_icons.hint,
         left_sep = ' ',
-        hl = { fg = theme.diagnostic_hints },
+        hl = { fg = 'diagnostic_hints' },
       },
       info = {
         provider = 'diagnostic_info',
         icon = diagnostic_icons.info,
         left_sep = ' ',
-        hl = { fg = theme.diagnostic_info },
+        hl = { fg = 'diagnostic_info' },
       },
     },
     name = {
@@ -214,7 +212,7 @@ local components = {
     hl = function ()
       return {
         name = vi_mode.get_mode_highlight_name(),
-        fg = theme.black,
+        fg = 'black',
         bg = vi_mode.get_mode_color(),
       }
     end,
@@ -245,7 +243,6 @@ feline.setup({
       }
     },
   },
-  theme = theme,
   vi_mode_colors = vi_mode_colors,
   force_inactive = {},
 })
@@ -267,6 +264,9 @@ feline.winbar.setup({
       }
     }
   },
-  theme = theme,
   force_inactive = {},
 } )
+
+local group = vim.api.nvim_create_augroup('user.plugins.feline', { clear = true })
+vim.api.nvim_create_autocmd('ColorScheme', { group = group, callback = function () feline.use_theme(get_theme()) end })
+feline.use_theme(get_theme())
