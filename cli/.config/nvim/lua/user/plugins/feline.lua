@@ -189,11 +189,28 @@ local components = {
     },
     name = {
       provider = 'lsp_client_names',
+      icon = ' ',
       left_sep = '  ',
+    },
+    progress = {
+      provider = function ()
+        local lsp = vim.lsp.util.get_progress_messages()[1]
+        if lsp then
+          local name = lsp.name or ''
+          local title = lsp.title or ''
+          local msg = lsp.message or ''
+          local percent = lsp.percentage or 0
+          return string.format("%%<%s: %s %s (%s%%%%) ", name, title, msg, percent)
+        end
+        return ''
+      end,
+      icon = ' ',
     },
   },
   vi_mode = {
-    provider = function () return ' ' .. vi_mode_text[vim.fn.mode()]:sub(1, 1) .. ' ' end,
+    provider = function ()
+      return ' ' .. vi_mode_text[vim.fn.mode()]:sub(1, 1) .. ' '
+    end,
     hl = function ()
       return {
         name = vi_mode.get_mode_highlight_name(),
@@ -223,6 +240,8 @@ feline.setup({
         components.lsp.diagnostics.warn,
         components.lsp.diagnostics.hint,
         components.lsp.diagnostics.info,
+      }, {
+        components.lsp.progress,
       }
     },
   },
