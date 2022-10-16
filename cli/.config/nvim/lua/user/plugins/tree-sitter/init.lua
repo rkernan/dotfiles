@@ -14,12 +14,7 @@ require('nvim-treesitter.configs').setup({
         ['ac'] = { query = '@class.outer', desc = 'around class' },
         ['ic'] = { query = '@class.inner', desc = 'inside class' },
       },
-      selection_modes = {
-        ['@parameter.outer'] = 'v',
-        ['@function.outer'] = 'V',
-        ['@class.outer'] = '<c-v>',
-      },
-      include_surrounding_whitespace = true,
+      include_surrounding_whitespace = false,
     },
     move = {
       enable = true,
