@@ -1,6 +1,6 @@
 local M = {}
 
-M.on_attach = function (client, buffer)
+function M.on_attach(client, buffer)
   local fzf = require('fzf-lua')
   local fzf_winopts = { preview = { layout = 'vertical', vertical = 'down:60%' }}
   vim.keymap.set('n', '<leader><leader>a', function () fzf.lsp_code_actions() end, { buffer = buffer, desc = 'LSP code actions' })

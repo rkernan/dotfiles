@@ -1,6 +1,6 @@
 local M = {}
 
-M.setup = function (on_attach, capabilities, lsp_flags)
+function M.setup(on_attach, capabilities, lsp_flags)
   local null_ls = require('null-ls')
   null_ls.setup({
     on_attach = on_attach,
