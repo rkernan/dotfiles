@@ -17,6 +17,7 @@ end
 
 require('user.plugins.lsp.diagnostics').setup()
 
+require('user.plugins.lsp.servers.jsonls').setup(on_attach, capabilities)
 require('user.plugins.lsp.servers.null-ls').setup(on_attach, capabilities)
 require('user.plugins.lsp.servers.pyright').setup(on_attach, capabilities)
 require('user.plugins.lsp.servers.sumneko_lua').setup(on_attach, capabilities)
