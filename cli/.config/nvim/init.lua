@@ -1,5 +1,3 @@
-local utils = require('user.utils')
-
 -- enable 24-bit colors
 vim.o.termguicolors = true
 -- enable undo file
@@ -23,8 +21,6 @@ vim.o.splitbelow = true
 vim.o.splitright = true
 -- make vim quieter
 vim.o.shortmess = 'actWIFS'
--- show line numbers
-vim.o.number = true
 -- don't print mode in cmd area
 vim.o.showmode = false
 -- enable mouse
@@ -63,7 +59,8 @@ vim.keymap.set({ 'n', 'v' }, 'p', 'p`]')
 
 local group = vim.api.nvim_create_augroup('vimrc', { clear = true })
 -- jump to last-position on start, replaces last-position-jump
-vim.api.nvim_create_autocmd('BufReadPost', { group = group,
+vim.api.nvim_create_autocmd('BufReadPost', {
+  group = group,
   callback = function ()
     local row, _ = unpack(vim.api.nvim_buf_get_mark(0, '"'))
     local max_row = vim.fn.line('$')
@@ -71,19 +68,10 @@ vim.api.nvim_create_autocmd('BufReadPost', { group = group,
   end
 })
 -- resize windows automatically
-vim.api.nvim_create_autocmd('VimResized', { group = group, pattern = '*', command = 'wincmd =' })
--- cursorline and relative line numbers of active buffers
-vim.api.nvim_create_autocmd({ 'BufWinEnter', 'VimEnter', 'WinEnter' }, { group = group, pattern = '*',
-  callback = function () utils.setlocal_no_float({ 'cursorline', 'relativenumber' }) end })
-vim.api.nvim_create_autocmd('WinLeave', { group = group, pattern = '*',
-  callback = function () utils.setlocal_no_float({ 'nocursorline', 'norelativenumber' }) end })
--- no relative line numbers in insert mode
-vim.api.nvim_create_autocmd('InsertEnter', { group = group, pattern = '*',
-  callback = function () utils.setlocal_no_float({ 'norelativenumber' }) end })
-vim.api.nvim_create_autocmd('InsertLeave', { group = group, pattern = '*',
-  callback = function () utils.setlocal_no_float({ 'relativenumber' }) end })
+vim.api.nvim_create_autocmd('VimResized', { group = group, command = 'wincmd =' })
 
 require('user.tabs')
+require('user.numbers')
 require('user.plugins')
 
 vim.cmd([[set background=dark]])
