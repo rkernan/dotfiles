@@ -6,6 +6,10 @@ function M.setup(on_attach, capabilities, lsp_flags)
     on_attach = on_attach,
     lsp_flags = lsp_flags or {},
     sources = {
+      -- fish
+      null_ls.builtins.diagnostics.fish,
+      -- json
+      null_ls.builtins.formatting.jq,
       -- python
       -- null_ls.builtins.formatting.black,
       null_ls.builtins.formatting.isort,
@@ -20,8 +24,6 @@ function M.setup(on_attach, capabilities, lsp_flags)
           diagnostic.severity = vim.diagnostic.severity['INFO']
         end
       }),
-      -- fish
-      null_ls.builtins.diagnostics.fish,
     },
   })
 end
