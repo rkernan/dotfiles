@@ -16,21 +16,10 @@ set -g __fish_git_prompt_color_stagedstate green
 set -g __fish_git_prompt_color_dirtystate yellow
 set -g __fish_git_prompt_color_invalidstate red
 set -g __fish_git_prompt_color_untrackedfiles red
-
-if set -q NO_UNICODE || test -z "$NO_UNICODE"
-  set -g __fish_git_prompt_char_upstream_ahead "↑"
-  set -g __fish_git_prompt_char_upstream_behind "↓"
-  set -g __fish_git_prompt_char_cleanstate ""
-  set -g __fish_git_prompt_char_stagedstate "•"
-  set -g __fish_git_prompt_char_dirtystate "+"
-  set -g __fish_git_prompt_char_invalidstate "⨯"
-  set -g __fish_git_prompt_char_untrackedfiles "…"
-else
-  set -g __fish_git_prompt_char_upstream_ahead "A"
-  set -g __fish_git_prompt_char_upstream_behind "B"
-  set -g __fish_git_prompt_char_cleanstate ""
-  set -g __fish_git_prompt_char_stagedstate "+"
-  set -g __fish_git_prompt_char_dirtystate "+"
-  set -g __fish_git_prompt_char_invalidstate "x"
-  set -g __fish_git_prompt_char_untrackedfiles "??"
-end
+set -g __fish_git_prompt_char_upstream_ahead "↑"
+set -g __fish_git_prompt_char_upstream_behind "↓"
+set -g __fish_git_prompt_char_cleanstate ""
+set -g __fish_git_prompt_char_stagedstate "•"
+set -g __fish_git_prompt_char_dirtystate "+"
+set -g __fish_git_prompt_char_invalidstate "⨯"
+set -g __fish_git_prompt_char_untrackedfiles "…"
