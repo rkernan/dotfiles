@@ -6,7 +6,7 @@ vim.o.undofile = true
 vim.o.ignorecase = true
 vim.o.smartcase = true
 -- unicode hidden characters
-if utils.enable_unicode() then vim.o.listchars = 'eol:¬,tab:» ,trail:·' end
+vim.o.listchars = 'eol:¬,tab:» ,trail:·'
 -- always show completion, don't select by default
 vim.o.completeopt = 'menu,menuone,noselect'
 -- complete longest common string, then list alternatives
