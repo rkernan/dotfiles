@@ -1,38 +1,38 @@
 -- enable 24-bit colors
-vim.o.termguicolors = true
+vim.opt.termguicolors = true
 -- enable undo file
-vim.o.undofile = true
+vim.opt.undofile = true
 -- ignorecase unless pattern contains uppercase letters
-vim.o.ignorecase = true
-vim.o.smartcase = true
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
 -- unicode hidden characters
-vim.o.listchars = 'eol:¬,tab:» ,trail:·'
+vim.opt.listchars = { eol = '¬', tab = '» ', trail = '·' }
 -- always show completion, don't select by default
-vim.o.completeopt = 'menu,menuone,noselect'
+vim.opt.completeopt = { 'menu', 'menuone' , 'noselect' }
 -- complete longest common string, then list alternatives
-vim.o.wildmode = 'longest:full,full'
+vim.opt.wildmode = { 'longest:full', 'full' }
 -- keep 1 line above and below cursor on screen
-vim.o.scrolloff = 1
+vim.opt.scrolloff = 1
 -- don't redraw scren while executing macros
-vim.o.lazyredraw = true
+vim.opt.lazyredraw = true
 -- split next window below current
-vim.o.splitbelow = true
+vim.opt.splitbelow = true
 -- vsplit next window right of current
-vim.o.splitright = true
+vim.opt.splitright = true
 -- make vim quieter
-vim.o.shortmess = 'actWIFS'
+vim.opt.shortmess = 'actWIFS'
 -- don't print mode in cmd area
-vim.o.showmode = false
+vim.opt.showmode = false
 -- enable mouse
-vim.o.mouse = 'a'
+vim.opt.mouse = 'a'
 -- set window title
-vim.o.title = true
+vim.opt.title = true
 -- always copy to system clipboard
-vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
+vim.opt.clipboard = vim.o.clipboard .. 'unnamedplus'
 -- timeout maps faster
-vim.o.timeoutlen = 500
+vim.opt.timeoutlen = 500
 -- trigger CursorHold faster
-vim.o.updatetime = 250
+vim.opt.updatetime = 250
 
 -- space as leader
 vim.g.mapleader = ' '

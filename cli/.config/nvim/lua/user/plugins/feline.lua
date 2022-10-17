@@ -219,7 +219,7 @@ local components = {
   },
 }
 
-vim.o.laststatus = 3
+vim.opt.laststatus = 3
 
 feline.setup({
   components = {
