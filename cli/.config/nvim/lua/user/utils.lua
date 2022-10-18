@@ -27,4 +27,12 @@ function M.has_value(tbl, value)
   return false
 end
 
+function M.get_tbl_index(tbl, value)
+  for i, v in ipairs(tbl) do
+    if v == value then
+      return i
+    end
+  end
+end
+
 return M

@@ -185,29 +185,22 @@ local components = {
         hl = { fg = 'diagnostic_info' },
       },
     },
-    name = {
-      provider = 'lsp_client_names',
+    clients = {
+      privider = 'lsp_client_names',
       icon = ' ',
       left_sep = '  ',
     },
-    progress = {
+    clients_with_spinner = {
       provider = function ()
-        local lsp = vim.lsp.util.get_progress_messages()[1]
-        if lsp then
-          local name = lsp.name or ''
-          local title = lsp.title or ''
-          local msg = lsp.message or ''
-          local percent = lsp.percentage or 0
-          return string.format("%%<%s: %s %s (%s%%%%) ", name, title, msg, percent)
-        end
-        return ''
+        return require('user.plugins.lsp.progress').status()
       end,
       icon = ' ',
+      left_sep = '  ',
     },
   },
   vi_mode = {
     provider = function ()
-      return ' ' .. vi_mode_text[vim.fn.mode()]:sub(1, 1) .. ' '
+      return string.format(' %s ', vi_mode_text[vim.fn.mode()]:sub(1, 1))
     end,
     hl = function ()
       return {
@@ -233,14 +226,12 @@ feline.setup({
         components.git.diff_added,
         components.git.diff_changed,
         components.git.diff_removed,
-        components.lsp.name,
+        components.lsp.clients_with_spinner,
         components.lsp.diagnostics.err,
         components.lsp.diagnostics.warn,
         components.lsp.diagnostics.hint,
         components.lsp.diagnostics.info,
-      }, {
-        components.lsp.progress,
-      }
+      },
     },
   },
   vi_mode_colors = vi_mode_colors,
@@ -254,18 +245,18 @@ feline.winbar.setup({
         components.file.position_percent,
         components.file.position,
         components.file.info,
-      }
+      },
     },
     inactive = {
       {
         components.file.position_percent,
         components.file.position,
         components.file.info,
-      }
-    }
+      },
+    },
   },
   force_inactive = {},
-} )
+})
 
 local group = vim.api.nvim_create_augroup('user.plugins.feline', { clear = true })
 vim.api.nvim_create_autocmd('ColorScheme', { group = group, callback = function () feline.use_theme(get_theme()) end })
