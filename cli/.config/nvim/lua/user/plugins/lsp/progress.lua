@@ -1,19 +1,16 @@
 local M = {}
 
 local utils = require('user.utils')
+local spinner = require('user.spinner')
 
 local clients = {}
-local config = {
-  spinner = { '⠋', '⠙', '⠹', '⠸', '⠼', '⠴', '⠦', '⠧', '⠇', '⠏' },
-  interval = 130,
-}
 
 local function clean_stopped_clients()
   -- stop tracking any stopped clients
   for id, client in ipairs(clients) do
     if vim.lsp.client_is_stopped(id) then
-      if client.timer then
-        client.timer:close()
+      if client.spinner then
+        client.spinner:stop()
       end
       table.remove(clients, id)
     end
@@ -30,7 +27,7 @@ local function get_clients_by_bufnr(bufnr)
   return ids
 end
 
-local function spinner_callback(err, result, ctx)
+local function progress_callback(err, result, ctx)
   if not clients[ctx.client_id] then
     return
   end
@@ -39,17 +36,12 @@ local function spinner_callback(err, result, ctx)
     -- start tracking the job
     table.insert(clients[ctx.client_id].jobs, result.token)
 
-    if not clients[ctx.client_id].timer then
-      clients[ctx.client_id].timer = vim.loop.new_timer()
-      clients[ctx.client_id].frame = 1
-      clients[ctx.client_id].timer:start(
-        config.interval,
-        config.interval,
-        vim.schedule_wrap(function ()
-          -- loop through spinner frames
-          clients[ctx.client_id].frame = clients[ctx.client_id].frame % #config.spinner + 1
-        end)
-      )
+    if not clients[ctx.client_id].spinner then
+      vim.pretty_print(ctx.client_id)
+      vim.pretty_print(clients[ctx.client_id].name)
+      clients[ctx.client_id].spinner = spinner:new()
+      vim.pretty_print(clients[ctx.client_id].spinner)
+      clients[ctx.client_id].spinner:start()
     end
 
   elseif result.value.kind == 'end' then
@@ -57,18 +49,17 @@ local function spinner_callback(err, result, ctx)
     -- stop tracking the job
     table.remove(clients[ctx.client_id].jobs, job_index)
 
-    if vim.tbl_isempty(clients[ctx.client_id].jobs) and clients[ctx.client_id].timer then
-      -- stop timer if not tracking any jobs
-      clients[ctx.client_id].timer:stop()
-      clients[ctx.client_id].timer:close()
-      clients[ctx.client_id].timer = nil
+    if vim.tbl_isempty(clients[ctx.client_id].jobs) and clients[ctx.client_id].spinner then
+      -- stop spinner if not tracking any jobs
+      clients[ctx.client_id].spinner:stop()
+      clients[ctx.client_id].spinner = nil
     end
   end
 end
 
 function M.setup()
   -- register spinner callback
-  vim.lsp.handlers['$/progress'] = spinner_callback
+  vim.lsp.handlers['$/progress'] = progress_callback
 end
 
 function M.on_attach(client, bufnr)
@@ -78,8 +69,7 @@ function M.on_attach(client, bufnr)
       name = client.name,
       buffers = {},
       jobs = {},
-      timer = nil,
-      frame = 1,
+      spinner = nil,
     }
   end
 
@@ -100,7 +90,7 @@ function M.status(bufnr)
   for i, id in ipairs(ids) do
     status = string.format('%s%s', status, clients[id].name)
     if not vim.tbl_isempty(clients[id].jobs) then
-      status = string.format('%s %s', status, config.spinner[clients[id].frame])
+      status = string.format('%s %s', status, clients[id].spinner:get())
     end
 
     if i < vim.tbl_count(ids) then
