@@ -3,6 +3,7 @@ local M = {}
 local icon = ''
 local hl = 'WarningMsg'
 local ns = vim.api.nvim_create_namespace('user.plugins.lsp.lightbulb')
+local augroup = vim.api.nvim_create_augroup('user.plugins.lsp.lightbulb', { clear = true })
 
 local function has_action(responses)
   for _, response in ipairs(responses) do
@@ -35,9 +36,8 @@ function M.on_attach(client, bufnr)
     return
   end
 
-  local group = vim.api.nvim_create_augroup('user.plugins.lsp.lightbulb', { clear = false })
-  vim.api.nvim_clear_autocmds({ buffer = bufnr, group = group })
-  vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, { buffer = bufnr, group = group, callback = function () check_action() end })
+  vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+  vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, { group = augroup, buffer = bufnr, callback = function () check_action() end })
 end
 
 return M

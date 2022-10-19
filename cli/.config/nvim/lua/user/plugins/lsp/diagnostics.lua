@@ -1,5 +1,7 @@
 local M = {}
 
+local augroup = vim.api.nvim_create_augroup('user.plugins.lsp.diagnostics', { clear = true })
+
 M.icons = {
   error = ' ',
   warn  = ' ',
@@ -7,7 +9,7 @@ M.icons = {
   info  = ' ',
 }
 
-function open_float()
+local function open_float()
   vim.diagnostic.open_float(nil, {
     scope = 'cursor',
     header = '',
@@ -16,12 +18,6 @@ function open_float()
     border = 'single',
     close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter' },
   })
-end
-
-function M.on_attach(client, buffer)
-  local group = vim.api.nvim_create_augroup('user.plugins.lsp.diagnostics', { clear = false })
-  vim.api.nvim_clear_autocmds({ buffer = buffer, group = group })
-  vim.api.nvim_create_autocmd('CursorHold', { buffer = buffer, group = group, callback = function () open_float() end })
 end
 
 function M.setup()
@@ -37,6 +33,15 @@ function M.setup()
   vim.fn.sign_define('DiagnosticSignWarn', { text = M.icons.warn, texthl = 'DiagnosticSignWarn', numhl = '' })
   vim.fn.sign_define('DiagnosticSignHint', { text = M.icons.hint, texthl = 'DiagnosticSignHint', numhl = '' })
   vim.fn.sign_define('DiagnosticSignInfo', { text = M.icons.info, texthl = 'DiagnosticSignInfo', numhl = '' })
+end
+
+function M.on_attach(client, bufnr)
+  if not client.supports_method('textDocument/publishDiagnostics') then
+    return
+  end
+
+  vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+  vim.api.nvim_create_autocmd('CursorHold', { group = augroup, buffer = bufnr, callback = function () open_float() end })
 end
 
 return M

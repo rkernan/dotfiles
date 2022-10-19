@@ -258,6 +258,6 @@ feline.winbar.setup({
   force_inactive = {},
 })
 
-local group = vim.api.nvim_create_augroup('user.plugins.feline', { clear = true })
-vim.api.nvim_create_autocmd('ColorScheme', { group = group, callback = function () feline.use_theme(get_theme()) end })
+local augroup = vim.api.nvim_create_augroup('user.plugins.feline', { clear = true })
+vim.api.nvim_create_autocmd('ColorScheme', { group = augroup, callback = function () feline.use_theme(get_theme()) end })
 feline.use_theme(get_theme())
