@@ -37,10 +37,7 @@ local function progress_callback(err, result, ctx)
     table.insert(clients[ctx.client_id].jobs, result.token)
 
     if not clients[ctx.client_id].spinner then
-      vim.pretty_print(ctx.client_id)
-      vim.pretty_print(clients[ctx.client_id].name)
       clients[ctx.client_id].spinner = spinner:new()
-      vim.pretty_print(clients[ctx.client_id].spinner)
       clients[ctx.client_id].spinner:start()
     end
 
