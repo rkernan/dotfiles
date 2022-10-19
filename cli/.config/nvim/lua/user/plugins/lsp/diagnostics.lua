@@ -7,7 +7,7 @@ M.icons = {
   info  = ' ',
 }
 
-function M.open_float()
+function open_float()
   vim.diagnostic.open_float(nil, {
     scope = 'cursor',
     header = '',
@@ -19,9 +19,9 @@ function M.open_float()
 end
 
 function M.on_attach(client, buffer)
-  local group = vim.api.nvim_create_augroup('user.plugins.lsp.diagnostics', { clear = true })
+  local group = vim.api.nvim_create_augroup('user.plugins.lsp.diagnostics', { clear = false })
   vim.api.nvim_clear_autocmds({ buffer = buffer, group = group })
-  vim.api.nvim_create_autocmd('CursorHold', { buffer = buffer, callback = M.open_float, group = group })
+  vim.api.nvim_create_autocmd('CursorHold', { buffer = buffer, group = group, callback = function () open_float() end })
 end
 
 function M.setup()

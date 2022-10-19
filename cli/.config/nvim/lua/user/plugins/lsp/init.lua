@@ -11,7 +11,7 @@ local function on_attach(client, bufnr)
   vim.keymap.set('i', '<c-k>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'LSP signature help' })
 
   require('user.plugins.lsp.fzf').on_attach(client, bufnr)
-  require('user.plugins.lsp.diagnostics').on_attach(bufnr)
+  require('user.plugins.lsp.diagnostics').on_attach(client, bufnr)
   require('user.plugins.lsp.progress').on_attach(client, bufnr)
 end
 
