@@ -43,7 +43,7 @@ return packer.startup(function (use)
   -- lsp
   use({ 'jose-elias-alvarez/null-ls.nvim', requires = 'nvim-lua/plenary.nvim' })
   use({ 'neovim/nvim-lspconfig', config = function () require('user.plugins.lsp') end })
-  use({ 'kosayoda/nvim-lightbulb', config = function () require('user.plugins.lightbulb') end })
+  -- use({ 'kosayoda/nvim-lightbulb', config = function () require('user.plugins.lightbulb') end })
   -- completion engine
   use({ 'hrsh7th/cmp-nvim-lsp' })
   use({ 'hrsh7th/cmp-buffer' })
