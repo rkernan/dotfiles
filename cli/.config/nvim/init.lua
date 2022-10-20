@@ -73,6 +73,7 @@ vim.api.nvim_create_autocmd('VimResized', { group = group, command = 'wincmd =' 
 require('user.tabs')
 require('user.numbers')
 require('user.plugins')
+require('user.terminal')
 
 vim.cmd([[set background=dark]])
 vim.cmd([[colorscheme gruvbones]])
