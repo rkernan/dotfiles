@@ -23,6 +23,10 @@ local function response_handler(responses, line, bufnr)
 end
 
 local function check_action()
+  if not client.supports_method('textDocument/codeAction') then
+    return
+  end
+
   local params = vim.lsp.util.make_range_params()
   params.context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() }
   local bufnr = vim.api.nvim_get_current_buf()
