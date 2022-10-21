@@ -22,26 +22,31 @@ local function response_handler(responses, line, bufnr)
   end
 end
 
-local function check_action()
-  if not client.supports_method('textDocument/codeAction') then
+local function supports_code_actions(bufnr)
+  for _, client in ipairs(vim.lsp.get_active_clients({ bufnr = vim.api.nvim_get_current_buf() })) do
+    if client.supports_method('textDocument/codeAction') then
+      return true
+    end
+  end
+
+  return false
+end
+
+local function check_action(bufnr)
+  if not supports_code_actions(bufnr) then
     return
   end
 
   local params = vim.lsp.util.make_range_params()
   params.context = { diagnostics = vim.lsp.diagnostic.get_line_diagnostics() }
-  local bufnr = vim.api.nvim_get_current_buf()
   vim.lsp.buf_request_all(bufnr, 'textDocument/codeAction', params, function (responses)
     response_handler(responses, params.range.start.line, bufnr)
   end)
 end
 
 function M.on_attach(client, bufnr)
-  if not client.supports_method('textDocument/codeAction') then
-    return
-  end
-
   vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-  vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, { group = augroup, buffer = bufnr, callback = function () check_action() end })
+  vim.api.nvim_create_autocmd({ 'CursorHold', 'CursorHoldI' }, { group = augroup, buffer = bufnr, callback = function () check_action(bufnr) end })
 end
 
 return M
