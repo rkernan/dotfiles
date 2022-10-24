@@ -19,17 +19,42 @@ return packer.startup(function (use)
   -- let packer manage itself
   use({ 'wbthomason/packer.nvim' })
   -- theme
-  use({ 'feline-nvim/feline.nvim', config = function () require('user.plugins.feline') end })
-  use({ 'folke/which-key.nvim', config = function () require("user.plugins.which-key") end })
-  use({ 'ibhagwan/fzf-lua', config = function () require('user.plugins.fzf') end })
-  use({ 'kyazdani42/nvim-web-devicons', config = function () require('user.plugins.web-devicons') end })
-  use({ 'mcchrish/zenbones.nvim', requires = 'rktjmp/lush.nvim' })
+  use({
+    'feline-nvim/feline.nvim',
+    config = function () require('user.plugins.feline') end
+  })
+  use({
+    'folke/which-key.nvim',
+    config = function () require("user.plugins.which-key") end
+  })
+  use({
+    'ibhagwan/fzf-lua',
+    config = function () require('user.plugins.fzf') end
+  })
+  use({
+    'kyazdani42/nvim-web-devicons',
+    config = function () require('user.plugins.web-devicons') end
+  })
+  use({
+    'mcchrish/zenbones.nvim',
+    requires = 'rktjmp/lush.nvim'
+  })
   -- vcs
-  use({ 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim', config = function () require('user.plugins.gitsigns') end })
+  use({
+    'lewis6991/gitsigns.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    config = function () require('user.plugins.gitsigns') end
+  })
   -- search
-  use({ 'haya14busa/vim-asterisk', config = function () require('user.plugins.asterisk') end })
+  use({
+    'haya14busa/vim-asterisk',
+    config = function () require('user.plugins.asterisk') end
+  })
   -- utilities
-  use({ 'lambdalisue/suda.vim', setup = function () require('user.plugins.suda') end })
+  use({
+    'lambdalisue/suda.vim',
+    setup = function () require('user.plugins.suda') end
+  })
   use({ 'tpope/vim-commentary' })
   use({ 'tpope/vim-repeat' })
   use({ 'tpope/vim-surround' })
@@ -37,20 +62,29 @@ return packer.startup(function (use)
   use({ 'tpope/vim-unimpaired' })
   -- pairs and tags
   use({ 'RRethy/nvim-treesitter-endwise' })
-  use({ 'windwp/nvim-autopairs', config = function () require('user.plugins.autopairs') end })
-  use({ 'windwp/nvim-ts-autotag', config = function () require('user.plugins.tree-sitter.autotag') end })
+  use({
+    'windwp/nvim-autopairs',
+    config = function () require('user.plugins.autopairs') end
+  })
+  use({
+    'windwp/nvim-ts-autotag',
+    config = function () require('user.plugins.tree-sitter.autotag') end
+  })
   -- lsp
-  use({ 'jose-elias-alvarez/null-ls.nvim', requires = 'nvim-lua/plenary.nvim' })
-  use({ 'neovim/nvim-lspconfig', config = function () require('user.plugins.lsp') end })
-  -- use({ 'kosayoda/nvim-lightbulb', config = function () require('user.plugins.lightbulb') end })
+  use({
+    'neovim/nvim-lspconfig',
+    config = function () require('user.plugins.lsp') end })
   -- completion engine
-  use({ 'hrsh7th/cmp-nvim-lsp' })
-  use({ 'hrsh7th/cmp-buffer' })
-  use({ 'hrsh7th/cmp-cmdline' })
-  use({ 'hrsh7th/cmp-path' })
-  use({ 'hrsh7th/nvim-cmp', config = function () require('user.plugins.cmp') end })
-  use({ 'L3MON4D3/LuaSnip' })
-  use({ 'saadparwaiz1/cmp_luasnip' })
+  use({
+    'hrsh7th/cmp-nvim-lsp',
+    'hrsh7th/cmp-buffer',
+    'hrsh7th/cmp-cmdline',
+    'hrsh7th/cmp-path',
+    'hrsh7th/nvim-cmp',
+    'L3MON4D3/LuaSnip',
+    'saadparwaiz1/cmp_luasnip',
+    config = function () require('user.plugins.cmp') end,
+  })
   -- treesitter
   use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = function () require('user.plugins.tree-sitter') end })
   use({ 'nvim-treesitter/nvim-treesitter-textobjects' })
