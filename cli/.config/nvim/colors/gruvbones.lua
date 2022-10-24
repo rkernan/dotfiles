@@ -34,33 +34,48 @@ else
 end
 
 local generator = require('zenbones.specs')
-local base_specs = generator.generate(palette, bg, generator.get_global_config(colors_name, bg))
+local zenbones = generator.generate(palette, bg, generator.get_global_config(colors_name, bg))
 
-
-local specs = lush.extends({ base_specs }).with(function ()
+local specs = lush.extends({ zenbones }).with(function (injected_functions)
+  local sym = injected_functions.sym
   return {
     ---@diagnostic disable: undefined-global
+
     -- no italic comments
-    Comment({ base_specs.Comment, gui = 'none' }),
-    -- no italic numbers
-    Number({ base_specs.Number, gui = 'none' }),
-    Float({ base_specs.Float, gui = 'none' }),
-    Boolean({ base_specs.Boolean, fg = palette.sky, gui = 'none' }),
-    -- rose statements, no italic operators
-    Statement({ base_specs.Statement, fg = palette.rose, gui = 'italic' }),
-    Operator({ base_specs.Statement, fg = palette.rose, gui = 'none' }),
-    -- water specials
-    Special({ fg = palette.water }),
-    -- no italic strings
-    String({ base_specs.Constant, gui = 'none' }),
-    -- underline errors and warnings
-    DiagnosticUnderlineError({ base_specs.DiagnosticUnderlineError, gui = 'underline' }),
-    DiagnosticUnderlineWarn({  base_specs.DiagnosticUnderlineWarn,  gui = 'underline' }),
-    -- DiagnosticUnderlineHint({  base_specs.DiagnosticUnderlineHint,  gui = 'underline' }),
-    -- DiagnosticUnderlineInfo({  base_specs.DiagnosticUnderlineInfo,  gui = 'underline' }),
-    -- lightbulb hightlights
-    LightBulbFloatWin({ base_specs.Float, fg = base_specs.DiagnosticWarn.fg }),
-    LightbulbVirtualText({ base_specs.CursorLine, fg = base_specs.DiagnosticWarn.fg }),
+    Comment({ zenbones.Comment, gui = 'none' }),
+    sym('@comment')({ Comment }),
+
+    -- no italic constants
+    Constant({ zenbones.Constant, gui = 'none' }),
+    Number({ zenbones.Number, gui = 'none' }),
+    sym('@number')({ Number }),
+    Float({ Number }),
+    sym('@float')({ Float }),
+
+    -- sky booleans
+    Boolean({ Constant, fg = palette.sky, gui = 'italic' }),
+    sym('@boolean')({ Boolean }),
+
+    -- rose italic statements
+    Statement({ zenbones.Statement, fg = palette.rose, gui = 'italic' }),
+    sym('@statement')({ Statement }),
+
+    -- no italic operators
+    Operator({ Statement, gui = 'none' }),
+    sym('@operator')({ Operator }),
+
+    -- underline errors, warnings, and hints
+    DiagnosticUnderlineError({ zenbones.DiagnosticUnderlineError, gui = 'underline' }),
+    DiagnosticUnderlineWarn({  zenbones.DiagnosticUnderlineWarn,  gui = 'underline' }),
+    DiagnosticUnderlineHint({  zenbones.DiagnosticUnderlineHint,  gui = 'underline' }),
+
+    -- no uderline on info
+    DiagnosticUnderlineInfo({ zenbones.DiagnosticUnderlineInfo,  gui = 'none' }),
+
+    -- lightbulb highlights
+    LightBulbFloatWin({ zenbones.Float, fg = zenbones.DiagnosticWarn.fg }),
+    LightbulbVirtualText({ zenbones.CursorLine, fg = zenbones.DiagnosticWarn.fg }),
+
     ---@diagnostic enable: undefined-global
   }
 end)
