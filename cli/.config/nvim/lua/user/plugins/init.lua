@@ -27,8 +27,7 @@ return packer.startup(function (use)
   -- vcs
   use({ 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim', config = function () require('user.plugins.gitsigns') end })
   -- search
-  use({ 'haya14busa/vim-asterisk' })
-  use({ 'kevinhwang91/nvim-hlslens', config = function () require('user.plugins.hlslens') end })
+  use({ 'haya14busa/vim-asterisk', config = function () require('user.plugins.asterisk') end })
   -- utilities
   use({ 'lambdalisue/suda.vim', setup = function () require('user.plugins.suda') end })
   use({ 'tpope/vim-commentary' })
