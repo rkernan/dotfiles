@@ -56,7 +56,7 @@ local specs = lush.extends({ base_specs }).with(function ()
     -- underline errors and warnings
     DiagnosticUnderlineError({ base_specs.DiagnosticUnderlineError, gui = 'underline' }),
     DiagnosticUnderlineWarn({  base_specs.DiagnosticUnderlineWarn,  gui = 'underline' }),
-    DiagnosticUnderlineHint({  base_specs.DiagnosticUnderlineHint,  gui = 'underline' }),
+    -- DiagnosticUnderlineHint({  base_specs.DiagnosticUnderlineHint,  gui = 'underline' }),
     -- DiagnosticUnderlineInfo({  base_specs.DiagnosticUnderlineInfo,  gui = 'underline' }),
     -- lightbulb hightlights
     LightBulbFloatWin({ base_specs.Float, fg = base_specs.DiagnosticWarn.fg }),
