@@ -25,11 +25,7 @@ return packer.startup(function (use)
   use({ 'kyazdani42/nvim-web-devicons', config = function () require('user.plugins.web-devicons') end })
   use({ 'mcchrish/zenbones.nvim', requires = 'rktjmp/lush.nvim' })
   -- vcs
-  use({
-    'lewis6991/gitsigns.nvim',
-    requires = 'nvim-lua/plenary.nvim',
-    config = function () require('user.plugins.gitsigns') end
-  })
+  use({ 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim', config = function () require('user.plugins.gitsigns') end })
   -- search
   use({ 'haya14busa/vim-asterisk', config = function () require('user.plugins.asterisk') end })
   -- utilities
@@ -42,29 +38,19 @@ return packer.startup(function (use)
   -- pairs and tags
   use({ 'windwp/nvim-autopairs', config = function () require('user.plugins.autopairs') end })
   -- lsp
-  use({
-    'neovim/nvim-lspconfig',
-    'jose-elias-alvarez/null-ls.nvim',
-    config = function () require('user.plugins.lsp') end
-  })
+  use({ 'jose-elias-alvarez/null-ls.nvim' })
+  use({ 'neovim/nvim-lspconfig', config = function () require('user.plugins.lsp') end })
   -- completion engine
-  use({
-    'hrsh7th/cmp-nvim-lsp',
-    'hrsh7th/cmp-buffer',
-    'hrsh7th/cmp-cmdline',
-    'hrsh7th/cmp-path',
-    'hrsh7th/nvim-cmp',
-    'L3MON4D3/LuaSnip',
-    'saadparwaiz1/cmp_luasnip',
-    config = function () require('user.plugins.cmp') end,
-  })
+  use({ 'hrsh7th/cmp-nvim-lsp' })
+  use({ 'hrsh7th/cmp-buffer' })
+  use({ 'hrsh7th/cmp-cmdline' })
+  use({ 'hrsh7th/cmp-path' })
+  use({ 'hrsh7th/nvim-cmp', config = function () require('user.plugins.cmp') end })
+  use({ 'L3MON4D3/LuaSnip' })
+  use({ 'saadparwaiz1/cmp_luasnip' })
   -- treesitter
-  use({
-    'nvim-treesitter/nvim-treesitter',
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    'RRethy/nvim-treesitter-endwise',
-    'windwp/nvim-ts-autotag',
-    run = ':TSUpdate',
-    config = function () require('user.plugins.tree-sitter') end
-  })
+  use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = function () require('user.plugins.tree-sitter') end })
+  use({ 'nvim-treesitter/nvim-treesitter-textobjects' })
+  use({ 'RRethy/nvim-treesitter-endwise' })
+  use({ 'windwp/nvim-ts-autotag' })
 end)
