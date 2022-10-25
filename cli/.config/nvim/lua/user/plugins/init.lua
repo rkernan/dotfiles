@@ -19,26 +19,11 @@ return packer.startup(function (use)
   -- let packer manage itself
   use({ 'wbthomason/packer.nvim' })
   -- theme
-  use({
-    'feline-nvim/feline.nvim',
-    config = function () require('user.plugins.feline') end
-  })
-  use({
-    'folke/which-key.nvim',
-    config = function () require("user.plugins.which-key") end
-  })
-  use({
-    'ibhagwan/fzf-lua',
-    config = function () require('user.plugins.fzf') end
-  })
-  use({
-    'kyazdani42/nvim-web-devicons',
-    config = function () require('user.plugins.web-devicons') end
-  })
-  use({
-    'mcchrish/zenbones.nvim',
-    requires = 'rktjmp/lush.nvim'
-  })
+  use({ 'feline-nvim/feline.nvim', config = function () require('user.plugins.feline') end })
+  use({ 'folke/which-key.nvim', config = function () require("user.plugins.which-key") end })
+  use({ 'ibhagwan/fzf-lua', config = function () require('user.plugins.fzf') end })
+  use({ 'kyazdani42/nvim-web-devicons', config = function () require('user.plugins.web-devicons') end })
+  use({ 'mcchrish/zenbones.nvim', requires = 'rktjmp/lush.nvim' })
   -- vcs
   use({
     'lewis6991/gitsigns.nvim',
@@ -46,34 +31,22 @@ return packer.startup(function (use)
     config = function () require('user.plugins.gitsigns') end
   })
   -- search
-  use({
-    'haya14busa/vim-asterisk',
-    config = function () require('user.plugins.asterisk') end
-  })
+  use({ 'haya14busa/vim-asterisk', config = function () require('user.plugins.asterisk') end })
   -- utilities
-  use({
-    'lambdalisue/suda.vim',
-    setup = function () require('user.plugins.suda') end
-  })
+  use({ 'lambdalisue/suda.vim', setup = function () require('user.plugins.suda') end })
   use({ 'tpope/vim-commentary' })
   use({ 'tpope/vim-repeat' })
   use({ 'tpope/vim-surround' })
   use({ 'tpope/vim-sleuth' })
   use({ 'tpope/vim-unimpaired' })
   -- pairs and tags
-  use({ 'RRethy/nvim-treesitter-endwise' })
-  use({
-    'windwp/nvim-autopairs',
-    config = function () require('user.plugins.autopairs') end
-  })
-  use({
-    'windwp/nvim-ts-autotag',
-    config = function () require('user.plugins.tree-sitter.autotag') end
-  })
+  use({ 'windwp/nvim-autopairs', config = function () require('user.plugins.autopairs') end })
   -- lsp
   use({
     'neovim/nvim-lspconfig',
-    config = function () require('user.plugins.lsp') end })
+    'jose-elias-alvarez/null-ls.nvim',
+    config = function () require('user.plugins.lsp') end
+  })
   -- completion engine
   use({
     'hrsh7th/cmp-nvim-lsp',
@@ -86,6 +59,12 @@ return packer.startup(function (use)
     config = function () require('user.plugins.cmp') end,
   })
   -- treesitter
-  use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = function () require('user.plugins.tree-sitter') end })
-  use({ 'nvim-treesitter/nvim-treesitter-textobjects' })
+  use({
+    'nvim-treesitter/nvim-treesitter',
+    'nvim-treesitter/nvim-treesitter-textobjects',
+    'RRethy/nvim-treesitter-endwise',
+    'windwp/nvim-ts-autotag',
+    run = ':TSUpdate',
+    config = function () require('user.plugins.tree-sitter') end
+  })
 end)
