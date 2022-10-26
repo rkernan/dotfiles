@@ -1,14 +1,12 @@
 local M = {}
 
-function M.setup(on_attach, capabilities, lsp_flags)
+function M.setup(capabilities)
   -- custom sumneko server
   local runtime_path = vim.split(package.path, ';')
   table.insert(runtime_path, 'lua/?.lua')
   table.insert(runtime_path, 'lua/?/init.lua')
   require('lspconfig').sumneko_lua.setup({
-    on_attach = on_attach,
     capabilities = capabilities,
-    lsp_flags = lsp_flags or {},
     settings = {
       Lua = {
         runtime = {

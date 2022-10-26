@@ -1,6 +1,5 @@
-local M = {}
-
-function M.on_attach(client, bufnr)
+function lsp_attach(args)
+  local bufnr = args.buf
   local fzf = require('fzf-lua')
   local fzf_winopts = { preview = { layout = 'vertical', vertical = 'down:60%' }}
   vim.keymap.set('n', '<leader><leader>a', function () fzf.lsp_code_actions() end, { buffer = bufnr, desc = 'LSP code actions' })
@@ -13,4 +12,18 @@ function M.on_attach(client, bufnr)
   vim.keymap.set('n', '<leader><leader>s', fzf.lsp_document_symbols, { buffer = bufnr, desc = 'LSP document symbols' })
 end
 
-return M
+function lsp_detach(args)
+  local bufnr = args.buf
+  vim.keymap.del('n', '<leader><leader>a', { buffer = bufnr })
+  vim.keymap.del('n', '<leader>e', { buffer = bufnr })
+  vim.keymap.del('n', '<leader><leader>r', { buffer = bufnr })
+  vim.keymap.del('n', '<leader><leader>i', { buffer = bufnr })
+  vim.keymap.del('n', '<leader><leader>d', { buffer = bufnr })
+  vim.keymap.del('n', '<leader><leader>D', { buffer = bufnr })
+  vim.keymap.del('n', '<leader><leader>t', { buffer = bufnr })
+  vim.keymap.del('n', '<leader><leader>s', { buffer = bufnr })
+end
+
+local augroup = vim.api.nvim_create_augroup('user.plugins.lsp.fzf', { clear = true })
+vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
+vim.api.nvim_create_autocmd('LspDetach', { group = augroup, callback = lsp_detach })

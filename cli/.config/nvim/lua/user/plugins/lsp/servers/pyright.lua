@@ -1,11 +1,7 @@
 local M = {}
 
-function M.setup(on_attach, capabilities, lsp_flags)
-  require('lspconfig').pyright.setup({
-    on_attach = on_attach,
-    capabilities = capabilities,
-    lsp_flags = lsp_flags or {}
-  })
+function M.setup(capabilities)
+  require('lspconfig').pyright.setup({ capabilities = capabilities })
 end
 
 return M

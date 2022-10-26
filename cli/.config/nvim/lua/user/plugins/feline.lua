@@ -192,7 +192,7 @@ local components = {
     },
     clients_with_spinner = {
       provider = function ()
-        return require('user.plugins.lsp.progress').status()
+        return require('user.plugins.lsp.progress').progres_status() or ''
       end,
       icon = ' ',
       left_sep = '  ',

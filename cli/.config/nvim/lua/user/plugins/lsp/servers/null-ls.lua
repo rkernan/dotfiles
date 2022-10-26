@@ -1,10 +1,8 @@
 local M = {}
 
-function M.setup(on_attach, capabilities, lsp_flags)
+function M.setup(capabilities)
   local null_ls = require('null-ls')
   null_ls.setup({
-    on_attach = on_attach,
-    lsp_flags = lsp_flags or {},
     sources = {
       -- fish
       null_ls.builtins.diagnostics.fish,
