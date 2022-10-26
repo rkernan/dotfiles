@@ -203,9 +203,8 @@ function M.progres_status(bufnr)
 
   local status = ''
   for _, client in ipairs(clients) do
-    status = string.format('%s %s %s', status, client.name, client:get_spinner_frame())
+    status = vim.trim(string.format('%s %s %s', status, client.name, client:get_spinner_frame()))
   end
-  status = vim.trim(status)
 
   return status
 end
