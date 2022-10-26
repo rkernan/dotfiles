@@ -78,8 +78,7 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     DiagnosticUnderlineInfo({ zenbones.DiagnosticUnderlineInfo,  gui = 'none' }),
 
     -- lightbulb highlights
-    LightBulbFloatWin({ zenbones.Float, fg = zenbones.DiagnosticWarn.fg }),
-    LightbulbVirtualText({ zenbones.CursorLine, fg = zenbones.DiagnosticWarn.fg }),
+    UserLightbulbExt({ zenbones.CursorLine, fg = zenbones.DiagnosticWarn.fg }),
 
     ---@diagnostic enable: undefined-global
   }

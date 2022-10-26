@@ -15,7 +15,7 @@ end
 local function response_handler(responses, line, bufnr)
   vim.api.nvim_buf_clear_namespace(bufnr, namespace, 0, -1)
   if has_action(responses) then
-    vim.api.nvim_buf_set_extmark(bufnr, namespace, line, -1, { virt_text = {{ '', 'WarningMsg' }}, hl_mode = 'combine' })
+    vim.api.nvim_buf_set_extmark(bufnr, namespace, line, -1, { virt_text = {{ '', 'UserLightbulbExt' }}, hl_mode = 'combine' })
   end
 end
 
