@@ -80,6 +80,9 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     -- lightbulb highlights
     UserLightbulbExt({ zenbones.CursorLine, fg = zenbones.DiagnosticWarn.fg }),
 
+    -- no italic WhichKey
+    WhichKey({ zenbones.WhichKey, gui = 'none' }),
+
     ---@diagnostic enable: undefined-global
   }
 end)
