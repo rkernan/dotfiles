@@ -30,9 +30,7 @@ return packer.startup(function (use)
   use({ 'haya14busa/vim-asterisk', config = function () require('user.plugins.asterisk') end })
   -- utilities
   use({ 'lambdalisue/suda.vim', setup = function () require('user.plugins.suda') end })
-  use({ 'tpope/vim-commentary' })
-  use({ 'tpope/vim-repeat' })
-  use({ 'tpope/vim-surround' })
+  use({ 'echasnovski/mini.nvim', config = function () require('user.plugins.mini') end })
   use({ 'tpope/vim-sleuth' })
   use({ 'tpope/vim-unimpaired' })
   -- pairs and tags
