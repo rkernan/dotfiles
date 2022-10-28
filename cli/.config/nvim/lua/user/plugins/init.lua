@@ -33,8 +33,6 @@ return packer.startup(function (use)
   use({ 'echasnovski/mini.nvim', config = function () require('user.plugins.mini') end })
   use({ 'tpope/vim-sleuth' })
   use({ 'tpope/vim-unimpaired' })
-  -- pairs and tags
-  use({ 'windwp/nvim-autopairs', config = function () require('user.plugins.autopairs') end })
   -- lsp
   use({ 'jose-elias-alvarez/null-ls.nvim' })
   use({ 'neovim/nvim-lspconfig', config = function () require('user.plugins.lsp') end })
