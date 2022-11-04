@@ -12,9 +12,9 @@ if test -d $brew_prefix
 end
 
 # asdf
-set -l asdf_brew_path $brew_prefix"/opt/asdf"
+set -l asdf_brew_path $brew_prefix"/opt/asdf/libexec/asdf.fish"
 if test -d $asdf_brew_path
-  source $asdf_brew_path"/opt/asdf/libexec/asdf.fish"
+  source $asdf_brew_path
 end
 
 # go
