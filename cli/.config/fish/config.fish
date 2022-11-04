@@ -1,7 +1,7 @@
 fish_add_path $HOME"/.local/bin"
 
 # brew
-set -l brew_prefix /home/linuxbrew/.linux
+set -l brew_prefix /home/linuxbrew/.linuxbrew
 if test -d $brew_prefix
   # path
   fish_add_path $brew_prefix"/sbin"
