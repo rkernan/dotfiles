@@ -47,6 +47,7 @@ return packer.startup(function (use)
   use({ 'hrsh7th/nvim-cmp', config = function () require('user.plugins.cmp') end })
   use({ 'L3MON4D3/LuaSnip' })
   use({ 'saadparwaiz1/cmp_luasnip' })
+  use({ 'folke/neodev.nvim', config = function () require('neodev').setup({}) end })
   -- treesitter
   use({ 'nvim-treesitter/nvim-treesitter', run = ':TSUpdate', config = function () require('user.plugins.tree-sitter') end })
   use({ 'nvim-treesitter/nvim-treesitter-textobjects' })
