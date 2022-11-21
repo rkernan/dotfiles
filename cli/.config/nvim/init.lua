@@ -7,6 +7,8 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 -- unicode hidden characters
 vim.opt.listchars = { eol = '¬', tab = '» ', trail = '·' }
+-- don't show sign on empty lines
+vim.opt.fillchars = { eob = ' ' }
 -- always show completion, don't select by default
 vim.opt.completeopt = { 'menu', 'menuone' , 'noselect' }
 -- complete longest common string, then list alternatives
