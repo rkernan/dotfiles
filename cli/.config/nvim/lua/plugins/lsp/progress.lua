@@ -1,5 +1,5 @@
-local spinner = require('user.spinner')
-local utils = require('user.utils')
+local spinner = require('utils.spinner')
+local tbl_utils = require('utils.tbl')
 local augroup = vim.api.nvim_create_augroup('user_lsp_progress', { clear = true })
 
 Client = {
@@ -37,7 +37,7 @@ end
 
 function Client:stop_tracking(bufnr)
   -- Stop tracking given buffer.
-  idx = utils.tbl_index(self.buffers, bufnr)
+  idx = tbl_utils.tbl_index(self.buffers, bufnr)
   if idx then
     table.remove(self.buffers, idx)
   end
@@ -58,7 +58,7 @@ end
 
 function Client:stop_job(job)
   -- Stop a job.
-  local idx = utils.tbl_index(self.jobs, job)
+  local idx = tbl_utils.tbl_index(self.jobs, job)
   if idx then
     table.remove(self.jobs, idx)
   end

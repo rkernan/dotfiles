@@ -1,30 +1,30 @@
-local utils = require('user.utils')
-local diagnostic_icons = require('user.plugins.lsp.diagnostics').icons
+local hl = require('utils.hl')
+-- local diagnostic_icons = require('user.plugins.lsp.diagnostics').icons
 local feline = require('feline')
 local vi_mode = require('feline.providers.vi_mode')
 
 local function get_theme()
   return {
-    fg = utils.get_hl('StatusLine').fg,
-    bg = utils.get_hl('StatusLine').bg,
+    fg = hl.get_hl('StatusLine').fg,
+    bg = hl.get_hl('StatusLine').bg,
     -- terminal colors
-    black = utils.get_termhl(0),
-    red = utils.get_termhl(1),
-    green = utils.get_termhl(2),
-    yellow = utils.get_termhl(3),
-    blue = utils.get_termhl(4),
-    magenta = utils.get_termhl(5),
-    cyan = utils.get_termhl(6),
-    white = utils.get_termhl(7),
+    black = hl.get_termhl(0),
+    red = hl.get_termhl(1),
+    green = hl.get_termhl(2),
+    yellow = hl.get_termhl(3),
+    blue = hl.get_termhl(4),
+    magenta = hl.get_termhl(5),
+    cyan = hl.get_termhl(6),
+    white = hl.get_termhl(7),
     -- diagnostic colors
-    diagnostic_errors = utils.get_hl('DiagnosticSignError').fg,
-    diagnostic_warnings = utils.get_hl('DiagnosticSignWarn').fg,
-    diagnostic_hints = utils.get_hl('DiagnosticSignHint').fg,
-    diagnostic_info = utils.get_hl('DiagnosticSignInfo').fg,
+    diagnostic_errors = hl.get_hl('DiagnosticSignError').fg,
+    diagnostic_warnings = hl.get_hl('DiagnosticSignWarn').fg,
+    diagnostic_hints = hl.get_hl('DiagnosticSignHint').fg,
+    diagnostic_info = hl.get_hl('DiagnosticSignInfo').fg,
     -- gitsigns colors
-    git_diff_added = utils.get_hl('GitSignsAdd').fg,
-    git_diff_changed = utils.get_hl('GitSignsChange').fg,
-    git_diff_removed = utils.get_hl('GitSignsDelete').fg,
+    git_diff_added = hl.get_hl('GitSignsAdd').fg,
+    git_diff_changed = hl.get_hl('GitSignsChange').fg,
+    git_diff_removed = hl.get_hl('GitSignsDelete').fg,
   }
 end
 
@@ -162,25 +162,25 @@ local components = {
     diagnostics = {
       err  = {
         provider = 'diagnostic_errors',
-        icon = diagnostic_icons.error,
+        -- icon = diagnostic_icons.error,
         left_sep = ' ',
         hl = { fg = 'diagnostic_errors' },
       },
       warn = {
         provider = 'diagnostic_warnings',
-        icon = diagnostic_icons.warn,
+        -- icon = diagnostic_icons.warn,
         left_sep = ' ',
         hl = { fg = 'diagnostic_warnings' },
       },
       hint = {
         provider = 'diagnostic_hints',
-        icon = diagnostic_icons.hint,
+        -- icon = diagnostic_icons.hint,
         left_sep = ' ',
         hl = { fg = 'diagnostic_hints' },
       },
       info = {
         provider = 'diagnostic_info',
-        icon = diagnostic_icons.info,
+        -- icon = diagnostic_icons.info,
         left_sep = ' ',
         hl = { fg = 'diagnostic_info' },
       },
@@ -192,7 +192,7 @@ local components = {
     },
     clients_with_spinner = {
       provider = function ()
-        return require('user.plugins.lsp.progress').progres_status() or ''
+        return require('plugins.lsp.progress').progres_status() or ''
       end,
       icon = ' ',
       left_sep = '  ',

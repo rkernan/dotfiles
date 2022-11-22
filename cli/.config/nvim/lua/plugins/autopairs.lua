@@ -6,7 +6,6 @@ npairs.setup({
   enable_bracket_in_quote = false,
 })
 
-
 local brackets = { { '(', ')' }, { '[', ']' }, { '{', '}' } }
 npairs.add_rules {
   Rule(' ', ' ')

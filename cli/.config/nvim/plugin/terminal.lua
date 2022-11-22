@@ -1,6 +1,6 @@
 local M = {}
 
-local term = require('user.floating_terminal')
+local term = require('utils.floating_terminal')
 
 M.terminal = term:new()
 
