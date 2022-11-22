@@ -51,8 +51,8 @@ return packer.startup(function (use)
     config = function ()
       require('plugins.mini_ai')
       require('mini.align').setup()
-      require('mini.comment').setup()
-      require('mini.surround').setup()
+      require('mini.comment').setup({})
+      require('mini.surround').setup({})
     end
   })
   use({
