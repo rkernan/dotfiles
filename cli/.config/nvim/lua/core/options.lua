@@ -73,7 +73,6 @@ vim.opt.signcolumn = 'yes'
 vim.opt.spelloptions = 'camel'
 
 vim.opt.textwidth = 100
-vim.opt.colorcolumn = '100'
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
