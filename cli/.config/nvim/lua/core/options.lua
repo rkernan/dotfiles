@@ -77,6 +77,3 @@ vim.opt.colorcolumn = '100'
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-
-vim.cmd([[set background=dark]])
-vim.cmd([[colorscheme gruvbones]])

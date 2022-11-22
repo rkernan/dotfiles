@@ -36,7 +36,16 @@ return packer.startup(function (use)
       require('plugins.telescope')
     end
   })
+  use({
+    'mcchrish/zenbones.nvim',
+    requires = 'rktjmp/lush.nvim',
+    config = function ()
+      vim.cmd([[set background=dark]])
+      vim.cmd([[colorscheme gruvbones]])
+    end
+  })
 
+  -- utils
   use({
     'echasnovski/mini.nvim',
     config = function ()
@@ -68,7 +77,6 @@ return packer.startup(function (use)
     end
   })
   use({ 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim', config = function () require('plugins.gitsigns') end })
-  use({ 'mcchrish/zenbones.nvim', requires = 'rktjmp/lush.nvim' })
   use({ 'tpope/vim-sleuth' })
   use({ 'tpope/vim-unimpaired' })
   use({ 'windwp/nvim-autopairs', config = function () require('plugins.autopairs') end })
