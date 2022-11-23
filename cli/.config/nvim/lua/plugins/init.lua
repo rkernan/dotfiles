@@ -101,6 +101,7 @@ return packer.startup(function (use)
       'hrsh7th/cmp-cmdline',
       'hrsh7th/cmp-path',
       'L3MON4D3/LuaSnip',
+      'ray-x/lsp_signature.nvim',
       'saadparwaiz1/cmp_luasnip',
       { 'windwp/nvim-autopairs', opt = true },
     },

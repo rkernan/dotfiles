@@ -2,10 +2,9 @@ local cmp = require('cmp')
 local luasnip = require('luasnip')
 local kind_icons = require('plugins.lsp.kind').icons
 
-local status_ok, cmp_autopairs = pcall(require ,'nvim-autopairs.completion.cmp')
-if status_ok then
-  cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-end
+cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
+
+require('lsp_signature').setup({ hint_enable = false })
 
 cmp.setup({
   enabled = function ()
