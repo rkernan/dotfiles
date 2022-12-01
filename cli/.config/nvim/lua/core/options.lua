@@ -50,8 +50,6 @@ vim.opt.listchars = {
   precedes = '←',
 }
 vim.opt.fillchars = { eob = ' ' }
-vim.opt.pumblend = 10
-vim.opt.winblend = 10
 vim.opt.undofile = true
 
 vim.opt.smarttab = true
