@@ -58,19 +58,8 @@ vim.opt.autoindent = true
 vim.opt.tabstop = 8
 vim.opt.shiftwidth = 8
 
--- wrap
-vim.opt.linebreak = true
-vim.opt.whichwrap = 'h,l,<,>,[,],~'
-vim.opt.breakindentopt = 'shift:2,min:20'
-vim.opt.showbreak = '↳ '
-vim.opt.foldlevelstart = 99
-vim.opt.foldmethod = 'marker'
-
-vim.opt.number = true
 vim.opt.signcolumn = 'yes'
 vim.opt.spelloptions = 'camel'
-
-vim.opt.textwidth = 100
 
 vim.opt.splitbelow = true
 vim.opt.splitright = true
