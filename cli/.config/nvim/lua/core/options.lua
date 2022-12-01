@@ -53,10 +53,10 @@ vim.opt.fillchars = { eob = ' ' }
 vim.opt.undofile = true
 
 vim.opt.smarttab = true
-vim.opt.expandtab = true
+vim.opt.expandtab = false
 vim.opt.autoindent = true
-vim.opt.tabstop = 2
-vim.opt.shiftwidth = 2
+vim.opt.tabstop = 8
+vim.opt.shiftwidth = 8
 
 -- wrap
 vim.opt.linebreak = true
