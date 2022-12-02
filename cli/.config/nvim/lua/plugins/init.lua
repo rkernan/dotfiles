@@ -30,8 +30,9 @@ return packer.startup(function (use)
     'nvim-telescope/telescope.nvim', branch = '0.1.x',
     requires = {
       'nvim-lua/plenary.nvim',
-      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
+      { 'nvim-telescope/telescope-dap.nvim' },
       { 'nvim-telescope/telescope-file-browser.nvim' },
+      { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
       { 'nvim-telescope/telescope-ui-select.nvim' },
     },
     config = function ()
@@ -127,4 +128,7 @@ return packer.startup(function (use)
       })
     end
   })
+
+  -- debug adapter protocol
+  use({ 'mfussenegger/nvim-dap' })
 end)
