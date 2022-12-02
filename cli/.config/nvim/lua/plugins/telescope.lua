@@ -1,6 +1,7 @@
+local telescope = require('telescope')
 local actions = require('telescope.actions')
 
-require('telescope').setup({
+telescope.setup({
   defaults = {
     sorting_strategy = 'ascending',
     layout_config = {
@@ -11,9 +12,13 @@ require('telescope').setup({
     mappings = {
       i = {
         ['<esc>'] = actions.close,
-        ['<C-u>'] = false,
         ['<C-h>'] = 'which_key',
+        ['<C-x>'] = false,
         ['<C-s>'] = actions.file_split,
+        ['<C-u>'] = false,
+      },
+      n = {
+        ['<C-h>'] = 'which_key',
       }
     }
   },
@@ -23,6 +28,15 @@ require('telescope').setup({
     }
   },
   extensions = {
+    file_browser = {
+      hijack_netrw = true,
+      initial_mode = 'normal',
+      mappings = {
+        i = {
+          ['<esc>'] = false,
+        }
+      }
+    },
     fzf = {
       fuzzy = true,
       override_generic_sorter = true,
@@ -32,7 +46,8 @@ require('telescope').setup({
   }
 })
 
-require('telescope').load_extension('fzf')
+telescope.load_extension('fzf')
+telescope.load_extension('file_browser')
 
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>f', builtin.find_files, { desc = 'Files' })
