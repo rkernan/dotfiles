@@ -34,10 +34,6 @@ cmp.setup({
       luasnip.lsp_expand(args.body)
     end
   },
-  window = {
-    completion = cmp.config.window.bordered(),
-    documentation = cmp.config.window.bordered(),
-  },
   mapping = {
     ['<c-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4),  { 'i', 'c' }),
     ['<c-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),

@@ -43,7 +43,7 @@ function FloatingTerminal:show()
     self.winnr = vim.api.nvim_open_win(self.bufnr, true, {
         relative = 'editor',
         style = 'minimal',
-        border = 'rounded',
+        border = 'single',
         width = dimensions.width,
         height = dimensions.height,
         col = dimensions.col,

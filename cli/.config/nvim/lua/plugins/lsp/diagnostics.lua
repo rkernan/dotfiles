@@ -9,7 +9,7 @@ local function open_float(args)
     header = '',
     source = false,
     focusable = false,
-    border = 'rounded',
+    border = 'single',
     close_events = { 'BufLeave', 'CursorMoved', 'InsertEnter' },
   })
 end

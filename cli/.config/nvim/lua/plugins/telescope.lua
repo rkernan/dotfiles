@@ -3,6 +3,7 @@ local actions = require('telescope.actions')
 
 telescope.setup({
   defaults = {
+    borderchars = { "─", "│", "─", "│", "┌", "┐", "┘", "└" },
     sorting_strategy = 'ascending',
     layout_config = {
       horizontal = {
