@@ -18,7 +18,7 @@ local function set_tabs()
     vim.bo.tabstop = vim.bo.shiftwidth
   end
   -- print summary
-  M.summarize_tabs()
+  summarize_tabs()
 end
 
 vim.api.nvim_create_user_command('SummarizeTabs', summarize_tabs, { nargs = 0, bang = true})
