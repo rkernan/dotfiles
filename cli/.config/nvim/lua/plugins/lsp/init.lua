@@ -41,13 +41,6 @@ local augroup = vim.api.nvim_create_augroup('plugins.lsp', { clear = true })
 vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
 vim.api.nvim_create_autocmd('LspDetach', { group = augroup, callback = lsp_detach })
 
-require('lsp_signature').setup({
-  bind = true,
-  handler_opts = {
-    border = 'single',
-  }
-})
-
 require('plugins.lsp.diagnostics')
 require('plugins.lsp.progress')
 

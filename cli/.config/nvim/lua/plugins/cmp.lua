@@ -4,8 +4,6 @@ local kind_icons = require('plugins.lsp.kind').icons
 
 cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
 
-require('lsp_signature').setup({ hint_enable = false })
-
 cmp.setup({
   enabled = function ()
     -- disable completion in comments
@@ -68,6 +66,7 @@ cmp.setup({
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip'},
+    { name = 'nvim_lsp_signature_help' },
   }, {
     { name = 'buffer' },
   })
