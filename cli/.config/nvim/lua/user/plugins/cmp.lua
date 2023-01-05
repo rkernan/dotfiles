@@ -4,6 +4,56 @@ local kind_icons = require('user.lsp.kind').icons
 
 cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
 
+local function get_mapping()
+  return {
+    ['<CR>'] = cmp.mapping.confirm({ select = false }),
+    ['<c-y>'] = cmp.mapping.confirm({ select = false  }),
+    -- navigate menu items
+    ['<Down>'] = cmp.mapping.select_next_item(),
+    ['<C-n>'] = cmp.mapping.select_next_item(),
+    ['<Up>'] = cmp.mapping.select_prev_item(),
+    ['<C-p>'] = cmp.mapping.select_prev_item(),
+    -- scroll up and down in the completion documentation
+    ['<C-f>'] = cmp.mapping.scroll_docs(5),
+    ['<C-b>'] = cmp.mapping.scroll_docs(-5),
+    -- toggle completion
+    ['<C-e>'] = cmp.mapping(function (fallback)
+      if cmp.visible() then
+        cmp.abort()
+      else
+        cmp.cmplete()
+      end
+    end),
+    -- supertab
+    ['<Tab>'] = cmp.mapping(function (fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif luasnip.jumpable(1) then
+        luasnip.jump(1)
+      else
+        fallback()
+      end
+    end, { 'i', 'c' }),
+    ['<S-Tab>'] = cmp.mapping(function (fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { 'i', 'c' }),
+  }
+end
+
+local function get_cmdline_mapping()
+  local mapping = get_mapping()
+  -- allow standard history traversal
+  mapping['<C-n>'] = nil
+  mapping['<C-p>'] = nil
+  return mapping
+end
+
 cmp.setup({
   enabled = function ()
     -- disable completion in comments
@@ -17,13 +67,11 @@ cmp.setup({
   end,
   formatting = {
     format = function (entry, vim_item)
-      -- kind icons
-      vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
-      -- kind icons - force File icon for path
+        -- kind icons
+        vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], string.lower(vim_item.kind))
       if entry.source.name == 'path' then
-        vim_item.kind = string.format('%s %s', kind_icons['File'], 'File')
+        vim_item.kind = string.format('%s %s', kind_icons['File'], 'file')
       end
-
       return vim_item
     end
   },
@@ -32,37 +80,7 @@ cmp.setup({
       luasnip.lsp_expand(args.body)
     end
   },
-  mapping = {
-    ['<c-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4),  { 'i', 'c' }),
-    ['<c-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-    ['<c-space>'] = cmp.mapping(cmp.mapping.complete({}), { 'i', 'c' }),
-    ['<c-e'] = cmp.mapping({
-      i = cmp.mapping.abort(),
-      c = cmp.mapping.close(),
-    }),
-    ['<cr>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = false,
-    }),
-    ['<tab>'] = cmp.mapping(function (fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
-      else
-        fallback()
-      end
-    end, { 'i', 'c' }),
-    ['<s-tab>'] = cmp.mapping(function (fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
-      else
-        fallback()
-      end
-    end, { 'i', 'c' }),
-  },
+  mapping = get_mapping(),
   sources = cmp.config.sources({
     { name = 'nvim_lsp' },
     { name = 'luasnip'},
@@ -73,17 +91,22 @@ cmp.setup({
 })
 
 cmp.setup.cmdline({ '/', '?' }, {
-  mapping = cmp.mapping.preset.cmdline(),
+  mapping = get_cmdline_mapping(),
   sources = {
     { name = 'buffer' },
   }
 })
 
 cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
+  mapping = get_cmdline_mapping(),
   sources = cmp.config.sources({
     { name = 'path' },
   }, {
-    { name = 'cmdline' },
+    {
+      name = 'cmdline',
+      options = {
+        ignore_cmds = { 'Man', '!' },
+      }
+    },
   })
 })
