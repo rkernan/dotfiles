@@ -1,5 +1,5 @@
-local win_utils = require('utils.win')
-local tbl_utils = require('utils.tbl')
+local win_utils = require('user.utils.win')
+local tbl_utils = require('user.utils.tbl')
 
 local config = {
   ignore_float = true,

@@ -1,6 +1,6 @@
 local cmp = require('cmp')
 local luasnip = require('luasnip')
-local kind_icons = require('lsp.kind').icons
+local kind_icons = require('user.lsp.kind').icons
 
 cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
 

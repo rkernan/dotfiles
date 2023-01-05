@@ -1,5 +1,5 @@
-local spinner = require('utils.spinner')
-local tbl_utils = require('utils.tbl')
+local spinner = require('user.utils.spinner')
+local tbl_utils = require('user.utils.tbl')
 local augroup = vim.api.nvim_create_augroup('lsp.progress', { clear = true })
 
 Client = {

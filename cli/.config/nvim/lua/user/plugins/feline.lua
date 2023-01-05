@@ -1,7 +1,7 @@
-local hl = require('utils.hl')
+local hl = require('user.utils.hl')
 local feline = require('feline')
 local vi_mode = require('feline.providers.vi_mode')
-local diagnostic_icons = require('lsp.diagnostics').icons
+local diagnostic_icons = require('user.lsp.diagnostics').icons
 
 local function get_theme()
   return {
@@ -192,7 +192,7 @@ local components = {
     },
     clients_with_spinner = {
       provider = function ()
-        return require('lsp.progress').progres_status() or ''
+        return require('user.lsp.progress').progres_status() or ''
       end,
       icon = ' ',
       left_sep = '  ',

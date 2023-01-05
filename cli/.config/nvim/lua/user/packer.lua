@@ -19,7 +19,7 @@ return packer.startup(function (use)
   use({ 'wbthomason/packer.nvim' })
 
   -- appearance
-  use({ 'feline-nvim/feline.nvim', config = function () require('plugins.feline') end })
+  use({ 'feline-nvim/feline.nvim', config = function () require('user.plugins.feline') end })
   use({
     'folke/which-key.nvim',
     config = function ()
@@ -36,7 +36,7 @@ return packer.startup(function (use)
       { 'nvim-telescope/telescope-ui-select.nvim' },
     },
     config = function ()
-      require('plugins.telescope')
+      require('user.plugins.telescope')
     end
   })
   use({
@@ -52,7 +52,7 @@ return packer.startup(function (use)
   use({
     'echasnovski/mini.nvim',
     config = function ()
-      require('plugins.mini_ai')
+      require('user.plugins.mini_ai')
       require('mini.align').setup()
       require('mini.comment').setup({})
       require('mini.surround').setup({})
@@ -79,10 +79,17 @@ return packer.startup(function (use)
       vim.g.suda_smart_edit = 1
     end
   })
-  use({ 'lewis6991/gitsigns.nvim', requires = 'nvim-lua/plenary.nvim', config = function () require('plugins.gitsigns') end })
+  use({
+    'lewis6991/gitsigns.nvim',
+    requires = 'nvim-lua/plenary.nvim',
+    config = function () require('user.plugins.gitsigns') end,
+  })
   use({ 'tpope/vim-sleuth' })
   use({ 'tpope/vim-unimpaired' })
-  use({ 'windwp/nvim-autopairs', config = function () require('plugins.autopairs') end })
+  use({
+    'windwp/nvim-autopairs',
+    config = function () require('user.plugins.autopairs') end,
+  })
   use({ 'samjwill/nvim-unception' })
 
   -- lsp
@@ -94,7 +101,7 @@ return packer.startup(function (use)
       'williamboman/mason-lspconfig.nvim',
       'folke/neodev.nvim',
     },
-    config = function () require('plugins.lspconfig') end
+    config = function () require('user.plugins.lspconfig') end
   })
 
   -- completion engine
@@ -110,7 +117,7 @@ return packer.startup(function (use)
       'saadparwaiz1/cmp_luasnip',
       { 'windwp/nvim-autopairs', opt = true },
     },
-    config = function () require('plugins.cmp') end
+    config = function () require('user.plugins.cmp') end
   })
 
   -- treesitter
