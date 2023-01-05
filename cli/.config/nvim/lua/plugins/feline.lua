@@ -1,7 +1,7 @@
 local hl = require('utils.hl')
--- local diagnostic_icons = require('user.plugins.lsp.diagnostics').icons
 local feline = require('feline')
 local vi_mode = require('feline.providers.vi_mode')
+local diagnostic_icons = require('lsp.diagnostics').icons
 
 local function get_theme()
   return {
@@ -162,25 +162,25 @@ local components = {
     diagnostics = {
       err  = {
         provider = 'diagnostic_errors',
-        -- icon = diagnostic_icons.error,
+        icon = diagnostic_icons.error,
         left_sep = ' ',
         hl = { fg = 'diagnostic_errors' },
       },
       warn = {
         provider = 'diagnostic_warnings',
-        -- icon = diagnostic_icons.warn,
+        icon = diagnostic_icons.warn,
         left_sep = ' ',
         hl = { fg = 'diagnostic_warnings' },
       },
       hint = {
         provider = 'diagnostic_hints',
-        -- icon = diagnostic_icons.hint,
+        icon = diagnostic_icons.hint,
         left_sep = ' ',
         hl = { fg = 'diagnostic_hints' },
       },
       info = {
         provider = 'diagnostic_info',
-        -- icon = diagnostic_icons.info,
+        icon = diagnostic_icons.info,
         left_sep = ' ',
         hl = { fg = 'diagnostic_info' },
       },
@@ -192,7 +192,7 @@ local components = {
     },
     clients_with_spinner = {
       provider = function ()
-        return require('plugins.lsp.progress').progres_status() or ''
+        return require('lsp.progress').progres_status() or ''
       end,
       icon = ' ',
       left_sep = '  ',

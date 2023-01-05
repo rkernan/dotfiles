@@ -87,12 +87,14 @@ return packer.startup(function (use)
 
   -- lsp
   use({ 'jose-elias-alvarez/null-ls.nvim' })
-  use({ 'neovim/nvim-lspconfig', config = function () require('plugins.lsp') end })
   use({
-    'folke/neodev.nvim',
-    config = function ()
-      require('neodev').setup({})
-    end
+    "neovim/nvim-lspconfig",
+    requires = {
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'folke/neodev.nvim',
+    },
+    config = function () require('plugins.lspconfig') end
   })
 
   -- completion engine
