@@ -30,15 +30,17 @@ return packer.startup(function (use)
     'nvim-telescope/telescope.nvim', branch = '0.1.x',
     requires = {
       'nvim-lua/plenary.nvim',
-      { 'nvim-telescope/telescope-dap.nvim' },
-      { 'nvim-telescope/telescope-file-browser.nvim' },
+      'nvim-telescope/telescope-dap.nvim',
+      'nvim-telescope/telescope-file-browser.nvim',
       { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-      { 'nvim-telescope/telescope-ui-select.nvim' },
+      'nvim-telescope/telescope-ui-select.nvim',
     },
     config = function ()
       require('user.plugins.telescope')
     end
   })
+
+  -- FIXME write out static colorscheme
   use({
     'mcchrish/zenbones.nvim',
     requires = 'rktjmp/lush.nvim',
@@ -51,27 +53,15 @@ return packer.startup(function (use)
   -- utils
   use({
     'echasnovski/mini.nvim',
-    config = function ()
-      require('user.plugins.mini_ai')
-      require('mini.align').setup()
-      require('mini.comment').setup({})
-      require('mini.surround').setup({})
-    end
+    config = function () require('user.plugins.mini') end,
   })
   use({
     'kyazdani42/nvim-web-devicons',
-    config = function ()
-      require('nvim-web-devicons').setup({ color_icons = false })
-    end
+    config = function () require('user.plugins.web-devicons') end,
   })
   use({
     'haya14busa/vim-asterisk',
-    config = function ()
-      vim.keymap.set({ 'n', 'v', 'o' }, '*', [[<Plug>(asterisk-z*)]], { desc = 'Search word' })
-      vim.keymap.set({ 'n', 'v', 'o' }, '#', [[<Plug>(asterisk-z#)]], { desc = 'Search word backwards' })
-      vim.keymap.set({ 'n', 'v', 'o' }, 'g*', [[<Plug>(asterisk-gz*)]], { desc = 'Search sub-word' })
-      vim.keymap.set({ 'n', 'v', 'o' }, 'g#', [[<Plug>(asterisk-gz#)]], { desc = 'Search sub-word backwards' })
-    end
+    config = function () require('user.plugins.asterisk') end,
   })
   use({
     'lambdalisue/suda.vim',
@@ -125,20 +115,14 @@ return packer.startup(function (use)
 
   -- treesitter
   use({
-    'nvim-treesitter/nvim-treesitter', run = ':TSUpdate',
+    'nvim-treesitter/nvim-treesitter',
+    run = ':TSUpdate',
     requires = {
       'nvim-treesitter/nvim-treesitter-textobjects',
       'RRethy/nvim-treesitter-endwise',
       'windwp/nvim-ts-autotag',
     },
-    config = function ()
-      require('nvim-ts-autotag').setup()
-      require('nvim-treesitter.configs').setup({
-        ensure_installed = 'all',
-        highlight = { enable = true },
-        endwise = { enable = true },
-      })
-    end
+    config = function () require('user.plugins.treesitter') end,
   })
 
   -- debug adapter protocol
