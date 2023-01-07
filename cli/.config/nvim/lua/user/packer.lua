@@ -19,12 +19,13 @@ return packer.startup(function (use)
   use({ 'wbthomason/packer.nvim' })
 
   -- appearance
-  use({ 'feline-nvim/feline.nvim', config = function () require('user.plugins.feline') end })
+  use({
+    'feline-nvim/feline.nvim',
+    config = function () require('user.plugins.feline') end,
+  })
   use({
     'folke/which-key.nvim',
-    config = function ()
-      require('which-key').setup()
-    end
+    config = function () require('which-key').setup() end,
   })
   use({
     'nvim-telescope/telescope.nvim', branch = '0.1.x',
@@ -35,9 +36,7 @@ return packer.startup(function (use)
       { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
       'nvim-telescope/telescope-ui-select.nvim',
     },
-    config = function ()
-      require('user.plugins.telescope')
-    end
+    config = function () require('user.plugins.telescope') end,
   })
 
   -- FIXME write out static colorscheme
@@ -83,7 +82,6 @@ return packer.startup(function (use)
   use({ 'samjwill/nvim-unception' })
 
   -- lsp
-  use({ 'jose-elias-alvarez/null-ls.nvim' })
   use({
     "neovim/nvim-lspconfig",
     requires = {
@@ -91,7 +89,11 @@ return packer.startup(function (use)
       'williamboman/mason-lspconfig.nvim',
       'folke/neodev.nvim',
     },
-    config = function () require('user.plugins.lspconfig') end
+    config = function () require('user.plugins.lspconfig') end,
+  })
+  use({
+    'jose-elias-alvarez/null-ls.nvim',
+    config = function () require('user.plugins.null-ls') end,
   })
 
   -- completion engine
@@ -110,7 +112,7 @@ return packer.startup(function (use)
       { 'rafamadriz/friendly-snippets' },
     },
     after = 'nvim-autopairs',
-    config = function () require('user.plugins.cmp') end
+    config = function () require('user.plugins.cmp') end,
   })
 
   -- treesitter
