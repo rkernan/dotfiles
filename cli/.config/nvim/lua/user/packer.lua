@@ -30,11 +30,11 @@ return packer.startup(function (use)
   use({
     'nvim-telescope/telescope.nvim', branch = '0.1.x',
     requires = {
-      'nvim-lua/plenary.nvim',
-      'nvim-telescope/telescope-dap.nvim',
-      'nvim-telescope/telescope-file-browser.nvim',
+      { 'nvim-lua/plenary.nvim' },
+      { 'nvim-telescope/telescope-dap.nvim' },
+      { 'nvim-telescope/telescope-file-browser.nvim' },
       { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-      'nvim-telescope/telescope-ui-select.nvim',
+      { 'nvim-telescope/telescope-ui-select.nvim' },
     },
     config = function () require('user.plugins.telescope') end,
   })
@@ -85,9 +85,9 @@ return packer.startup(function (use)
   use({
     "neovim/nvim-lspconfig",
     requires = {
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-      'folke/neodev.nvim',
+      { 'williamboman/mason.nvim' },
+      { 'williamboman/mason-lspconfig.nvim' },
+      { 'folke/neodev.nvim' },
     },
     config = function () require('user.plugins.lspconfig') end,
   })
@@ -120,11 +120,22 @@ return packer.startup(function (use)
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     requires = {
-      'nvim-treesitter/nvim-treesitter-textobjects',
-      'RRethy/nvim-treesitter-endwise',
-      'windwp/nvim-ts-autotag',
+      { 'nvim-treesitter/nvim-treesitter-textobjects' },
+      { 'RRethy/nvim-treesitter-endwise' },
+      { 'windwp/nvim-ts-autotag' },
     },
     config = function () require('user.plugins.treesitter') end,
+  })
+
+  -- refactoring
+  use({
+    'ThePrimeagen/refactoring.nvim',
+    requires = {
+        { 'nvim-lua/plenary.nvim' },
+        { 'nvim-treesitter/nvim-treesitter' },
+    },
+    after = 'telescope.nvim',
+    config = function () require('user.plugins.refactoring') end,
   })
 
   -- debug adapter protocol
