@@ -8,6 +8,10 @@ telescope.setup({
     layout_config = {
       horizontal = {
         prompt_position = 'top',
+      },
+      vertical = {
+        mirror = true,
+        prompt_position = 'top',
       }
     },
     mappings = {
@@ -64,7 +68,8 @@ vim.keymap.set('n', '<leader>/', builtin.live_grep, { desc = 'Live grep' })
 -- LSP mappings
 local function lsp_attach(args)
   local bufnr = args.buf
-  vim.keymap.set('n', '<leader>e', function () builtin.diagnostics({ bufnr = 0 }) end, { buffer = bufnr, desc = 'LSP diagnostics' })
+  vim.keymap.set('n', '<leader>e', function () builtin.diagnostics({ layout_strategy = 'vertical', bufnr = 0 }) end, { buffer = bufnr, desc = 'LSP diagnostics' })
+  vim.keymap.set('n', '<leader>we', function () builtin.diagnostics({ layout_strategy = 'vertical' }) end, { buffer = bufnr, desc = 'LSP workspace diagnostics' })
   vim.keymap.set('n', '<leader><leader>r', builtin.lsp_references, { buffer = bufnr, desc = 'LSP references' })
   vim.keymap.set('n', '<leader><leader>i', builtin.lsp_implementations, { buffer = bufnr, desc = 'LSP implementations' })
   vim.keymap.set('n', '<leader><leader>d', builtin.lsp_definitions, { buffer = bufnr, desc = 'LSP definitions' })
@@ -75,6 +80,7 @@ end
 local function lsp_detach(args)
   local bufnr = args.buf
   vim.keymap.del('n', '<leader>e', { buffer = bufnr })
+  vim.keymap.del('n', '<leader>we', { buffer = bufnr })
   vim.keymap.del('n', '<leader><leader>r', { buffer = bufnr })
   vim.keymap.del('n', '<leader><leader>i', { buffer = bufnr })
   vim.keymap.del('n', '<leader><leader>d', { buffer = bufnr })
