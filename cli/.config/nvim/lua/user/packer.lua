@@ -22,55 +22,25 @@ require('packer').startup(function (use)
   use({ 'wbthomason/packer.nvim' })
 
   -- appearance
-  use({
-    'feline-nvim/feline.nvim',
-    config = function () require('user.plugins.feline') end,
-  })
-  use({
-    'folke/which-key.nvim',
-    config = function () require('which-key').setup() end,
-  })
+  use({ 'feline-nvim/feline.nvim', config = function () require('user.plugins.feline') end })
+  use({ 'folke/which-key.nvim', config = function () require('user.plugins.which-key') end })
   use({
     'nvim-telescope/telescope.nvim', branch = '0.1.x',
     requires = {
-      { 'nvim-lua/plenary.nvim' },
-      { 'nvim-telescope/telescope-dap.nvim' },
-      { 'nvim-telescope/telescope-file-browser.nvim' },
+      'nvim-lua/plenary.nvim',
+      'nvim-telescope/telescope-file-browser.nvim',
       { 'nvim-telescope/telescope-fzf-native.nvim', run = 'make' },
-      { 'nvim-telescope/telescope-ui-select.nvim' },
+      'nvim-telescope/telescope-ui-select.nvim',
     },
     config = function () require('user.plugins.telescope') end,
   })
-
-  -- FIXME write out static colorscheme
-  use({
-    'mcchrish/zenbones.nvim',
-    requires = 'rktjmp/lush.nvim',
-    config = function ()
-      vim.cmd([[set background=dark]])
-      vim.cmd([[colorscheme gruvbones]])
-    end
-  })
+  use({ 'mcchrish/zenbones.nvim', requires = 'rktjmp/lush.nvim' })
 
   -- utils
-  use({
-    'echasnovski/mini.nvim',
-    config = function () require('user.plugins.mini') end,
-  })
-  use({
-    'kyazdani42/nvim-web-devicons',
-    config = function () require('user.plugins.web-devicons') end,
-  })
-  use({
-    'haya14busa/vim-asterisk',
-    config = function () require('user.plugins.asterisk') end,
-  })
-  use({
-    'lambdalisue/suda.vim',
-    setup = function ()
-      vim.g.suda_smart_edit = 1
-    end
-  })
+  use({ 'echasnovski/mini.nvim', config = function () require('user.plugins.mini') end })
+  use({ 'kyazdani42/nvim-web-devicons', config = function () require('user.plugins.web-devicons') end })
+  use({ 'haya14busa/vim-asterisk', config = function () require('user.plugins.asterisk') end })
+  use({ 'lambdalisue/suda.vim', config = function () require('user.plugins.suda') end })
   use({
     'lewis6991/gitsigns.nvim',
     requires = 'nvim-lua/plenary.nvim',
@@ -78,41 +48,35 @@ require('packer').startup(function (use)
   })
   use({ 'tpope/vim-sleuth' })
   use({ 'tpope/vim-unimpaired' })
-  use({
-    'windwp/nvim-autopairs',
-    config = function () require('user.plugins.autopairs') end,
-  })
+  use({ 'windwp/nvim-autopairs', config = function () require('user.plugins.autopairs') end })
   use({ 'samjwill/nvim-unception' })
 
   -- lsp
   use({
     "neovim/nvim-lspconfig",
     requires = {
-      { 'williamboman/mason.nvim' },
-      { 'williamboman/mason-lspconfig.nvim' },
-      { 'folke/neodev.nvim' },
+      'williamboman/mason.nvim',
+      'williamboman/mason-lspconfig.nvim',
+      'folke/neodev.nvim',
     },
     config = function () require('user.plugins.lspconfig') end,
   })
-  use({
-    'jose-elias-alvarez/null-ls.nvim',
-    config = function () require('user.plugins.null-ls') end,
-  })
+  use({ 'jose-elias-alvarez/null-ls.nvim', config = function () require('user.plugins.null-ls') end })
 
   -- completion engine
   use({
     'hrsh7th/nvim-cmp',
     requires = {
       -- autocompletion
-      { 'hrsh7th/cmp-buffer' },
-      { 'hrsh7th/cmp-cmdline' },
-      { 'hrsh7th/cmp-path' },
-      { 'saadparwaiz1/cmp_luasnip' },
-      { 'hrsh7th/cmp-nvim-lsp' },
-      { 'hrsh7th/cmp-nvim-lsp-signature-help' },
+      'hrsh7th/cmp-buffer',
+      'hrsh7th/cmp-cmdline',
+      'hrsh7th/cmp-path',
+      'saadparwaiz1/cmp_luasnip',
+      'hrsh7th/cmp-nvim-lsp',
+      'hrsh7th/cmp-nvim-lsp-signature-help',
       -- snippets
-      { 'L3MON4D3/LuaSnip' },
-      { 'rafamadriz/friendly-snippets' },
+      'L3MON4D3/LuaSnip',
+      'rafamadriz/friendly-snippets',
     },
     after = 'nvim-autopairs',
     config = function () require('user.plugins.cmp') end,
@@ -123,9 +87,9 @@ require('packer').startup(function (use)
     'nvim-treesitter/nvim-treesitter',
     run = ':TSUpdate',
     requires = {
-      { 'nvim-treesitter/nvim-treesitter-textobjects' },
-      { 'RRethy/nvim-treesitter-endwise' },
-      { 'windwp/nvim-ts-autotag' },
+      'nvim-treesitter/nvim-treesitter-textobjects',
+      'RRethy/nvim-treesitter-endwise',
+      'windwp/nvim-ts-autotag',
     },
     config = function () require('user.plugins.treesitter') end,
   })
@@ -134,15 +98,12 @@ require('packer').startup(function (use)
   use({
     'ThePrimeagen/refactoring.nvim',
     requires = {
-        { 'nvim-lua/plenary.nvim' },
-        { 'nvim-treesitter/nvim-treesitter' },
+        'nvim-lua/plenary.nvim',
+        'nvim-treesitter/nvim-treesitter',
     },
     after = 'telescope.nvim',
     config = function () require('user.plugins.refactoring') end,
   })
-
-  -- debug adapter protocol
-  use({ 'mfussenegger/nvim-dap' })
 
   if is_bootstrap then
     require('packer').sync()

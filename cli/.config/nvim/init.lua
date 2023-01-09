@@ -28,3 +28,6 @@ require('user.mappings')
 require('user.events')
 require('user.lsp')
 require('user.packer')
+
+vim.cmd("set background=dark")
+vim.cmd("colorscheme gruvbones")
