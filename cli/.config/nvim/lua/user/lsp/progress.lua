@@ -37,7 +37,7 @@ end
 
 function Client:stop_tracking(bufnr)
   -- Stop tracking given buffer.
-  idx = tbl_utils.tbl_index(self.buffers, bufnr)
+  local idx = tbl_utils.tbl_index(self.buffers, bufnr)
   if idx then
     table.remove(self.buffers, idx)
   end
