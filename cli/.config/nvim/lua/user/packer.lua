@@ -1,11 +1,14 @@
--- use a protectd call so we don't error out on first use
-local status_ok, packer = pcall(require, 'packer')
-if not status_ok then
-  return
+-- Install packer
+local install_path = vim.fn.stdpath('data') .. '/site/pack/packer/start/packer.nvim'
+local is_bootstrap = false
+if vim.fn.empty(vim.fn.glob(install_path)) > 0 then
+  is_bootstrap = true
+  vim.fn.system({ 'git', 'clone', '--depth', '1', 'https://github.com/wbthomason/packer.nvim', install_path })
+  vim.cmd("packadd packer.nvim")
 end
 
 -- use a floating window
-packer.init({
+require('packer').init({
   display = {
     open_fn = function ()
       return require('packer.util').float({ border = 'single' })
@@ -15,7 +18,7 @@ packer.init({
 })
 
 -- install plugins
-return packer.startup(function (use)
+require('packer').startup(function (use)
   use({ 'wbthomason/packer.nvim' })
 
   -- appearance
@@ -140,4 +143,12 @@ return packer.startup(function (use)
 
   -- debug adapter protocol
   use({ 'mfussenegger/nvim-dap' })
+
+  if is_bootstrap then
+    require('packer').sync()
+  end
 end)
+
+if is_bootstrap then
+  print('Plugins are being installed. Wait until packer completes then restart nvim.')
+end

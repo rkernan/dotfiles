@@ -63,15 +63,6 @@ setup_brew_fzf() {
   $installer --key-bindings --completion --no-update-rc --xdg
 }
 
-setup_packer_nvim() {
-  # install packer.nvim
-  local packer_dir="${HOME}/.local/share/nvim/site/pack/packer/start/packer.nvim"
-  if [[ ! -e "$packer_dir" ]]; then
-    mkdir -p "$packer_dir"
-    git clone --depth 1 "https://github.com/wbthomason/packer.nvim" "$packer_dir"
-  fi
-}
-
 setup_gpg_agent() {
   mkdir -p "${HOME}/.config/systemd/user"
   pushd "${HOME}/.config/systemd/user" > /dev/null
@@ -107,7 +98,6 @@ for target in $targets; do
       ;;
     cli)
       stow cli
-      setup_packer_nvim
       ;;
     gui)
       stow gui
