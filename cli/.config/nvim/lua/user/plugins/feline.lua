@@ -90,45 +90,6 @@ local separators = {
   soft = { str = ' ' },
 }
 
-local function file_encoding()
-  if string.lower(vim.bo.fileencoding) ~= 'utf-8' then
-    return vim.bo.fileencoding
-  end
-  return ''
-end
-
-local function get_cwd()
-  return vim.fn.fnamemodify(vim.fn.getcwd(), ':~')
-end
-
-local function file_format()
-  if string.lower(vim.bo.fileformat) ~= 'unix' then
-    return vim.bo.fileformat
-  end
-  return ''
-end
-
-local function workspace_diagnostics(severity)
-  local count = vim.tbl_count(vim.diagnostic.get(nil, severity and { severity = severity }))
-  return count ~= 0 and tostring(count) or ''
-end
-
-local function workspace_diagnostics_err()
-  return workspace_diagnostics(vim.diagnostic.severity.ERROR)
-end
-
-local function workspace_diagnostics_warn()
-  return workspace_diagnostics(vim.diagnostic.severity.WARN)
-end
-
-local function workspace_diagnostics_hint()
-  return workspace_diagnostics(vim.diagnostic.severity.HINT)
-end
-
-local function workspace_diagnostics_info()
-  return workspace_diagnostics(vim.diagnostic.severity.INFO)
-end
-
 local components = {
   buffer = {
     is_active = {
@@ -141,7 +102,9 @@ local components = {
     },
   },
   cwd = {
-    provider = get_cwd,
+    provider = function ()
+      return vim.fn.fnamemodify(vim.fn.getcwd(), ':~')
+    end
   },
   git = {
     branch = {
@@ -167,11 +130,21 @@ local components = {
   },
   file = {
     encoding = {
-      provider = file_encoding,
+      provider = function ()
+        if string.lower(vim.bo.fileencoding) ~= 'utf-8' then
+          return vim.bo.fileencoding
+        end
+        return ''
+      end,
       hl = { fg = 'red' },
     },
     format = {
-      provider = file_format,
+      provider = function ()
+        if string.lower(vim.bo.fileformat) ~= 'unix' then
+          return vim.bo.fileformat
+        end
+        return ''
+      end,
       hl = { fg = 'red' },
     },
     info = {
@@ -228,28 +201,6 @@ local components = {
         hl = { fg = 'diagnostic_info' },
       },
     },
-    workspace_diagnostics = {
-      err  = {
-        provider = workspace_diagnostics_err,
-        icon = diagnostic_icons.error,
-        hl = { fg = 'diagnostic_errors' },
-      },
-      warn = {
-        provider = workspace_diagnostics_warn,
-        icon = diagnostic_icons.warn,
-        hl = { fg = 'diagnostic_warnings' },
-      },
-      hint = {
-        provider = workspace_diagnostics_hint,
-        icon = diagnostic_icons.hint,
-        hl = { fg = 'diagnostic_hints' },
-      },
-      info = {
-        provider = workspace_diagnostics_info,
-        icon = diagnostic_icons.info,
-        hl = { fg = 'diagnostic_info' },
-      },
-    },
   },
   vi_mode = {
     provider = function ()
@@ -289,15 +240,18 @@ feline.setup({
   components = {
     active= {
       {
-        components.vi_mode,
-        wrap_left(components.cwd),
-        wrap_left(components.git.branch, separators.hard),
-        wrap_left(components.file.info, separators.hard),
+        wrap_right(components.vi_mode),
+        wrap_right(components.git.branch, separators.hard),
+        wrap_right(components.cwd, separators.hard),
+        wrap_right(components.git.diff_added),
+        wrap_right(components.git.diff_changed),
+        wrap_right(components.git.diff_removed),
+        components.file.info,
       }, {
-        wrap_right(components.lsp.workspace_diagnostics.err),
-        wrap_right(components.lsp.workspace_diagnostics.warn),
-        wrap_right(components.lsp.workspace_diagnostics.hint),
-        wrap_right(components.lsp.workspace_diagnostics.info),
+        wrap_right(components.lsp.diagnostics.err),
+        wrap_right(components.lsp.diagnostics.warn),
+        wrap_right(components.lsp.diagnostics.hint),
+        wrap_right(components.lsp.diagnostics.info),
         wrap_right(components.lsp.clients, separators.hard),
         wrap_right(components.file.format, separators.hard),
         wrap_right(components.file.encoding, separators.hard),
@@ -316,28 +270,28 @@ feline.winbar.setup({
       {
         components.buffer.is_active,
         wrap_left(components.file.info),
-        wrap_left(components.git.diff_added),
-        wrap_left(components.git.diff_changed),
-        wrap_left(components.git.diff_removed),
       }, {
         wrap_right(components.lsp.diagnostics.err),
         wrap_right(components.lsp.diagnostics.warn),
         wrap_right(components.lsp.diagnostics.hint),
         wrap_right(components.lsp.diagnostics.info),
+        wrap_right(components.git.diff_added),
+        wrap_right(components.git.diff_changed),
+        wrap_right(components.git.diff_removed),
       }
     },
     inactive = {
       {
         components.buffer.is_inactive,
         wrap_left(components.file.info),
-        wrap_left(components.git.diff_added),
-        wrap_left(components.git.diff_changed),
-        wrap_left(components.git.diff_removed),
       }, {
         wrap_right(components.lsp.diagnostics.err),
         wrap_right(components.lsp.diagnostics.warn),
         wrap_right(components.lsp.diagnostics.hint),
         wrap_right(components.lsp.diagnostics.info),
+        wrap_right(components.git.diff_added),
+        wrap_right(components.git.diff_changed),
+        wrap_right(components.git.diff_removed),
       }
     },
   },
