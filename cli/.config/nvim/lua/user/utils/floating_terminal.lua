@@ -71,7 +71,7 @@ end
 
 function FloatingTerminal:hide()
   if self.winnr then
-    vim.api.nvim_win_close(self.winnr, {})
+    vim.api.nvim_win_close(self.winnr, true)
     self.winnr = nil
   end
 end
