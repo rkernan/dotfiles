@@ -49,7 +49,6 @@ require('packer').startup(function (use)
   use({ 'tpope/vim-sleuth' })
   use({ 'tpope/vim-unimpaired' })
   use({ 'windwp/nvim-autopairs', config = function () require('user.plugins.autopairs') end })
-  use({ 'samjwill/nvim-unception' })
 
   -- lsp
   use({
