@@ -196,7 +196,7 @@ vim.api.nvim_create_autocmd('BufDelete', { group = augroup, callback = buf_delet
 
 local M = {}
 
-function M.progres_status(bufnr)
+function M.progress_status(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
 
   local clients = tracker:get_by_bufnr(bufnr)
