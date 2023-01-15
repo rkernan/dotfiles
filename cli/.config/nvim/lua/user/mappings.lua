@@ -11,9 +11,9 @@ vim.keymap.set('n', 'gj', 'j', { desc = 'Next line' })
 vim.keymap.set('n', 'gk', 'k', { desc = 'Prev line' })
 
 -- keep highlight after changing indent
-vim.keymap.set('v', '>', '>gv')
-vim.keymap.set('v', '<', '<gv')
+vim.keymap.set('x', '>', '>gv')
+vim.keymap.set('x', '<', '<gv')
 
 -- automatically jump to the end of the last paste
-vim.keymap.set('v', 'y', 'y`]')
-vim.keymap.set({ 'n', 'v' }, 'p', 'p`]')
+vim.keymap.set('x', 'y', 'y`]')
+vim.keymap.set({ 'n', 'x' }, 'p', 'p`]')
