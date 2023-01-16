@@ -26,8 +26,8 @@ return {
   config = function ()
     require('gitsigns').setup({
       signs = {
-        untracked    = { text = '│' },
+        untracked = { text = '│' },
       },
     })
-  end
+  end,
 }
