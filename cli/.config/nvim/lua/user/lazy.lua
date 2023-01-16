@@ -13,6 +13,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   -- appearance
+  require('user.plugins.noice'),
   require('user.plugins.feline'),
   require('user.plugins.which-key'),
   require('user.plugins.telescope'),
