@@ -24,6 +24,9 @@ return {
       },
       cmdline = {
         view = 'cmdline',
+        format = {
+          help_vert = { pattern = '^:vert %s*he?l?p?%s+', icon = '' },
+        }
       },
       format = {
         search_down = {
