@@ -200,6 +200,28 @@ local components = {
       },
     },
   },
+  noice = {
+    mode = {
+      provider = function ()
+        if require('noice').api.status.mode.has() then
+          return require('noice').api.status.mode.get()
+        end
+        return ''
+      end,
+      icon = '',
+      hl = { fg = 'yellow' },
+    },
+    search = {
+      provider = function ()
+        if require('noice').api.status.search.has() then
+          return require('noice').api.status.search.get()
+        end
+        return ''
+      end,
+      icon = '',
+      hl = { fg = 'blue' },
+    },
+  },
   vi_mode = {
     provider = function ()
       return string.format(' %s ', vi_mode_text[vim.fn.mode()]:sub(1, 1))
@@ -244,22 +266,10 @@ return {
           {
             wrap_right(components.vi_mode),
             wrap_right(components.git.branch, separators.hard),
-            wrap_right(components.cwd, separators.hard),
-            wrap_right(components.git.diff_added),
-            wrap_right(components.git.diff_changed),
-            wrap_right(components.git.diff_removed),
-            components.file.info,
+            wrap_right(components.cwd),
           }, {
-            wrap_right(components.lsp.diagnostics.err),
-            wrap_right(components.lsp.diagnostics.warn),
-            wrap_right(components.lsp.diagnostics.hint),
-            wrap_right(components.lsp.diagnostics.info),
-            wrap_right(components.lsp.clients, separators.hard),
-            wrap_right(components.file.format, separators.hard),
-            wrap_right(components.file.encoding, separators.hard),
-            wrap_right(components.file.position),
-            wrap_right(components.file.position_percent),
-          }
+            wrap_right(components.noice.mode),
+          },
         },
       },
       vi_mode_colors = vi_mode_colors,
@@ -272,28 +282,36 @@ return {
           {
             components.buffer.is_active,
             wrap_left(components.file.info),
+            wrap_left(components.git.diff_added),
+            wrap_left(components.git.diff_changed),
+            wrap_left(components.git.diff_removed),
           }, {
             wrap_right(components.lsp.diagnostics.err),
             wrap_right(components.lsp.diagnostics.warn),
             wrap_right(components.lsp.diagnostics.hint),
             wrap_right(components.lsp.diagnostics.info),
-            wrap_right(components.git.diff_added),
-            wrap_right(components.git.diff_changed),
-            wrap_right(components.git.diff_removed),
+            wrap_right(components.file.format, separators.hard),
+            wrap_right(components.file.encoding, separators.hard),
+            wrap_right(components.file.position),
+            wrap_right(components.file.position_percent),
           }
         },
         inactive = {
           {
             components.buffer.is_inactive,
             wrap_left(components.file.info),
+            wrap_left(components.git.diff_added),
+            wrap_left(components.git.diff_changed),
+            wrap_left(components.git.diff_removed),
           }, {
             wrap_right(components.lsp.diagnostics.err),
             wrap_right(components.lsp.diagnostics.warn),
             wrap_right(components.lsp.diagnostics.hint),
             wrap_right(components.lsp.diagnostics.info),
-            wrap_right(components.git.diff_added),
-            wrap_right(components.git.diff_changed),
-            wrap_right(components.git.diff_removed),
+            wrap_right(components.file.format, separators.hard),
+            wrap_right(components.file.encoding, separators.hard),
+            wrap_right(components.file.position),
+            wrap_right(components.file.position_percent),
           }
         },
       },
