@@ -1,6 +1,4 @@
 local hl = require('user.utils.hl')
-local feline = require('feline')
-local vi_mode = require('feline.providers.vi_mode')
 local diagnostic_icons = require('user.lsp.diagnostics').icons
 
 local function get_theme()
@@ -208,9 +206,9 @@ local components = {
     end,
     hl = function ()
       return {
-        name = vi_mode.get_mode_highlight_name(),
+        name = require('feline.providers.vi_mode').get_mode_highlight_name(),
         fg = 'black',
-        bg = vi_mode.get_mode_color(),
+        bg = require('feline.providers.vi_mode').get_mode_color(),
       }
     end,
   },
@@ -234,70 +232,76 @@ local function wrap_right(cmp, sep)
   return wrap
 end
 
-vim.opt.laststatus = 3
+return {
+  'feline-nvim/feline.nvim',
+  event = 'VeryLazy',
+  config = function ()
+    vim.opt.laststatus = 3
 
-feline.setup({
-  components = {
-    active= {
-      {
-        wrap_right(components.vi_mode),
-        wrap_right(components.git.branch, separators.hard),
-        wrap_right(components.cwd, separators.hard),
-        wrap_right(components.git.diff_added),
-        wrap_right(components.git.diff_changed),
-        wrap_right(components.git.diff_removed),
-        components.file.info,
-      }, {
-        wrap_right(components.lsp.diagnostics.err),
-        wrap_right(components.lsp.diagnostics.warn),
-        wrap_right(components.lsp.diagnostics.hint),
-        wrap_right(components.lsp.diagnostics.info),
-        wrap_right(components.lsp.clients, separators.hard),
-        wrap_right(components.file.format, separators.hard),
-        wrap_right(components.file.encoding, separators.hard),
-        wrap_right(components.file.position),
-        wrap_right(components.file.position_percent),
-      }
-    },
-  },
-  vi_mode_colors = vi_mode_colors,
-  force_inactive = {},
-})
+    require('feline').setup({
+      components = {
+        active= {
+          {
+            wrap_right(components.vi_mode),
+            wrap_right(components.git.branch, separators.hard),
+            wrap_right(components.cwd, separators.hard),
+            wrap_right(components.git.diff_added),
+            wrap_right(components.git.diff_changed),
+            wrap_right(components.git.diff_removed),
+            components.file.info,
+          }, {
+            wrap_right(components.lsp.diagnostics.err),
+            wrap_right(components.lsp.diagnostics.warn),
+            wrap_right(components.lsp.diagnostics.hint),
+            wrap_right(components.lsp.diagnostics.info),
+            wrap_right(components.lsp.clients, separators.hard),
+            wrap_right(components.file.format, separators.hard),
+            wrap_right(components.file.encoding, separators.hard),
+            wrap_right(components.file.position),
+            wrap_right(components.file.position_percent),
+          }
+        },
+      },
+      vi_mode_colors = vi_mode_colors,
+      force_inactive = {},
+    })
 
-feline.winbar.setup({
-  components = {
-    active = {
-      {
-        components.buffer.is_active,
-        wrap_left(components.file.info),
-      }, {
-        wrap_right(components.lsp.diagnostics.err),
-        wrap_right(components.lsp.diagnostics.warn),
-        wrap_right(components.lsp.diagnostics.hint),
-        wrap_right(components.lsp.diagnostics.info),
-        wrap_right(components.git.diff_added),
-        wrap_right(components.git.diff_changed),
-        wrap_right(components.git.diff_removed),
-      }
-    },
-    inactive = {
-      {
-        components.buffer.is_inactive,
-        wrap_left(components.file.info),
-      }, {
-        wrap_right(components.lsp.diagnostics.err),
-        wrap_right(components.lsp.diagnostics.warn),
-        wrap_right(components.lsp.diagnostics.hint),
-        wrap_right(components.lsp.diagnostics.info),
-        wrap_right(components.git.diff_added),
-        wrap_right(components.git.diff_changed),
-        wrap_right(components.git.diff_removed),
-      }
-    },
-  },
-  force_inactive = {},
-})
+    require('feline').winbar.setup({
+      components = {
+        active = {
+          {
+            components.buffer.is_active,
+            wrap_left(components.file.info),
+          }, {
+            wrap_right(components.lsp.diagnostics.err),
+            wrap_right(components.lsp.diagnostics.warn),
+            wrap_right(components.lsp.diagnostics.hint),
+            wrap_right(components.lsp.diagnostics.info),
+            wrap_right(components.git.diff_added),
+            wrap_right(components.git.diff_changed),
+            wrap_right(components.git.diff_removed),
+          }
+        },
+        inactive = {
+          {
+            components.buffer.is_inactive,
+            wrap_left(components.file.info),
+          }, {
+            wrap_right(components.lsp.diagnostics.err),
+            wrap_right(components.lsp.diagnostics.warn),
+            wrap_right(components.lsp.diagnostics.hint),
+            wrap_right(components.lsp.diagnostics.info),
+            wrap_right(components.git.diff_added),
+            wrap_right(components.git.diff_changed),
+            wrap_right(components.git.diff_removed),
+          }
+        },
+      },
+      force_inactive = {},
+    })
 
-local augroup = vim.api.nvim_create_augroup('user.plugins.feline', { clear = true })
-vim.api.nvim_create_autocmd('ColorScheme', { group = augroup, callback = function () feline.use_theme(get_theme()) end })
-feline.use_theme(get_theme())
+    local augroup = vim.api.nvim_create_augroup('user.plugins.feline', { clear = true })
+    vim.api.nvim_create_autocmd('ColorScheme', { group = augroup, callback = function () require('feline').use_theme(get_theme()) end })
+    require('feline').use_theme(get_theme())
+  end,
+}

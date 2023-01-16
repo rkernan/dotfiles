@@ -27,7 +27,7 @@ require('user.options')
 require('user.mappings')
 require('user.events')
 require('user.lsp')
-require('user.packer')
+require('user.lazy')
 
 vim.cmd("set background=dark")
 vim.cmd("colorscheme gruvbones")
