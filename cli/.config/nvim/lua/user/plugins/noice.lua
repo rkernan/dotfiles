@@ -9,9 +9,6 @@ return {
     require('telescope').load_extension('noice')
     require("noice").setup({
       lsp = {
-        progress = {
-          enabled = false,
-        },
         -- override markdown rendering so that cmp and other plugins user treesitter
         override = {
           ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
