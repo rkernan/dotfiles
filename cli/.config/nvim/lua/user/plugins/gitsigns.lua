@@ -24,6 +24,10 @@ return {
     { 'ah', ':<C-u>Gitsigns select_hunk<cr>', mode = { 'o', 'x' }, desc = 'Git select hunk' },
   },
   config = function ()
-    require('gitsigns').setup()
+    require('gitsigns').setup({
+      signs = {
+        untracked    = { text = '│' },
+      },
+    })
   end
 }
