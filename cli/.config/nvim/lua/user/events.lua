@@ -12,4 +12,3 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 
 -- resize windows automatically
 vim.api.nvim_create_autocmd('VimResized', { group = augroup, command = 'wincmd =' })
-
