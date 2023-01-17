@@ -106,7 +106,9 @@ local components = {
   },
   git = {
     branch = {
-      provider = 'git_branch',
+      provider = function ()
+        return vim.g.gitsigns_head or ''
+      end,
       icon = ' ',
       hl = { fg = 'magenta' },
     },
