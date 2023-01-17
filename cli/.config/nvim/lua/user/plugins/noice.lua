@@ -22,7 +22,9 @@ return {
       cmdline = {
         view = 'cmdline',
         format = {
-          help_vert = { pattern = '^:vert %s*he?l?p?%s+', icon = '' },
+          cmdline = { icon = '>' },
+          help = { icon = '?' },
+          help_vert = { pattern = '^:vert %s*he?l?p?%s+', icon = '?' },
         }
       },
       format = {
