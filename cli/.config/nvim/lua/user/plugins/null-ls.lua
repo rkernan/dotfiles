@@ -7,6 +7,8 @@ return {
       sources = {
         -- fish
         null_ls.builtins.diagnostics.fish,
+        -- git
+        null_ls.builtins.code_actions.gitsigns,
         -- json
         null_ls.builtins.formatting.jq,
         -- python
