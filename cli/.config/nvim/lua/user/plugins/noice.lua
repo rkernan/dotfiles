@@ -34,6 +34,15 @@ return {
           ['cmp.entry.get_documentation'] = true,
         },
       },
+      format = {
+        level = {
+          icons = {
+            error = '',
+            warn = '',
+            info = '',
+          },
+        },
+      },
       views = {
         popup = {
           border = {
