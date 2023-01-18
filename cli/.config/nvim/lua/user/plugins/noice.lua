@@ -8,18 +8,6 @@ return {
   config = function ()
     require('telescope').load_extension('noice')
     require("noice").setup({
-      lsp = {
-        -- override markdown rendering so that cmp and other plugins user treesitter
-        override = {
-          ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
-          ['vim.lsp.util.stylize_markdown'] = true,
-          ['cmp.entry.get_documentation'] = true,
-        },
-      },
-      messages = {
-        view_history = 'popup',
-        view_search = 'notify',
-      },
       cmdline = {
         view = 'cmdline',
         format = {
@@ -28,13 +16,23 @@ return {
           help_vert = { pattern = '^:vert %s*he?l?p?%s+', icon = '?' },
         }
       },
-      format = {
-        search_down = {
-          view = 'cmdline',
+      messages = {
+        view_history = 'popup',
+        view_search = 'notify',
+      },
+      popupmenu = {
+        enabled = false,
+      },
+      lsp = {
+        progress = {
+          format_done = '',
         },
-        search_up = {
-          view = 'cmdline',
-        }
+        -- override markdown rendering so that cmp and other plugins user treesitter
+        override = {
+          ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+          ['vim.lsp.util.stylize_markdown'] = true,
+          ['cmp.entry.get_documentation'] = true,
+        },
       },
       views = {
         popup = {
