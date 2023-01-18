@@ -173,12 +173,6 @@ local components = {
     },
   },
   lsp = {
-    clients = {
-      provider = function ()
-        return require('user.lsp.progress').progress_status() or ''
-      end,
-      icon = ' ',
-    },
     diagnostics = {
       err  = {
         provider = 'diagnostic_errors',
