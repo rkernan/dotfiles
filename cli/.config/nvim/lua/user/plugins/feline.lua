@@ -174,7 +174,10 @@ local components = {
     },
     tabs = {
       provider = function ()
-        return string.format('tab: %d', vim.bo.shiftwidth)
+        if vim.bo.expandtab then
+          return string.format('tab:%d,et', vim.bo.shiftwidth)
+        end
+        return string.format('tab:%d', vim.bo.shiftwidth)
       end,
       hl = { fg = 'black' },
     }
