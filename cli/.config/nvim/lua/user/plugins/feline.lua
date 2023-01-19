@@ -138,21 +138,15 @@ local components = {
   file = {
     encoding = {
       provider = function ()
-        if string.lower(vim.bo.fileencoding) ~= 'utf-8' then
-          return vim.bo.fileencoding
-        end
-        return ''
+        return vim.bo.fileencoding
       end,
-      hl = { fg = 'red' },
+      hl = { fg = 'black' },
     },
     format = {
       provider = function ()
-        if string.lower(vim.bo.fileformat) ~= 'unix' then
-          return vim.bo.fileformat
-        end
-        return ''
+        return vim.bo.fileformat
       end,
-      hl = { fg = 'red' },
+      hl = { fg = 'black' },
     },
     info = {
       provider = {
@@ -178,6 +172,12 @@ local components = {
     position_percent = {
       provider = 'line_percentage',
     },
+    tabs = {
+      provider = function ()
+        return string.format('tab: %d', vim.bo.shiftwidth)
+      end,
+      hl = { fg = 'black' },
+    }
   },
   lsp = {
     diagnostics = {
@@ -271,8 +271,11 @@ return {
             wrap_right(components.git.branch, separators.hard),
             wrap_right(components.cwd),
           }, {
-            wrap_right(components.noice.search),
-            wrap_right(components.noice.mode),
+            wrap_right(components.noice.search, separators.hard),
+            wrap_right(components.noice.mode, separators.hard),
+            wrap_right(components.file.tabs, separators.hard),
+            wrap_right(components.file.encoding, separators.hard),
+            wrap_right(components.file.format),
           },
         },
       },
@@ -294,8 +297,6 @@ return {
             wrap_right(components.lsp.diagnostics.warn),
             wrap_right(components.lsp.diagnostics.hint),
             wrap_right(components.lsp.diagnostics.info),
-            wrap_right(components.file.format, separators.hard),
-            wrap_right(components.file.encoding, separators.hard),
             wrap_right(components.file.position),
             wrap_right(components.file.position_percent),
           }
@@ -312,8 +313,6 @@ return {
             wrap_right(components.lsp.diagnostics.warn),
             wrap_right(components.lsp.diagnostics.hint),
             wrap_right(components.lsp.diagnostics.info),
-            wrap_right(components.file.format, separators.hard),
-            wrap_right(components.file.encoding, separators.hard),
             wrap_right(components.file.position),
             wrap_right(components.file.position_percent),
           }
