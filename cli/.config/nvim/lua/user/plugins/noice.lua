@@ -18,7 +18,7 @@ return {
       },
       messages = {
         view_history = 'popup',
-        view_search = 'notify',
+        view_search = false,
       },
       popupmenu = {
         enabled = false,

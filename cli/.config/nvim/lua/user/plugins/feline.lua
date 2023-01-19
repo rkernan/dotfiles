@@ -263,6 +263,7 @@ return {
             wrap_right(components.git.branch, separators.hard),
             wrap_right(components.cwd),
           }, {
+            wrap_right(components.noice.search),
             wrap_right(components.noice.mode),
           },
         },
