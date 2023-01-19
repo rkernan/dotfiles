@@ -84,23 +84,26 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     WhichKey({ zenbones.WhichKey, gui = 'none' }),
 
     -- statusline
-    StatusLineWhite({ zenbones.StatusLine }),
-    StatusLineFaded({ zenbones.StatusLine, fg = StatusLineWhite.fg.da(30) }),
-    StatusLineRed({ zenbones.StatusLine, fg = hsluv('#FB4C36') }),
-    StatusLineOrange({ zenbones.Statusline, fg = hsluv('#FF9000') }),
-    StatusLineYellow({ zenbones.StatusLine, fg = hsluv('#B7BA26') }),
-    StatusLineGreen({ zenbones.StatusLine, fg = hsluv('#B7BA26') }),
+    StatusLineNC({ zenbones.StatusLine, fg = zenbones.StatusLine.fg.da(15) }),
+
+    -- statusline - basic
+    StatusLineBlack({ zenbones.StatusLine, fg = zenbones.StatusLine.fg.da(30) }),
     StatusLineBlue({ zenbones.StatusLine, fg = hsluv('#83A598') }),
-    StatusLineMagenta({ zenbones.StatusLine, fg = hsluv('#D2859A') }),
     StatusLineCyan({ zenbones.StatusLine, fg = hsluv('#82C07B') }),
+    StatusLineGreen({ zenbones.StatusLine, fg = hsluv('#B7BA26') }),
+    StatusLineMagenta({ zenbones.StatusLine, fg = hsluv('#D2859A') }),
+    StatusLineOrange({ zenbones.StatusLine, fg = hsluv('#FF9000') }),
+    StatusLineRed({ zenbones.StatusLine, fg = hsluv('#FB4C36') }),
+    StatusLineWhite({ zenbones.StatusLine }),
+    StatusLineYellow({ zenbones.StatusLine, fg = hsluv('#B7BA26') }),
 
     -- statusline - mode
-    StatusLineModeNormal({ fg = hsluv('#282828'), bg = StatusLineWhite.fg }),
-    StatusLineModeInsert({ StatusLineModeNormal, bg = StatusLineBlue.fg }),
     StatusLineModeCommand({ StatusLineModeNormal, bg = StatusLineGreen.fg }),
+    StatusLineModeInsert({ StatusLineModeNormal, bg = StatusLineBlue.fg }),
+    StatusLineModeNormal({ fg = hsluv('#282828'), bg = StatusLineWhite.fg }),
     StatusLineModeReplace({ StatusLineModeNormal, bg = StatusLineRed.fg }),
-    StatusLineModeVisual({ StatusLineModeNormal, bg = StatusLineOrange.fg }),
     StatusLineModeTerminal({ StatusLineModeNormal, bg = StatusLineYellow.fg }),
+    StatusLineModeVisual({ StatusLineModeNormal, bg = StatusLineOrange.fg }),
 
     -- statusline - diagnostics
     StatusLineDiagnosticError({ zenbones.StatusLine, fg = zenbones.DiagnosticSignError.fg }),
@@ -112,6 +115,10 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     StatusLineGitDiffAdd({ zenbones.StatusLine, fg = zenbones.GitSignsAdd.fg }),
     StatusLineGitDiffChange({ zenbones.StatusLine, fg = zenbones.GitSignsChange.fg }),
     StatusLineGitDiffDelete({ zenbones.StatusLine, fg = zenbones.GitSignsDelete.fg }),
+
+    -- winbar
+    WinBar({ zenbones.StatusLine }),
+    WinBarNC({ StatusLineNC }),
 
     ---@diagnostic enable: undefined-global
   }

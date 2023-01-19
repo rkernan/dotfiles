@@ -6,7 +6,7 @@ local function get_theme()
     bg = hl.get_hl('StatusLine').bg,
     -- colors
     white = hl.get_hl('StatusLineWhite').fg,
-    black = hl.get_hl('StatusLineFaded').fg,
+    black = hl.get_hl('StatusLineBlack').fg,
     red = hl.get_hl('StatusLineRed').fg,
     orange = hl.get_hl('StatusLineOrange').fg,
     yellow = hl.get_hl('StatusLineYellow').fg,
