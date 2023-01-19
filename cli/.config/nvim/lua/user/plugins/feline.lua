@@ -1,5 +1,4 @@
 local hl = require('user.utils.hl')
-local diagnostic_icons = require('user.lsp.diagnostics').icons
 
 local function get_theme()
   return {
@@ -176,22 +175,22 @@ local components = {
     diagnostics = {
       err  = {
         provider = 'diagnostic_errors',
-        icon = diagnostic_icons.error,
+        icon = ' ',
         hl = { fg = 'diagnostic_errors' },
       },
       warn = {
         provider = 'diagnostic_warnings',
-        icon = diagnostic_icons.warn,
+        icon = ' ',
         hl = { fg = 'diagnostic_warnings' },
       },
       hint = {
         provider = 'diagnostic_hints',
-        icon = diagnostic_icons.hint,
+        icon = ' ',
         hl = { fg = 'diagnostic_hints' },
       },
       info = {
         provider = 'diagnostic_info',
-        icon = diagnostic_icons.info,
+        icon = ' ',
         hl = { fg = 'diagnostic_info' },
       },
     },

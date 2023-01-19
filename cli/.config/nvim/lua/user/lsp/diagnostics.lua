@@ -46,21 +46,10 @@ vim.diagnostic.config({
   severity_sort = true,
 })
 
-local M = {}
-
-M.icons = {
-  error = ' ',
-  warn  = ' ',
-  hint  = ' ',
-  info  = ' ',
-}
-
-vim.fn.sign_define('DiagnosticSignError', { text = M.icons.error, texthl = 'DiagnosticSignError', numhl = '' })
-vim.fn.sign_define('DiagnosticSignWarn', { text = M.icons.warn, texthl = 'DiagnosticSignWarn', numhl = '' })
-vim.fn.sign_define('DiagnosticSignHint', { text = M.icons.hint, texthl = 'DiagnosticSignHint', numhl = '' })
-vim.fn.sign_define('DiagnosticSignInfo', { text = M.icons.info, texthl = 'DiagnosticSignInfo', numhl = '' })
+vim.fn.sign_define('DiagnosticSignError', { text = ' ', texthl = 'DiagnosticSignError', numhl = '' })
+vim.fn.sign_define('DiagnosticSignWarn', { text = ' ', texthl = 'DiagnosticSignWarn', numhl = '' })
+vim.fn.sign_define('DiagnosticSignHint', { text = ' ', texthl = 'DiagnosticSignHint', numhl = '' })
+vim.fn.sign_define('DiagnosticSignInfo', { text = ' ', texthl = 'DiagnosticSignInfo', numhl = '' })
 
 vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
 vim.api.nvim_create_autocmd('LspDetach', { group = augroup, callback = lsp_detach })
-
-return M
