@@ -4,24 +4,32 @@ local function get_theme()
   return {
     fg = hl.get_hl('StatusLine').fg,
     bg = hl.get_hl('StatusLine').bg,
-    -- terminal colors
-    black = hl.get_termhl(0),
-    red = hl.get_termhl(1),
-    green = hl.get_termhl(2),
-    yellow = hl.get_termhl(3),
-    blue = hl.get_termhl(4),
-    magenta = hl.get_termhl(5),
-    cyan = hl.get_termhl(6),
-    white = hl.get_termhl(7),
+    -- colors
+    white = hl.get_hl('StatusLineWhite').fg,
+    black = hl.get_hl('StatusLineFaded').fg,
+    red = hl.get_hl('StatusLineRed').fg,
+    orange = hl.get_hl('StatusLineOrange').fg,
+    yellow = hl.get_hl('StatusLineYellow').fg,
+    green = hl.get_hl('StatusLineGreen').fg,
+    blue = hl.get_hl('StatusLineBlue').fg,
+    magenta = hl.get_hl('StatusLineMagenta').fg,
+    cyan = hl.get_hl('StatusLineCyan').fg,
+    -- mode colors
+    mode_normal = hl.get_hl('StatusLineModeNormal').bg,
+    mode_insert = hl.get_hl('StatusLineModeInsert').bg,
+    mode_command = hl.get_hl('StatusLineModeCommand').bg,
+    mode_replace = hl.get_hl('StatusLineModeReplace').bg,
+    mode_visual = hl.get_hl('StatusLineModeVisual').bg,
+    mode_terminal = hl.get_hl('StatusLineModeTerminal').bg,
     -- diagnostic colors
-    diagnostic_errors = hl.get_hl('DiagnosticSignError').fg,
-    diagnostic_warnings = hl.get_hl('DiagnosticSignWarn').fg,
-    diagnostic_hints = hl.get_hl('DiagnosticSignHint').fg,
-    diagnostic_info = hl.get_hl('DiagnosticSignInfo').fg,
+    diagnostic_errors = hl.get_hl('StatusLineDiagnosticError').fg,
+    diagnostic_warnings = hl.get_hl('StatusLineDiagnosticWarn').fg,
+    diagnostic_hints = hl.get_hl('StatusLineDiagnosticHint').fg,
+    diagnostic_info = hl.get_hl('StatusLineDiagnosticInfo').fg,
     -- gitsigns colors
-    git_diff_added = hl.get_hl('GitSignsAdd').fg,
-    git_diff_changed = hl.get_hl('GitSignsChange').fg,
-    git_diff_removed = hl.get_hl('GitSignsDelete').fg,
+    git_diff_added = hl.get_hl('StatusLineGitDiffAdd').fg,
+    git_diff_changed = hl.get_hl('StatusLineGitDiffChange').fg,
+    git_diff_removed = hl.get_hl('StatusLineGitDiffDelete').fg,
   }
 end
 
@@ -65,21 +73,21 @@ local vi_mode_text = {
 }
 
 local vi_mode_colors = {
-  ['NORMAL'] = 'white',
-  ['COMMAND'] = 'green',
-  ['INSERT'] = 'blue',
-  ['REPLACE'] = 'red',
-  ['LINES'] = 'orange',
-  ['VISUAL'] = 'orange',
-  ['OP'] = 'yellow',
-  ['BLOCK'] = 'yellow',
-  ['V-REPLACE'] = 'yellow',
-  ['ENTER'] = 'yellow',
-  ['MORE'] = 'yellow',
-  ['SELECT'] = 'yellow',
-  ['SHELL'] = 'yellow',
-  ['TERM'] = 'yellow',
-  ['NONE'] = 'yellow',
+  ['NORMAL'] = 'mode_normal',
+  ['COMMAND'] = 'mode_command',
+  ['INSERT'] = 'mode_insert',
+  ['REPLACE'] = 'mode_replace',
+  ['LINES'] = 'mode_visual',
+  ['VISUAL'] = 'mode_visual',
+  ['OP'] = 'mode_replace',
+  ['BLOCK'] = 'mode_visual',
+  ['V-REPLACE'] = 'mode_replace',
+  ['ENTER'] = 'mode_normal',
+  ['MORE'] = 'mode_normal',
+  ['SELECT'] = 'mode_replace',
+  ['SHELL'] = 'mode_terminal',
+  ['TERM'] = 'mode_terminal',
+  ['NONE'] = 'mode_normal',
 }
 
 local separators = {
@@ -95,7 +103,7 @@ local components = {
     },
     is_inactive = {
       provider = ' ● ',
-      hl = { fg = 'white' },
+      hl = { fg = 'black' },
     },
   },
   cwd = {
@@ -224,7 +232,7 @@ local components = {
     hl = function ()
       return {
         name = require('feline.providers.vi_mode').get_mode_highlight_name(),
-        fg = 'black',
+        fg = 'bg',
         bg = require('feline.providers.vi_mode').get_mode_color(),
       }
     end,

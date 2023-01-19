@@ -83,6 +83,36 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     -- no italic WhichKey
     WhichKey({ zenbones.WhichKey, gui = 'none' }),
 
+    -- statusline
+    StatusLineWhite({ zenbones.StatusLine }),
+    StatusLineFaded({ zenbones.StatusLine, fg = StatusLineWhite.fg.da(50) }),
+    StatusLineRed({ zenbones.StatusLine, fg = hsluv('#FB4C36') }),
+    StatusLineOrange({ zenbones.Statusline, fg = hsluv('#FF9000') }),
+    StatusLineYellow({ zenbones.StatusLine, fg = hsluv('#B7BA26') }),
+    StatusLineGreen({ zenbones.StatusLine, fg = hsluv('#B7BA26') }),
+    StatusLineBlue({ zenbones.StatusLine, fg = hsluv('#83A598') }),
+    StatusLineMagenta({ zenbones.StatusLine, fg = hsluv('#D2859A') }),
+    StatusLineCyan({ zenbones.StatusLine, fg = hsluv('#82C07B') }),
+
+    -- statusline - mode
+    StatusLineModeNormal({ fg = hsluv('#282828'), bg = StatusLineWhite.fg }),
+    StatusLineModeInsert({ StatusLineModeNormal, bg = StatusLineBlue.fg }),
+    StatusLineModeCommand({ StatusLineModeNormal, bg = StatusLineGreen.fg }),
+    StatusLineModeReplace({ StatusLineModeNormal, bg = StatusLineRed.fg }),
+    StatusLineModeVisual({ StatusLineModeNormal, bg = StatusLineOrange.fg }),
+    StatusLineModeTerminal({ StatusLineModeNormal, bg = StatusLineYellow.fg }),
+
+    -- statusline - diagnostics
+    StatusLineDiagnosticError({ zenbones.StatusLine, fg = zenbones.DiagnosticSignError.fg }),
+    StatusLineDiagnosticWarn({ zenbones.StatusLine, fg = zenbones.DiagnosticSignWarn.fg }),
+    StatusLineDiagnosticHint({ zenbones.StatusLine, fg = zenbones.DiagnosticSignHint.fg }),
+    StatusLineDiagnosticInfo({ zenbones.StatusLine, fg = zenbones.DiagnosticSignInfo.fg }),
+
+    -- statusline - git
+    StatusLineGitDiffAdd({ zenbones.StatusLine, fg = zenbones.GitSignsAdd.fg }),
+    StatusLineGitDiffChange({ zenbones.StatusLine, fg = zenbones.GitSignsChange.fg }),
+    StatusLineGitDiffDelete({ zenbones.StatusLine, fg = zenbones.GitSignsDelete.fg }),
+
     ---@diagnostic enable: undefined-global
   }
 end)
