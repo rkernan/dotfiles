@@ -13,20 +13,19 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
   -- appearance
-  require('user.plugins.noice'),
   require('user.plugins.feline'),
-  require('user.plugins.which-key'),
+  require('user.plugins.noice'),
   require('user.plugins.telescope'),
+  require('user.plugins.which-key'),
   require('user.plugins.zenbones'),
   -- utils
-  require('user.plugins.mini'),
-  require('user.plugins.web-devicons'),
   require('user.plugins.asterisk'),
-  require('user.plugins.suda'),
-  require('user.plugins.gitsigns'),
-  require('user.plugins.sleuth'),
-  require('user.plugins.unimpaired'),
   require('user.plugins.autopairs'),
+  require('user.plugins.gitsigns'),
+  require('user.plugins.mini'),
+  require('user.plugins.sleuth'),
+  require('user.plugins.suda'),
+  require('user.plugins.web-devicons'),
   -- lsp
   require('user.plugins.lspconfig'),
   require('user.plugins.null-ls'),
