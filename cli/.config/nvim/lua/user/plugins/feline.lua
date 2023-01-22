@@ -93,6 +93,7 @@ local vi_mode_colors = {
 local separators = {
   hard = { str = ' | ', hl = { fg = 'black' }},
   soft = { str = ' ' },
+  arrow = { str = ' > ', hl = { fg = 'black' }},
 }
 
 local components = {
@@ -205,6 +206,16 @@ local components = {
         hl = { fg = 'diagnostic_info' },
       },
     },
+    symbols = {
+      provider = function ()
+        local navic = require('nvim-navic')
+        if navic.is_available() then
+          return navic.get_location()
+        end
+        return ''
+      end,
+      hl = { fg = 'black' },
+    }
   },
   noice = {
     mode = {
@@ -295,6 +306,7 @@ return {
             wrap_left(components.git.diff_added),
             wrap_left(components.git.diff_changed),
             wrap_left(components.git.diff_removed),
+            wrap_left(components.lsp.symbols, separators.arrow),
           }, {
             wrap_right(components.lsp.diagnostics.err),
             wrap_right(components.lsp.diagnostics.warn),

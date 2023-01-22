@@ -4,6 +4,7 @@ return {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'folke/neodev.nvim',
+    'SmiteshP/nvim-navic',
   },
   event = { 'BufNew', 'BufRead '},
   config = function ()
@@ -24,7 +25,14 @@ return {
 
     require('mason-lspconfig').setup_handlers({
       function (server_name)
-        lspconfig[server_name].setup({ capabilities = lsp_capabilities })
+        lspconfig[server_name].setup({
+          capabilities = lsp_capabilities,
+          on_attach = function (client, bufnr)
+            if client.server_capabilities.documentSymbolProvider then
+              require('nvim-navic').attach(client, bufnr)
+            end
+          end
+        })
       end,
     })
   end,
