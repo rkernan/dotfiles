@@ -17,3 +17,8 @@ vim.keymap.set('x', '<', '<gv')
 -- automatically jump to the end of the last paste
 vim.keymap.set('x', 'y', 'y`]')
 vim.keymap.set({ 'n', 'x' }, 'p', 'p`]')
+
+vim.keymap.set('n', '<C-e>', function ()
+  local res = vim.treesitter.get_captures_at_cursor(0)
+  print(vim.inspect(res))
+end, { desc = 'Highlight under cursor' })
