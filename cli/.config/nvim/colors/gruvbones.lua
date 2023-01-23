@@ -88,7 +88,6 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     StatusLineNC({ zenbones.StatusLine, fg = zenbones.StatusLine.fg.da(15) }),
 
     -- statusline - basic
-    StatusLineBlack({ zenbones.StatusLine, fg = zenbones.StatusLine.fg.da(30) }),
     StatusLineBlue({ zenbones.StatusLine, fg = hsluv('#83A598') }),
     StatusLineCyan({ zenbones.StatusLine, fg = hsluv('#82C07B') }),
     StatusLineGreen({ zenbones.StatusLine, fg = hsluv('#B7BA26') }),
@@ -96,6 +95,8 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     StatusLineOrange({ zenbones.StatusLine, fg = hsluv('#FF9000') }),
     StatusLineRed({ zenbones.StatusLine, fg = hsluv('#FB4C36') }),
     StatusLineWhite({ zenbones.StatusLine }),
+    StatusLineWhite2({ StatusLineWhite, fg = StatusLineWhite.fg.da(30) }),
+    StatusLineWhite3({ StatusLineWhite, fg = StatusLineWhite.fg.da(50) }),
     StatusLineYellow({ zenbones.StatusLine, fg = hsluv('#B7BA26') }),
 
     -- statusline - mode

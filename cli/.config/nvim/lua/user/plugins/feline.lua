@@ -6,7 +6,8 @@ local function get_theme()
     bg = hl.get_hl('StatusLine').bg,
     -- colors
     white = hl.get_hl('StatusLineWhite').fg,
-    black = hl.get_hl('StatusLineBlack').fg,
+    white2 = hl.get_hl('StatusLineWhite2').fg,
+    white3 = hl.get_hl('StatusLineWhite3').fg,
     red = hl.get_hl('StatusLineRed').fg,
     orange = hl.get_hl('StatusLineOrange').fg,
     yellow = hl.get_hl('StatusLineYellow').fg,
@@ -91,9 +92,9 @@ local vi_mode_colors = {
 }
 
 local separators = {
-  hard = { str = ' | ', hl = { fg = 'black' }},
+  hard = { str = ' │ ', hl = { fg = 'white3' }},
   soft = { str = ' ' },
-  arrow = { str = ' > ', hl = { fg = 'black' }},
+  arrow = { str = ' > ', hl = { fg = 'white2' }},
 }
 
 local components = {
@@ -104,7 +105,7 @@ local components = {
     },
     is_inactive = {
       provider = ' ● ',
-      hl = { fg = 'black' },
+      hl = { fg = 'white2' },
     },
   },
   cwd = {
@@ -141,13 +142,13 @@ local components = {
       provider = function ()
         return vim.bo.fileencoding
       end,
-      hl = { fg = 'black' },
+      hl = { fg = 'white2' },
     },
     format = {
       provider = function ()
         return vim.bo.fileformat
       end,
-      hl = { fg = 'black' },
+      hl = { fg = 'white2' },
     },
     info = {
       provider = {
@@ -180,7 +181,7 @@ local components = {
         end
         return string.format('tab:%d', vim.bo.shiftwidth)
       end,
-      hl = { fg = 'black' },
+      hl = { fg = 'white2' },
     }
   },
   lsp = {
@@ -214,7 +215,7 @@ local components = {
         end
         return ''
       end,
-      hl = { fg = 'black' },
+      hl = { fg = 'white2' },
     }
   },
   noice = {
