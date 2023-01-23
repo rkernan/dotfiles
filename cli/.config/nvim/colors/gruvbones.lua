@@ -47,6 +47,7 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
 
     -- no italic constants
     Constant({ zenbones.Constant, gui = 'none' }),
+    sym('@constant.builtin')({ Constant }),
 
     -- no italic tags
     sym('@tag')({ Constant }),
