@@ -97,7 +97,7 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     StatusLineWhite({ zenbones.StatusLine }),
     StatusLineWhite2({ StatusLineWhite, fg = StatusLineWhite.fg.da(30) }),
     StatusLineWhite3({ StatusLineWhite, fg = StatusLineWhite.fg.da(50) }),
-    StatusLineYellow({ zenbones.StatusLine, fg = hsluv('#B7BA26') }),
+    StatusLineYellow({ zenbones.StatusLine, fg = hsluv('#F9BD30') }),
 
     -- statusline - mode
     StatusLineModeNormal({ fg = hsluv('#282828'), bg = StatusLineWhite.fg }),
