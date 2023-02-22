@@ -13,8 +13,8 @@ return {
     require('mason-lspconfig').setup({
       ensure_installed = {
         'jsonls',
+        'lua_ls',
         'pyright',
-        'sumneko_lua',
       }
     })
 
