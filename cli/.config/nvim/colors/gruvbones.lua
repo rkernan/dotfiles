@@ -85,9 +85,10 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     WhichKey({ zenbones.WhichKey, gui = 'none' }),
 
     -- statusline
-    StatusLineNC({ zenbones.StatusLine, fg = zenbones.StatusLine.fg.da(15) }),
+    StatusLineNC({ zenbones.StatusLine, fg = zenbones.StatusLine.fg.da(20) }),
 
     -- statusline - basic
+    StatusLineBlack({ zenbones.StatusLine, fg = hsluv('#282828') }),
     StatusLineBlue({ zenbones.StatusLine, fg = hsluv('#83A598') }),
     StatusLineCyan({ zenbones.StatusLine, fg = hsluv('#82C07B') }),
     StatusLineGreen({ zenbones.StatusLine, fg = hsluv('#B7BA26') }),
