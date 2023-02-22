@@ -1,4 +1,4 @@
-return {
+local navic = {
   conditon = require('nvim-navic').is_available,
   static = {
     -- bit operation magic, see below
@@ -54,4 +54,10 @@ return {
   end,
   hl = 'StatusLineWhite2',
   update = 'CursorMoved',
+}
+
+return {
+  flexible = 3,
+  navic,
+  { provider = '' },
 }

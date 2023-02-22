@@ -21,13 +21,22 @@ local icon = {
 }
 
 local filename = {
-  provider = function (self)
-    local filename = vim.fn.fnamemodify(self.filename, ':.')
-    if not conditions.width_percent_below(#filename, 0.25) then
-      filename = vim.fn.pathshorten(filename)
+  init = function (self)
+    self.lfilename = vim.fn.fnamemodify(self.filename, ':.')
+    if self.lfilename == '' then
+      self.lfilename = '[No Name]'
     end
-    return filename
   end,
+  flexible = 2,
+  {
+    provider = function (self)
+      return self.lfilename
+    end,
+  }, {
+    provider = function (self)
+      return vim.fn.pathshorten(self.lfilename)
+    end,
+  },
 }
 
 local flags = {
