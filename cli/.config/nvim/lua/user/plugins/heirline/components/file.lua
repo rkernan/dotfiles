@@ -18,6 +18,7 @@ local icon = {
   provider = function (self)
     return self.icon and (self.icon .. ' ')
   end,
+  hl = 'StatusLine',
 }
 
 local filename = {
