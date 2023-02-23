@@ -1,9 +1,8 @@
 local M = {}
 
-local conditions = require('heirline.conditions')
 local utils = require('heirline.utils')
 
-local name = {
+local name_block = {
   init = function (self)
     self.filename = vim.api.nvim_buf_get_name(0)
   end,
@@ -55,34 +54,34 @@ local flags = {
   }
 }
 
-M.name = utils.insert(
-  name,
-  icon,
-  filename,
-  flags,
-  -- truncate here if not enough space
-  { provider = '%<' }
-)
+M.name = utils.insert(name_block, icon, filename, flags)
+
+M.type = {
+  provider = function ()
+    return ' ' .. vim.bo.filetype
+  end,
+  hl = 'StatusLineWhite2',
+}
 
 M.format = {
-  provider = function (self)
+  provider = function ()
     return ' ' .. vim.bo.fileformat
   end,
   hl = 'StatusLineWhite2',
 }
 
 M.encoding = {
-  condition = function (self)
+  condition = function ()
     return #vim.bo.fileencoding > 0
   end,
-  provider = function (self)
+  provider = function ()
     return ' ' .. vim.bo.fileencoding
   end,
   hl = 'StatusLineWhite2',
 }
 
 M.tabs = {
-  provider = function (self)
+  provider = function ()
     if vim.bo.expandtab then
       return ' tab:' .. vim.bo.shiftwidth .. ',et'
     else

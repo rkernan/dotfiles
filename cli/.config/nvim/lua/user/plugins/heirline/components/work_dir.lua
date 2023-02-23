@@ -1,6 +1,4 @@
-local conditions = require('heirline.conditions')
-
-local work_dir = {
+return {
   init = function (self)
     local cwd = vim.fn.getcwd(0)
     self.cwd = vim.fn.fnamemodify(cwd, ':~')
@@ -21,5 +19,3 @@ local work_dir = {
     end
   },
 }
-
-return work_dir

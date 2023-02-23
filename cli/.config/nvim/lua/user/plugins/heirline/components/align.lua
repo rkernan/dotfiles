@@ -1,2 +1,1 @@
-local align = { provider = '%=' }
-return align
+return { provider = '%=' }
