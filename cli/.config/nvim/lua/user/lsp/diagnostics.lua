@@ -1,4 +1,4 @@
-local lsp_utils = require('user.utils.lsp')
+local lsp_utils = require('user.lsp.utils')
 local augroup = vim.api.nvim_create_augroup('lsp.diagnostics', { clear = true })
 
 local function open_float(args)
