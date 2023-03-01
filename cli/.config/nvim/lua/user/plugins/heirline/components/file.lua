@@ -85,7 +85,7 @@ M.tabs = {
     if vim.bo.expandtab then
       return ' tab:' .. vim.bo.shiftwidth .. ',et'
     else
-      return ' tab:' .. vim.bo.shiftwidth
+      return ' tab:' .. vim.bo.tabstop
     end
   end,
   hl = 'StatusLineWhite2',

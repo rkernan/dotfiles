@@ -6,16 +6,20 @@ end
 
 local function set_tabs()
   -- set shiftwidth
-  vim.bo.shiftwidth = tonumber(vim.fn.input('shiftwidth = '))
+  local tabsize = tonumber(vim.fn.input('shiftwidth = '))
   vim.notify('\n\r')
   -- set expandtab
-  vim.bo.expandtab = (vim.fn.input('expandtab = [y/N] ') == 'y')
+  local expandtab = (vim.fn.input('expandtab = [y/N] ') == 'y')
   vim.notify('\n\r')
   -- set tabstop - 8 for soft-tabs, shiftwidth for hard-tabs
-  if vim.bo.expandtab then
+  if expandtab then
+    vim.bo.shiftwidth = tabsize
     vim.bo.tabstop = 8
+    vim.bo.expandtab = true
   else
-    vim.bo.tabstop = vim.bo.shiftwidth
+    vim.bo.shiftwidth = 0
+    vim.bo.tabstop = tabsize
+    vim.bo.expandtab = false
   end
   -- print summary
   summarize_tabs()
