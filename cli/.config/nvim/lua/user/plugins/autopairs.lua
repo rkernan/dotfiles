@@ -34,7 +34,7 @@ return {
         end)
     }
 
-    for _,bracket in pairs(brackets) do
+    for _, bracket in pairs(brackets) do
       npairs.add_rules {
         Rule(bracket[1]..' ', ' '..bracket[2])
           :with_pair(cond.none())
