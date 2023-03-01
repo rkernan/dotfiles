@@ -19,8 +19,7 @@ local diagnostics = {
   update = { 'DiagnosticChanged', 'Bufenter' },
   on_click = {
     callback = function (self, minwid, nclicks, buttons, mods)
-      -- FIXME duplicate layout_strategy
-      require('telescope.builtin').diagnostics({ layout_strategy = 'vertical', bufnr = 0 })
+      require('user.plugins.telescope.helpers').local_diagnostics()
     end,
     name = 'heirline_diagnostics',
   }, {
