@@ -3,6 +3,7 @@ local helpers = require('user.plugins.telescope.helpers')
 return {
   'nvim-telescope/telescope.nvim',
   dependencies = {
+    'debugloop/telescope-undo.nvim',
     'nvim-lua/plenary.nvim',
     'nvim-telescope/telescope-file-browser.nvim',
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
@@ -12,6 +13,7 @@ return {
     { '<leader>f', function () require('telescope.builtin').find_files() end, desc = 'Files' },
     { '<leader>b', function () require('telescope.builtin').buffers() end, desc = 'Buffers' },
     { '<leader>/', function () require('telescope.builtin').live_grep() end, desc = 'Live grep' },
+    { '<leader>u', function () require('telescope').extensions.undo.undo() end, desc = 'Undo' },
     { '<leader>e', helpers.local_diagnostic, desc = 'LSP diagnostics' },
     { '<leader>we', helpers.workspace_diagnostics, desc = 'LSP workspace diagnostics' },
     { '<leader><leader>r', function () require('telescope.builtin').lsp_references() end, desc = 'LSP references' },
@@ -70,12 +72,20 @@ return {
         },
         ['ui-select'] = {
           require('telescope.themes').get_dropdown({ previewer = false })
-        }
-      }
+        },
+        undo = {
+          side_by_side = true,
+          layout_strategy = 'vertical',
+          layout_config = {
+            preview_height = 0.7,
+          },
+        },
+      },
     })
 
     require('telescope').load_extension('file_browser')
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('ui-select')
+    require('telescope').load_extension('undo')
   end,
 }
