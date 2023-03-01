@@ -7,6 +7,12 @@ return {
   static = {
     icon = ' '
   },
+  on_click = {
+    callback = function (self, minwid, nclicks, buttons, mods)
+      require('telescope').extensions.file_browser.file_browser()
+    end,
+    name = 'work_dir_file_browser',
+  },
   flexible = 1,
   {
     provider = function (self)
