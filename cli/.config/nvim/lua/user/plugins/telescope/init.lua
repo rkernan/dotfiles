@@ -52,10 +52,14 @@ return {
       pickers = {
         find_files = {
           hidden = true,
+          no_ignore = true,
+          no_ignore_parent = true,
         }
       },
       extensions = {
         file_browser = {
+          hidden = true,
+          respect_gitignore = false,
           hijack_netrw = true,
           initial_mode = 'normal',
           mappings = {
