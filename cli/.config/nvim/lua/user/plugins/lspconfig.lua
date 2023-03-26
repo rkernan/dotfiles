@@ -7,6 +7,7 @@ return {
     'SmiteshP/nvim-navic',
   },
   event = { 'BufNew', 'BufRead '},
+  cmd = { 'Mason' },
   config = function ()
     require('mason').setup()
 
