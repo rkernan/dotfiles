@@ -23,6 +23,9 @@ vim.g.mapleader = ' '
 vim.keymap.set('n', ' ', '', { noremap = true })
 vim.keymap.set('x', ' ', '', { noremap = true })
 
+-- comma as localleader
+vim.g.maplocalleader = ','
+
 require('user.options')
 require('user.mappings')
 require('user.events')
