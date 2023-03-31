@@ -1,5 +1,3 @@
-local helpers = require('user.plugins.telescope.helpers')
-
 return {
   'nvim-telescope/telescope.nvim',
   dependencies = {
@@ -14,8 +12,8 @@ return {
     { '<leader>b', function () require('telescope.builtin').buffers() end, desc = 'Buffers' },
     { '<leader>/', function () require('telescope.builtin').live_grep() end, desc = 'Live grep' },
     { '<leader>u', function () require('telescope').extensions.undo.undo() end, desc = 'Undo' },
-    { '<leader>e', helpers.local_diagnostic, desc = 'LSP diagnostics' },
-    { '<leader>we', helpers.workspace_diagnostics, desc = 'LSP workspace diagnostics' },
+    { '<leader>e', function () require('user.plugins.telescope.helpers').local_diagnostics() end, desc = 'LSP diagnostics' },
+    { '<leader>we', function () require('user.plugins.telescope.helpers').workspace_diagnostics() end, desc = 'LSP workspace diagnostics' },
     { '<leader><leader>r', function () require('telescope.builtin').lsp_references() end, desc = 'LSP references' },
     { '<leader><leader>i', function () require('telescope.builtin').lsp_implementations() end, desc = 'LSP implementations' },
     { '<leader><leader>d', function () require('telescope.builtin').lsp_definitions() end, desc = 'LSP definitions' },
