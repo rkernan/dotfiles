@@ -3,4 +3,13 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim'
   },
+  cmd = {
+    'DiffviewOpen',
+    'DiffviewFileHistory',
+    'DiffviewClose',
+    'DiffviewToggleFiles',
+    'DiffviewFocusFiles',
+    'DiffviewRefresh',
+    'DiffviewLogs',
+  },
 }
