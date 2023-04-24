@@ -10,13 +10,13 @@ return {
       -- default behavior
       ['core.defaults'] = {},
       -- pretty icons
-      ['core.norg.concealer'] = {
+      ['core.concealer'] = {
         config = {
           icon_preset = 'varied',
         },
       },
       -- manage neorg workspaces
-      ['core.norg.dirman'] = {
+      ['core.dirman'] = {
         config = {
           workspaces = {
             notes = '~/Workspace/notes',
@@ -25,7 +25,7 @@ return {
         },
       },
       -- completion using nvim-cmp
-      ['core.norg.completion'] = {
+      ['core.completion'] = {
         config = {
           engine = 'nvim-cmp',
         },
