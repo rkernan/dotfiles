@@ -129,6 +129,15 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     sym('@text.todo')({ gui = 'none' }),
     sym('@text.warning')({ gui = 'none' }),
 
+    -- mini.jump - nicer looking labels
+    MiniJump({ zenbones.Normal, fg = zenbones.IncSearch.bg, gui = 'bold' }),
+
+    -- mini.jump2d - nicer looking labels
+    MiniJump2dSpot({ MiniJump }),
+    MiniJump2dSpotUnique({ MiniJump2dSpot }),
+    MiniJump2dSpotAhead({ MiniJump2dSpot, fg = MiniJump2dSpot.fg.da(50) }),
+    -- MiniJump2dDim({ MiniJump2dSpotAhead, }),
+
     -- custom neorg highlights
     sym('@neorg.headings.1.prefix')({ fg = palette.blossom, gui = 'bold' }),
     sym('@neorg.headings.1.title')({ fg = palette.blossom, gui = 'bold' }),

@@ -6,6 +6,8 @@ return {
     require('mini.align').setup()
     require('mini.bracketed').setup()
     require('mini.comment').setup()
+    require('mini.jump').setup()
+    require('mini.jump2d').setup()
     local hipatterns = require('mini.hipatterns')
     hipatterns.setup({
       highlighters = {
