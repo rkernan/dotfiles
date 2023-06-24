@@ -123,6 +123,12 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     WinBar({ zenbones.StatusLine }),
     WinBarNC({ StatusLineNC }),
 
+    -- mini.hipatterns - disable gui in text elements
+    sym('@text.danger')({ gui = 'none' }),
+    sym('@text.note')({ gui = 'none' }),
+    sym('@text.todo')({ gui = 'none' }),
+    sym('@text.warning')({ gui = 'none' }),
+
     -- custom neorg highlights
     sym('@neorg.headings.1.prefix')({ fg = palette.blossom, gui = 'bold' }),
     sym('@neorg.headings.1.title')({ fg = palette.blossom, gui = 'bold' }),
