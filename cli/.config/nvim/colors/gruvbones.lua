@@ -130,7 +130,7 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     sym('@text.warning')({ gui = 'none' }),
 
     -- mini.jump - nicer looking labels
-    MiniJump({ zenbones.Normal, fg = zenbones.IncSearch.bg, gui = 'bold' }),
+    MiniJump({ zenbones.none, gui = 'underline' }),
 
     -- mini.jump2d - nicer looking labels
     MiniJump2dSpot({ MiniJump }),
