@@ -133,10 +133,10 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     MiniJump({ zenbones.none, gui = 'underline' }),
 
     -- mini.jump2d - nicer looking labels
-    MiniJump2dSpot({ MiniJump }),
-    MiniJump2dSpotUnique({ MiniJump2dSpot }),
+    MiniJump2dSpot({ zenbones.Normal, fg = palette.rose }),
+    MiniJump2dSpotUnique({ MiniJump2dSpot, gui = 'underline' }),
     MiniJump2dSpotAhead({ MiniJump2dSpot, fg = MiniJump2dSpot.fg.da(50) }),
-    -- MiniJump2dDim({ MiniJump2dSpotAhead, }),
+    MiniJump2dDim({ MiniJump2dSpotAhead }),
 
     -- custom neorg highlights
     sym('@neorg.headings.1.prefix')({ fg = palette.blossom, gui = 'bold' }),
