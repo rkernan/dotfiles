@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+case $1 in
+  --eval)
+    case $2 in
+      %dist)
+        echo ".el7"
+        ;;
+      %rhel)
+        echo "9"
+        ;;
+      %_target_cpu)
+        echo "x86_64"
+        ;;
+      *)
+        # not mocked
+        ;;
+    esac
+    ;;
+  *)
+    # not mocked
+    ;;
+esac

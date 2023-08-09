@@ -28,7 +28,11 @@ guess_target() {
     echo "cli gui"
   elif [ $(command -v wsl.exe) ]; then
     # WSL
-    echo "cli wsl"
+    if [ -e ~/.work ]; then
+      echo "cli wsl wsl-work"
+    else
+      echo "cli wsl"
+    fi
   else
     # other
     echo "cli"
@@ -120,6 +124,9 @@ for target in $targets; do
     wsl)
       stow wsl
       check_command fish &> /dev/null && fish -c "set -Ux AUTOSTART_TMUX 1" || true
+      ;;
+    wsl-work)
+      stow wsl-work
       ;;
     *)
       (>&2 echo "Unknown target $target")

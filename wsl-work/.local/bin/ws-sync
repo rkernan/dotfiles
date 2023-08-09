@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -e
+
+remote="nsth9"
+remote_ws="/docker-container/workspace"
+name=$(basename $(pwd))
+
+rsync -av --delete . ${remote}:${remote_ws}/${name}
