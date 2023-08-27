@@ -31,14 +31,6 @@ return {
         -- scroll up and down in the completion documentation
         ['<C-f>'] = cmp.mapping.scroll_docs(5),
         ['<C-b>'] = cmp.mapping.scroll_docs(-5),
-        -- toggle completion
-        ['<C-e>'] = cmp.mapping(function (fallback)
-          if cmp.visible() then
-            cmp.abort()
-          else
-            cmp.cmplete()
-          end
-        end),
         -- supertab
         ['<Tab>'] = cmp.mapping(function (fallback)
           if cmp.visible() then
