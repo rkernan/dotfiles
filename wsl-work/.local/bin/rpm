@@ -4,10 +4,13 @@ case $1 in
   --eval)
     case $2 in
       %dist)
-        echo ".el7"
+        echo ".el9"
         ;;
       %rhel)
         echo "9"
+        ;;
+      %dist_name)
+        echo "AlmaLinux"
         ;;
       %_target_cpu)
         echo "x86_64"
