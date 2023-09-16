@@ -1,8 +1,6 @@
 local cache_dir = vim.env.HOME .. '/.cache/nvim/'
 
 vim.opt.termguicolors = true
-vim.opt.hidden = true
-vim.opt.magic = true
 vim.opt.virtualedit = 'block'
 vim.opt.clipboard = 'unnamedplus'
 vim.opt.wildignorecase = true
@@ -11,10 +9,7 @@ vim.opt.directory = cache_dir .. 'swap/'
 vim.opt.undodir = cache_dir .. 'undo/'
 vim.opt.backupdir = cache_dir .. 'backup/'
 vim.opt.viewdir = cache_dir .. 'view/'
-vim.opt.spellfile = cache_dir .. 'spell/en.uft-8.add'
 vim.opt.history = 2000
-vim.opt.timeout = true
-vim.opt.ttimeout = true
 vim.opt.timeoutlen = 500
 vim.opt.ttimeoutlen = 10
 vim.opt.updatetime = 100
@@ -28,14 +23,13 @@ if vim.fn.executable('rg') == 1 then
   vim.opt.grepprg = 'rg --vimgrep --no-heading --smart-case'
 end
 
-vim.opt.completeopt = { 'menu', 'menuone', 'noselect' }
+vim.opt.completeopt = { 'menuone', 'noinsert', 'noselect' }
 vim.opt.showmode = false
 vim.opt.shortmess = 'aoOTIcF'
 vim.opt.scrolloff = 5
 vim.opt.sidescrolloff = 5
 vim.opt.ruler = false
 vim.opt.showtabline = 0
-vim.opt.winwidth = 30
 vim.opt.pumheight = 15
 vim.opt.showcmd = false
 vim.opt.cmdheight = 1
@@ -54,11 +48,7 @@ vim.opt.undofile = true
 
 vim.opt.smarttab = true
 vim.opt.expandtab = false
-vim.opt.autoindent = true
-vim.opt.tabstop = 8
-vim.opt.shiftwidth = 8
 
-vim.opt.signcolumn = 'yes'
 vim.opt.spelloptions = 'camel'
 
 vim.opt.splitbelow = true
