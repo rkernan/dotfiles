@@ -24,6 +24,7 @@
   "nvim-hlslens": { "branch": "main", "commit": "f0281591a59e95400babf61a96e59ba20e5c9533" },
   "nvim-lspconfig": { "branch": "master", "commit": "cc388d3f6b9c7c943ae2b2dcd46ad470fd257f91" },
   "nvim-navic": { "branch": "master", "commit": "9c89730da6a05acfeb6a197e212dfadf5aa60ca0" },
+  "nvim-puppeteer": { "branch": "main", "commit": "754d556d2b181dfe6ba591bf80d078e2f5661f06" },
   "nvim-treesitter": { "branch": "master", "commit": "bf8b089eecef9e9e8c1765f81613a2fd5e49175c" },
   "nvim-treesitter-textobjects": { "branch": "master", "commit": "bd103502252027434ec42f628d2dbf54821d4ce6" },
   "nvim-web-devicons": { "branch": "master", "commit": "973ab742f143a796a779af4d786ec409116a0d87" },
