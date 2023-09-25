@@ -12,7 +12,7 @@ local git = {
 
 local head = {
   static = {
-    icon = ' '
+    icon = ' '
   },
   provider = function (self)
     return ' ' .. self.icon .. self.status_dict.head
