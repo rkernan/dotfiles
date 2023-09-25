@@ -10,7 +10,7 @@ return {
           require('formatter.filetypes.python').isort,
         },
         ['*'] = {
-          require('formatter.filetypes.any').remove_trailing_whitespace,
+          -- require('formatter.filetypes.any').remove_trailing_whitespace,
         },
       },
     })
