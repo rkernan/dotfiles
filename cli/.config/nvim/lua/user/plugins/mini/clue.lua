@@ -1,15 +1,6 @@
 local function setup()
   local miniclue = require('mini.clue')
   miniclue.setup({
-    clues = {
-      -- Enhance this by adding descriptions for <Leader> mapping groups
-      miniclue.gen_clues.builtin_completion(),
-      miniclue.gen_clues.g(),
-      miniclue.gen_clues.marks(),
-      miniclue.gen_clues.registers(),
-      miniclue.gen_clues.windows(),
-      miniclue.gen_clues.z(),
-    },
     triggers = {
       -- Leader triggers
       { mode = 'n', keys = '<Leader>' },
@@ -21,9 +12,13 @@ local function setup()
       { mode = 'x', keys = 'g' },
       -- Marks
       { mode = 'n', keys = "'" },
+      { mode = 'n', keys = "g'" },
       { mode = 'n', keys = '`' },
+      { mode = 'n', keys = 'g`' },
       { mode = 'x', keys = "'" },
+      { mode = 'x', keys = "g'" },
       { mode = 'x', keys = '`' },
+      { mode = 'x', keys = 'g`' },
       -- Registers
       { mode = 'n', keys = '"' },
       { mode = 'x', keys = '"' },
@@ -34,9 +29,39 @@ local function setup()
       -- `z` key
       { mode = 'n', keys = 'z' },
       { mode = 'x', keys = 'z' },
+      -- operators
+      -- FIXME operators don't work
+      -- { mode = 'n', keys = 'y' },
+      -- { mode = 'n', keys = 'd' },
+      -- { mode = 'n', keys = 'c' },
+      -- { mode = 'n', keys = '>' },
+      -- { mode = 'n', keys = '<' },
+      -- { mode = 'n', keys = '~' },
+      -- { mode = 'n', keys = '!' },
+      -- { mode = 'n', keys = '=' },
+      -- mini.bracketed
+      { mode = 'n', keys = ']' },
+      { mode = 'x', keys = ']' },
+      -- mini.surround
+      { mode = 'n', keys = 's' },
+      { mode = 'x', keys = 's' },
+    },
+    clues = {
+      miniclue.gen_clues.builtin_completion(),
+      miniclue.gen_clues.g(),
+      miniclue.gen_clues.marks(),
+      miniclue.gen_clues.registers({ show_contents = true }),
+      miniclue.gen_clues.windows({ submode_move = true, submode_resize = true }),
+      miniclue.gen_clues.z(),
+      require('user.plugins.mini.move').gen_clues(),
+      require('user.plugins.dap.clues').gen_clues(),
+      -- TODO neorg submode/mappings
     },
     window = {
       delay = 100,
+      config = {
+        width = 'auto',
+      }
     }
   })
 end
