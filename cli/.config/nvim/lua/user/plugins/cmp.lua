@@ -17,8 +17,6 @@ return {
     local luasnip = require('luasnip')
     local kind_icons = require('user.lsp.kind').icons
 
-    cmp.event:on('confirm_done', require('nvim-autopairs.completion.cmp').on_confirm_done())
-
     local function get_mapping()
       return {
         ['<CR>'] = cmp.mapping.confirm({ select = false }),
