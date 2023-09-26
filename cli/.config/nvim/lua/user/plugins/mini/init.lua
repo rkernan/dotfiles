@@ -2,7 +2,7 @@ return {
   'echasnovski/mini.nvim',
   lazy = false,
   keys = {
-    { '<Leader>F', function () MiniFiles.open() end, desc = 'file explorer' },
+    { '<Leader>F', function () MiniFiles.open() end, desc = 'File explorer' },
     { '<C-w>z', function () MiniMisc.zoom() end, desc = 'Toggle zoom' },
   },
   config = function ()
