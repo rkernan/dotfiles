@@ -39,6 +39,8 @@ local function setup()
       -- { mode = 'n', keys = '~' },
       -- { mode = 'n', keys = '!' },
       -- { mode = 'n', keys = '=' },
+      -- mini.basic
+      { mode = 'n', keys = '\\' },
       -- mini.bracketed
       { mode = 'n', keys = ']' },
       { mode = 'x', keys = ']' },

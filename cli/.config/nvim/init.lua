@@ -28,7 +28,6 @@ vim.g.maplocalleader = ','
 
 require('user.options')
 require('user.mappings')
-require('user.events')
 require('user.lsp')
 require('user.lazy')
 

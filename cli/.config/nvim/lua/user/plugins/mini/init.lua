@@ -18,6 +18,7 @@ return {
     require('mini.pairs').setup()
     require('mini.surround').setup()
     require('mini.trailspace').setup()
+    require('user.plugins.mini.basics').setup()
     require('user.plugins.mini.clue').setup()
     require('user.plugins.mini.hlpatterns').setup()
     require('user.plugins.mini.misc').setup()

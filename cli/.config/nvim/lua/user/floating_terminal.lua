@@ -57,7 +57,7 @@ function FloatingTerminal:show()
       { on_exit = function () self:on_exit() end })
   end
 
-  vim.api.nvim_command([[startinsert]])
+  -- vim.api.nvim_command([[startinsert]])
 end
 
 function FloatingTerminal:run(cmd)
