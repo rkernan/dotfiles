@@ -4,8 +4,8 @@ local term = require('user.floating_terminal')
 
 M.terminal = term:new()
 
-vim.keymap.set('n', '<leader>t', function () M.terminal:toggle() end, { desc = 'Toggle floating terminal' })
-vim.keymap.set('t', '<a-i>', function ()
+vim.keymap.set('n', '<Leader>t', function () M.terminal:toggle() end, { desc = 'Toggle floating terminal' })
+vim.keymap.set('t', '<A-i>', function ()
   if vim.api.nvim_get_current_buf() == M.terminal.bufnr then
     M.terminal:toggle()
   end

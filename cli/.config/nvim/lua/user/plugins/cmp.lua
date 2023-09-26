@@ -19,13 +19,13 @@ return {
 
     local function get_mapping()
       return {
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+        ['<CR>']  = cmp.mapping.confirm({ select = false }),
         ['<c-y>'] = cmp.mapping.confirm({ select = false  }),
         -- navigate menu items
         ['<Down>'] = cmp.mapping.select_next_item(),
-        ['<C-n>'] = cmp.mapping.select_next_item(),
-        ['<Up>'] = cmp.mapping.select_prev_item(),
-        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-n>']  = cmp.mapping.select_next_item(),
+        ['<Up>']   = cmp.mapping.select_prev_item(),
+        ['<C-p>']  = cmp.mapping.select_prev_item(),
         -- scroll up and down in the completion documentation
         ['<C-f>'] = cmp.mapping.scroll_docs(5),
         ['<C-b>'] = cmp.mapping.scroll_docs(-5),
