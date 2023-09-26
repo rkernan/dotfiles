@@ -54,7 +54,7 @@ local function setup()
       miniclue.gen_clues.windows({ submode_move = true, submode_resize = true }),
       miniclue.gen_clues.z(),
       require('user.plugins.mini.move').gen_clues(),
-      require('user.plugins.dap.clues').gen_clues(),
+      require('user.plugins.dap.keys').gen_clues(),
       -- TODO neorg submode/mappings
     },
     window = {

@@ -8,7 +8,7 @@ return {
     -- languages
     'mfussenegger/nvim-dap-python',
   },
-  keys = require('user.plugins.dap.clues').gen_keys(),
+  keys = require('user.plugins.dap.keys').gen_keys(),
   config = function ()
     require('telescope').load_extension('dap')
     vim.fn.sign_define('DapBreakpoint', { text = ' ', texthl = '', linehl = '', numhl = '' })
