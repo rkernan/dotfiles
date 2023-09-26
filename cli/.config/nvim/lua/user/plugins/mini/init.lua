@@ -3,6 +3,7 @@ return {
   lazy = false,
   keys = {
     { '<Leader>F', function () MiniFiles.open() end, desc = 'file explorer' },
+    { '<C-w>z', function () MiniMisc.zoom() end, desc = 'Toggle zoom' },
   },
   config = function ()
     require('mini.ai').setup()
@@ -12,6 +13,7 @@ return {
     require('mini.files').setup()
     require('mini.jump').setup()
     require('mini.jump2d').setup()
+    require('mini.misc').setup()
     require('mini.move').setup()
     require('mini.operators').setup()
     require('mini.pairs').setup()
