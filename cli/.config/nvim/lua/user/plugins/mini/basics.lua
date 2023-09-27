@@ -7,7 +7,7 @@ local function setup()
     mappings = {
       move_with_alt = true,
     },
-    autocmds = {
+    autocommands = {
       basic = false,
     },
   })
