@@ -12,13 +12,9 @@ local function setup()
       { mode = 'x', keys = 'g' },
       -- Marks
       { mode = 'n', keys = "'" },
-      { mode = 'n', keys = "g'" },
       { mode = 'n', keys = '`' },
-      { mode = 'n', keys = 'g`' },
       { mode = 'x', keys = "'" },
-      { mode = 'x', keys = "g'" },
       { mode = 'x', keys = '`' },
-      { mode = 'x', keys = 'g`' },
       -- Registers
       { mode = 'n', keys = '"' },
       { mode = 'x', keys = '"' },
@@ -29,16 +25,6 @@ local function setup()
       -- `z` key
       { mode = 'n', keys = 'z' },
       { mode = 'x', keys = 'z' },
-      -- operators
-      -- FIXME operators don't work
-      -- { mode = 'n', keys = 'y' },
-      -- { mode = 'n', keys = 'd' },
-      -- { mode = 'n', keys = 'c' },
-      -- { mode = 'n', keys = '>' },
-      -- { mode = 'n', keys = '<' },
-      -- { mode = 'n', keys = '~' },
-      -- { mode = 'n', keys = '!' },
-      -- { mode = 'n', keys = '=' },
       -- mini.basic
       { mode = 'n', keys = '\\' },
       -- mini.bracketed
