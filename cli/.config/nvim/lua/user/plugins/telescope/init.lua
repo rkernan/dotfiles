@@ -3,7 +3,6 @@ return {
   dependencies = {
     'debugloop/telescope-undo.nvim',
     'nvim-lua/plenary.nvim',
-    'nvim-telescope/telescope-file-browser.nvim',
     { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     'nvim-telescope/telescope-ui-select.nvim',
   },
@@ -55,17 +54,6 @@ return {
         }
       },
       extensions = {
-        file_browser = {
-          hidden = true,
-          respect_gitignore = false,
-          hijack_netrw = true,
-          initial_mode = 'normal',
-          mappings = {
-            i = {
-              ['<esc>'] = false,
-            }
-          }
-        },
         fzf = {
           fuzzy = true,
           override_generic_sorter = true,
@@ -85,7 +73,6 @@ return {
       },
     })
 
-    require('telescope').load_extension('file_browser')
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('ui-select')
     require('telescope').load_extension('undo')
