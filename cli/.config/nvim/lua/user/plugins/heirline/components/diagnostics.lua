@@ -26,22 +26,22 @@ local diagnostics = {
     provider = function (self)
     return self.errors > 0 and (' ' .. self.icons.errors .. self.errors)
     end,
-    hl = 'StatusLineDiagnosticError',
+    hl = { fg = 'diag_err' },
   }, {
     provider = function (self)
       return self.warnings > 0 and (' ' .. self.icons.warnings .. self.warnings)
     end,
-    hl = 'StatusLineDiagnosticWarn',
+    hl = { fg = 'diag_warn' },
   }, {
     provider = function (self)
       return self.hints > 0 and (' ' .. self.icons.hints .. self.hints)
     end,
-    hl = 'StatusLineDiagnosticHint',
+    hl = { fg = 'diag_hint' },
   }, {
     provider = function (self)
       return self.info > 0 and (' ' .. self.icons.info .. self.info)
     end,
-    hl = 'StatusLineDiagnosticInfo',
+    hl = { fg = 'diag_info' },
   },
 }
 

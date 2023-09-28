@@ -31,5 +31,5 @@ require('user.mappings')
 require('user.lsp')
 require('user.lazy')
 
-vim.cmd("set background=dark")
-vim.cmd("colorscheme gruvbones")
+vim.cmd('set background=dark')
+vim.cmd('colorscheme gruvbones')

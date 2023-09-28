@@ -8,5 +8,13 @@ return {
       -- tabline = {},
       -- statuscolumn = {},
     })
+
+    vim.api.nvim_create_augroup('plugins.heirline', { clear = true })
+    vim.api.nvim_create_autocmd('ColorScheme', {
+      callback = function ()
+        require('heirline.utils').on_colorscheme(require('user.plugins.heirline.colors').setup_colors())
+      end,
+      group = 'plugins.heirline',
+    })
   end
 }

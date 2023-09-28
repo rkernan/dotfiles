@@ -1,0 +1,6 @@
+local gruvbones = require('mini.colors').get_colorscheme('gruvbones')
+gruvbones:add_transparency({ general = true, float = true })
+gruvbones:add_cterm_attributes()
+gruvbones:add_terminal_colors()
+gruvbones:apply()
+gruvbones:write()

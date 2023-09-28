@@ -22,11 +22,11 @@ local navic = {
       local child = {
         {
           provider = d.icon,
-          hl = 'StatusLineWhite2',
+          hl = { fg = 'dim' },
         }, {
           -- escape '%s's and buggy default separators
           provider = d.name:gsub('%%', '%%%%'):gsub('%s*->%s*', ''),
-          hl = 'StatusLineWhite2',
+          hl = { fg = 'dim' },
           on_click = {
             -- pass the encoded position through minwid
             minwid = pos,
@@ -41,7 +41,7 @@ local navic = {
       }
       -- add a separator only if needed
       if #data > 1 and i < #data then
-        table.insert(child, { provider = ' > ', hl = 'StatusLineWhite2' })
+        table.insert(child, { provider = ' > ', hl = { fg = 'dim' }})
       end
       table.insert(children, child)
     end
@@ -52,7 +52,7 @@ local navic = {
   provider = function (self)
     return ' ' .. self.child:eval()
   end,
-  hl = 'StatusLineWhite2',
+  hl = { fg = 'dim' },
   update = 'CursorMoved',
 }
 

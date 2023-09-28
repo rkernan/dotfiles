@@ -1,170 +1,513 @@
-local colors_name = 'gruvbones'
--- required when defining a colorscheme
-vim.g.colors_name = colors_name
+-- Made with 'mini.colors' module of https://github.com/echasnovski/mini.nvim
 
-local lush = require('lush')
-local hsluv = lush.hsluv
-local util = require('zenbones.util')
+if vim.g.colors_name ~= nil then vim.cmd('highlight clear') end
+vim.g.colors_name = "gruvbones"
 
-local bg = vim.opt.background:get()
+-- Highlight groups
+local hi = vim.api.nvim_set_hl
 
-local palette
-if bg == "light" then
-  palette = util.palette_extend({
-    bg = hsluv('#fbf1c7'),
-    fg = hsluv('#3c3836'),
-    rose = hsluv('#9d0006'),
-    leaf = hsluv('#79740e'),
-    wood = hsluv('#b57614'),
-    water = hsluv('#076678'),
-    blossom = hsluv('#8f3f71'),
-    sky = hsluv('#427b58'),
-  }, bg)
-else
-  palette = util.palette_extend({
-    bg = hsluv('#282828'),
-    fg = hsluv('#ebdbb2'),
-    rose = hsluv('#fb4934'),
-    leaf = hsluv('#b8bb26'),
-    wood = hsluv('#fabd2f'),
-    water = hsluv('#83a598'),
-    blossom = hsluv('#d3869b'),
-    sky = hsluv('#83c07c'),
-  }, bg)
-end
+hi(0, "@annotation", { link = "PreProc" })
+hi(0, "@attribute", { link = "PreProc" })
+hi(0, "@character", { link = "Constant" })
+hi(0, "@character.special", { link = "Special" })
+hi(0, "@conditional", { link = "Statement" })
+hi(0, "@constant", { bold = true, fg = "#c9ba94" })
+hi(0, "@constant.builtin", { link = "Constant" })
+hi(0, "@constant.macro", { link = "Number" })
+hi(0, "@debug", { link = "Special" })
+hi(0, "@define", { link = "PreProc" })
+hi(0, "@exception", { link = "Statement" })
+hi(0, "@function.builtin", { link = "Special" })
+hi(0, "@function.call", { link = "Function" })
+hi(0, "@function.macro", { link = "PreProc" })
+hi(0, "@include", { link = "PreProc" })
+hi(0, "@keyword", { link = "Statement" })
+hi(0, "@keyword.coroutine", { link = "Statement" })
+hi(0, "@keyword.function", { link = "Statement" })
+hi(0, "@keyword.operator", { link = "Statement" })
+hi(0, "@keyword.return", { link = "Statement" })
+hi(0, "@label", { link = "Statement" })
+hi(0, "@lsp.type.boolean", { link = "@boolean" })
+hi(0, "@lsp.type.builtinType", { link = "@type.builtin" })
+hi(0, "@lsp.type.comment", { link = "@comment" })
+hi(0, "@lsp.type.enum", { link = "@type" })
+hi(0, "@lsp.type.enumMember", { link = "@constant" })
+hi(0, "@lsp.type.escapeSequence", { link = "@string.escape" })
+hi(0, "@lsp.type.formatSpecifier", { link = "@punctuation.special" })
+hi(0, "@lsp.type.keyword", { link = "@keyword" })
+hi(0, "@lsp.type.namespace", { link = "@namespace" })
+hi(0, "@lsp.type.number", { link = "@number" })
+hi(0, "@lsp.type.parameter", { link = "@parameter" })
+hi(0, "@lsp.type.property", { link = "@property" })
+hi(0, "@lsp.type.selfKeyword", { link = "@variable.builtin" })
+hi(0, "@lsp.type.string.rust", { link = "@string" })
+hi(0, "@lsp.type.typeAlias", { link = "@type.definition" })
+hi(0, "@lsp.type.unresolvedReference", { sp = "#fb4c36", undercurl = true })
+hi(0, "@lsp.type.variable", { link = "@variable" })
+hi(0, "@lsp.typemod.class.defaultLibrary", { link = "@type.builtin" })
+hi(0, "@lsp.typemod.enum.defaultLibrary", { link = "@type.builtin" })
+hi(0, "@lsp.typemod.enumMember.defaultLibrary", { link = "@constant.builtin" })
+hi(0, "@lsp.typemod.function.defaultLibrary", { link = "@function.builtin" })
+hi(0, "@lsp.typemod.keyword.async", { link = "@keyword.coroutine" })
+hi(0, "@lsp.typemod.macro.defaultLibrary", { link = "@function.builtin" })
+hi(0, "@lsp.typemod.method.defaultLibrary", { link = "@function.builtin" })
+hi(0, "@lsp.typemod.operator.injected", { link = "@operator" })
+hi(0, "@lsp.typemod.string.injected", { link = "@string" })
+hi(0, "@lsp.typemod.variable.defaultLibrary", { link = "@variable.builtin" })
+hi(0, "@lsp.typemod.variable.injected", { link = "@variable" })
+hi(0, "@method.call", { link = "Function" })
+hi(0, "@namespace", { link = "Special" })
+hi(0, "@neorg.anchors.declaration", { link = "@text.reference" })
+hi(0, "@neorg.anchors.declaration.delimiter", { link = "NonText" })
+hi(0, "@neorg.anchors.definition.delimiter", { link = "NonText" })
+hi(0, "@neorg.definitions.content", { link = "@text.emphasis" })
+hi(0, "@neorg.definitions.prefix", { link = "@punctuation.delimiter" })
+hi(0, "@neorg.definitions.suffix", { link = "@punctuation.delimiter" })
+hi(0, "@neorg.definitions.title", { link = "@text.strong" })
+hi(0, "@neorg.delimiters.horizontal_line", { link = "@punctuation.delimiter" })
+hi(0, "@neorg.delimiters.strong", { link = "@punctuation.delimiter" })
+hi(0, "@neorg.delimiters.weak", { link = "@punctuation.delimiter" })
+hi(0, "@neorg.error", { link = "@error" })
+hi(0, "@neorg.footnotes.content", { link = "@text.emphasis" })
+hi(0, "@neorg.footnotes.prefix", { link = "@punctuation.delimiter" })
+hi(0, "@neorg.footnotes.suffix", { link = "@punctuation.delimiter" })
+hi(0, "@neorg.footnotes.title", { link = "@text.strong" })
+hi(0, "@neorg.headings.1.prefix", { link = "@attribute" })
+hi(0, "@neorg.headings.1.title", { link = "@attribute" })
+hi(0, "@neorg.headings.2.prefix", { link = "@label" })
+hi(0, "@neorg.headings.2.title", { link = "@label" })
+hi(0, "@neorg.headings.3.prefix", { link = "@constant" })
+hi(0, "@neorg.headings.3.title", { link = "@constant" })
+hi(0, "@neorg.headings.4.prefix", { link = "@string" })
+hi(0, "@neorg.headings.4.title", { link = "@string" })
+hi(0, "@neorg.headings.5.prefix", { link = "@label" })
+hi(0, "@neorg.headings.5.title", { link = "@label" })
+hi(0, "@neorg.headings.6.prefix", { link = "@constructor" })
+hi(0, "@neorg.headings.6.title", { link = "@constructor" })
+hi(0, "@neorg.links.description", { link = "@text.uri" })
+hi(0, "@neorg.links.description.delimiter", { link = "NonText" })
+hi(0, "@neorg.links.file", { link = "@comment" })
+hi(0, "@neorg.links.file.delimiter", { link = "NonText" })
+hi(0, "@neorg.links.location.definition", { link = "@neorg.definitions.title" })
+hi(0, "@neorg.links.location.definition.prefix", { link = "@neorg.definitions.prefix" })
+hi(0, "@neorg.links.location.delimiter", { link = "NonText" })
+hi(0, "@neorg.links.location.external_file", { link = "@label" })
+hi(0, "@neorg.links.location.external_file.prefix", { link = "@label" })
+hi(0, "@neorg.links.location.footnote", { link = "@neorg.footnotes.title" })
+hi(0, "@neorg.links.location.footnote.prefix", { link = "@neorg.footnotes.prefix" })
+hi(0, "@neorg.links.location.generic", { link = "@type" })
+hi(0, "@neorg.links.location.generic.prefix", { link = "@type" })
+hi(0, "@neorg.links.location.heading.1", { link = "@neorg.headings.1.title" })
+hi(0, "@neorg.links.location.heading.1.prefix", { link = "@neorg.headings.1.prefix" })
+hi(0, "@neorg.links.location.heading.2", { link = "@neorg.headings.2.title" })
+hi(0, "@neorg.links.location.heading.2.prefix", { link = "@neorg.headings.2.prefix" })
+hi(0, "@neorg.links.location.heading.3", { link = "@neorg.headings.3.title" })
+hi(0, "@neorg.links.location.heading.3.prefix", { link = "@neorg.headings.3.prefix" })
+hi(0, "@neorg.links.location.heading.4", { link = "@neorg.headings.4.title" })
+hi(0, "@neorg.links.location.heading.4.prefix", { link = "@neorg.headings.4.prefix" })
+hi(0, "@neorg.links.location.heading.5", { link = "@neorg.headings.5.title" })
+hi(0, "@neorg.links.location.heading.5.prefix", { link = "@neorg.headings.5.prefix" })
+hi(0, "@neorg.links.location.heading.6", { link = "@neorg.headings.6.title" })
+hi(0, "@neorg.links.location.heading.6.prefix", { link = "@neorg.headings.6.prefix" })
+hi(0, "@neorg.links.location.marker", { link = "@neorg.markers.title" })
+hi(0, "@neorg.links.location.marker.prefix", { link = "@neorg.markers.prefix" })
+hi(0, "@neorg.links.location.url", { link = "@text.uri" })
+hi(0, "@neorg.lists.ordered.prefix", { link = "@repeat" })
+hi(0, "@neorg.lists.unordered.prefix", { link = "@punctuation.delimiter" })
+hi(0, "@neorg.markup.bold", { link = "@text.strong" })
+hi(0, "@neorg.markup.bold.delimiter", { link = "NonText" })
+hi(0, "@neorg.markup.free_form_delimiter", { link = "NonText" })
+hi(0, "@neorg.markup.inline_comment", { fg = "#8d846c" })
+hi(0, "@neorg.markup.inline_comment.delimiter", { link = "NonText" })
+hi(0, "@neorg.markup.inline_math", { link = "@text.math" })
+hi(0, "@neorg.markup.inline_math.delimiter", { link = "NonText" })
+hi(0, "@neorg.markup.italic", { link = "@text.emphasis" })
+hi(0, "@neorg.markup.italic.delimiter", { link = "NonText" })
+hi(0, "@neorg.markup.spoiler", { link = "@text.danger" })
+hi(0, "@neorg.markup.spoiler.delimiter", { link = "NonText" })
+hi(0, "@neorg.markup.strikethrough", { strikethrough = true })
+hi(0, "@neorg.markup.strikethrough.delimiter", { link = "NonText" })
+hi(0, "@neorg.markup.subscript", { link = "@label" })
+hi(0, "@neorg.markup.subscript.delimiter", { link = "NonText" })
+hi(0, "@neorg.markup.superscript", { link = "@number" })
+hi(0, "@neorg.markup.superscript.delimiter", { link = "NonText" })
+hi(0, "@neorg.markup.underline", { underline = true })
+hi(0, "@neorg.markup.underline.delimiter", { link = "NonText" })
+hi(0, "@neorg.markup.variable", { link = "@function.macro" })
+hi(0, "@neorg.markup.variable.delimiter", { link = "NonText" })
+hi(0, "@neorg.markup.verbatim", { fg = "#bcb090" })
+hi(0, "@neorg.markup.verbatim.delimiter", { link = "NonText" })
+hi(0, "@neorg.modifiers.escape", { link = "@type" })
+hi(0, "@neorg.modifiers.link", { link = "NonText" })
+hi(0, "@neorg.quotes.1.content", { link = "@punctuation.delimiter" })
+hi(0, "@neorg.quotes.1.prefix", { link = "@punctuation.delimiter" })
+hi(0, "@neorg.quotes.2.content", { link = "Blue" })
+hi(0, "@neorg.quotes.2.prefix", { link = "Blue" })
+hi(0, "@neorg.quotes.3.content", { link = "Yellow" })
+hi(0, "@neorg.quotes.3.prefix", { link = "Yellow" })
+hi(0, "@neorg.quotes.4.content", { link = "Red" })
+hi(0, "@neorg.quotes.4.prefix", { link = "Red" })
+hi(0, "@neorg.quotes.5.content", { link = "Green" })
+hi(0, "@neorg.quotes.5.prefix", { link = "Green" })
+hi(0, "@neorg.quotes.6.content", { link = "Brown" })
+hi(0, "@neorg.quotes.6.prefix", { link = "Brown" })
+hi(0, "@neorg.selection_window.arrow", { link = "@none" })
+hi(0, "@neorg.selection_window.heading", { link = "@annotation" })
+hi(0, "@neorg.selection_window.key", { link = "@namespace" })
+hi(0, "@neorg.selection_window.keyname", { link = "@constant" })
+hi(0, "@neorg.selection_window.nestedkeyname", { link = "@string" })
+hi(0, "@neorg.tags.carryover.begin", { link = "@label" })
+hi(0, "@neorg.tags.carryover.name", { link = "@none" })
+hi(0, "@neorg.tags.carryover.name.delimiter", { link = "@none" })
+hi(0, "@neorg.tags.carryover.name.word", { link = "@label" })
+hi(0, "@neorg.tags.carryover.parameters", { link = "@string" })
+hi(0, "@neorg.tags.comment.content", { link = "@comment" })
+hi(0, "@neorg.tags.ranged_verbatim.begin", { link = "@keyword" })
+hi(0, "@neorg.tags.ranged_verbatim.code_block", { bg = "#222222" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.array.bracket", { link = "@punctuation.bracket" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.array.value", { link = "@none" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.authors", { link = "@annotation" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.categories", { link = "@keyword" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.created", { link = "@float" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.description", { link = "@label" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.key", { link = "@field" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.number", { link = "@number" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.object.bracket", { link = "@punctuation.bracket" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.title", { link = "@text.title" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.trailing", { link = "@repeat" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.updated", { link = "@float" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.value", { link = "@string" })
+hi(0, "@neorg.tags.ranged_verbatim.document_meta.version", { link = "@float" })
+hi(0, "@neorg.tags.ranged_verbatim.end", { link = "@keyword" })
+hi(0, "@neorg.tags.ranged_verbatim.name", { link = "@none" })
+hi(0, "@neorg.tags.ranged_verbatim.name.delimiter", { link = "@none" })
+hi(0, "@neorg.tags.ranged_verbatim.name.word", { link = "@keyword" })
+hi(0, "@neorg.tags.ranged_verbatim.parameters", { link = "@type" })
+hi(0, "@neorg.todo_items.cancelled", { link = "NonText" })
+hi(0, "@neorg.todo_items.done", { link = "@string" })
+hi(0, "@neorg.todo_items.on_hold", { link = "@text.note" })
+hi(0, "@neorg.todo_items.pending", { link = "@namespace" })
+hi(0, "@neorg.todo_items.recurring", { link = "@repeat" })
+hi(0, "@neorg.todo_items.uncertain", { link = "@boolean" })
+hi(0, "@neorg.todo_items.undone", { link = "@punctuation.delimiter" })
+hi(0, "@neorg.todo_items.urgent", { link = "@text.danger" })
+hi(0, "@parameter.reference", { link = "@parameter" })
+hi(0, "@punctuation.bracket", { link = "Delimiter" })
+hi(0, "@punctuation.delimiter", { link = "Delimiter" })
+hi(0, "@punctuation.special", { link = "Delimiter" })
+hi(0, "@punctuation.special.markdown", { link = "Special" })
+hi(0, "@repeat", { link = "Statement" })
+hi(0, "@statement", { link = "Statement" })
+hi(0, "@storageclass", { link = "Type" })
+hi(0, "@string", { link = "Constant" })
+hi(0, "@string.escape", { link = "Special" })
+hi(0, "@string.escape.markdown", { link = "SpecialKey" })
+hi(0, "@string.regex", { link = "Constant" })
+hi(0, "@string.special", { link = "Special" })
+hi(0, "@symbol", { link = "Identifier" })
+hi(0, "@tag", { link = "Constant" })
+hi(0, "@tag.attribute", { link = "@property" })
+hi(0, "@tag.delimiter", { link = "Delimiter" })
+hi(0, "@text", { link = "@none" })
+hi(0, "@text.danger", { link = "Error" })
+hi(0, "@text.diff.add", { link = "diffAdded" })
+hi(0, "@text.diff.delete", { link = "diffRemoved" })
+hi(0, "@text.emphasis", { link = "Italic" })
+hi(0, "@text.emphasis.markdown", { link = "Italic" })
+hi(0, "@text.environment", { link = "PreProc" })
+hi(0, "@text.environment.name", { link = "Type" })
+hi(0, "@text.literal", { link = "Constant" })
+hi(0, "@text.literal.markdown", { link = "Type" })
+hi(0, "@text.math", { link = "Special" })
+hi(0, "@text.note", { link = "DiagnosticInfo" })
+hi(0, "@text.reference", { link = "Constant" })
+hi(0, "@text.reference.markdown", { fg = "#c9ba94", underline = true })
+hi(0, "@text.strike", { strikethrough = true })
+hi(0, "@text.strong", { link = "Bold" })
+hi(0, "@text.title", { link = "Title" })
+hi(0, "@text.title.markdown", { link = "Statement" })
+hi(0, "@text.underline", { link = "Underlined" })
+hi(0, "@text.uri", { link = "Underlined" })
+hi(0, "@text.uri.markdown", { link = "SpecialComment" })
+hi(0, "@text.warning", { link = "WarningMsg" })
+hi(0, "@todo", { link = "Todo" })
+hi(0, "@type.builtin", { link = "Type" })
+hi(0, "@type.definition", { link = "Type" })
+hi(0, "@type.qualifier", { link = "Type" })
+hi(0, "@variable.builtin", { link = "Number" })
+hi(0, "Bold", { bold = true })
+hi(0, "Boolean", { fg = "#82c07b", italic = true })
+hi(0, "BufferCurrent", { link = "TabLineSel" })
+hi(0, "BufferVisible", { fg = "#f0e4ca" })
+hi(0, "BufferVisibleIndex", { fg = "#f0e4ca" })
+hi(0, "BufferVisibleSign", { fg = "#f0e4ca" })
+hi(0, "CmpItemAbbr", { fg = "#c9ba94" })
+hi(0, "CmpItemAbbrDeprecated", { fg = "#83795f" })
+hi(0, "CmpItemAbbrDeprecatedDefault", { fg = "#727272" })
+hi(0, "CmpItemAbbrMatch", { bold = true, fg = "#ebdcb4" })
+hi(0, "CmpItemAbbrMatchFuzzy", { bold = true, fg = "#d2c39a" })
+hi(0, "CmpItemKind", { fg = "#afa280" })
+hi(0, "CmpItemKindClassDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindColorDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindConstantDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindConstructorDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindDefault", { fg = "#b8aa87" })
+hi(0, "CmpItemKindEnumDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindEnumMemberDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindEventDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindFieldDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindFileDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindFolderDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindFunctionDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindInterfaceDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindKeywordDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindMethodDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindModuleDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindOperatorDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindPropertyDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindReferenceDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindSnippetDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindStructDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindTextDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindTypeParameterDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindUnitDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindValueDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemKindVariableDefault", { link = "CmpItemKind" })
+hi(0, "CmpItemMenu", { fg = "#a19576" })
+hi(0, "CocCodeLens", { link = "LineNr" })
+hi(0, "CocErrorHighlight", { link = "DiagnosticUnderlineError" })
+hi(0, "CocErrorSign", { link = "DiagnosticSignError" })
+hi(0, "CocErrorVirtualText", { link = "DiagnosticVirtualTextError" })
+hi(0, "CocHintHighlight", { link = "DiagnosticUnderlineHint" })
+hi(0, "CocHintSign", { link = "DiagnosticSignHint" })
+hi(0, "CocInfoHighlight", { link = "DiagnosticUnderlineInfo" })
+hi(0, "CocInfoSign", { link = "DiagnosticSignInfo" })
+hi(0, "CocMarkdownLink", { fg = "#82c07b", underline = true })
+hi(0, "CocMenuSel", { link = "CursorLine" })
+hi(0, "CocSearch", { link = "Search" })
+hi(0, "CocSelectedText", { link = "SpellBad" })
+hi(0, "CocWarningHighlight", { link = "DiagnosticUnderlineWarn" })
+hi(0, "CocWarningSign", { link = "DiagnosticSignWarn" })
+hi(0, "CocWarningVitualText", { link = "DiagnosticVirtualTextWarn" })
+hi(0, "ColorColumn", { bg = "#5d4e38" })
+hi(0, "Comment", { fg = "#727272" })
+hi(0, "Conceal", { bold = true, fg = "#a19576", italic = true })
+hi(0, "Constant", { fg = "#afa280" })
+hi(0, "CurSearch", { link = "IncSearch" })
+hi(0, "Cursor", { bg = "#eee2c3", fg = "#282828" })
+hi(0, "CursorColumn", { link = "CursorLine" })
+hi(0, "CursorLine", { bg = "#2e2e2e" })
+hi(0, "CursorLineNr", { bold = true, fg = "#ebdcb4" })
+hi(0, "Delimiter", { fg = "#848484" })
+hi(0, "DiagnosticDeprecated", { link = "DiagnosticWarn" })
+hi(0, "DiagnosticError", { link = "Error" })
+hi(0, "DiagnosticHint", { fg = "#d2859a" })
+hi(0, "DiagnosticInfo", { fg = "#83a598" })
+hi(0, "DiagnosticSignError", { fg = "#fb4c36" })
+hi(0, "DiagnosticSignHint", { fg = "#d2859a" })
+hi(0, "DiagnosticSignInfo", { fg = "#83a598" })
+hi(0, "DiagnosticSignWarn", { fg = "#f9bd30" })
+hi(0, "DiagnosticUnderlineError", { sp = "#fb4c36", underline = true })
+hi(0, "DiagnosticUnderlineHint", { sp = "#d2859a", underline = true })
+hi(0, "DiagnosticUnderlineInfo", { sp = "#83a598" })
+hi(0, "DiagnosticUnderlineWarn", { sp = "#f9bd30", underline = true })
+hi(0, "DiagnosticUnnecessary", { link = "DiagnosticWarn" })
+hi(0, "DiagnosticVirtualTextError", { bg = "#372e2e", fg = "#fb4c36" })
+hi(0, "DiagnosticVirtualTextHint", { bg = "#372e30", fg = "#d2859a" })
+hi(0, "DiagnosticVirtualTextInfo", { bg = "#2e3130", fg = "#83a598" })
+hi(0, "DiagnosticVirtualTextWarn", { bg = "#32302e", fg = "#f9bd30" })
+hi(0, "DiagnosticWarn", { link = "WarningMsg" })
+hi(0, "DiffAdd", { bg = "#3a3a25" })
+hi(0, "DiffChange", { bg = "#273e35" })
+hi(0, "DiffDelete", { bg = "#52302e" })
+hi(0, "DiffText", { bg = "#3b5b4f", fg = "#ebdcb4" })
+hi(0, "Directory", { bold = true })
+hi(0, "Error", { fg = "#fb4c36" })
+hi(0, "ErrorMsg", { link = "Error" })
+hi(0, "FlashBackdrop", { fg = "#727272" })
+hi(0, "FlashLabel", { bg = "#4e635b", fg = "#ebdcb4" })
+hi(0, "FloatBorder", { fg = "#848484" })
+hi(0, "FoldColumn", { bold = true, fg = "#6a6a6a" })
+hi(0, "Folded", { bg = "#424242", fg = "#ababab" })
+hi(0, "Function", { fg = "#ebdcb4" })
+hi(0, "GitGutterAdd", { link = "GitSignsAdd" })
+hi(0, "GitGutterChange", { link = "GitSignsChange" })
+hi(0, "GitGutterDelete", { link = "GitSignsDelete" })
+hi(0, "GitSignsAdd", { fg = "#b7ba26" })
+hi(0, "GitSignsChange", { fg = "#83a598" })
+hi(0, "GitSignsDelete", { fg = "#fb4c36" })
+hi(0, "GitSignsStagedAdd", { fg = "#5b5d13" })
+hi(0, "GitSignsStagedAddLn", { bg = "#3a3a25" })
+hi(0, "GitSignsStagedAddNr", { fg = "#5b5d13" })
+hi(0, "GitSignsStagedChange", { fg = "#41524c" })
+hi(0, "GitSignsStagedChangeLn", { bg = "#273e35" })
+hi(0, "GitSignsStagedChangeNr", { fg = "#41524c" })
+hi(0, "GitSignsStagedChangedelete", { fg = "#41524c" })
+hi(0, "GitSignsStagedChangedeleteLn", { bg = "#273e35" })
+hi(0, "GitSignsStagedChangedeleteNr", { fg = "#41524c" })
+hi(0, "GitSignsStagedDelete", { fg = "#7d261b" })
+hi(0, "GitSignsStagedDeleteNr", { fg = "#7d261b" })
+hi(0, "GitSignsStagedTopdelete", { fg = "#7d261b" })
+hi(0, "GitSignsStagedTopdeleteNr", { fg = "#7d261b" })
+hi(0, "HopNextKey", { bold = true, fg = "#d2859a", underline = true })
+hi(0, "HopNextKey1", { bold = true, fg = "#82c07b", underline = true })
+hi(0, "HopNextKey2", { fg = "#83a598" })
+hi(0, "HopUnmatched", { fg = "#727272" })
+hi(0, "Identifier", { fg = "#c9ba94" })
+hi(0, "IncSearch", { bg = "#dba1b0", bold = true, fg = "#282828" })
+hi(0, "IndentBlanklineChar", { fg = "#424242" })
+hi(0, "Italic", { italic = true })
+hi(0, "LeapLabelPrimary", { bg = "#93455d", bold = true, fg = "#ebdcb4", nocombine = true })
+hi(0, "LeapLabelSecondary", { bg = "#3b5b4f", bold = true, fg = "#ebdcb4", nocombine = true })
+hi(0, "LeapLabelSelected", { link = "IncSearch" })
+hi(0, "LeapMatch", { bold = true, nocombine = true, underline = true })
+hi(0, "LineNr", { fg = "#6a6a6a" })
+hi(0, "LspCodeLens", { link = "LineNr" })
+hi(0, "LspReferenceRead", { link = "ColorColumn" })
+hi(0, "LspReferenceText", { link = "ColorColumn" })
+hi(0, "LspReferenceWrite", { link = "ColorColumn" })
+hi(0, "MasonError", { link = "Error" })
+hi(0, "MasonHeader", { bg = "#f9bd30", bold = true, fg = "#282828" })
+hi(0, "MasonHighlight", { fg = "#83a598" })
+hi(0, "MasonHighlightBlock", { bg = "#83a598", fg = "#282828" })
+hi(0, "MasonHighlightBlockBold", { bg = "#83a598", bold = true, fg = "#282828" })
+hi(0, "MasonHighlightBlockBoldSecondary", { bg = "#f9bd30", bold = true, fg = "#282828" })
+hi(0, "MasonHighlightBlockSecondary", { bg = "#f9bd30", fg = "#282828" })
+hi(0, "MasonHighlightSecondary", { fg = "#f9bd30" })
+hi(0, "MasonMuted", { fg = "#afa280" })
+hi(0, "MasonMutedBlock", { bg = "#afa280", fg = "#282828" })
+hi(0, "MasonMutedBlockBold", { bg = "#afa280", bold = true, fg = "#282828" })
+hi(0, "MatchParen", { link = "Search" })
+hi(0, "MiniJump2dDim", { fg = "#727272" })
+hi(0, "MiniJump2dSpot", { bg = "#000000", bold = true, fg = "#ffffff", nocombine = true })
+hi(0, "MiniJump2dSpotAhead", { bg = "#000000", fg = "#808080", nocombine = true })
+hi(0, "MiniJump2dSpotUnique", { bg = "#000000", bold = true, fg = "#ffffff", nocombine = true })
+hi(0, "MoreMsg", { bold = true, fg = "#b7ba26" })
+hi(0, "NeogitDiffAddHighlight", { link = "DiffAdd" })
+hi(0, "NeogitDiffContextHighlight", { link = "CursorLine" })
+hi(0, "NeogitDiffDeleteHighlight", { link = "DiffDelete" })
+hi(0, "NeogitHunkHeader", { link = "LineNr" })
+hi(0, "NeogitHunkHeaderHighlight", { bg = "#2e2e2e", bold = true, fg = "#ebdcb4" })
+hi(0, "NeogitNotificationError", { link = "DiagnosticError" })
+hi(0, "NeogitNotificationInfo", { link = "DiagnosticInfo" })
+hi(0, "NeogitNotificationWarning", { link = "DiagnosticWarn" })
+hi(0, "NnnNormal", { link = "NvimTreeNormal" })
+hi(0, "NnnNormalNC", { link = "NnnNormal" })
+hi(0, "NnnVertSplit", { link = "NnnWinSeparator" })
+hi(0, "NnnWinSeparator", { link = "NvimTreeWinSeparator" })
+hi(0, "NoiceCmdlineIcon", { fg = "#83a598" })
+hi(0, "NoiceCmdlineIconSearch", { link = "WarningMsg" })
+hi(0, "NoiceCmdlinePopupBorder", { link = "NoiceCmdlineIcon" })
+hi(0, "NoiceCmdlinePopupBorderSearch", { link = "WarningMsg" })
+hi(0, "NoiceCmdlinePopupTitle", { link = "NoiceCmdlineIcon" })
+hi(0, "NoiceCompletionItemKindDefault", { fg = "#afa280" })
+hi(0, "NoiceConfirmBorder", { link = "NoiceCmdlineIcon" })
+hi(0, "NonText", { fg = "#616161" })
+hi(0, "Normal", { bg = "#282828", fg = "#ebdcb4" })
+hi(0, "NormalFloat", { bg = "#393939" })
+hi(0, "NotifyDEBUGIcon", { link = "DiagnosticHint" })
+hi(0, "NotifyDEBUGTitle", { link = "DiagnosticHint" })
+hi(0, "NotifyERRORIcon", { link = "DiagnosticError" })
+hi(0, "NotifyERRORTitle", { link = "DiagnosticError" })
+hi(0, "NotifyINFOIcon", { link = "DiagnosticInfo" })
+hi(0, "NotifyINFOTitle", { link = "DiagnosticInfo" })
+hi(0, "NotifyTRACEIcon", { link = "DiagnosticHint" })
+hi(0, "NotifyTRACETitle", { link = "DiagnosticHint" })
+hi(0, "NotifyWARNIcon", { link = "DiagnosticWarn" })
+hi(0, "NotifyWARNTitle", { link = "DiagnosticWarn" })
+hi(0, "Number", { fg = "#ebdcb4" })
+hi(0, "NvimTreeCursorColumn", { link = "NvimTreeCursorLine" })
+hi(0, "NvimTreeCursorLine", { bg = "#323232" })
+hi(0, "NvimTreeGitDeleted", { link = "diffRemoved" })
+hi(0, "NvimTreeGitDirty", { link = "diffChanged" })
+hi(0, "NvimTreeGitNew", { link = "diffAdded" })
+hi(0, "NvimTreeNormal", { bg = "#2e2e2e", fg = "#ebdcb4" })
+hi(0, "NvimTreeRootFolder", { bold = true, fg = "#83a598" })
+hi(0, "NvimTreeSpecialFile", { fg = "#d2859a", underline = true })
+hi(0, "NvimTreeSymlink", { fg = "#83a598" })
+hi(0, "NvimTreeWinSeparator", { fg = "#282828" })
+hi(0, "Operator", { fg = "#fb4c36" })
+hi(0, "Pmenu", { bg = "#393939" })
+hi(0, "PmenuSbar", { bg = "#666666" })
+hi(0, "PmenuSel", { bg = "#505050" })
+hi(0, "PmenuThumb", { bg = "#8b8b8b" })
+hi(0, "PreProc", { link = "Statement" })
+hi(0, "Question", { link = "MoreMsg" })
+hi(0, "Search", { bg = "#93455d", fg = "#ebdcb4" })
+hi(0, "SignColumn", { link = "LineNr" })
+hi(0, "Sneak", { link = "Search" })
+hi(0, "SneakLabel", { link = "WildMenu" })
+hi(0, "SneakLabelMask", { bg = "#d2859a", fg = "#d2859a" })
+hi(0, "Special", { bold = true, fg = "#b8aa87" })
+hi(0, "SpecialComment", { fg = "#727272" })
+hi(0, "SpecialKey", { fg = "#616161", italic = true })
+hi(0, "SpellBad", { fg = "#e46258", undercurl = true })
+hi(0, "SpellCap", { fg = "#e46258", undercurl = true })
+hi(0, "SpellLocal", { link = "SpellCap" })
+hi(0, "SpellRare", { fg = "#e46258", undercurl = true })
+hi(0, "Statement", { fg = "#fb4c36", italic = true })
+hi(0, "StatusLine", { bg = "#3e3e3e", fg = "#ebdcb4" })
+hi(0, "StatusLineNC", { bg = "#323232", fg = "#f0e4ca" })
+hi(0, "TabLine", { link = "StatusLine" })
+hi(0, "TabLineFill", { link = "StatusLineNC" })
+hi(0, "TelescopeBorder", { fg = "#848484" })
+hi(0, "TelescopeMatching", { bold = true, fg = "#d2859a" })
+hi(0, "TelescopeSelection", { link = "CursorLine" })
+hi(0, "TelescopeSelectionCaret", { bg = "#2e2e2e", fg = "#fb4c36" })
+hi(0, "TermCursor", { link = "Cursor" })
+hi(0, "TermCursorNC", { link = "lCursor" })
+hi(0, "Title", { bold = true, fg = "#ebdcb4" })
+hi(0, "Todo", { bold = true, underline = true })
+hi(0, "TroubleNormal", { link = "Function" })
+hi(0, "TroubleSource", { link = "Constant" })
+hi(0, "TroubleText", { link = "Function" })
+hi(0, "Type", { fg = "#9e9e9e" })
+hi(0, "Underlined", { underline = true })
+hi(0, "UserLightbulbExt", { bg = "#2e2e2e", fg = "#f9bd30" })
+hi(0, "VertSplit", { fg = "#6a6a6a" })
+hi(0, "Visual", { bg = "#555041" })
+hi(0, "WarningMsg", { fg = "#f9bd30" })
+hi(0, "WhichKey", { link = "Statement" })
+hi(0, "WhichKeyGroup", { link = "Special" })
+hi(0, "WhichKeySeparator", { fg = "#6a6a6a" })
+hi(0, "WhichKeyValue", { link = "Constant" })
+hi(0, "WildMenu", { bg = "#d2859a", fg = "#282828" })
+hi(0, "diffAdded", { fg = "#b7ba26" })
+hi(0, "diffChanged", { fg = "#83a598" })
+hi(0, "diffFile", { bold = true, fg = "#f9bd30" })
+hi(0, "diffIndexLine", { fg = "#f9bd30" })
+hi(0, "diffLine", { bold = true, fg = "#d2859a" })
+hi(0, "diffNewFile", { fg = "#b7ba26", italic = true })
+hi(0, "diffOldFile", { fg = "#fb4c36", italic = true })
+hi(0, "diffRemoved", { fg = "#fb4c36" })
+hi(0, "gitcommitOverflow", { link = "WarningMsg" })
+hi(0, "helpHyperTextEntry", { link = "Special" })
+hi(0, "helpHyperTextJump", { link = "Constant" })
+hi(0, "helpOption", { link = "Constant" })
+hi(0, "helpSpecial", { link = "Type" })
+hi(0, "lCursor", { bg = "#998d6f", fg = "#282828" })
+hi(0, "markdownCode", { link = "Type" })
+hi(0, "markdownLinkText", { fg = "#c9ba94", underline = true })
+hi(0, "markdownLinkTextDelimiter", { link = "Delimiter" })
+hi(0, "markdownUrl", { link = "SpecialComment" })
+hi(0, "nvim_set_hl_x_hi_clear_bugfix", { fg = "#ff0000" })
 
-local generator = require('zenbones.specs')
-local zenbones = generator.generate(palette, bg, generator.get_global_config(colors_name, bg))
+-- Terminal colors
+local g = vim.g
 
-local specs = lush.extends({ zenbones }).with(function (injected_functions)
-  local sym = injected_functions.sym
-  return {
-    ---@diagnostic disable: undefined-global
-
-    -- no italic comments
-    Comment({ zenbones.Comment, gui = 'none' }),
-    sym('@comment')({ Comment }),
-
-    -- no italic constants
-    Constant({ zenbones.Constant, gui = 'none' }),
-    sym('@constant.builtin')({ Constant }),
-
-    -- no italic tags
-    sym('@tag')({ Constant }),
-
-    -- no italic numbers and floats
-    Number({ zenbones.Number, gui = 'none' }),
-    sym('@number')({ Number }),
-    Float({ Number }),
-    sym('@float')({ Float }),
-
-    -- sky booleans
-    Boolean({ Constant, fg = palette.sky, gui = 'italic' }),
-    sym('@boolean')({ Boolean }),
-
-    -- rose italic statements
-    Statement({ zenbones.Statement, fg = palette.rose, gui = 'italic' }),
-    sym('@statement')({ Statement }),
-
-    -- no italic operators
-    Operator({ Statement, gui = 'none' }),
-    sym('@operator')({ Operator }),
-
-    -- underline errors, warnings, and hints
-    DiagnosticUnderlineError({ zenbones.DiagnosticUnderlineError, gui = 'underline' }),
-    DiagnosticUnderlineWarn({  zenbones.DiagnosticUnderlineWarn,  gui = 'underline' }),
-    DiagnosticUnderlineHint({  zenbones.DiagnosticUnderlineHint,  gui = 'underline' }),
-
-    -- no uderline on info
-    DiagnosticUnderlineInfo({ zenbones.DiagnosticUnderlineInfo,  gui = 'none' }),
-
-    -- lightbulb highlights
-    UserLightbulbExt({ zenbones.CursorLine, fg = zenbones.DiagnosticWarn.fg }),
-
-    -- no italic WhichKey
-    WhichKey({ zenbones.WhichKey, gui = 'none' }),
-
-    -- statusline
-    StatusLineNC({ zenbones.StatusLine, fg = zenbones.StatusLine.fg.da(20) }),
-
-    -- statusline - basic
-    StatusLineBlack({ zenbones.StatusLine, fg = hsluv('#282828') }),
-    StatusLineBlue({ zenbones.StatusLine, fg = hsluv('#83A598') }),
-    StatusLineCyan({ zenbones.StatusLine, fg = hsluv('#82C07B') }),
-    StatusLineGreen({ zenbones.StatusLine, fg = hsluv('#B7BA26') }),
-    StatusLineMagenta({ zenbones.StatusLine, fg = hsluv('#D2859A') }),
-    StatusLineOrange({ zenbones.StatusLine, fg = hsluv('#FF9000') }),
-    StatusLineRed({ zenbones.StatusLine, fg = hsluv('#FB4C36') }),
-    StatusLineWhite({ zenbones.StatusLine }),
-    StatusLineWhite2({ StatusLineWhite, fg = StatusLineWhite.fg.da(30) }),
-    StatusLineWhite3({ StatusLineWhite, fg = StatusLineWhite.fg.da(50) }),
-    StatusLineYellow({ zenbones.StatusLine, fg = hsluv('#F9BD30') }),
-
-    -- statusline - mode
-    StatusLineModeNormal({ fg = hsluv('#282828'), bg = StatusLineWhite.fg }),
-    StatusLineModeCommand({ StatusLineModeNormal, bg = StatusLineGreen.fg }),
-    StatusLineModeInsert({ StatusLineModeNormal, bg = StatusLineBlue.fg }),
-    StatusLineModeReplace({ StatusLineModeNormal, bg = StatusLineRed.fg }),
-    StatusLineModeTerminal({ StatusLineModeNormal, bg = StatusLineYellow.fg }),
-    StatusLineModeVisual({ StatusLineModeNormal, bg = StatusLineOrange.fg }),
-
-    -- statusline - diagnostics
-    StatusLineDiagnosticError({ zenbones.StatusLine, fg = zenbones.DiagnosticSignError.fg }),
-    StatusLineDiagnosticWarn({ zenbones.StatusLine, fg = zenbones.DiagnosticSignWarn.fg }),
-    StatusLineDiagnosticHint({ zenbones.StatusLine, fg = zenbones.DiagnosticSignHint.fg }),
-    StatusLineDiagnosticInfo({ zenbones.StatusLine, fg = zenbones.DiagnosticSignInfo.fg }),
-
-    -- statusline - git
-    StatusLineGitDiffAdd({ zenbones.StatusLine, fg = zenbones.GitSignsAdd.fg }),
-    StatusLineGitDiffChange({ zenbones.StatusLine, fg = zenbones.GitSignsChange.fg }),
-    StatusLineGitDiffDelete({ zenbones.StatusLine, fg = zenbones.GitSignsDelete.fg }),
-
-    -- winbar
-    WinBar({ zenbones.StatusLine }),
-    WinBarNC({ StatusLineNC }),
-
-    -- mini.hipatterns - disable gui in text elements
-    sym('@text.danger')({ gui = 'none' }),
-    sym('@text.note')({ gui = 'none' }),
-    sym('@text.todo')({ gui = 'none' }),
-    sym('@text.warning')({ gui = 'none' }),
-
-    -- mini.jump - nicer looking labels
-    MiniJump({ zenbones.none, gui = 'underline' }),
-
-    -- mini.jump2d - nicer looking labels
-    MiniJump2dSpot({ zenbones.Normal, fg = palette.rose }),
-    MiniJump2dSpotUnique({ MiniJump2dSpot, gui = 'underline' }),
-    MiniJump2dSpotAhead({ MiniJump2dSpot, fg = MiniJump2dSpot.fg.da(50) }),
-    MiniJump2dDim({ MiniJump2dSpotAhead }),
-
-    -- custom neorg highlights
-    sym('@neorg.headings.1.prefix')({ fg = palette.blossom, gui = 'bold' }),
-    sym('@neorg.headings.1.title')({ fg = palette.blossom, gui = 'bold' }),
-    sym('@neorg.headings.2.prefix')({ fg = palette.leaf, gui = 'bold' }),
-    sym('@neorg.headings.2.title')({ fg = palette.leaf, gui = 'bold' }),
-    sym('@neorg.headings.3.prefix')({ fg = palette.leaf, gui = 'none' }),
-    sym('@neorg.headings.3.title')({ fg = palette.leaf, gui = 'none' }),
-    sym('@neorg.headings.4.prefix')({ fg = palette.sky, gui = 'bold' }),
-    sym('@neorg.headings.4.title')({ fg = palette.sky, gui = 'bold' }),
-    sym('@neorg.headings.5.prefix')({ fg = palette.sky, gui = 'none' }),
-    sym('@neorg.headings.5.title')({ fg = palette.sky, gui = 'none' }),
-    sym('@neorg.headings.6.prefix')({ fg = palette.fg.da(30), gui = 'bold' }),
-    sym('@neorg.headings.6.title')({ fg = palette.fg.da(30), gui = 'bold' }),
-    sym('@neorg.lists.ordered.1.prefix')({ fg = palette.rose, gui = 'none' }),
-    sym('@neorg.lists.ordered.2.prefix')({ fg = palette.rose, gui = 'none' }),
-    sym('@neorg.lists.ordered.3.prefix')({ fg = palette.rose, gui = 'none' }),
-    sym('@neorg.lists.ordered.4.prefix')({ fg = palette.rose, gui = 'none' }),
-    sym('@neorg.lists.ordered.5.prefix')({ fg = palette.rose, gui = 'none' }),
-    sym('@neorg.lists.ordered.6.prefix')({ fg = palette.rose, gui = 'none' }),
-    sym('@neorg.markup.spoiler')({ fg = palette.water, gui = 'none' }),
-    sym('@neorg.markup.subscript')({ fg = palette.fg.da(10), gui = 'none' }),
-    sym('@neorg.markup.superscript')({ fg = palette.fg.da(10), gui = 'bold' }),
-
-    ---@diagnostic enable: undefined-global
-  }
-end)
-
-lush(specs)
-
-require("zenbones.term").apply_colors(palette)
+g.terminal_color_0 = "#282828"
+g.terminal_color_1 = "#fb4c36"
+g.terminal_color_2 = "#b7ba26"
+g.terminal_color_3 = "#f9bd30"
+g.terminal_color_4 = "#83a598"
+g.terminal_color_5 = "#d2859a"
+g.terminal_color_6 = "#82c07b"
+g.terminal_color_7 = "#ebdcb4"
+g.terminal_color_8 = "#494344"
+g.terminal_color_9 = "#fc7369"
+g.terminal_color_10 = "#c2c524"
+g.terminal_color_11 = "#fdc65f"
+g.terminal_color_12 = "#82b9a5"
+g.terminal_color_13 = "#e296aa"
+g.terminal_color_14 = "#7fce75"
+g.terminal_color_15 = "#b5a885"

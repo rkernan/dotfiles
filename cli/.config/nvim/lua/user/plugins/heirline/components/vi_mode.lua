@@ -49,19 +49,19 @@ return {
       ['t']     = 'TERMINAL',
     },
     colors = {
-      ['n']   = 'StatusLineModeNormal',
-      ['i']   = 'StatusLineModeInsert',
-      ['v']   = 'StatusLineModeVisual',
-      ['V']   = 'StatusLineModeVisual',
-      ['\22'] = 'StatusLineModeVisual',
-      ['c']   = 'StatusLineModeCommand',
-      ['s']   = 'StatusLineModeReplace',
-      ['S']   = 'StatusLineModeReplace',
-      ['\19'] = 'StatusLineModeReplace',
-      ['R']   = 'StatusLineModeReplace',
-      ['r']   = 'StatusLineModeReplace',
-      ['!']   = 'StatusLineModeTerminal',
-      ['t']   = 'StatusLineModeTerminal',
+      ['n']   = { fg = 'black', bg = 'bright_white' },
+      ['i']   = { fg = 'black', bg = 'blue' },
+      ['v']   = { fg = 'black', bg = 'orange' },
+      ['V']   = { fg = 'black', bg = 'orange' },
+      ['\22'] = { fg = 'black', bg = 'orange' },
+      ['c']   = { fg = 'black', bg = 'green' },
+      ['s']   = { fg = 'black', bg = 'red' },
+      ['S']   = { fg = 'black', bg = 'red' },
+      ['\19'] = { fg = 'black', bg = 'red' },
+      ['R']   = { fg = 'black', bg = 'red' },
+      ['r']   = { fg = 'black', bg = 'red' },
+      ['!']   = { fg = 'black', bg = 'yellow' },
+      ['t']   = { fg = 'black', bg = 'yellow' },
     },
   },
   provider = function (self)
@@ -70,5 +70,11 @@ return {
   hl = function (self)
     return self.colors[self.mode:sub(1, 1)]
   end,
-  update = 'ModeChanged',
+  update = {
+    'ModeChanged',
+    pattern = '*:*',
+    callback = vim.schedule_wrap(function ()
+      vim.cmd('redrawstatus')
+    end)
+  }
 }

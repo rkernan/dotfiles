@@ -17,7 +17,6 @@ local icon = {
   provider = function (self)
     return self.icon and (self.icon .. ' ')
   end,
-  hl = 'StatusLine',
 }
 
 local filename = {
@@ -45,7 +44,7 @@ local flags = {
       return vim.bo.modified
     end,
     provider = '[+]',
-    hl = 'StatusLineGreen',
+    hl = { fg = 'green' },
   }, {
     condition = function ()
       return not vim.bo.modifiable or vim.bo.readonly
@@ -60,14 +59,12 @@ M.type = {
   provider = function ()
     return ' ' .. vim.bo.filetype
   end,
-  hl = 'StatusLineWhite2',
 }
 
 M.format = {
   provider = function ()
     return ' ' .. vim.bo.fileformat
   end,
-  hl = 'StatusLineWhite2',
 }
 
 M.encoding = {
@@ -77,7 +74,6 @@ M.encoding = {
   provider = function ()
     return ' ' .. vim.bo.fileencoding
   end,
-  hl = 'StatusLineWhite2',
 }
 
 M.tabs = {
@@ -88,7 +84,6 @@ M.tabs = {
       return ' tab:' .. vim.bo.tabstop
     end
   end,
-  hl = 'StatusLineWhite2',
 }
 
 return M
