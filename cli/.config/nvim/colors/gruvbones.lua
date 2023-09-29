@@ -1,59 +1,61 @@
 local colors_name = 'gruvbones'
--- required when defining a colorscheme
-vim.g.colors_name = colors_name
+vim.g.colors_name = colors_name -- Required when defining a colorscheme
 
 local lush = require('lush')
-local hsluv = lush.hsluv
+local hsluv = lush.hsluv -- Human-friendly hsl
 local util = require('zenbones.util')
 
 local bg = vim.opt.background:get()
 
+-- Define a palette. Use `palette_extend` to fill unspecified colors
+-- Based on https://github.com/gruvbox-community/gruvbox#palette
 local palette
 if bg == "light" then
   palette = util.palette_extend({
-    bg = hsluv('#fbf1c7'),
-    fg = hsluv('#3c3836'),
-    rose = hsluv('#9d0006'),
-    leaf = hsluv('#79740e'),
-    wood = hsluv('#b57614'),
-    water = hsluv('#076678'),
-    blossom = hsluv('#8f3f71'),
-    sky = hsluv('#427b58'),
+    bg = hsluv "#fbf1c7",
+    fg = hsluv "#3c3836",
+    rose = hsluv "#9d0006",
+    leaf = hsluv "#79740e",
+    wood = hsluv "#b57614",
+    water = hsluv "#076678",
+    blossom = hsluv "#8f3f71",
+    sky = hsluv "#427b58",
   }, bg)
 else
   palette = util.palette_extend({
-    bg = hsluv('#282828'),
-    fg = hsluv('#ebdbb2'),
-    rose = hsluv('#fb4934'),
-    leaf = hsluv('#b8bb26'),
-    wood = hsluv('#fabd2f'),
-    water = hsluv('#83a598'),
-    blossom = hsluv('#d3869b'),
-    sky = hsluv('#83c07c'),
+    bg = hsluv "#282828",
+    fg = hsluv "#ebdbb2",
+    rose = hsluv "#fb4934",
+    leaf = hsluv "#b8bb26",
+    wood = hsluv "#fabd2f",
+    water = hsluv "#83a598",
+    blossom = hsluv "#d3869b",
+    sky = hsluv "#83c07c",
   }, bg)
 end
 
+-- Generate the lush specs using the generator util
 local generator = require('zenbones.specs')
-local zenbones = generator.generate(palette, bg, generator.get_global_config(colors_name, bg))
+local base_specs = generator.generate(palette, bg, generator.get_global_config(colors_name, bg))
 
-local specs = lush.extends({ zenbones }).with(function (injected_functions)
+local specs = lush.extends({ base_specs }).with(function (injected_functions)
   local sym = injected_functions.sym
   return {
     ---@diagnostic disable: undefined-global
 
     -- no italic comments
-    Comment({ zenbones.Comment, gui = 'none' }),
+    Comment({ base_specs.Comment, gui = 'none' }),
     sym('@comment')({ Comment }),
 
     -- no italic constants
-    Constant({ zenbones.Constant, gui = 'none' }),
+    Constant({ base_specs.Constant, gui = 'none' }),
     sym('@constant.builtin')({ Constant }),
 
     -- no italic tags
     sym('@tag')({ Constant }),
 
     -- no italic numbers and floats
-    Number({ zenbones.Number, gui = 'none' }),
+    Number({ base_specs.Number, gui = 'none' }),
     sym('@number')({ Number }),
     Float({ Number }),
     sym('@float')({ Float }),
@@ -63,7 +65,7 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     sym('@boolean')({ Boolean }),
 
     -- rose italic statements
-    Statement({ zenbones.Statement, fg = palette.rose, gui = 'italic' }),
+    Statement({ base_specs.Statement, fg = palette.rose, gui = 'italic' }),
     sym('@statement')({ Statement }),
 
     -- no italic operators
@@ -71,17 +73,19 @@ local specs = lush.extends({ zenbones }).with(function (injected_functions)
     sym('@operator')({ Operator }),
 
     -- underline errors, warnings, and hints
-    DiagnosticUnderlineError({ zenbones.DiagnosticUnderlineError, gui = 'underline' }),
-    DiagnosticUnderlineWarn({  zenbones.DiagnosticUnderlineWarn,  gui = 'underline' }),
-    DiagnosticUnderlineHint({  zenbones.DiagnosticUnderlineHint,  gui = 'underline' }),
+    DiagnosticUnderlineError({ base_specs.DiagnosticUnderlineError, gui = 'underline' }),
+    DiagnosticUnderlineWarn({  base_specs.DiagnosticUnderlineWarn,  gui = 'underline' }),
+    DiagnosticUnderlineHint({  base_specs.DiagnosticUnderlineHint,  gui = 'underline' }),
 
     -- no uderline on info
-    DiagnosticUnderlineInfo({ zenbones.DiagnosticUnderlineInfo,  gui = 'none' }),
+    DiagnosticUnderlineInfo({ base_specs.DiagnosticUnderlineInfo,  gui = 'none' }),
 
     ---@diagnostic enable: undefined-global
   }
 end)
 
+-- Pass the specs to lush to apply
 lush(specs)
 
+-- Optionally set term colors
 require("zenbones.term").apply_colors(palette)

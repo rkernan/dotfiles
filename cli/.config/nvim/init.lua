@@ -32,4 +32,4 @@ require('user.lsp')
 require('user.lazy')
 
 vim.cmd('set background=dark')
-vim.cmd('colorscheme gruvbones-mini')
+vim.cmd('colorscheme gruvbones')

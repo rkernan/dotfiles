@@ -1,1 +1,0 @@
-../../../colors/gruvbones-mini-dark.lua
