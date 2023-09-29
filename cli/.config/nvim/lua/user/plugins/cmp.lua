@@ -75,8 +75,8 @@ return {
       end,
       formatting = {
         format = function (entry, vim_item)
-            -- kind icons
-            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], string.lower(vim_item.kind))
+          -- kind icons
+          vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], string.lower(vim_item.kind))
           if entry.source.name == 'path' then
             vim_item.kind = string.format('%s %s', kind_icons['File'], 'file')
           end
