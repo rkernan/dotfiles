@@ -80,6 +80,44 @@ local specs = lush.extends({ base_specs }).with(function (injected_functions)
     -- no uderline on info
     DiagnosticUnderlineInfo({ base_specs.DiagnosticUnderlineInfo,  gui = 'none' }),
 
+    -- mini.hipatterns - disable gui in text elements
+    sym('@text.danger')({ gui = 'none' }),
+    sym('@text.note')({ gui = 'none' }),
+    sym('@text.todo')({ gui = 'none' }),
+    sym('@text.warning')({ gui = 'none' }),
+
+    -- mini.jump - nicer looking labels
+    MiniJump({ base_specs.none, gui = 'underline' }),
+
+    -- mini.jump2d - nicer looking labels
+    MiniJump2dSpot({ base_specs.Normal, fg = palette.rose }),
+    MiniJump2dSpotUnique({ MiniJump2dSpot, gui = 'underline' }),
+    MiniJump2dSpotAhead({ MiniJump2dSpot, fg = MiniJump2dSpot.fg.da(50) }),
+    MiniJump2dDim({ MiniJump2dSpotAhead }),
+
+    -- custom neorg highlights
+    sym('@neorg.headings.1.prefix')({ fg = palette.blossom, gui = 'bold' }),
+    sym('@neorg.headings.1.title')({ fg = palette.blossom, gui = 'bold' }),
+    sym('@neorg.headings.2.prefix')({ fg = palette.leaf, gui = 'bold' }),
+    sym('@neorg.headings.2.title')({ fg = palette.leaf, gui = 'bold' }),
+    sym('@neorg.headings.3.prefix')({ fg = palette.leaf, gui = 'none' }),
+    sym('@neorg.headings.3.title')({ fg = palette.leaf, gui = 'none' }),
+    sym('@neorg.headings.4.prefix')({ fg = palette.sky, gui = 'bold' }),
+    sym('@neorg.headings.4.title')({ fg = palette.sky, gui = 'bold' }),
+    sym('@neorg.headings.5.prefix')({ fg = palette.sky, gui = 'none' }),
+    sym('@neorg.headings.5.title')({ fg = palette.sky, gui = 'none' }),
+    sym('@neorg.headings.6.prefix')({ fg = palette.fg.da(30), gui = 'bold' }),
+    sym('@neorg.headings.6.title')({ fg = palette.fg.da(30), gui = 'bold' }),
+    sym('@neorg.lists.ordered.1.prefix')({ fg = palette.rose, gui = 'none' }),
+    sym('@neorg.lists.ordered.2.prefix')({ fg = palette.rose, gui = 'none' }),
+    sym('@neorg.lists.ordered.3.prefix')({ fg = palette.rose, gui = 'none' }),
+    sym('@neorg.lists.ordered.4.prefix')({ fg = palette.rose, gui = 'none' }),
+    sym('@neorg.lists.ordered.5.prefix')({ fg = palette.rose, gui = 'none' }),
+    sym('@neorg.lists.ordered.6.prefix')({ fg = palette.rose, gui = 'none' }),
+    sym('@neorg.markup.spoiler')({ fg = palette.water, gui = 'none' }),
+    sym('@neorg.markup.subscript')({ fg = palette.fg.da(10), gui = 'none' }),
+    sym('@neorg.markup.superscript')({ fg = palette.fg.da(10), gui = 'bold' }),
+
     ---@diagnostic enable: undefined-global
   }
 end)
