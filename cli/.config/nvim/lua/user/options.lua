@@ -1,5 +1,7 @@
 vim.o.clipboard = 'unnamedplus'
 
+vim.o.shortmess = 'I'
+
 vim.o.scrolloff = 5
 vim.o.sidescrolloff = 5
 
