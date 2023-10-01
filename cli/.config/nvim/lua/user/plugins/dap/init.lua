@@ -1,6 +1,5 @@
 return {
   'mfussenegger/nvim-dap',
-  event = 'VeryLazy',
   dependencies = {
     -- telescope UI
     'nvim-telescope/telescope.nvim',
