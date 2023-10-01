@@ -3,10 +3,10 @@
 ## Theme
 Add colorschemes to `%LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8bbwe\LocalState\settings.json`.
 
-### Gruvbones Mini Dark
+### Gruvbones Dark
 ```
 {
-    "name":         "Gruvbones Mini Dark",
+    "name":         "Gruvbones Dark",
     "background":   "#282828",
     "foreground":   "#ebdcb4",
     "black":        "#282828",
@@ -29,10 +29,10 @@ Add colorschemes to `%LOCALAPPDATA%\Packages\Microsoft.WindowsTerminal_8wekyb3d8
 ```
 
 
-### Gruvbones Mini Light
+### Gruvbones Light
 ```
 {
-    "name":         "Gruvbones Mini Light",
+    "name":         "Gruvbones Light",
     "background":   "#fbf1c9",
     "foreground":   "#3c3836",
     "black":        "#3c3836",
