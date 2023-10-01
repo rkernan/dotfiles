@@ -50,6 +50,8 @@ function FloatingTerminal:show()
         row = dimensions.row,
       }
     )
+    -- better terminal colors
+    vim.api.nvim_win_set_option(self.winnr, 'winhighlight', 'Normal:Normal,FloatBorder:FloatBorder')
   end
 
   if self.terminal == nil then

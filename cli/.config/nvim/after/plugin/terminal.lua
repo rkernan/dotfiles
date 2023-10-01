@@ -11,15 +11,23 @@ vim.keymap.set('t', '<A-i>', function ()
   end
 end)
 
-local function run_or_show(terminal, cmd)
-  if not vim.tbl_isempty(cmd) then
-    terminal:run(cmd)
-  else
-    terminal:show()
-  end
-end
+vim.api.nvim_create_user_command(
+  'Term',
+  function ()
+    M.terminal:show()
+  end,
+  { nargs = '*', bang = true })
 
-vim.api.nvim_create_user_command('Term', function (args) run_or_show(M.terminal, args.fargs) end, { nargs = '*', bang = true })
-vim.api.nvim_create_user_command('TermScratch', function (args) run_or_show(term:new(), args.fargs) end, { nargs = '*', bang = true })
+vim.api.nvim_create_user_command(
+  'TermScratch',
+  function (args)
+    local scratch = term:new()
+    if not vim.tbl_isempty(args.fargs) then
+      scratch:run(args.fargs)
+    end
+    scratch:show()
+    -- TODO close terminal
+  end,
+  { nargs = '*', bang = true })
 
 return M
