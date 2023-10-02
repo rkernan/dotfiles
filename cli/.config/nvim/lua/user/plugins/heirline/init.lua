@@ -1,6 +1,6 @@
 return {
   'rebelot/heirline.nvim',
-  event = 'ColorScheme',
+  lazy = false,
   config = function ()
     require('heirline').setup({
       statusline = require('user.plugins.heirline.statusline'),
