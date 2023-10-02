@@ -1,6 +1,10 @@
 return {
   'mhartington/formatter.nvim',
-  event = 'VeryLazy',
+  cmd = { 'Format', 'FormatLock', 'FormatWrite', 'FormatWriteLock' },
+  init = function ()
+    local augroup = vim.api.nvim_create_augroup('formatter', { clear = true })
+    vim.api.nvim_create_autocmd('BufWritePost', { group = augroup, callback = function () vim.cmd('FormatWrite') end })
+  end,
   config = function ()
     require("formatter").setup({
       logging = true,
@@ -19,8 +23,5 @@ return {
         },
       },
     })
-
-    local augroup = vim.api.nvim_create_augroup('formatter', { clear = true })
-    vim.api.nvim_create_autocmd('BufWritePost', { group = augroup, callback = function () vim.cmd('FormatWrite') end })
   end
 }
