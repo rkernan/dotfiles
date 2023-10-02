@@ -3,8 +3,9 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
   },
-  event = 'VeryLazy',
   build = ':Neorg sync-parsers',
+  cmd = 'Neorg',
+  fg = 'norg',
   opts = {
     load = {
       -- default behavior
