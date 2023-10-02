@@ -6,7 +6,7 @@ return {
     'folke/neodev.nvim',
     'SmiteshP/nvim-navic',
   },
-  event = { 'BufNew', 'BufRead '},
+  event = { 'BufNewFile', 'BufReadPost', 'FileReadPost' },
   cmd = 'Mason',
   config = function ()
     require('mason').setup()
