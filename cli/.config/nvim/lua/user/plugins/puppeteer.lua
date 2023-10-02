@@ -1,5 +1,5 @@
 return {
   "chrisgrieser/nvim-puppeteer",
   dependencies = "nvim-treesitter/nvim-treesitter",
-  lazy = false,
+  lazy = false, -- plugin lazy loads itself
 }
