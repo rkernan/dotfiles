@@ -121,7 +121,7 @@ case $CMD in
     ;;
   upgrade-keyring)
     no_params_or_die $*
-    exec $SU_BIN -Syyu archlinux-keyring
+    exec $SU_BIN -Sy archlinux-keyring
     ;;
   verify)
     exec $BIN -Qkk $*
