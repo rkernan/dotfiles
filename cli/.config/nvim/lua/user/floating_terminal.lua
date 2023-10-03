@@ -52,6 +52,8 @@ function FloatingTerminal:show()
     )
     -- better terminal colors
     vim.api.nvim_win_set_option(self.winnr, 'winhighlight', 'Normal:Normal,FloatBorder:FloatBorder')
+    -- no transparency
+    vim.api.nvim_win_set_option(self.winnr, 'winblend', 0)
   end
 
   if self.terminal == nil then
