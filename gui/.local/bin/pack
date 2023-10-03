@@ -2,8 +2,8 @@
 
 set -e
 
-BIN=$(which yay 2>/dev/null || which pacman)
-SU_BIN=$(which yay 2>/dev/null || echo "sudo $(which pacman)")
+BIN=$(which paru 2>/dev/null || which pacman)
+SU_BIN=$(which paru 2>/dev/null || echo "sudo $(which pacman)")
 
 no_params_or_die() {
   if [ $# -ne 0 ]; then
@@ -14,7 +14,7 @@ no_params_or_die() {
 
 usage() {
   echo "Pacman helper tool ('$BIN', '$SU_BIN')"
-  echo "If using 'yay' AUR helper, run the following first: yay --gendb && yay --devel --save"
+  echo "If using 'paru' AUR helper, run the following first: paru --gendb && paru --devel --save"
   echo "Usage: $0 [command] [options]"
   echo "  clean               : Clean the pacman cache"
   echo "  deptree             : List dependency tree of a given package"
