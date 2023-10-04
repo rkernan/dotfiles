@@ -1,5 +1,20 @@
 vim.o.clipboard = 'unnamedplus'
 
+if vim.fn.has('wsl') then
+  vim.g.clipboard = {
+    name = 'WslClipboard',
+    copy = {
+      ['+'] = 'clip.exe',
+      ['*'] = 'clip.exe',
+    },
+    paste = {
+      ['+'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+      ['*'] = 'powershell.exe -c [Console]::Out.Write($(Get-Clipboard -Raw).tostring().replace("`r", ""))',
+    },
+    cache_enabled = false,
+  }
+end
+
 vim.o.shortmess = vim.o.shortmess .. 'I'
 
 vim.o.scrolloff = 5
