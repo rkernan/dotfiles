@@ -46,7 +46,7 @@ local function setup()
       -- TODO neorg submode/mappings
     },
     window = {
-      delay = 100,
+      -- delay = 500,
       config = {
         width = 'auto',
       }
