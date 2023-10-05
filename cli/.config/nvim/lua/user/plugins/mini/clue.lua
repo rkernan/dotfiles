@@ -38,7 +38,7 @@ local function setup()
       miniclue.gen_clues.builtin_completion(),
       miniclue.gen_clues.g(),
       miniclue.gen_clues.marks(),
-      miniclue.gen_clues.registers({ show_contents = true }),
+      miniclue.gen_clues.registers(),
       miniclue.gen_clues.windows({ submode_move = true, submode_resize = true }),
       miniclue.gen_clues.z(),
       require('user.plugins.mini.move').gen_clues(),
