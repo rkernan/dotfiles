@@ -6,4 +6,4 @@ remote="nsth9"
 remote_ws="/docker-container/workspace"
 name=$(basename $(pwd))
 
-rsync -av --delete . ${remote}:${remote_ws}/${name}
+rsync -av --delete --exclude=build . ${remote}:${remote_ws}/${name}
