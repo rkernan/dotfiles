@@ -8,7 +8,7 @@ return {
       segments = {
         { sign = { name = { '.*' }, auto = true }, click = 'v:lua.ScSa' },
         { sign = { name = { 'Diagnostic.*' }, auto = true }, click = 'v:lua.ScSa' },
-        { sign = { name = { 'GitSigns.*' }, colwidth = 1, auto = true }, click = 'v:lua.ScSa' },
+        { sign = { namespace = { 'gitsigns_extmark_signs_' }, auto = true }, click = 'v:lua:ScSa' },
         { text = { builtin.lnumfunc }, click = 'v:lua.ScLa' },
         { text = { ' ', builtin.foldfunc, ' ' }, { builtin.not_empty, true, builtin.not_empty }, click = 'v:lua.ScFa' },
       }
