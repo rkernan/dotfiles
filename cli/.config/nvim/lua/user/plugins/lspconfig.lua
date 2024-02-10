@@ -5,6 +5,7 @@ return {
     'williamboman/mason-lspconfig.nvim',
     'folke/neodev.nvim',
     'SmiteshP/nvim-navic',
+    'ray-x/lsp_signature.nvim',
   },
   event = { 'BufNewFile', 'BufReadPost', 'FileReadPost' },
   cmd = 'Mason',
@@ -29,6 +30,9 @@ return {
         lspconfig[server_name].setup({
           capabilities = lsp_capabilities,
           on_attach = function (client, bufnr)
+            -- enable lsp signature help
+            require('lsp_signature').on_attach({}, bufnr)
+            -- enable navic if server supports document symbols
             if client.server_capabilities.documentSymbolProvider then
               require('nvim-navic').attach(client, bufnr)
             end
