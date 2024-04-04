@@ -14,7 +14,7 @@ end
 function _prompt_virtualenv
   if set -q VIRTUAL_ENV
     set_color blue white
-    echo -n '(venv) '
+    echo -n '('(basename "$VIRTUAL_ENV")') '
     set_color normal
   end
 end
