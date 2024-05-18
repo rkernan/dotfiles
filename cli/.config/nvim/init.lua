@@ -31,5 +31,6 @@ require('user.mappings')
 require('user.lsp')
 require('user.lazy')
 
+vim.opt.termguicolors = true
 vim.cmd('set background=dark')
 vim.cmd('colorscheme gruvbones')
