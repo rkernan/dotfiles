@@ -7,7 +7,7 @@ return {
     'SmiteshP/nvim-navic',
     'ray-x/lsp_signature.nvim',
   },
-  event = { 'BufNewFile', 'BufReadPost', 'FileReadPost' },
+  event = { 'BufNewFile', 'BufReadPost' },
   cmd = 'Mason',
   config = function ()
     require('mason').setup()

@@ -3,7 +3,7 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
   },
-  event = { 'BufNew', 'BufRead' },
+  event = { 'BufNewFile', 'BufReadPost' },
   keys = {
     -- navigation
     { '[h', function () require('gitsigns').prev_hunk() end, desc = 'Git next hunk' },
