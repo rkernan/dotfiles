@@ -19,7 +19,7 @@ return {
           -- require('formatter.filetypes.python').black,
         },
         ['*'] = {
-          -- require('formatter.filetypes.any').remove_trailing_whitespace,
+          require('formatter.filetypes.any').remove_trailing_whitespace,
         },
       },
     })
