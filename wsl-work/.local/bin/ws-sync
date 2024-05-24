@@ -2,8 +2,23 @@
 
 set -e
 
-remote="nsth9"
-remote_ws="/docker-container/workspace"
-name=$(basename $(pwd))
+find_project_root() {
+  local orig_path=$1
+  local path=$orig_path
+  while [ $path != "/" ]; do
+    if [ -e "${path}/.git" ]; then
+      echo $path
+      return 0
+    fi
+    path=$(realpath "${path}/..")
+  done
+  echo $orig_path
+}
 
-rsync -av --delete --exclude=build . ${remote}:${remote_ws}/${name}
+path=$(find_project_root $(pwd))
+remote=${1:-"nsth9"}
+remote_ws=${2:-"/docker-container/workspace"}
+name=$(basename $path)
+
+set -x
+rsync -av --delete --exclude=build ${path}/ ${remote}:${remote_ws}/${name}
