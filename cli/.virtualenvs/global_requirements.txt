@@ -1,6 +1,6 @@
+basedpyright
 black
 isort
 pycodestyle
 pydebug
 pydocstyle
-pyright
