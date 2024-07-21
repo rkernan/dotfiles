@@ -2,15 +2,16 @@ return {
   'echasnovski/mini.nvim',
   lazy = false,
   keys = {
-    { '<Leader>F', function() MiniFiles.open() end,  desc = 'File explorer' },
-    { '<C-w>z',    function() MiniMisc.zoom() end,   desc = 'Toggle zoom' },
+    { '<C-w>z',    function () MiniMisc.zoom() end, desc = 'Toggle zoom' },
   },
   config = function()
     require('mini.ai').setup()
     require('mini.align').setup()
     require('mini.bracketed').setup()
     require('mini.comment').setup()
-    require('mini.files').setup()
+    require('mini.extra').setup()
+    require('mini.icons').setup()
+    MiniIcons.mock_nvim_web_devicons()
     require('mini.jump').setup()
     require('mini.jump2d').setup()
     require('mini.operators').setup()

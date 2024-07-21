@@ -11,14 +11,13 @@ local name_block = {
 local icon = {
   init = function (self)
     local filename = self.filename
-    local extension = vim.fn.fnamemodify(filename, ':e')
-    self.icon, self.color = require('nvim-web-devicons').get_icon_color(filename, extension)
+    self.icon, self.color = MiniIcons.get('file', filename)
   end,
   provider = function (self)
     return self.icon and (self.icon .. ' ')
   end,
   hl = function (self)
-    return { fg = self.color }
+    return self.color
   end
 }
 
