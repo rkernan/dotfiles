@@ -26,7 +26,12 @@ return {
   config = function ()
     require('gitsigns').setup({
       signs = {
-        untracked = { text = '│' },
+        changedelete = { text = '┃' },
+        untracked = { text = '┃' },
+      },
+      signs_staged = {
+        changedelete = { text = '┃' },
+        untracked = { text = '┃' },
       },
     })
   end,
