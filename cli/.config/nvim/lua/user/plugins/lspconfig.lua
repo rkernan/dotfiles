@@ -3,7 +3,6 @@ return {
   dependencies = {
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
-    'folke/neodev.nvim',
     'SmiteshP/nvim-navic',
   },
   event = { 'BufNewFile', 'BufReadPost' },
@@ -18,8 +17,6 @@ return {
         'lua_ls',
       }
     })
-
-    require('neodev').setup({})
 
     local lspconfig = require('lspconfig')
     local lsp_capabilities = require('cmp_nvim_lsp').default_capabilities()
