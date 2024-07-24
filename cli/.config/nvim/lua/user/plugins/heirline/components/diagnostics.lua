@@ -19,7 +19,7 @@ local diagnostics = {
   update = { 'DiagnosticChanged', 'Bufenter' },
   on_click = {
     callback = function (self, minwid, nclicks, buttons, mods)
-      require('user.plugins.telescope.helpers').local_diagnostics()
+      require('telescope.builtin').diagnostics({ bufnr = 0 })
     end,
     name = 'heirline_diagnostics',
   }, {

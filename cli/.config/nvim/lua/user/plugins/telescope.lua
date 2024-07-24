@@ -7,12 +7,12 @@ return {
     'nvim-telescope/telescope-ui-select.nvim',
   },
   keys = {
-    { '<Leader>f', function () require('telescope.builtin').find_files() end,                         desc = 'Files' },
-    { '<Leader>b', function () require('telescope.builtin').buffers() end,                            desc = 'Buffers' },
-    { '<Leader>/', function () require('telescope.builtin').live_grep() end,                          desc = 'Live grep' },
-    { '<Leader>u', function () require('telescope').extensions.undo.undo() end,                       desc = 'Undo' },
-    { '<Leader>e', function () require('user.plugins.telescope.helpers').local_diagnostics() end,     desc = 'Diagnostics' },
-    { '<Leader>E', function () require('user.plugins.telescope.helpers').workspace_diagnostics() end, desc = 'Workspace diagnostics' },
+    { '<Leader>f', function () require('telescope.builtin').find_files() end, desc = 'Files' },
+    { '<Leader>b', function () require('telescope.builtin').buffers() end, desc = 'Buffers' },
+    { '<Leader>/', function () require('telescope.builtin').live_grep() end, desc = 'Live grep' },
+    { '<Leader>u', function () require('telescope').extensions.undo.undo() end, desc = 'Undo' },
+    { '<Leader>e', function () require('telescope.builtin').diagnostics({ bufnr = 0 }) end, desc = 'Diagnostics' },
+    { '<Leader>E', function () require('telescope.builtin').diagnostics() end, desc = 'Workspace diagnostics' },
   },
   config = function ()
     require('telescope').setup({
@@ -46,7 +46,10 @@ return {
           hidden = true,
           no_ignore = true,
           no_ignore_parent = true,
-        }
+        },
+        diagnostics = {
+          layout_strategy = 'vertical',
+        },
       },
       extensions = {
         fzf = {
