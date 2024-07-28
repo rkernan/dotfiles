@@ -1,14 +1,17 @@
 return {
   'neovim/nvim-lspconfig',
   dependencies = {
+    -- completion
     'hrsh7th/nvim-cmp',
     'hrsh7th/cmp-buffer',
     'hrsh7th/cmp-cmdline',
     'hrsh7th/cmp-path',
-    'saadparwaiz1/cmp_luasnip',
     'hrsh7th/cmp-nvim-lsp',
-    'L3MON4D3/LuaSnip',
+    -- snippet support
+    { 'L3MON4D3/LuaSnip', version = 'v2.*', build = 'make install_jsregexp' },
     'rafamadriz/friendly-snippets',
+    'saadparwaiz1/cmp_luasnip',
+    -- statusline breadcrumbs
     'SmiteshP/nvim-navic',
   },
   lazy = false,
@@ -59,23 +62,26 @@ return {
         ['<Tab>'] = cmp.mapping(function (fallback)
           if cmp.visible() then
             cmp.select_next_item()
-          elseif luasnip.jumpable(1) then
+          elseif luasnip.locally_jumpable(1) then
             luasnip.jump(1)
           else
             fallback()
           end
-        end, { 'i', 'c' }),
+        end, { 'i', 's' }),
         ['<S-Tab>'] = cmp.mapping(function (fallback)
           if cmp.visible() then
             cmp.select_prev_item()
-          elseif luasnip.jumpable(-1) then
+          elseif luasnip.locally_jumpable(-1) then
             luasnip.jump(-1)
           else
             fallback()
           end
-        end, { 'i', 'c' }),
+        end, { 'i', 's' }),
       }
     end
+
+    -- lazy load snippets from friendly-snippets
+    require('luasnip.loaders.from_vscode').lazy_load()
 
     local function get_cmdline_mapping()
       local mapping = get_mapping()
