@@ -15,7 +15,7 @@ return {
     'SmiteshP/nvim-navic',
   },
   lazy = false,
-  config = function ()
+  config = function()
     local lspconfig = require('lspconfig')
     local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
@@ -44,22 +44,54 @@ return {
 
     local cmp = require('cmp')
     local luasnip = require('luasnip')
-    local kind_icons = require('user.lsp.kind').icons
+
+    local kind_icons = {
+      Text = " ",
+      Method = "󰆧 ",
+      Function = "󰊕 ",
+      Constructor = " ",
+      Field = " ",
+      Variable = "󰆧 ",
+      Class = "󰌗 ",
+      Interface = "󰕘 ",
+      Module = " ",
+      Property = " ",
+      Unit = "",
+      Value = "󰎠 ",
+      Enum = "󰕘 ",
+      Keyword = "󰌋 ",
+      Snippet = " ",
+      Color = " ",
+      File = "󰈙 ",
+      Reference = " ",
+      Folder = " ",
+      EnumMember = " ",
+      Constant = "󰏿 ",
+      Struct = "󰌗 ",
+      Event = " ",
+      Operator = "󰆕 ",
+      TypeParameter = "󰊄 ",
+    }
+
+    local kinds = vim.lsp.protocol.CompletionItemKind
+    for i, kind in ipairs(kinds) do
+      kinds[i] = kind_icons[kind] or kind
+    end
 
     local function get_mapping()
       return {
-        ['<CR>']  = cmp.mapping.confirm({ select = false }),
-        ['<c-y>'] = cmp.mapping.confirm({ select = false  }),
+        ['<CR>']    = cmp.mapping.confirm({ select = false }),
+        ['<c-y>']   = cmp.mapping.confirm({ select = false }),
         -- navigate menu items
-        ['<Down>'] = cmp.mapping.select_next_item(),
-        ['<C-n>']  = cmp.mapping.select_next_item(),
-        ['<Up>']   = cmp.mapping.select_prev_item(),
-        ['<C-p>']  = cmp.mapping.select_prev_item(),
+        ['<Down>']  = cmp.mapping.select_next_item(),
+        ['<C-n>']   = cmp.mapping.select_next_item(),
+        ['<Up>']    = cmp.mapping.select_prev_item(),
+        ['<C-p>']   = cmp.mapping.select_prev_item(),
         -- scroll up and down in the completion documentation
-        ['<C-f>'] = cmp.mapping.scroll_docs(5),
-        ['<C-b>'] = cmp.mapping.scroll_docs(-5),
+        ['<C-f>']   = cmp.mapping.scroll_docs(5),
+        ['<C-b>']   = cmp.mapping.scroll_docs(-5),
         -- supertab
-        ['<Tab>'] = cmp.mapping(function (fallback)
+        ['<Tab>']   = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_next_item()
           elseif luasnip.locally_jumpable(1) then
@@ -68,7 +100,7 @@ return {
             fallback()
           end
         end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function (fallback)
+        ['<S-Tab>'] = cmp.mapping(function(fallback)
           if cmp.visible() then
             cmp.select_prev_item()
           elseif luasnip.locally_jumpable(-1) then
@@ -92,7 +124,7 @@ return {
     end
 
     cmp.setup({
-      enabled = function ()
+      enabled = function()
         -- disable completion in comments and strings
         if vim.api.nvim_get_mode().mode == 'c' then
           -- keep command mode completion when cursor is in comment
@@ -100,13 +132,13 @@ return {
         else
           local context = require('cmp.config.context')
           return not context.in_treesitter_capture('comment')
-            and not context.in_syntax_group('Comment')
-            and not context.in_treesitter_capture('string')
-            and not context.in_syntax_group('String')
+              and not context.in_syntax_group('Comment')
+              and not context.in_treesitter_capture('string')
+              and not context.in_syntax_group('String')
         end
       end,
       formatting = {
-        format = function (entry, vim_item)
+        format = function(entry, vim_item)
           -- kind icons
           vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], string.lower(vim_item.kind))
           if entry.source.name == 'path' then
@@ -116,7 +148,7 @@ return {
         end
       },
       snippet = {
-        expand = function (args)
+        expand = function(args)
           luasnip.lsp_expand(args.body)
         end
       },
@@ -124,7 +156,7 @@ return {
 
       sources = cmp.config.sources({
         { name = 'nvim_lsp' },
-        { name = 'luasnip'},
+        { name = 'luasnip' },
       }, {
         { name = 'buffer' },
       })
@@ -150,5 +182,25 @@ return {
         },
       })
     })
+
+    local function lsp_attach(args)
+      local bufnr = args.buf
+      vim.keymap.set('n', 'K', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'LSP signature help' })
+      vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'LSP signature help' })
+      vim.keymap.set('n', '<Leader><Leader>f', vim.lsp.buf.format, { buffer = bufnr, desc = 'LSP format buffer' })
+      vim.keymap.set('n', '<Leader><Leader>a', vim.lsp.buf.code_action, { buffer = bufnr, desc = 'LSP code actions' })
+    end
+
+    local function lsp_detach(args)
+      local bufnr = args.buf
+      vim.keymap.del('n', 'K', { buffer = bufnr })
+      vim.keymap.del('i', '<C-k>', { buffer = bufnr })
+      vim.keymap.del('n', '<Leader><Leader>f', { buffer = bufnr })
+      vim.keymap.del('n', '<Leader><Leader>a', { buffer = bufnr })
+    end
+
+    local augroup = vim.api.nvim_create_augroup('lsp.mappings', { clear = true })
+    vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
+    vim.api.nvim_create_autocmd('LspDetach', { group = augroup, callback = lsp_detach })
   end,
 }

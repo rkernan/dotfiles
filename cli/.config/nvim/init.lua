@@ -28,9 +28,9 @@ vim.g.maplocalleader = ','
 
 require('user.options')
 require('user.mappings')
-require('user.lsp')
+require('user.diagnostics')
 require('user.lazy')
 
 vim.opt.termguicolors = true
-vim.cmd('set background=dark')
-vim.cmd('colorscheme gruvbones')
+vim.cmd([[set background=dark]])
+vim.cmd([[colorscheme gruvbones]])
