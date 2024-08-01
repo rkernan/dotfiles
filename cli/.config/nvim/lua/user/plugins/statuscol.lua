@@ -8,8 +8,8 @@ return {
       segments = {
         { sign = { name = { '.*' }, auto = true }, click = 'v:lua.ScSa' },
         { sign = { namespace = { 'diagnostic' }, auto = true }, click = 'v:lua.ScSa' },
-        { sign = { namespace = { 'gitsigns' }, auto = true }, click = 'v:lua:ScSa' },
         { text = { builtin.lnumfunc, ' ' }, click = 'v:lua.ScLa' },
+        { sign = { namespace = { 'gitsigns' }, auto = true }, click = 'v:lua:ScSa' },
       }
     })
   end
