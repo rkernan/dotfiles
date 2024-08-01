@@ -18,6 +18,12 @@ vim.g.loaded_netrwPlugin = true
 vim.g.loaded_netrwSettings = true
 vim.g.loaded_netrwFileHandlers = true
 
+-- disable unused language providers
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 -- space as leader
 vim.g.mapleader = ' '
 vim.keymap.set('n', ' ', '', { noremap = true })
