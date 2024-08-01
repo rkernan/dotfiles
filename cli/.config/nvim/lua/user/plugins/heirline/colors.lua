@@ -19,14 +19,16 @@ local function setup_colors()
     bright_cyan = vim.g.terminal_color_14,
     bright_white = vim.g.terminal_color_15,
     -- specialized colors
+    file_modified = vim.g.terminal_color_2, -- green
     dim = utils.get_highlight('Conceal').fg,
-    git_add = utils.get_highlight('GitSignsAdd').fg,
-    git_change = utils.get_highlight('GitSignsChange').fg,
-    git_del = utils.get_highlight('GitSignsDelete').fg,
-    diag_err = utils.get_highlight('DiagnosticSignError').fg,
-    diag_hint = utils.get_highlight('DiagnosticSignHint').fg,
-    diag_info = utils.get_highlight('DiagnosticSignInfo').fg,
-    diag_warn = utils.get_highlight('DiagnosticSignWarn').fg,
+    gitsigns_head = vim.g.terminal_color_5, -- magenta
+    gitsigns_added = utils.get_highlight('GitSignsAdd').fg,
+    gitsigns_changed = utils.get_highlight('GitSignsChange').fg,
+    gitsigns_deleted = utils.get_highlight('GitSignsDelete').fg,
+    diagnostics_error = utils.get_highlight('DiagnosticSignError').fg,
+    diagnostics_warn = utils.get_highlight('DiagnosticSignWarn').fg,
+    diagnostics_info = utils.get_highlight('DiagnosticSignInfo').fg,
+    diagnostics_hint = utils.get_highlight('DiagnosticSignHint').fg,
   }
 end
 

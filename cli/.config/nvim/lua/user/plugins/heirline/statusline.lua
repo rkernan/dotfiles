@@ -11,12 +11,21 @@ return {
   end,
   fallthrough = false,
   {
-    components.vi_mode,
-    components.git.head,
-    components.work_dir,
-    components.align,
-    components.file.tabs,
-    components.file.format,
-    components.file.encoding,
+    components.mode,
+    {
+      condition = components.gitsigns.head.condition,
+      components.space,
+      components.gitsigns.head
+    },
+    components.space,
+    components.cwd,
+    components.space,
+    components.recording_macro,
+    components.fill,
+    components.tabsummary,
+    components.space,
+    components.fileformat,
+    components.space,
+    components.fileencoding,
   },
 }

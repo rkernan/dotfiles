@@ -1,5 +1,8 @@
-local navic = {
-  conditon = require('nvim-navic').is_available,
+return {
+  conditon = function ()
+    local ok, navic = pcall(require, 'nvim-navic')
+    return ok and navic.is_available()
+  end,
   static = {
     -- bit operation magic, see below
     enc = function (line, col, winnr)
@@ -12,36 +15,39 @@ local navic = {
       return line, col, winnr
     end,
   },
-  init = function (self)
-    local data = require('nvim-navic').get_data() or {}
+  init = function(self)
+    local data = require("nvim-navic").get_data() or {}
     local children = {}
-    -- create child for each level
+    -- create a child for each level
     for i, d in ipairs(data) do
       -- encode line and column numbers into a single integer
       local pos = self.enc(d.scope.start.line, d.scope.start.character, self.winnr)
       local child = {
         {
           provider = d.icon,
-          hl = { fg = 'dim' },
-        }, {
-          -- escape '%s's and buggy default separators
-          provider = d.name:gsub('%%', '%%%%'):gsub('%s*->%s*', ''),
-          hl = { fg = 'dim' },
+        },
+        {
+          -- escape `%`s (elixir) and buggy default separators
+          provider = d.name:gsub("%%", "%%%%"):gsub("%s*->%s*", ''),
+
           on_click = {
             -- pass the encoded position through minwid
             minwid = pos,
-            callback = function (_, minwid)
+            callback = function(_, minwid)
               -- decode
               local line, col, winnr = self.dec(minwid)
               vim.api.nvim_win_set_cursor(vim.fn.win_getid(winnr), { line, col })
             end,
-            name = 'heirline_navic',
-          }
-        }
+            name = "heirline_navic",
+          },
+        },
       }
       -- add a separator only if needed
       if #data > 1 and i < #data then
-        table.insert(child, { provider = ' > ', hl = { fg = 'dim' }})
+          table.insert(child, {
+              provider = " > ",
+              hl = { fg = 'dim' },
+          })
       end
       table.insert(children, child)
     end
@@ -49,15 +55,9 @@ local navic = {
     self.child = self:new(children, 1)
   end,
   -- evaluate the children containing navic components
-  provider = function (self)
-    return ' ' .. self.child:eval()
+  provider = function(self)
+    return self.child:eval()
   end,
-  hl = { fg = 'dim' },
+  hl = { fg = "dim" },
   update = 'CursorMoved',
-}
-
-return {
-  flexible = 3,
-  navic,
-  { provider = '' },
 }

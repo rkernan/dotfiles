@@ -40,11 +40,17 @@ return {
       vim.opt_local.winbar = nil
     end,
   }, {
-    components.file.name,
-    components.git.diff,
+    components.filename,
+    components.space,
+    components.gitsigns.added,
+    components.gitsigns.changed,
+    components.gitsigns.deleted,
     components.navic,
-    components.align,
-    components.diagnostics,
+    components.fill,
+    components.diagnostics.errors,
+    components.diagnostics.warnings,
+    components.diagnostics.info,
+    components.diagnostics.hints,
     components.ruler,
   },
 }
