@@ -20,7 +20,27 @@ vim.diagnostic.config({
     end,
     spacing = 2,
     severity = { min = vim.diagnostic.severity.INFO },
-  }
+  },
+  float = {
+    header = '',
+    source = true,
+    prefix = function (diagnostic, ...)
+      if diagnostic.severity == vim.diagnostic.severity.ERROR then
+        local sign = vim.fn.sign_getdefined('DiagnosticSignError')[1]
+        return sign.text, sign.texthl
+      elseif diagnostic.severity == vim.diagnostic.severity.WARN then
+        local sign = vim.fn.sign_getdefined('DiagnosticSignWarn')[1]
+        return sign.text, sign.texthl
+      elseif diagnostic.severity == vim.diagnostic.severity.INFO then
+        local sign = vim.fn.sign_getdefined('DiagnosticSignInfo')[1]
+        return sign.text, sign.texthl
+      else
+        local sign = vim.fn.sign_getdefined('DiagnosticSignHint')[1]
+        return sign.text, sign.texthl
+      end
+    end,
+    border = 'single',
+  },
 })
 
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Diagnostic forward' })
