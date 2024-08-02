@@ -1,7 +1,6 @@
 local function setup()
   require('mini.basics').setup({
     options = {
-      extra_ui = true,
       win_borders = 'single',
     },
     mappings = {
