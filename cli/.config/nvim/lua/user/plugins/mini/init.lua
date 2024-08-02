@@ -1,9 +1,6 @@
 return {
   'echasnovski/mini.nvim',
   lazy = false,
-  keys = {
-    { '<C-w>z', function () require('mini.misc').zoom() end, desc = 'Toggle zoom' },
-  },
   config = function()
     require('mini.ai').setup()
     require('mini.align').setup()
@@ -19,7 +16,6 @@ return {
     require('user.plugins.mini.basics').setup()
     require('user.plugins.mini.clue').setup()
     require('user.plugins.mini.hlpatterns').setup()
-    require('user.plugins.mini.misc').setup()
     require('user.plugins.mini.move').setup()
   end,
 }
