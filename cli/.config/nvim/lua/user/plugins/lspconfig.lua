@@ -7,10 +7,10 @@ return {
     'hrsh7th/cmp-cmdline',
     'hrsh7th/cmp-path',
     'hrsh7th/cmp-nvim-lsp',
-    -- snippet support
-    { 'L3MON4D3/LuaSnip', version = 'v2.*', build = 'make install_jsregexp' },
-    'rafamadriz/friendly-snippets',
-    'saadparwaiz1/cmp_luasnip',
+    'hrsh7th/cmp-nvim-lsp-signature-help',
+    'hrsh7th/cmp-nvim-lsp-document-symbol',
+    -- lsp kind icons
+    'onsails/lspkind.nvim',
     -- statusline breadcrumbs
     'SmiteshP/nvim-navic',
   },
@@ -43,144 +43,73 @@ return {
     lspconfig.lua_ls.setup({ capabilities = capabilities, on_attach = on_attach })
 
     local cmp = require('cmp')
-    local luasnip = require('luasnip')
-
-    local kind_icons = {
-      Text = " ",
-      Method = "󰆧 ",
-      Function = "󰊕 ",
-      Constructor = " ",
-      Field = " ",
-      Variable = "󰆧 ",
-      Class = "󰌗 ",
-      Interface = "󰕘 ",
-      Module = " ",
-      Property = " ",
-      Unit = "",
-      Value = "󰎠 ",
-      Enum = "󰕘 ",
-      Keyword = "󰌋 ",
-      Snippet = " ",
-      Color = " ",
-      File = "󰈙 ",
-      Reference = " ",
-      Folder = " ",
-      EnumMember = " ",
-      Constant = "󰏿 ",
-      Struct = "󰌗 ",
-      Event = " ",
-      Operator = "󰆕 ",
-      TypeParameter = "󰊄 ",
-    }
-
-    local kinds = vim.lsp.protocol.CompletionItemKind
-    for i, kind in ipairs(kinds) do
-      kinds[i] = kind_icons[kind] or kind
-    end
-
-    local function get_mapping()
-      return {
-        ['<CR>']    = cmp.mapping.confirm({ select = false }),
-        ['<c-y>']   = cmp.mapping.confirm({ select = false }),
-        -- navigate menu items
-        ['<Down>']  = cmp.mapping.select_next_item(),
-        ['<C-n>']   = cmp.mapping.select_next_item(),
-        ['<Up>']    = cmp.mapping.select_prev_item(),
-        ['<C-p>']   = cmp.mapping.select_prev_item(),
-        -- scroll up and down in the completion documentation
-        ['<C-f>']   = cmp.mapping.scroll_docs(5),
-        ['<C-b>']   = cmp.mapping.scroll_docs(-5),
-        -- supertab
-        ['<Tab>']   = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          elseif luasnip.locally_jumpable(1) then
-            luasnip.jump(1)
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-        ['<S-Tab>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          elseif luasnip.locally_jumpable(-1) then
-            luasnip.jump(-1)
-          else
-            fallback()
-          end
-        end, { 'i', 's' }),
-      }
-    end
-
-    -- lazy load snippets from friendly-snippets
-    require('luasnip.loaders.from_vscode').lazy_load()
-
-    local function get_cmdline_mapping()
-      local mapping = get_mapping()
-      -- allow standard history traversal
-      mapping['<C-n>'] = nil
-      mapping['<C-p>'] = nil
-      return mapping
-    end
 
     cmp.setup({
-      enabled = function()
-        -- disable completion in comments and strings
+      enabled = function ()
+        local context = require('cmp.config.context')
+        -- always enable command mode completion
         if vim.api.nvim_get_mode().mode == 'c' then
-          -- keep command mode completion when cursor is in comment
           return true
         else
-          local context = require('cmp.config.context')
-          return not context.in_treesitter_capture('comment')
-              and not context.in_syntax_group('Comment')
-              and not context.in_treesitter_capture('string')
-              and not context.in_syntax_group('String')
+          -- disable completion in comments
+          return not context.in_treesitter_capture('comment') and
+            not context.in_syntax_group('comment')
         end
       end,
       formatting = {
-        format = function(entry, vim_item)
-          -- kind icons
-          vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], string.lower(vim_item.kind))
-          if entry.source.name == 'path' then
-            vim_item.kind = string.format('%s %s', kind_icons['File'], 'file')
-          end
-          return vim_item
-        end
+        format = require('lspkind').cmp_format(),
       },
       snippet = {
-        expand = function(args)
-          luasnip.lsp_expand(args.body)
+        expand = function (args)
+          vim.snippet.expand(args.body)
         end
       },
-      mapping = get_mapping(),
-
+      mapping = cmp.mapping.preset.insert({
+        ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-f>'] = cmp.mapping.scroll_docs(4),
+        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-e>'] = cmp.mapping.abort(),
+        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+        ['<Tab>']   = cmp.mapping(function (fallback)
+          if cmp.visible() then
+            cmp.select_next_item()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+        ['<S-Tab>'] = cmp.mapping(function (fallback)
+          if cmp.visible() then
+            cmp.select_prev_item()
+          else
+            fallback()
+          end
+        end, { 'i', 's' }),
+      }),
       sources = cmp.config.sources({
         { name = 'nvim_lsp' },
-        { name = 'luasnip' },
+        { name = 'nvim_lsp_signature_help' },
       }, {
         { name = 'buffer' },
       })
     })
 
     cmp.setup.cmdline({ '/', '?' }, {
-      mapping = get_cmdline_mapping(),
-      sources = {
+      mapping = cmp.mapping.preset.cmdline(),
+      source = cmp.config.sources({
+        { name = 'nvim_lsp_document_symbols' },
+      }, {
         { name = 'buffer' },
-      }
+      }),
     })
 
     cmp.setup.cmdline(':', {
-      mapping = get_cmdline_mapping(),
+      mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
         { name = 'path' },
       }, {
-        {
-          name = 'cmdline',
-          options = {
-            ignore_cmds = { 'Man', '!' },
-          }
-        },
-      })
+        { name = 'cmdline' },
+      }),
+      matching = { disallow_symbol_nonprefix_matching = false },
     })
 
     local function lsp_attach(args)
