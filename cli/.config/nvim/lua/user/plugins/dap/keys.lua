@@ -48,19 +48,7 @@ local mappings = {
     desc     = 'Toggle repl',
     cmd      = function () require('dap').repl.toggle() end,
     postkeys = trigger,
-  }, {
-    mode     = 'n',
-    keys     = trigger .. 'v',
-    desc     = 'Variables',
-    cmd      = function () require('telescope').extensions.dap.variables() end,
-    postkeys = nil,
-  }, {
-    mode     = 'n',
-    keys     = trigger .. 'f',
-    desc     = 'Frames',
-    cmd      = function () require('telescope').extensions.dap.frames() end,
-    postkeys = nil,
-  }
+  },
 }
 
 local function gen_keys()
