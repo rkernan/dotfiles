@@ -10,27 +10,27 @@ local bg = vim.opt.background:get()
 -- Define a palette. Use `palette_extend` to fill unspecified colors
 -- Based on https://github.com/gruvbox-community/gruvbox#palette
 local palette
-if bg == "light" then
+if bg == 'light' then
   palette = util.palette_extend({
-    bg = hsluv "#fbf1c7",
-    fg = hsluv "#3c3836",
-    rose = hsluv "#9d0006",
-    leaf = hsluv "#79740e",
-    wood = hsluv "#b57614",
-    water = hsluv "#076678",
-    blossom = hsluv "#8f3f71",
-    sky = hsluv "#427b58",
+    bg      = hsluv('#fbf1c7'),
+    fg      = hsluv('#3c3836'),
+    rose    = hsluv('#9d0006'),
+    leaf    = hsluv('#79740e'),
+    wood    = hsluv('#b57614'),
+    water   = hsluv('#076678'),
+    blossom = hsluv('#8f3f71'),
+    sky     = hsluv('#427b58'),
   }, bg)
 else
   palette = util.palette_extend({
-    bg = hsluv "#282828",
-    fg = hsluv "#ebdbb2",
-    rose = hsluv "#fb4934",
-    leaf = hsluv "#b8bb26",
-    wood = hsluv "#fabd2f",
-    water = hsluv "#83a598",
-    blossom = hsluv "#d3869b",
-    sky = hsluv "#83c07c",
+    bg      = hsluv('#282828'),
+    fg      = hsluv('#ebdbb2'),
+    rose    = hsluv('#fb4934'),
+    leaf    = hsluv('#b8bb26'),
+    wood    = hsluv('#fabd2f'),
+    water   = hsluv('#83a598'),
+    blossom = hsluv('#d3869b'),
+    sky     = hsluv('#83c07c'),
   }, bg)
 end
 
@@ -103,4 +103,4 @@ end)
 lush(specs)
 
 -- Optionally set term colors
-require("zenbones.term").apply_colors(palette)
+require('zenbones.term').apply_colors(palette)
