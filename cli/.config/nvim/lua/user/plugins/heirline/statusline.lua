@@ -11,7 +11,7 @@ return {
   end,
   fallthrough = false,
   {
-    components.mode,
+    components.shortmode,
     {
       condition = components.gitsigns.head.condition,
       components.space,

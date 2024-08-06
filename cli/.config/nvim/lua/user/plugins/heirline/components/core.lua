@@ -6,72 +6,52 @@ M.fill = { provider = '%=' }
 
 M.space = { provider = ' ' }
 
-M.mode = {
+local mode_base = {
   init = function (self)
     self.mode = vim.fn.mode(1)
   end,
   static = {
     modes = {
-      ['n']     = 'NORMAL',
-      ['no']    = 'O-PENDING',
-      ['nov']   = 'O-PENDING',
-      ['noV']   = 'O-PENDING',
-      ['no\22'] = 'O-PENDING',
-      ['niI']   = 'NORMAL',
-      ['niR']   = 'NORMAL',
-      ['niV']   = 'NORMAL',
-      ['nt']    = 'NORMAL',
-      ['ntT']   = 'NORMAL',
-      ['v']     = 'VISUAL',
-      ['vs']    = 'VISUAL',
-      ['V']     = 'V-LINE',
-      ['Vs']    = 'V-LINE',
-      ['\22']   = 'V-BLOCK',
-      ['\22s']  = 'V-BLOCK',
-      ['s']     = 'SELECT',
-      ['S']     = 'S-LINE',
-      ['\19']   = 'S-BLOCK',
-      ['i']     = 'INSERT',
-      ['ic']    = 'INSERT',
-      ['ix']    = 'INSERT',
-      ['R']     = 'REPLACE',
-      ['Rc']    = 'REPLACE',
-      ['Rx']    = 'REPLACE',
-      ['Rv']    = 'V-REPLACE',
-      ['Rvc']   = 'V-REPLACE',
-      ['Rvx']   = 'V-REPLACE',
-      ['c']     = 'COMMAND',
-      ['cv']    = 'EX',
-      ['ce']    = 'EX',
-      ['r']     = 'REPLACE',
-      ['rm']    = 'MORE',
-      ['r?']    = 'CONFIRM',
-      ['!']     = 'SHELL',
-      ['t']     = 'TERMINAL',
-    },
-    colors = {
-      ['n']   = { fg = 'black', bg = 'bright_white' },
-      ['i']   = { fg = 'black', bg = 'blue' },
-      ['v']   = { fg = 'black', bg = 'orange' },
-      ['V']   = { fg = 'black', bg = 'orange' },
-      ['\22'] = { fg = 'black', bg = 'orange' },
-      ['c']   = { fg = 'black', bg = 'green' },
-      ['s']   = { fg = 'black', bg = 'red' },
-      ['S']   = { fg = 'black', bg = 'red' },
-      ['\19'] = { fg = 'black', bg = 'red' },
-      ['R']   = { fg = 'black', bg = 'red' },
-      ['r']   = { fg = 'black', bg = 'red' },
-      ['!']   = { fg = 'black', bg = 'yellow' },
-      ['t']   = { fg = 'black', bg = 'yellow' },
+      ['n']     = { name = 'NORMAL',    shortname = 'N',   hl = { fg = 'mode_fg', bg = 'mode_normal_bg'   }},
+      ['no']    = { name = 'O-PENDING', shortname = 'N',   hl = { fg = 'mode_fg', bg = 'mode_normal_bg'   }},
+      ['nov']   = { name = 'O-PENDING', shortname = 'N',   hl = { fg = 'mode_fg', bg = 'mode_normal_bg'   }},
+      ['noV']   = { name = 'O-PENDING', shortname = 'N',   hl = { fg = 'mode_fg', bg = 'mode_normal_bg'   }},
+      ['no\22'] = { name = 'O-PENDING', shortname = 'N',   hl = { fg = 'mode_fg', bg = 'mode_normal_bg'   }},
+      ['niI']   = { name = 'NORMAL',    shortname = 'N',   hl = { fg = 'mode_fg', bg = 'mode_normal_bg'   }},
+      ['niR']   = { name = 'NORMAL',    shortname = 'N',   hl = { fg = 'mode_fg', bg = 'mode_normal_bg'   }},
+      ['niV']   = { name = 'NORMAL',    shortname = 'N',   hl = { fg = 'mode_fg', bg = 'mode_normal_bg'   }},
+      ['nt']    = { name = 'NORMAL',    shortname = 'N',   hl = { fg = 'mode_fg', bg = 'mode_normal_bg'   }},
+      ['ntT']   = { name = 'NORMAL',    shortname = 'N',   hl = { fg = 'mode_fg', bg = 'mode_normal_bg'   }},
+      ['v']     = { name = 'VISUAL',    shortname = 'V',   hl = { fg = 'mode_fg', bg = 'mode_visual_bg'   }},
+      ['vs']    = { name = 'VISUAL',    shortname = 'V',   hl = { fg = 'mode_fg', bg = 'mode_visual_bg'   }},
+      ['V']     = { name = 'V-LINE',    shortname = 'V-L', hl = { fg = 'mode_fg', bg = 'mode_visual_bg'   }},
+      ['Vs']    = { name = 'V-LINE',    shortname = 'V-L', hl = { fg = 'mode_fg', bg = 'mode_visual_bg'   }},
+      ['\22']   = { name = 'V-BLOCK',   shortname = 'V-B', hl = { fg = 'mode_fg', bg = 'mode_visual_bg'   }},
+      ['\22s']  = { name = 'V-BLOCK',   shortname = 'V-B', hl = { fg = 'mode_fg', bg = 'mode_visual_bg'   }},
+      ['s']     = { name = 'SELECT',    shortname = 'S',   hl = { fg = 'mode_fg', bg = 'mode_replace_bg'  }},
+      ['S']     = { name = 'S-LINE',    shortname = 'S-L', hl = { fg = 'mode_fg', bg = 'mode_replace_bg'  }},
+      ['\19']   = { name = 'S-BLOCK',   shortname = 'S-B', hl = { fg = 'mode_fg', bg = 'mode_replace_bg'  }},
+      ['i']     = { name = 'INSERT',    shortname = 'I',   hl = { fg = 'mode_fg', bg = 'mode_insert_bg'   }},
+      ['ic']    = { name = 'INSERT',    shortname = 'I',   hl = { fg = 'mode_fg', bg = 'mode_insert_bg'   }},
+      ['ix']    = { name = 'INSERT',    shortname = 'I',   hl = { fg = 'mode_fg', bg = 'mode_insert_bg'   }},
+      ['R']     = { name = 'REPLACE',   shortname = 'R',   hl = { fg = 'mode_fg', bg = 'mode_replace_bg'  }},
+      ['Rc']    = { name = 'REPLACE',   shortname = 'R',   hl = { fg = 'mode_fg', bg = 'mode_replace_bg'  }},
+      ['Rx']    = { name = 'REPLACE',   shortname = 'R',   hl = { fg = 'mode_fg', bg = 'mode_replace_bg'  }},
+      ['Rv']    = { name = 'V-REPLACE', shortname = 'R-V', hl = { fg = 'mode_fg', bg = 'mode_replace_bg'  }},
+      ['Rvc']   = { name = 'V-REPLACE', shortname = 'R-V', hl = { fg = 'mode_fg', bg = 'mode_replace_bg'  }},
+      ['Rvx']   = { name = 'V-REPLACE', shortname = 'R-V', hl = { fg = 'mode_fg', bg = 'mode_replace_bg'  }},
+      ['c']     = { name = 'COMMAND',   shortname = 'C',   hl = { fg = 'mode_fg', bg = 'mode_command_bg'  }},
+      ['cv']    = { name = 'EX',        shortname = 'C',   hl = { fg = 'mode_fg', bg = 'mode_command_bg'  }},
+      ['ce']    = { name = 'EX',        shortname = 'C',   hl = { fg = 'mode_fg', bg = 'mode_command_bg'  }},
+      ['r']     = { name = 'REPLACE',   shortname = 'R',   hl = { fg = 'mode_fg', bg = 'mode_replace_bg'  }},
+      ['rm']    = { name = 'MORE',      shortname = 'R',   hl = { fg = 'mode_fg', bg = 'mode_replace_bg'  }},
+      ['r?']    = { name = 'CONFIRM',   shortname = 'R',   hl = { fg = 'mode_fg', bg = 'mode_replace_bg'  }},
+      ['!']     = { name = 'SHELL',     shortname = 'S',   hl = { fg = 'mode_fg', bg = 'mode_terminal_bg' }},
+      ['t']     = { name = 'TERMINAL',  shortname = 'T',   hl = { fg = 'mode_fg', bg = 'mode_terminal_bg' }},
     },
   },
-  utils.surround({ ' ', ' ' }, nil, {
-    provider = function (self)
-      return string.format('%%1(%s%%)', self.modes[self.mode]:sub(1, 1))
-    end,
-  }),
   hl = function (self)
-    return self.colors[self.mode:sub(1, 1)]
+    return self.modes[self.mode].hl
   end,
   update = {
     'ModeChanged',
@@ -81,6 +61,22 @@ M.mode = {
     end)
   }
 }
+
+M.mode = utils.insert(mode_base, {
+  utils.surround({ ' ', ' ' }, nil, {
+    provider = function (self)
+      return string.format('%%1(%s%%)', self.modes[self.mode].name)
+    end,
+  }),
+})
+
+M.shortmode = utils.insert(mode_base, {
+  utils.surround({ ' ', ' ' }, nil, {
+    provider = function (self)
+      return string.format('%%1(%s%%)', self.modes[self.mode].shortname)
+    end,
+  }),
+})
 
 M.cwd = {
   init = function (self)
