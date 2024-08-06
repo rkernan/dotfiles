@@ -197,7 +197,7 @@ M.recording_macro = {
     icon = '󰻂',
   },
   condition = function ()
-    return vim.fn.reg_recording() ~= ''
+    return vim.o.cmdheight == 0 and vim.fn.reg_recording() ~= ''
   end,
   utils.surround({ ' ', ' ' }, nil, {
     provider = function (self)
