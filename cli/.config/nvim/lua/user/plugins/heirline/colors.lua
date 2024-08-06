@@ -4,6 +4,8 @@ local function setup_colors()
   return {
     dim = utils.get_highlight('Conceal').fg,
     file_modified = vim.g.terminal_color_2, -- green
+    recording_fg = vim.g.terminal_color_0, -- black
+    recording_bg = vim.g.terminal_color_2, -- green
     -- gitsigns
     gitsigns_head = vim.g.terminal_color_5, -- magenta
     gitsigns_added = utils.get_highlight('GitSignsAdd').fg,

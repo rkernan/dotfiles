@@ -204,7 +204,7 @@ M.recording_macro = {
       return string.format('%s %s', self.icon, vim.fn.reg_recording())
     end,
   }),
-  hl = { fg = 'black', bg = 'green', bold = true },
+  hl = { fg = 'recording_fg', bg = 'recording_bg', bold = true },
   update = {
     'RecordingEnter',
     'RecordingLeave',
