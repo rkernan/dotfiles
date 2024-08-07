@@ -12,7 +12,6 @@ return {
     require('mini.jump2d').setup()
     require('mini.operators').setup()
     require('mini.pairs').setup()
-    require('mini.pick').setup()
     require('mini.surround').setup()
     require('mini.trailspace').setup()
     require('user.plugins.mini.basics').setup()
