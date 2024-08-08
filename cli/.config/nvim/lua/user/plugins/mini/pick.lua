@@ -83,7 +83,7 @@ local keys = {
 local function setup()
   require('mini.pick').setup()
 
-  local augroup = vim.api.nvim_create_augroup('plugins.mini.pick', { clear = true })
+  local augroup = vim.api.nvim_create_augroup('user.plugins.mini.pick', { clear = true })
   vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
   vim.api.nvim_create_autocmd('LspDetach', { group = augroup, callback = lsp_detach })
 end

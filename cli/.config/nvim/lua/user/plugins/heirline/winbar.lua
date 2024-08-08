@@ -5,7 +5,7 @@ local buftype_disable = { 'nofile', 'help', 'prompt', 'quickfix', 'terminal' }
 local filetype_disable = {}
 
 -- need autocmd, otherwise an empty window appears until CursorMoved
-local augroup = vim.api.nvim_create_augroup('plugins.heirline.winbar', { clear = true })
+local augroup = vim.api.nvim_create_augroup('user.plugins.heirline.winbar', { clear = true })
 vim.api.nvim_create_autocmd('User', {
   pattern = 'HeirlineInitWinbar',
   callback = function (args)

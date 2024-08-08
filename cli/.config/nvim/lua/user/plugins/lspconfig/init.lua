@@ -163,7 +163,7 @@ return {
       matching = { disallow_symbol_nonprefix_matching = false },
     })
 
-    local augroup = vim.api.nvim_create_augroup('lsp.mappings', { clear = true })
+    local augroup = vim.api.nvim_create_augroup('user.plugins.lspconfig', { clear = true })
     vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
     vim.api.nvim_create_autocmd('LspDetach', { group = augroup, callback = lsp_detach })
   end,
