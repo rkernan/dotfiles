@@ -6,10 +6,10 @@ local function setup()
       win_borders = 'single',
     },
     mappings = {
-      basic = true,
+      basic = false,
     },
     autocommands = {
-      basic = true,
+      basic = false,
     },
   })
   -- additional listchars
