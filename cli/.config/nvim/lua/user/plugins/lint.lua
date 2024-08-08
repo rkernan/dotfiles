@@ -5,6 +5,11 @@ return {
     local lint = require('lint')
     local util = require('lint.util')
 
+    lint.linters.cspell = util.wrap(lint.linters.cspell, function (diagnostic)
+      diagnostic.severity = vim.diagnostic.severity.HINT
+      return diagnostic
+    end)
+
     lint.linters.pycodestyle = util.wrap(lint.linters.pycodestyle, function (diagnostic)
       diagnostic.severity = vim.diagnostic.severity.INFO
       return diagnostic
@@ -20,6 +25,7 @@ return {
     vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, {
       callback = function ()
         require('lint').try_lint()
+        require('lint').try_lint('cspell')
       end,
     })
   end
