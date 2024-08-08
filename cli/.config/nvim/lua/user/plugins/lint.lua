@@ -1,20 +1,14 @@
+local function try_lint()
+  require('lint').try_lint()
+  -- always check spelling
+  require('lint').try_lint('cspell')
+end
+
 return {
   'mfussenegger/nvim-lint',
   event = { 'BufReadPre', 'BufWritePre' },
   config = function ()
     local lint = require('lint')
-    local util = require('lint.util')
-
-    lint.linters.cspell = util.wrap(lint.linters.cspell, function (diagnostic)
-      diagnostic.severity = vim.diagnostic.severity.HINT
-      return diagnostic
-    end)
-
-    lint.linters.pycodestyle = util.wrap(lint.linters.pycodestyle, function (diagnostic)
-      diagnostic.severity = vim.diagnostic.severity.INFO
-      return diagnostic
-    end)
-
     lint.linters_by_ft = {
       python = {
         'pycodestyle',
@@ -22,11 +16,11 @@ return {
       },
     }
 
-    vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, {
-      callback = function ()
-        require('lint').try_lint()
-        require('lint').try_lint('cspell')
-      end,
-    })
+    lint.linters.cspell = require("lint.util").wrap(lint.linters.cspell, function(diagnostic)
+      diagnostic.severity = vim.diagnostic.severity.HINT
+      return diagnostic
+    end)
+
+    vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, { callback = try_lint })
   end
 }
