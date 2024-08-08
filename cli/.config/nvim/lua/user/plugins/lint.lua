@@ -1,7 +1,7 @@
 local function try_lint()
   require('lint').try_lint()
   -- always check spelling
-  require('lint').try_lint('cspell')
+  -- require('lint').try_lint('cspell')
 end
 
 return {
