@@ -1,47 +1,47 @@
-vim.fn.sign_define('DiagnosticSignError', { text = '󰔶', texthl = 'DiagnosticSignError' })
-vim.fn.sign_define('DiagnosticSignWarn', { text = '󰔶', texthl = 'DiagnosticSignWarn' })
-vim.fn.sign_define('DiagnosticSignInfo', { text = '󰝤', texthl = 'DiagnosticSignInfo' })
-vim.fn.sign_define('DiagnosticSignHint', { text = '󰝤', texthl = 'DiagnosticSignHint' })
+local M = {}
 
-vim.diagnostic.config({
-  severity_sort = true,
-  update_in_insert = false,
-  virtual_text = {
-    prefix = function (message)
-      if message.severity == vim.diagnostic.severity.ERROR then
-        return vim.fn.sign_getdefined('DiagnosticSignError')[1].text
-      elseif message.severity == vim.diagnostic.severity.WARN then
-        return vim.fn.sign_getdefined('DiagnosticSignWarn')[1].text
-      elseif message.severity == vim.diagnostic.severity.INFO then
-        return vim.fn.sign_getdefined('DiagnosticSignInfo')[1].text
-      else
-        return vim.fn.sign_getdefined('DiagnosticSignHint')[1].text
-      end
-    end,
-    spacing = 2,
-    severity = { min = vim.diagnostic.severity.INFO },
-  },
-  float = {
-    header = '',
-    source = true,
-    prefix = function (diagnostic, ...)
-      if diagnostic.severity == vim.diagnostic.severity.ERROR then
-        local sign = vim.fn.sign_getdefined('DiagnosticSignError')[1]
-        return sign.text, sign.texthl
-      elseif diagnostic.severity == vim.diagnostic.severity.WARN then
-        local sign = vim.fn.sign_getdefined('DiagnosticSignWarn')[1]
-        return sign.text, sign.texthl
-      elseif diagnostic.severity == vim.diagnostic.severity.INFO then
-        local sign = vim.fn.sign_getdefined('DiagnosticSignInfo')[1]
-        return sign.text, sign.texthl
-      else
-        local sign = vim.fn.sign_getdefined('DiagnosticSignHint')[1]
-        return sign.text, sign.texthl
-      end
-    end,
-    border = 'single',
-  },
-})
+M.signs = {
+  [vim.diagnostic.severity.ERROR] = '󰔶',
+  [vim.diagnostic.severity.WARN] = '󰔶',
+  [vim.diagnostic.severity.INFO] = '󰝤',
+  [vim.diagnostic.severity.HINT] = '󰝤',
+}
 
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Diagnostic forward' })
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Diagnostic backward' })
+M.sign_hl = {
+  [vim.diagnostic.severity.ERROR] = 'DiagnosticSignError',
+  [vim.diagnostic.severity.WARN] = 'DiagnosticSignWarn',
+  [vim.diagnostic.severity.INFO] = 'DiagnosticSignInfo',
+  [vim.diagnostic.severity.HINT] = 'DiagnosticSignHint',
+}
+
+function M.setup()
+  vim.diagnostic.config({
+    signs = {
+      text = M.signs,
+    },
+    severity_sort = true,
+    update_in_insert = false,
+    virtual_text = {
+      prefix = function (message)
+        return M.signs[message.severity]
+      end,
+      spacing = 2,
+      severity = { min = vim.diagnostic.severity.INFO },
+    },
+    float = {
+      border = 'single',
+      header = '',
+      source = true,
+      prefix= function (diagnostic, ...)
+        local sign = string.format('%s ', M.signs[diagnostic.severity])
+        local hl = M.sign_hl[diagnostic.severity]
+        return sign, hl
+      end,
+    },
+  })
+
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Diagnostic forward' })
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Diagnostic backward' })
+end
+
+return M

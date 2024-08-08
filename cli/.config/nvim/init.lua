@@ -35,7 +35,7 @@ vim.g.maplocalleader = ','
 require('user.options')
 require('user.mappings')
 require('user.autocmds')
-require('user.diagnostics')
+require('user.diagnostics').setup()
 require('user.lazy')
 
 vim.opt.termguicolors = true
