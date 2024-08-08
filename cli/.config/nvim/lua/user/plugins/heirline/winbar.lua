@@ -47,10 +47,7 @@ return {
     components.gitsigns.deleted,
     components.navic,
     components.fill,
-    components.diagnostics.errors,
-    components.diagnostics.warnings,
-    components.diagnostics.info,
-    components.diagnostics.hints,
+    components.diagnostics,
     components.ruler,
   },
 }
