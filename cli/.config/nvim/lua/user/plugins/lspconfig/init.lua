@@ -20,15 +20,13 @@ local function lsp_attach(args)
   end
 
 
-  -- enable inlay hints if supported
   if client.supports_method('textDocument/inlayHint') then
-    vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+    -- vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
     vim.keymap.set('n', '<Leader><Leader>i', function ()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, { buffer = bufnr, desc = 'Toggle inlay hints' })
   end
 
-  -- enable navic if server supports document symbols
   if client.supports_method('textDocument/documentSymbol') then
     require('nvim-navic').attach(client, bufnr)
   end
