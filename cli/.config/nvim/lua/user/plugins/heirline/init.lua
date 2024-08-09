@@ -1,5 +1,4 @@
 return {
-  enabled = false,
   'rebelot/heirline.nvim',
   lazy = false,
   config = function ()
