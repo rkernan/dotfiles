@@ -21,7 +21,6 @@ return {
       })
     end,
     init = function ()
-      -- disable winbar
       vim.opt_local.winbar = nil
     end,
   }, {
