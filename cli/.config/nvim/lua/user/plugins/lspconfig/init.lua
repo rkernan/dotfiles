@@ -79,6 +79,7 @@ return {
     local lspconfig = require('lspconfig')
     local capabilities = require('user.plugins.lspconfig.capabilities')
 
+    lspconfig.bashls.setup({ capabilities = capabilities })
     lspconfig.basedpyright.setup({
       capabilities = capabilities,
       settings = {
