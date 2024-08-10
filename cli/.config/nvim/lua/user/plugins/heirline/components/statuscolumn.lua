@@ -21,29 +21,25 @@ M.folds = {
       return self.foldlevel == 0
     end,
     provider = '  ',
-    hl = 'FoldColumn',
   }, {
     condition = function (self)
       return self.foldclosed > 0 and self.foldclosed == vim.v.lnum
     end,
     provider = ' ',
-    hl = 'FoldColumn',
   }, {
     condition = function (self)
       return self.foldlevel > self.foldlevel_before and self.foldlevel <= self.foldlevel_after
     end,
     provider = ' ',
-    hl = 'FoldColumn',
   }, {
     condition = function (self)
-      return self.foldlevel > self.foldlevel_after
+      return self.foldlevel > self.foldlevel_after and self.foldlevel <= self.foldlevel_before
     end,
     provider = '╰ ',
-    hl = 'FoldColumn',
   }, {
     provider = '│ ',
-    hl = 'FoldColumn',
-  }
+  },
+  hl = 'FoldColumn',
 }
 
 return M
