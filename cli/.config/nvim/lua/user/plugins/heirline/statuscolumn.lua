@@ -19,14 +19,13 @@ return {
     end,
   }, {
     condition = conditions.is_not_active,
-    components.statuscolumn.signs,
-    -- TODO diagnostics
-    components.statuscolumn.lnum,
-    -- TODO gitsigns
     components.statuscolumn.folds,
+    components.statuscolumn.diagnostics,
+    components.statuscolumn.lnum,
+    components.statuscolumn.gitsigns,
   }, {
-    components.statuscolumn.signs,
-    -- TODO diagnostics
+    components.statuscolumn.folds,
+    components.statuscolumn.diagnostics,
     {
       fallthrough = false,
       utils.insert({
@@ -38,7 +37,6 @@ return {
         components.statuscolumn.relnum,
       }
     },
-    -- TODO gitsigns
-    components.statuscolumn.folds,
+    components.statuscolumn.gitsigns,
   }
 }
