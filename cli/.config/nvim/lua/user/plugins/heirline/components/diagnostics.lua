@@ -13,17 +13,13 @@ return {
   },
   init = function (self)
     self.count = {
-      error = 0,
-      warn = 0,
-      hint = 0,
-      info = 0,
-      -- error = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR }),
-      -- warn  = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN }),
-      -- hint  = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT }),
-      -- info  = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO }),
+      error = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR }),
+      warn  = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN }),
+      hint  = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT }),
+      info  = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO }),
     }
   end,
-  -- update = { 'DiagnosticChanged', 'BufEnter' },
+  update = { 'DiagnosticChanged', 'BufEnter' },
   {
     {
       -- errors
@@ -31,7 +27,7 @@ return {
         return self.count.error > 0 and string.format('%s %d ', self.icons.error, self.count.error)
       end,
       on_click = {
-        callback = function (self, minwid, nclicks, buttons, mods)
+        callback = function (...)
           vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
         end,
         name = 'heirline_diagnostics_error',
@@ -43,7 +39,7 @@ return {
         return self.count.warn > 0 and string.format('%s %d ', self.icons.warn, self.count.warn)
       end,
       on_click = {
-        callback = function (self, minwid, nclicks, buttons, mods)
+        callback = function (...)
           vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
         end,
         name = 'heirline_diagnostics_warn',
@@ -55,7 +51,7 @@ return {
         return self.count.info > 0 and string.format('%s %d ', self.icons.info, self.count.info)
       end,
       on_click = {
-        callback = function (self, minwid, nclicks, buttons, mods)
+        callback = function (...)
           vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.INFO })
         end,
         name = 'heirline_diagnostics_info',
@@ -67,7 +63,7 @@ return {
         return self.count.hint > 0 and string.format('%s %d ', self.icons.hint, self.count.hint)
       end,
       on_click = {
-        callback = function (self, minwid, nclicks, buttons, mods)
+        callback = function (...)
           vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.HINT })
         end,
         name = 'heirline_diagnostics_hint',
