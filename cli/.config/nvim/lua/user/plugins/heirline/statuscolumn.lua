@@ -19,24 +19,14 @@ return {
     end,
   }, {
     condition = conditions.is_not_active,
-    components.statuscolumn.folds,
-    components.statuscolumn.diagnostics,
-    components.statuscolumn.lnum,
-    components.statuscolumn.gitsigns,
+    components.foldcolumn,
+    -- components.diagnosticscolumn,
+    components.numbercolumn,
+    -- components.gitsignscolumn,
   }, {
-    components.statuscolumn.folds,
-    components.statuscolumn.diagnostics,
-    {
-      fallthrough = false,
-      utils.insert({
-        condition = function ()
-          return vim.fn.mode() == 'i' or vim.v.relnum == 0
-        end,
-      }, components.statuscolumn.lnum),
-      {
-        components.statuscolumn.relnum,
-      }
-    },
-    components.statuscolumn.gitsigns,
+    components.foldcolumn,
+    -- components.diagnosticscolumn,
+    components.numbercolumn,
+    -- components.gitsignscolumn,
   }
 }

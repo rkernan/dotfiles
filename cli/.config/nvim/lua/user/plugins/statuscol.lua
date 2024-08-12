@@ -1,4 +1,5 @@
 return {
+  -- enabled = false,
   'luukvbaal/statuscol.nvim',
   lazy = false,
   config = function ()
