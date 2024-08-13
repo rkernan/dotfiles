@@ -88,9 +88,10 @@ return {
         },
       },
     })
-    lspconfig.pyright.setup({ capabilities = capabilities })
+    lspconfig.gopls.setup({ capabilities = capabilities })
     lspconfig.jsonls.setup({ capabilities = capabilities })
     lspconfig.lua_ls.setup({ capabilities = capabilities })
+    lspconfig.pyright.setup({ capabilities = capabilities })
 
     local cmp = require('cmp')
 
