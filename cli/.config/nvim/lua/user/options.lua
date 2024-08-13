@@ -1,4 +1,4 @@
-vim.o.clipboard = 'unnamedplus'
+vim.opt.clipboard = 'unnamedplus'
 
 if vim.fn.has('wsl') > 0 then
   vim.g.clipboard = {
@@ -15,14 +15,26 @@ if vim.fn.has('wsl') > 0 then
   }
 end
 
-vim.o.shortmess = vim.o.shortmess .. 'I'
+vim.opt.fillchars = {
+  eob = ' ',
+  foldopen = '',
+  foldclose = '',
+  foldsep = ' ',
+}
 
-vim.o.scrolloff = 5
-vim.o.sidescrolloff = 5
+vim.opt.shortmess = vim.opt.shortmess + 'I'
 
-vim.o.laststatus = 3
+vim.opt.scrolloff = 5
+vim.opt.sidescrolloff = 5
 
-vim.o.foldlevel=99
+vim.opt.laststatus = 3
+
+vim.opt.foldcolumn = 'auto'
+vim.opt.foldlevel = 99
+vim.opt.foldmethod = 'expr'
+vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+-- TODO
+-- vim.opt.foldtext = 'v:lua.custom_foldtext()'
 
 if vim.fn.executable('rg') == 1 then
   vim.opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'

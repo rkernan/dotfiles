@@ -3,7 +3,7 @@ return {
   lazy = false,
   config = function ()
     require('heirline').setup({
-      -- statuscolumn = require('user.plugins.heirline.statuscolumn'),
+      statuscolumn = require('user.plugins.heirline.statuscolumn'),
       statusline = require('user.plugins.heirline.statusline'),
       winbar = require('user.plugins.heirline.winbar'),
     })

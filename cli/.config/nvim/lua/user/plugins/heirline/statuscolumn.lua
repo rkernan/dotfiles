@@ -19,14 +19,14 @@ return {
     end,
   }, {
     condition = conditions.is_not_active,
-    components.foldcolumn,
-    -- components.diagnosticscolumn,
-    components.numbercolumn,
-    -- components.gitsignscolumn,
+    -- TODO separate gitsigns, diagnostics, and dap
+    components.column.folds,
+    utils.surround({ '%=', '' }, nil, components.column.lnum),
+    utils.surround({ '%=', '' }, nil, components.column.signs),
   }, {
-    components.foldcolumn,
-    -- components.diagnosticscolumn,
-    components.numbercolumn,
-    -- components.gitsignscolumn,
+    -- TODO separate gitsigns, diagnostics, and dap
+    components.column.folds,
+    utils.surround({ '%=', '' }, nil, components.column.lnum),
+    utils.surround({ '%=', '' }, nil, components.column.signs),
   }
 }
