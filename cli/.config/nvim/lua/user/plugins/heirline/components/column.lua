@@ -32,40 +32,52 @@ M.lnum = {
 }
 
 M.folds = {
-  provider = function ()
-    local fillchars = vim.opt_local.fillchars:get()
-    local foldclosed = vim.fn.foldclosed(vim.v.lnum)
-    if foldclosed > 0 and foldclosed == vim.v.lnum then
-      return fillchars.foldclose
-    end
-
-    local foldlevel = vim.fn.foldlevel(vim.v.lnum)
-    local foldlevel_before = vim.fn.foldlevel((vim.v.lnum > 1) and (vim.v.lnum - 1) or 1)
+  fallthrough = false,
+  init = function (self)
+    self.foldclosed = vim.fn.foldclosed(vim.v.lnum)
+    self.foldlevel = vim.fn.foldlevel(vim.v.lnum)
+    self.foldlevel_before = vim.fn.foldlevel((vim.v.lnum > 1) and (vim.v.lnum - 1) or 1)
     local maxline = vim.fn.line('$')
-    local foldlevel_after = vim.fn.foldlevel((vim.v.lnum < maxline) and (vim.v.lnum + 1 ) or maxline)
-    if foldlevel > foldlevel_before and foldlevel <= foldlevel_after then
-      return fillchars.foldopen
-    end
-
-    return ' '
+    self.foldlevel_after = vim.fn.foldlevel((vim.v.lnum < maxline) and (vim.v.lnum + 1 ) or maxline)
   end,
   on_click = {
     callback = function (_, ...)
       local args = statuscolumn_args(...)
       local char = vim.fn.screenstring(args.mousepos.screenrow, args.mousepos.screencol)
       local fillchars = vim.opt_local.fillchars:get()
+
+      -- save position
       local saved_pos = vim.api.nvim_win_get_cursor(args.minwid)
       vim.api.nvim_set_current_win(args.mousepos.winid)
       vim.api.nvim_win_set_cursor(args.mousepos.winid, { args.mousepos.line, 0 })
+
       if char == fillchars.foldopen then
         vim.cmd([[norm! zc]])
       elseif char == fillchars.foldclose then
         vim.cmd([[norm! zo]])
       end
+
+      -- restore position
       vim.api.nvim_set_current_win(args.minwid)
       vim.api.nvim_win_set_cursor(args.minwid, saved_pos)
     end,
     name = 'heirline_statuscolumn_folds',
+  }, {
+    condition = function (self)
+      return self.foldclosed > 0 and self.foldclosed == vim.v.lnum
+    end,
+    provider = function ()
+      return vim.opt_local.fillchars:get().foldclose
+    end,
+  }, {
+    condition = function (self)
+      return self.foldlevel > self.foldlevel_before and self.foldlevel <= self.foldlevel_after
+    end,
+    provider = function ()
+      return vim.opt_local.fillchars:get().foldopen
+    end,
+  }, {
+    provider = ' ',
   },
   hl = 'FoldColumn',
 }
