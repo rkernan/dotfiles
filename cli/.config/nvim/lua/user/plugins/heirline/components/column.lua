@@ -1,14 +1,5 @@
 local M = {}
 
-local ffi = require('ffi')
-
-ffi.cdef([[
-  typedef struct {} Error;
-  typedef struct {} win_T;
-  win_T *find_window_by_handle(int Window, Error *err);
-  int compute_foldcolumn(win_T *wp, int col);
-]])
-
 local function statuscolumn_click_args(minwid, clicks, button, mods)
   return {
     minwid = minwid,
@@ -49,22 +40,11 @@ M.folds = {
     },
   },
   init = function (self)
-    -- calculate fold column width
-    local wp = ffi.C.find_window_by_handle(0, ffi.new 'Error')
-    self.width = ffi.C.compute_foldcolumn(wp, 0)
-
-    if self.width > 0 then
-      self.foldclosed = vim.fn.foldclosed(vim.v.lnum)
-      self.foldlevel = vim.fn.foldlevel(vim.v.lnum)
-      self.foldlevel_before = vim.fn.foldlevel((vim.v.lnum > 1) and (vim.v.lnum - 1) or 1)
-      local maxline = vim.fn.line('$')
-      self.foldlevel_after = vim.fn.foldlevel((vim.v.lnum < maxline) and (vim.v.lnum + 1 ) or maxline)
-    else
-      self.foldclosed = 0
-      self.foldlevel = 0
-      self.foldlevel_before = 0
-      self.foldlevel_after = 0
-    end
+    self.foldclosed = vim.fn.foldclosed(vim.v.lnum)
+    self.foldlevel = vim.fn.foldlevel(vim.v.lnum)
+    self.foldlevel_before = vim.fn.foldlevel((vim.v.lnum > 1) and (vim.v.lnum - 1) or 1)
+    local maxline = vim.fn.line('$')
+    self.foldlevel_after = vim.fn.foldlevel((vim.v.lnum < maxline) and (vim.v.lnum + 1 ) or maxline)
   end,
   on_click = {
     callback = function (_, ...)
@@ -90,26 +70,21 @@ M.folds = {
     name = 'heirline_statuscolumn_folds',
   }, {
     condition = function (self)
-      return self.width == 0
-    end,
-    provider = '',
-  }, {
-    condition = function (self)
       return self.foldclosed > 0 and self.foldclosed == vim.v.lnum
     end,
     provider = function (self)
-      return self.icons.foldclose .. (' '):rep(self.width - #self.icons.foldclose)
+      return self.icons.foldclose
     end,
   }, {
     condition = function (self)
       return self.foldlevel > self.foldlevel_before and self.foldlevel <= self.foldlevel_after
     end,
     provider = function (self)
-      return self.icons.foldopen .. (' '):rep(self.width - #self.icons.foldopen)
+      return self.icons.foldopen
     end,
   }, {
     provider = function (self)
-      return (' '):rep(self.width)
+      return ' '
     end
   },
   hl = 'FoldColumn',
