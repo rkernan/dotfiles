@@ -19,14 +19,16 @@ return {
     end,
   }, {
     condition = conditions.is_not_active,
-    -- TODO separate gitsigns, diagnostics, and dap
     components.column.folds,
-    utils.surround({ '%=', '' }, nil, components.column.lnum),
-    utils.surround({ '%=', '' }, nil, components.column.signs),
+    utils.surround({ '%=', '' }, nil, components.column.line_number),
+    -- TODO separate gitsigns, diagnostics, and dap
+    components.column.signs,
+    -- utils.surround({ '%=', '' }, nil, components.column.sign_from_extmark('gitsigns_signs')),
   }, {
-    -- TODO separate gitsigns, diagnostics, and dap
     components.column.folds,
-    utils.surround({ '%=', '' }, nil, components.column.lnum),
-    utils.surround({ '%=', '' }, nil, components.column.signs),
+    utils.surround({ '%=', '' }, nil, components.column.line_number),
+    -- TODO separate gitsigns, diagnostics, and dap
+    components.column.signs,
+    -- utils.surround({ '%=', '' }, nil, components.column.sign_from_extmark('gitsigns_signs')),
   }
 }
