@@ -33,7 +33,8 @@ vim.keymap.set('x', ' ', '', { noremap = true })
 vim.g.maplocalleader = ','
 
 require('user.options')
-require('user.mappings')
+require('user.commands')
+require('user.keymaps')
 require('user.autocmds')
 require('user.diagnostics').setup()
 require('user.lazy')
