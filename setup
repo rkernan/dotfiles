@@ -87,18 +87,22 @@ for target in $targets; do
   case $target in
     checkhealth)
       # commands
-      check_command bat     || true
-      check_command brew    || true
-      check_command fd      || true
-      check_command fish    || true
-      check_command fzf     || true
-      check_command git-lfs || true
-      check_command go      || true
-      check_command nvim    || true
-      check_command rg      || true
-      check_command stow    || true
-      check_command tmux    || true
-      check_command vf      || true
+      check_command bat        || true
+      check_command brew       || true
+      check_command fd         || true
+      check_command fish       || true
+      check_command fzf        || true
+      check_command git-cz     || true
+      check_command git-lfs    || true
+      check_command go         || true
+      check_command lazygit    || true
+      check_command nvim       || true
+      check_command pre-commit || true
+      check_command rg         || true
+      check_command stow       || true
+      check_command tmux       || true
+      check_command vf         || true
+      check_command cz         || true
       ;;
     cli)
       stow cli
