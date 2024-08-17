@@ -221,7 +221,7 @@ function M.environment(env_var, hl, formatter)
       return self.environ and #self.environ > 0
     end,
     provider = function (self)
-      return self.formatter(self.environ)
+      return self.formatter and self.formatter(self.environ) or self.environ
     end,
     hl = hl,
   }
