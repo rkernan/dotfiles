@@ -1,5 +1,6 @@
 local components = require('user.plugins.heirline.components')
 local conditions = require('heirline.conditions')
+local utils = require('heirline.utils')
 
 return {
   hl = function ()
@@ -12,12 +13,9 @@ return {
   fallthrough = false,
   {
     components.shortmode,
-    {
-      condition = components.gitsigns.head.condition,
-      components.space,
-      components.gitsigns.head
-    },
     components.space,
+    utils.insert(components.gitsigns.head, components.space),
+    utils.insert(components.virtualenv, components.space),
     components.cwd,
     components.space,
     components.recording_macro,

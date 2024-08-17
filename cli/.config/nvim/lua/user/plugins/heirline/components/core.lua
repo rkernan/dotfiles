@@ -211,4 +211,24 @@ M.recording_macro = {
   }
 }
 
+function M.environment(env_var, hl, formatter)
+  return {
+    static = {
+      environ = (vim.fn.environ()[env_var] or ''):gsub('%s+', ''),
+      formatter = formatter,
+    },
+    condition = function (self)
+      return self.environ and #self.environ > 0
+    end,
+    provider = function (self)
+      return self.formatter(self.environ)
+    end,
+    hl = hl,
+  }
+end
+
+M.virtualenv = M.environment('VIRTUAL_ENV', { fg = 'virtualenv' }, function (str)
+  return string.format(' %s', vim.fn.fnamemodify(str, ':t'))
+end)
+
 return M
