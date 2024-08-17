@@ -39,7 +39,7 @@ local function setup_colors()
     -- mode colors
     mode_fg          = vim.g.terminal_color_0, -- black
     mode_normal_bg   = vim.g.terminal_color_7, -- white
-    mode_visual_bg   = 'orange',
+    mode_visual_bg   = vim.g.terminal_color_1, -- red
     mode_replace_bg  = vim.g.terminal_color_1, -- red
     mode_insert_bg   = vim.g.terminal_color_4, -- blue
     mode_terminal_bg = vim.g.terminal_color_3, -- yellow
