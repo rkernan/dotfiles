@@ -227,8 +227,4 @@ function M.environment(env_var, hl, formatter)
   }
 end
 
-M.virtualenv = M.environment('VIRTUAL_ENV', { fg = 'virtualenv' }, function (str)
-  return string.format(' %s', vim.fn.fnamemodify(str, ':t'))
-end)
-
 return M
