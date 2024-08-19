@@ -72,14 +72,6 @@ local specs = lush.extends({ base_specs }).with(function (injected_functions)
     Operator({ Statement, gui = 'none' }),
     sym('@operator')({ Operator }),
 
-    -- underline errors, warnings, and hints
-    DiagnosticUnderlineError({ base_specs.DiagnosticUnderlineError, gui = 'underline' }),
-    DiagnosticUnderlineWarn({  base_specs.DiagnosticUnderlineWarn,  gui = 'underline' }),
-    DiagnosticUnderlineHint({  base_specs.DiagnosticUnderlineHint,  gui = 'underline' }),
-
-    -- no uderline on info
-    DiagnosticUnderlineInfo({ base_specs.DiagnosticUnderlineInfo,  gui = 'none' }),
-
     -- mini.hipatterns - disable gui in text elements
     sym('@text.danger')({ gui = 'none' }),
     sym('@text.note')({ gui = 'none' }),
