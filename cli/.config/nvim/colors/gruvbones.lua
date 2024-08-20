@@ -84,8 +84,11 @@ local specs = lush.extends({ base_specs }).with(function (injected_functions)
     -- mini.jump2d - nicer looking labels
     MiniJump2dSpot({ base_specs.Normal, fg = palette.rose }),
     MiniJump2dSpotUnique({ MiniJump2dSpot, gui = 'underline' }),
-    MiniJump2dSpotAhead({ MiniJump2dSpot, fg = MiniJump2dSpot.fg.da(50) }),
+    MiniJump2dSpotAhead({ MiniJump2dSpot, fg = MiniJump2dSpot.fg.darken(50) }),
     MiniJump2dDim({ MiniJump2dSpotAhead }),
+
+    -- indent-blankline scope
+    IblScope({ base_specs.IblIdent, fg = base_specs.Whitespace.fg.lighten(5) }),
 
     ---@diagnostic enable: undefined-global
   }
