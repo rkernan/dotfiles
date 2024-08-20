@@ -69,8 +69,6 @@ return {
     'hrsh7th/cmp-nvim-lsp',
     'hrsh7th/cmp-nvim-lsp-signature-help',
     'hrsh7th/cmp-nvim-lsp-document-symbol',
-    -- lsp kind icons
-    'onsails/lspkind.nvim',
     -- statusline breadcrumbs
     'SmiteshP/nvim-navic',
   },
@@ -95,6 +93,34 @@ return {
 
     local cmp = require('cmp')
 
+    local kind_icons = {
+      Text = "",
+      Method = "󰆧",
+      Function = "󰊕",
+      Constructor = "",
+      Field = "󰇽",
+      Variable = "󰂡",
+      Class = "󰠱",
+      Interface = "",
+      Module = "",
+      Property = "󰜢",
+      Unit = "",
+      Value = "󰎠",
+      Enum = "",
+      Keyword = "󰌋",
+      Snippet = "",
+      Color = "󰏘",
+      File = "󰈙",
+      Reference = "",
+      Folder = "󰉋",
+      EnumMember = "",
+      Constant = "󰏿",
+      Struct = "",
+      Event = "",
+      Operator = "󰆕",
+      TypeParameter = "󰅲",
+    }
+
     cmp.setup({
       enabled = function ()
         local context = require('cmp.config.context')
@@ -108,7 +134,10 @@ return {
         end
       end,
       formatting = {
-        format = require('lspkind').cmp_format(),
+        format = function (entry, vim_item)
+          vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
+          return vim_item
+        end,
       },
       snippet = {
         expand = function (args)
