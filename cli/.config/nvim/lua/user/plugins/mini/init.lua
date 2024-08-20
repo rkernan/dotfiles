@@ -1,6 +1,6 @@
 return {
   'echasnovski/mini.nvim',
-  version = '*',
+  version = false,
   lazy = false,
   keys = require('user.plugins.mini.pick').keys,
   config = function()
