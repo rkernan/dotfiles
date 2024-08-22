@@ -2,7 +2,7 @@ status is-interactive || exit
 
 set fish_prompt_bg_color 3E3E3E
 
-set fish_prompt_color_pwd brwhite
+set fish_prompt_color_pwd white
 set fish_prompt_color_venv cyan
 set fish_prompt_color_jobs yellow
 
