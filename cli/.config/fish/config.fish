@@ -13,7 +13,7 @@ end
 
 # asdf
 set -l asdf_brew_path $brew_prefix"/opt/asdf/libexec/asdf.fish"
-if test -d $asdf_brew_path
+if test -e $asdf_brew_path
   source $asdf_brew_path
 end
 
