@@ -6,56 +6,62 @@ local function lsp_attach(args)
 
   local bufnr = args.buf
 
-  if client.supports_method('textDocument/signatureHelp') then
+  if client.server_capabilities.signatureHelpProvider then
     vim.keymap.set('n', 'K', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'LSP signature help' })
     vim.keymap.set('i', '<C-k>', vim.lsp.buf.signature_help, { buffer = bufnr, desc = 'LSP signature help' })
   end
 
-  if client.supports_method('textDocument/formatting') then
+  if client.server_capabilities.definitionProvider then
+    vim.keymap.set('n', '<Leader><Leader>d', vim.lsp.buf.definition, { buffer = bufnr, desc = 'LSP definition' })
+  end
+
+  if client.server_capabilities.declarationProvider then
+    vim.keymap.set('n', '<Leader><Leader>D', vim.lsp.buf.declaration, { buffer = bufnr, desc = 'LSP declaration' })
+  end
+
+  if client.server_capabilities.typeDefinitionProvider then
+    vim.keymap.set('n', '<Leader><Leader>t', vim.lsp.buf.type_definition, { buffer = bufnr, desc = 'LSP type definition'} )
+  end
+
+  if client.server_capabilities.documentFormattingProvider then
     vim.keymap.set('n', '<Leader><Leader>f', vim.lsp.buf.format, { buffer = bufnr, desc = 'LSP format buffer' })
   end
 
-  if client.supports_method('textDocument/codeAction') then
-    vim.keymap.set('n', '<Leader><Leader>a', vim.lsp.buf.code_action, { buffer = bufnr, desc = 'LSP code actions' })
+  if client.server_capabilities.documentRangeFormattingProvider then
+    vim.keymap.set('x', '<Leader><Leader>f', vim.lsp.buf.format, { buffer = bufnr, desc = 'LSP format buffer' })
   end
 
+  if client.server_capabilities.renameProvider then
+    vim.keymap.set('n', '<Leader><Leader>R', vim.lsp.buf.rename, { buffer = bufnr, desc = 'LSP rename' })
+  end
 
-  if client.supports_method('textDocument/inlayHint') then
-    -- vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
-    vim.keymap.set('n', '<Leader><Leader>i', function ()
+  if client.server_capabilities.codeActionProvider then
+    vim.keymap.set('n', '<Leader><Leader>A', vim.lsp.buf.code_action, { buffer = bufnr, desc = 'LSP code actions' })
+  end
+
+  if client.server_capabilities.inlayHintProvider then
+    vim.keymap.set('n', '<Leader><Leader>I', function ()
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
-    end, { buffer = bufnr, desc = 'Toggle inlay hints' })
+    end, { buffer = bufnr, desc = 'LSP toggle inlay hints' })
   end
 
-  if client.supports_method('textDocument/documentSymbol') then
+  if client.server_capabilities.documentSymbolProvider then
     require('nvim-navic').attach(client, bufnr)
   end
 end
 
 local function lsp_detach(args)
-  local client = vim.lsp.get_client_by_id(args.data.client_id)
-  if not client then
-    return
-  end
-
   local bufnr = args.buf
-
-  if client.supports_method('textDocument/signatureHelp') then
-    vim.keymap.del('n', 'K', { buffer = bufnr })
-    vim.keymap.del('i', '<C-k>', { buffer = bufnr })
-  end
-
-  if client.supports_method('textDocument/formatting') then
-    vim.keymap.del('n', '<Leader><Leader>f', { buffer = bufnr })
-  end
-
-  if client.supports_method('textDocument/codeAction') then
-    vim.keymap.del('n', '<Leader><Leader>a', { buffer = bufnr })
-  end
-
-  if client.supports_method('textDocument/inlayHint') then
-    vim.keymap.del('n', '<Leader><Leader>i', { buffer = bufnr })
-  end
+  pcall(vim.keymap.del, 'n', 'K', { buffer = bufnr})
+  pcall(vim.keymap.del, 'i', '<C-k>', { buffer = bufnr})
+  pcall(vim.keymap.del, 'n', '<Leader><Leader>d', { buffer = bufnr})
+  pcall(vim.keymap.del, 'n', '<Leader><Leader>D', { buffer = bufnr})
+  pcall(vim.keymap.del, 'n', '<Leader><Leader>t', { buffer = bufnr})
+  pcall(vim.keymap.del, 'n', '<Leader><Leader>f', { buffer = bufnr})
+  pcall(vim.keymap.del, 'x', '<Leader><Leader>f', { buffer = bufnr})
+  pcall(vim.keymap.del, 'n', '<Leader><Leader>R', { buffer = bufnr})
+  pcall(vim.keymap.del, 'n', '<Leader><Leader>A', { buffer = bufnr})
+  pcall(vim.keymap.del, 'n', '<Leader><Leader>I', { buffer = bufnr})
 end
 
 return {
@@ -77,19 +83,25 @@ return {
     local lspconfig = require('lspconfig')
     local capabilities = require('user.plugins.lspconfig.capabilities')
 
-    lspconfig.bashls.setup({ capabilities = capabilities })
+    local handlers = {
+      ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
+      ['textDocument/signatureHelp'] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = 'single' }),
+    }
+
+    lspconfig.bashls.setup({ capabilities = capabilities, handlers = handlers })
     lspconfig.basedpyright.setup({
       capabilities = capabilities,
+      handlers = handlers,
       settings = {
         basedpyright = {
           typeCheckingMode = 'basic',
         },
       },
     })
-    lspconfig.gopls.setup({ capabilities = capabilities })
-    lspconfig.jsonls.setup({ capabilities = capabilities })
-    lspconfig.lua_ls.setup({ capabilities = capabilities })
-    lspconfig.pyright.setup({ capabilities = capabilities })
+    lspconfig.gopls.setup({ capabilities = capabilities, handlers = handlers })
+    lspconfig.jsonls.setup({ capabilities = capabilities, handlers = handlers })
+    lspconfig.lua_ls.setup({ capabilities = capabilities, handlers = handlers })
+    lspconfig.pyright.setup({ capabilities = capabilities, handlers = handlers })
 
     local cmp = require('cmp')
 

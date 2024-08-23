@@ -6,70 +6,29 @@ local function lsp_attach(args)
 
   local bufnr = args.buf
 
-  if client.supports_method('textDocument/declaration*') then
-    vim.keymap.set('n', 'gD', function () require('mini.extra').pickers.lsp({ scope = 'declaration' }) end, { buffer = bufnr, desc = 'LSP declaration' })
+  if client.server_capabilities.implementationProvider then
+    vim.keymap.set('n', '<Leader><Leader>i', function () require('mini.extra').pickers.lsp({ scope = 'implementation' }) end, { buffer = bufnr, desc = 'LSP implementation' })
   end
 
-  if client.supports_method('textDocument/definition') then
-    vim.keymap.set('n', 'gd', function () require('mini.extra').pickers.lsp({ scope = 'definition' }) end, { buffer = bufnr, desc = 'LSP definition' })
+  if client.server_capabilities.referencesProvider then
+    vim.keymap.set('n', '<Leader><Leader>r', function () require('mini.extra').pickers.lsp({ scope = 'references' }) end, { buffer = bufnr, desc = 'LSP references' })
   end
 
-  if client.supports_method('textDocument/implementation*') then
-    vim.keymap.set('n', 'gi', function () require('mini.extra').pickers.lsp({ scope = 'implementation' }) end, { buffer = bufnr, desc = 'LSP implementation' })
+  if client.server_capabilities.documentSymbolProvider then
+    vim.keymap.set('n', '<Leader><Leader>o', function () require('mini.extra').pickers.lsp({ scope = 'document_symbol' }) end, { buffer = bufnr, desc = 'LSP document symbols' })
   end
 
-  if client.supports_method('textDocument/references') then
-    vim.keymap.set('n', 'gR', function () require('mini.extra').pickers.lsp({ scope = 'references' }) end, { buffer = bufnr, desc = 'LSP references' })
-  end
-
-  if client.supports_method('textDocument/typeDefinition*') then
-    vim.keymap.set('n', '<Leader>D', function () require('mini.extra').pickers.lsp({ scope = 'type_definition' }) end, { buffer = bufnr, desc = 'LSP type definitions' })
-  end
-
-  if client.supports_method('textDocument/documentSymbol') then
-    vim.keymap.set('n', '<Leader><Leader>d', function () require('mini.extra').pickers.lsp({ scope = 'document_symbol' }) end, { buffer = bufnr, desc = 'LSP document symbols' })
-  end
-
-  if client.supports_method('workspace/symbol') then
-    vim.keymap.set('n', '<Leader><Leader>w', function () require('mini.extra').pickers.lsp({ scope = 'workspace_symbol' }) end, { buffer = bufnr, desc = 'LSP workspace symbols' })
+  if client.server_capabilities.workspaceSymbolProvider then
+    vim.keymap.set('n', '<Leader><Leader>O', function () require('mini.extra').pickers.lsp({ scope = 'workspace_symbol' }) end, { buffer = bufnr, desc = 'LSP workspace symbols' })
   end
 end
 
 local function lsp_detach(args)
-  local client = vim.lsp.get_client_by_id(args.data.client_id)
-  if not client then
-    return
-  end
-
   local bufnr = args.buf
-
-  if client.supports_method('textDocument/declaration*') then
-    vim.keymap.del('n', 'gD', { buffer = bufnr })
-  end
-
-  if client.supports_method('textDocument/definition') then
-    vim.keymap.del('n', 'gd', { buffer = bufnr })
-  end
-
-  if client.supports_method('textDocument/implementation*') then
-    vim.keymap.del('n', 'gi', { buffer = bufnr })
-  end
-
-  if client.supports_method('textDocument/references') then
-    vim.keymap.del('n', 'gR', { buffer = bufnr })
-  end
-
-  if client.supports_method('textDocument/typeDefinition*') then
-    vim.keymap.del('n', '<Leader>D', { buffer = bufnr })
-  end
-
-  if client.supports_method('textDocument/documentSymbol') then
-    vim.keymap.del('n', '<Leader><Leader>d', { buffer = bufnr })
-  end
-
-  if client.supports_method('workspace/symbol') then
-    vim.keymap.del('n', '<Leader><Leader>w', { buffer = bufnr })
-  end
+  pcall(vim.keymap.del, 'n', '<Leader><Leader>i', { buffer = bufnr })
+  pcall(vim.keymap.del, 'n', '<Leader><Leader>r', { buffer = bufnr })
+  pcall(vim.keymap.del, 'n', '<Leader><Leader>o', { buffer = bufnr })
+  pcall(vim.keymap.del, 'n', '<Leader><Leader>O', { buffer = bufnr })
 end
 
 local keys = {
