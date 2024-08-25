@@ -3,8 +3,6 @@ function _prompt_cmd_duration
     set_color brwhite
     echo -n ' '(time_conv $CMD_DURATION)' '
     set_color normal
-    # only print duration once
-    set -g CMD_DURATION 0
   end
 end
 
