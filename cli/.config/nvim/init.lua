@@ -38,6 +38,7 @@ require('user.keymaps')
 require('user.autocmds')
 require('user.diagnostics').setup()
 require('user.lazy')
+require('user.terminal')
 
 vim.opt.termguicolors = true
 vim.cmd([[set background=dark]])
