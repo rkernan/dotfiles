@@ -2,32 +2,31 @@ local M = {}
 
 local term = require('user.floating_terminal')
 
-M.terminal = term:new()
+local function on_start(terminal)
+  -- better terminal colors
+  vim.wo[terminal.winnr].winhighlight = 'Normal:Normal,FloatBorder:FloatBorder'
+  -- no transparency
+  vim.wo[terminal.winnr].winblend = 0
+end
 
-vim.keymap.set('n', '<Leader>t', function () M.terminal:toggle() end, { desc = 'Toggle floating terminal' })
-vim.keymap.set('t', '<A-i>', function ()
-  if vim.api.nvim_get_current_buf() == M.terminal.bufnr then
-    M.terminal:toggle()
-  end
-end)
-
-vim.api.nvim_create_user_command(
-  'Term',
-  function ()
-    M.terminal:show()
-  end,
-  { nargs = '*', bang = true })
-
-vim.api.nvim_create_user_command(
-  'TermScratch',
-  function (args)
-    local scratch = term:new()
-    if not vim.tbl_isempty(args.fargs) then
-      scratch:run(args.fargs)
+M.terminal = term:new({ on_start = function (terminal)
+  on_start(terminal)
+  -- setup keymap to close
+  vim.keymap.set('t', '<A-i>', function ()
+    if vim.api.nvim_get_current_buf() == terminal.bufnr then
+      terminal:hide()
     end
-    scratch:show()
-    -- TODO close terminal
+  end)
+end})
+
+vim.keymap.set('n', '<Leader>t', function () M.terminal:show() end, { desc = 'Terminal' })
+vim.keymap.set('n', '<Leader>s',
+  function ()
+    term:new({
+      on_start = on_start,
+      title = 'Scratch',
+    }):show()
   end,
-  { nargs = '*', bang = true })
+  { desc = 'Scratch terminal' })
 
 return M

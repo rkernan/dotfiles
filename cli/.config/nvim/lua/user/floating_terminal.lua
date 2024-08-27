@@ -34,8 +34,10 @@ function FloatingTerminal:is_win_valid()
 end
 
 function FloatingTerminal:show()
+  local started = false
   if not self:is_buf_valid() then
     self.bufnr = vim.api.nvim_create_buf(false, true)
+    started = true
   end
 
   if not self:is_win_valid() then
@@ -48,20 +50,23 @@ function FloatingTerminal:show()
         height = dimensions.height,
         col = dimensions.col,
         row = dimensions.row,
+        title = self.title,
       }
     )
-    -- better terminal colors
-    vim.api.nvim_win_set_option(self.winnr, 'winhighlight', 'Normal:Normal,FloatBorder:FloatBorder')
-    -- no transparency
-    vim.api.nvim_win_set_option(self.winnr, 'winblend', 0)
+    started = true
   end
 
   if self.terminal == nil then
-    self.terminal = vim.fn.termopen(os.getenv('SHELL'),
+    self.terminal = vim.fn.termopen(self.command and self.command or os.getenv('SHELL'),
       { on_exit = function () self:on_exit() end })
+    started = true
   end
 
   vim.api.nvim_command([[startinsert]])
+
+  if started and self.on_start then
+    self.on_start(self)
+  end
 end
 
 function FloatingTerminal:run(cmd)
