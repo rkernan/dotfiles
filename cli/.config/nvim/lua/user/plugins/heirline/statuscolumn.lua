@@ -21,14 +21,10 @@ return {
     condition = conditions.is_not_active,
     utils.surround({ '', ' '}, nil, components.column.folds),
     utils.surround({ '%=', '' }, nil, components.column.line_number),
-    -- TODO separate gitsigns, diagnostics, and dap
     components.column.signs,
-    -- utils.surround({ '%=', '' }, nil, components.column.sign_from_extmark('gitsigns_signs')),
   }, {
     utils.surround({ '', ' '}, nil, components.column.folds),
     utils.surround({ '%=', '' }, nil, components.column.line_number),
-    -- TODO separate gitsigns, diagnostics, and dap
     components.column.signs,
-    -- components.column.sign_from_extmark('gitsigns_signs_'),
   }
 }
