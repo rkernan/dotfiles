@@ -94,6 +94,7 @@ for target in $targets; do
       check_command fish    || true
       check_command fzf     || true
       check_command git-lfs || true
+      check_command gg      || true
       check_command go      || true
       check_command nvim    || true
       check_command rg      || true
