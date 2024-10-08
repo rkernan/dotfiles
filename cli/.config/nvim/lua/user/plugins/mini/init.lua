@@ -1,5 +1,4 @@
-local keys = {}
-vim.tbl_extend('error', keys, require('user.plugins.mini.pick').keys)
+local keys = require('user.plugins.mini.pick').keys
 table.insert(keys, {  '<Leader>F', function () require('mini.files').open() end, desc = 'File explorer' })
 
 return {
