@@ -39,9 +39,6 @@ function M.setup()
       end,
     },
   })
-
-  vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Diagnostic forward' })
-  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Diagnostic backward' })
 end
 
 return M
