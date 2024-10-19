@@ -24,12 +24,6 @@ if test -d $go_path
   fish_add_path $GOPATH"/bin"
 end
 
-# rust
-set -l cargo_path $HOME"/.cargo/env.fish"
-if test -e $cargo_path
-  source $cargo_path
-end
-
 # env
 set -x EDITOR nvim
 set -x PAGER less

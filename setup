@@ -89,7 +89,6 @@ for target in $targets; do
       # commands
       check_command bat     || true
       check_command brew    || true
-      check_command cargo   || true
       check_command fd      || true
       check_command fish    || true
       check_command fzf     || true
@@ -97,7 +96,6 @@ for target in $targets; do
       check_command go      || true
       check_command nvim    || true
       check_command rg      || true
-      check_command rustup  || true
       check_command stow    || true
       check_command tmux    || true
       check_command vf      || true
