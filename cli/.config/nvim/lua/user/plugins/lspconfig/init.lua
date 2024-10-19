@@ -133,6 +133,12 @@ return {
       TypeParameter = "󰅲",
     }
 
+    local function has_words_before()
+      unpack = unpack or table.unpack
+      local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+      return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match('%s') == nil
+    end
+
     cmp.setup({
       enabled = function ()
         local context = require('cmp.config.context')
@@ -164,9 +170,15 @@ return {
         ['<CR>'] = cmp.mapping.confirm({ select = false }),
         ['<Tab>']   = cmp.mapping(function (fallback)
           if cmp.visible() then
-            cmp.select_next_item()
+            if #cmp.get_entries() == 1 then
+              cmp.confirm({ select = true })
+            else
+              cmp.select_next_item()
+            end
           elseif vim.snippet.active({ direction = 1 }) then
             vim.snippet.jump(1)
+          elseif has_words_before() then
+            cmp.complete()
           else
             fallback()
           end
@@ -176,6 +188,8 @@ return {
             cmp.select_prev_item()
           elseif vim.snippet.active({ direction = -1 }) then
             vim.snippet.jump(-1)
+          elseif has_words_before() then
+            cmp.complete()
           else
             fallback()
           end
@@ -199,7 +213,10 @@ return {
     })
 
     cmp.setup.cmdline(':', {
-      mapping = cmp.mapping.preset.cmdline(),
+      mapping = cmp.mapping.preset.cmdline({
+        ['<C-n>'] = cmp.config.disable,
+        ['<C-p>'] = cmp.config.disable,
+      }),
       sources = cmp.config.sources({
         { name = 'path' },
       }, {
