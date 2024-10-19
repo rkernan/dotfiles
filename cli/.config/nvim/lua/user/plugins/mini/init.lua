@@ -1,17 +1,16 @@
 local keys = require('user.plugins.mini.pick').keys
-table.insert(keys, {  '<Leader>F', function () require('mini.files').open() end, desc = 'File explorer' })
+keys = table.insert(keys, {  '<Leader>F', function () require('mini.files').open() end, desc = 'File explorer' })
 
 return {
   'echasnovski/mini.nvim',
   version = false,
   lazy = false,
-  keys = keys,
+  keys = require('user.plugins.mini.pick').keys,
   config = function()
     require('mini.ai').setup()
     require('mini.align').setup()
     require('mini.bracketed').setup()
     require('mini.comment').setup()
-    require('mini.files').setup()
     require('mini.jump').setup()
     require('mini.jump2d').setup()
     require('mini.operators').setup()
