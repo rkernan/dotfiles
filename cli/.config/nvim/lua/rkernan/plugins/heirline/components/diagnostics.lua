@@ -1,5 +1,5 @@
 local conditions = require('heirline.conditions')
-local diagnostic_signs = require('user.diagnostics').signs
+local diagnostic_signs = require('rkernan.diagnostics').signs
 
 return {
   condition = conditions.has_diagnostics,

@@ -41,8 +41,8 @@ local function setup()
       miniclue.gen_clues.registers(),
       miniclue.gen_clues.windows({ submode_move = true, submode_resize = true }),
       miniclue.gen_clues.z(),
-      require('user.plugins.mini.move').gen_clues(),
-      require('user.plugins.dap.keys').gen_clues(),
+      require('rkernan.plugins.mini.move').gen_clues(),
+      require('rkernan.plugins.dap.keys').gen_clues(),
     },
     window = {
       -- delay = 500,

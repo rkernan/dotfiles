@@ -1,4 +1,4 @@
-local augroup = vim.api.nvim_create_augroup('user.autocmds', { clear = true })
+local augroup = vim.api.nvim_create_augroup('rkernan.autocmds', { clear = true })
 
 -- resize windows automatically
 vim.api.nvim_create_autocmd('VimResized', { group = augroup, command = 'wincmd =' })

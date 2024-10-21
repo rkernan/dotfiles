@@ -81,7 +81,7 @@ return {
   lazy = false,
   config = function()
     local lspconfig = require('lspconfig')
-    local capabilities = require('user.plugins.lspconfig.capabilities')
+    local capabilities = require('rkernan.plugins.lspconfig.capabilities')
 
     local handlers = {
       ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
@@ -225,7 +225,7 @@ return {
       matching = { disallow_symbol_nonprefix_matching = false },
     })
 
-    local augroup = vim.api.nvim_create_augroup('user.plugins.lspconfig', { clear = true })
+    local augroup = vim.api.nvim_create_augroup('rkernan.plugins.lspconfig', { clear = true })
     vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
     vim.api.nvim_create_autocmd('LspDetach', { group = augroup, callback = lsp_detach })
   end,

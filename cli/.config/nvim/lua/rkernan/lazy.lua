@@ -17,7 +17,7 @@ require('lazy').setup({
     hererocks = false,
   },
   spec = {
-    { import = 'user.plugins' },
+    { import = 'rkernan.plugins' },
   },
   ui = {
     backdrop = 100,

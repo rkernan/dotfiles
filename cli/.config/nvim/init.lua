@@ -32,13 +32,13 @@ vim.keymap.set('x', ' ', '', { noremap = true })
 -- comma as localleader
 vim.g.maplocalleader = ','
 
-require('user.options')
-require('user.commands')
-require('user.keymaps')
-require('user.autocmds')
-require('user.diagnostics').setup()
-require('user.lazy')
-require('user.terminal')
+require('rkernan.options')
+require('rkernan.commands')
+require('rkernan.keymaps')
+require('rkernan.autocmds')
+require('rkernan.diagnostics').setup()
+require('rkernan.lazy')
+require('rkernan.terminal')
 
 vim.opt.termguicolors = true
 vim.cmd([[set background=dark]])
