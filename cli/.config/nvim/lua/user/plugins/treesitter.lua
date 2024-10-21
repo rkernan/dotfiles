@@ -13,6 +13,7 @@ return {
       incremental_selection = { enable = true },
       indent = { enable = true },
       endwise = { enable = true },
+      additional_vim_regex_highlighting = false,
     })
   end,
 }
