@@ -21,7 +21,7 @@ local function statuscolumn_click_args(minwid, clicks, button, mods)
 end
 
 M.line_number = {
-  provider = '%l ',
+  fallthrough = false,
   on_click = {
     callback = function (_, ...)
       local args = statuscolumn_click_args(...)
@@ -37,7 +37,14 @@ M.line_number = {
       end
     end,
     name = 'heirline_statuscolumn_lnum',
-  },
+  }, {
+    condition = function ()
+      return vim.wo.relativenumber and vim.v.lnum ~= vim.fn.getcurpos()[2]
+    end,
+    provider = '%r ',
+  }, {
+    provider = '%l ',
+  }
 }
 
 M.folds = {
