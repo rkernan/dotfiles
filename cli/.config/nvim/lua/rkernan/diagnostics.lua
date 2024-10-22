@@ -32,7 +32,7 @@ function M.setup()
       border = 'single',
       header = '',
       source = true,
-      prefix= function (diagnostic, ...)
+      prefix = function (diagnostic)
         local sign = string.format('%s ', M.signs[diagnostic.severity])
         local hl = M.sign_hl[diagnostic.severity]
         return sign, hl

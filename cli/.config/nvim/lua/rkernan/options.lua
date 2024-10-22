@@ -1,5 +1,3 @@
-vim.opt.clipboard = 'unnamedplus'
-
 if vim.fn.has('wsl') > 0 then
   vim.g.clipboard = {
     name = 'WslClipboard',
@@ -33,8 +31,6 @@ vim.opt.foldcolumn = 'auto'
 vim.opt.foldlevel = 99
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
--- TODO
--- vim.opt.foldtext = 'v:lua.custom_foldtext()'
 
 if vim.fn.executable('rg') == 1 then
   vim.opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
