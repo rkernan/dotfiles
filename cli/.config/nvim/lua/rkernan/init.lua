@@ -29,11 +29,11 @@ vim.g.mapleader = ' '
 -- comma as localleader
 vim.g.maplocalleader = ','
 
-require('rkernan.options')
 require('rkernan.keymaps')
 require('rkernan.autocmds')
 require('rkernan.diagnostics').setup()
 require('rkernan.lazy')
+require('rkernan.options')
 
 vim.opt.termguicolors = true
 vim.cmd([[set background=dark]])

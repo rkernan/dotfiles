@@ -27,6 +27,9 @@ vim.keymap.set('n', 'gk', 'k', { desc = 'Prev line' })
 vim.keymap.set('x', '>', '>gv')
 vim.keymap.set('x', '<', '<gv')
 
+-- restore <C-z> - mini.basics breaks
+vim.keymap.set('n', '<C-z>', '<Cmd>stop<CR>')
+
 vim.keymap.set('n', '<C-e>', function ()
   local res = vim.treesitter.get_captures_at_cursor(0)
   print(vim.inspect(res))

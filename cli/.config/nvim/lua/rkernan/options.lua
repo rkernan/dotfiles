@@ -13,12 +13,25 @@ if vim.fn.has('wsl') > 0 then
   }
 end
 
+vim.opt.showbreak = '⌙'
+
 vim.opt.fillchars = {
   eob = ' ',
   foldopen = '',
   foldclose = '',
   foldsep = ' ',
 }
+
+vim.opt.listchars = {
+  eol = '¬',
+  tab = '»·',
+  nbsp = '␣',
+  trail = '·',
+  extends = '→',
+  precedes = '←',
+}
+
+vim.opt.list = false
 
 vim.opt.shortmess = vim.opt.shortmess + 'I'
 
