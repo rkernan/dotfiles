@@ -9,6 +9,10 @@ ffi.cdef([[
   int compute_foldcolumn(win_T* wp, int col);
 ]])
 
+local function is_line_visible()
+  return vim.v.lnum >= vim.fn.line('w0') and vim.v.lnum <= vim.fn.line('w$')
+end
+
 local function statuscolumn_click_args(minwid, clicks, button, mods)
   return {
     minwid = minwid,
@@ -22,6 +26,7 @@ end
 
 M.line_number = {
   fallthrough = false,
+  condition = is_line_visible,
   on_click = {
     callback = function (_, ...)
       local args = statuscolumn_click_args(...)
@@ -49,6 +54,7 @@ M.line_number = {
 
 M.folds = {
   fallthrough = false,
+  condition = is_line_visible,
   init = function (self)
     local wp = ffi.C.find_window_by_handle(0, ffi.new('Error'))
     self.width = ffi.C.compute_foldcolumn(wp, 0)
@@ -115,6 +121,7 @@ M.folds = {
 }
 
 M.signs = {
+  condition = is_line_visible,
   provider = '%s',
 }
 
