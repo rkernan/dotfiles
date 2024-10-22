@@ -11,3 +11,18 @@ vim.api.nvim_create_autocmd('BufReadPost', {
     vim.cmd([[silent! normal! g`"zv]])
   end
 })
+
+-- relativenumber in active windows
+vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter'}, {
+  group = augroup,
+  callback = function ()
+    vim.wo.relativenumber = true
+  end
+})
+-- norelativenumber in inactive windows and insert mode
+vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
+  group = augroup,
+  callback = function ()
+    vim.wo.relativenumber = false
+  end
+})
