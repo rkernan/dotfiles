@@ -42,12 +42,6 @@ M.line_number = {
 
 M.folds = {
   fallthrough = false,
-  static = {
-    icons = {
-      foldclose = vim.opt_local.fillchars:get().foldclose,
-      foldopen = vim.opt_local.fillchars:get().foldopen,
-    },
-  },
   init = function (self)
     local wp = ffi.C.find_window_by_handle(0, ffi.new('Error'))
     self.width = ffi.C.compute_foldcolumn(wp, 0)
@@ -57,6 +51,10 @@ M.folds = {
       self.foldlevel_before = vim.fn.foldlevel((vim.v.lnum > 1) and (vim.v.lnum - 1) or 1)
       local maxline = vim.fn.line('$')
       self.foldlevel_after = vim.fn.foldlevel((vim.v.lnum < maxline) and (vim.v.lnum + 1 ) or maxline)
+      self.icons = {
+        foldclose = vim.opt_local.fillchars:get().foldclose,
+        foldopen = vim.opt_local.fillchars:get().foldopen,
+      }
     end
 
   end,
