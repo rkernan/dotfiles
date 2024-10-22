@@ -8,7 +8,7 @@ vim.keymap.set('n', '<C-u>', '<C-u>zz')
 -- yank to end of line
 vim.keymap.set('n', 'Y', 'y$')
 
--- paster replace to void register
+-- paste replace to void register
 vim.keymap.set('x', '<Leader>p', '"_dP', { desc = 'Replace to void register' })
 
 -- yank to system clipboard
