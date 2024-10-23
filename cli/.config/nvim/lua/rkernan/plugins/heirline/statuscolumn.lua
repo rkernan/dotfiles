@@ -9,7 +9,7 @@ return {
   fallthrough = false,
   {
     condition = function ()
-      conditions.buffer_matches({
+      return conditions.buffer_matches({
         buftype = buftype_disable,
         filetype = filetype_disable,
       })
