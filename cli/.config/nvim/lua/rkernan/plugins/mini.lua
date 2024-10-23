@@ -143,6 +143,16 @@ return {
       },
     })
 
+    require('mini.notify').setup({
+      window = {
+        config = {
+          -- don't draw over winbar
+          row = 1,
+        },
+      },
+    })
+    MiniNotify.make_notify()
+
     require('mini.operators').setup()
     require('mini.pairs').setup()
     require('mini.pick').setup()
