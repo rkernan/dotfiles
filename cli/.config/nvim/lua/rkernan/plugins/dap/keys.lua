@@ -69,6 +69,6 @@ end
 
 return {
   trigger = trigger,
-  gen_keys = gen_keys,
-  gen_clues = gen_clues,
+  keys = gen_keys(),
+  clues = gen_clues(),
 }

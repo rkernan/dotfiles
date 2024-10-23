@@ -4,10 +4,10 @@ return {
     'theHamsta/nvim-dap-virtual-text',
     'mfussenegger/nvim-dap-python',
   },
-  keys = require('rkernan.plugins.dap.keys').gen_keys(),
+  keys = require('rkernan.plugins.dap.keys').keys,
   config = function ()
     vim.fn.sign_define('DapBreakpoint', { text = '', texthl = 'DiagnosticSignWarn', linehl = '', numhl = '' })
-    require("nvim-dap-virtual-text").setup()
+    require("nvim-dap-virtual-text").setup({})
     require('dap-python').setup()
   end
 }
