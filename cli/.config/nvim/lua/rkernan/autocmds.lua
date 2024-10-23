@@ -16,13 +16,17 @@ vim.api.nvim_create_autocmd('BufReadPost', {
 vim.api.nvim_create_autocmd({ 'BufEnter', 'FocusGained', 'InsertLeave', 'WinEnter'}, {
   group = augroup,
   callback = function ()
-    vim.wo.relativenumber = true
+    if vim.wo.number then
+      vim.wo.relativenumber = true
+    end
   end
 })
 -- norelativenumber in inactive windows and insert mode
 vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave' }, {
   group = augroup,
   callback = function ()
-    vim.wo.relativenumber = false
+    if vim.wo.number then
+      vim.wo.relativenumber = false
+    end
   end
 })
