@@ -155,7 +155,10 @@ return {
 
     require('mini.operators').setup()
     require('mini.pairs').setup()
+
     require('mini.pick').setup()
+    vim.ui.select = MiniPick.ui_select
+
     require('mini.surround').setup()
     require('mini.trailspace').setup()
   end,
