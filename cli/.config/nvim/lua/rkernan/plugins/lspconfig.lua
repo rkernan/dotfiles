@@ -50,12 +50,6 @@ local function lsp_detach(args)
 end
 
 return {
-  {
-    'VonHeikemen/lsp-zero.nvim',
-    branch = 'v4.x',
-    lazy = true,
-  },
-
   -- neovim completion
   {
     'folke/lazydev.nvim',
@@ -130,8 +124,24 @@ return {
           ['<C-Space>'] = cmp.mapping.complete(),
           ['<C-u>'] = cmp.mapping.scroll_docs(-4),
           ['<C-d>'] = cmp.mapping.scroll_docs(4),
-          ['<Tab>'] = cmp_action.tab_complete(),
-          ['<S-Tab>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Insert }),
+          ['<Tab>'] = cmp.mapping(function (fallback)
+            if not cmp.select_next_item() then
+              if vim.snippet.active({ direction = 1 }) then
+                vim.snippet.jump(1)
+              else
+                fallback()
+              end
+            end
+          end),
+          ['<S-Tab>'] = cmp.mapping(function (fallback)
+            if not cmp.select_prev_item() then
+              if vim.snippet.active({ direction = -1 }) then
+                vim.snippet.jump(-1)
+              else
+                fallback()
+              end
+            end
+          end),
         }),
         snippet = {
           expand = function(args)
