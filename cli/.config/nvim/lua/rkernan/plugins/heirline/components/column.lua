@@ -5,6 +5,13 @@ local ffi = require('ffi')
 ffi.cdef([[
   typedef struct {} Error;
   typedef struct {} win_T;
+  typedef struct {
+    int start;  // line number where deepest fold starts
+    int level;  // fold level, when zero other fields are N/A
+    int llevel; // lowest level that starts in v:lnum
+    int lines;  // number of lines from v:lnum to end of closed fold
+  } foldinfo_T;
+  foldinfo_T fold_info(win_T* wp, int lnum);
   win_T* find_window_by_handle(int Window, Error* err);
   int compute_foldcolumn(win_T* wp, int col);
 ]])
@@ -38,6 +45,8 @@ M.line_number = {
     end,
     name = 'heirline_statuscolumn_lnum',
   }, {
+    -- FIXME future remove %r and handle this for us
+    -- https://github.com/neovim/neovim/commit/ad70c9892d5b5ebcc106742386c99524f074bcea/
     condition = function ()
       return vim.wo.relativenumber and vim.v.lnum ~= vim.fn.getcurpos()[2]
     end,
@@ -53,17 +62,15 @@ M.folds = {
     local wp = ffi.C.find_window_by_handle(0, ffi.new('Error'))
     self.width = ffi.C.compute_foldcolumn(wp, 0)
     if self.width > 0 then
-      self.foldclosed = vim.fn.foldclosed(vim.v.lnum)
-      self.foldlevel = vim.fn.foldlevel(vim.v.lnum)
-      self.foldlevel_before = vim.fn.foldlevel((vim.v.lnum > 1) and (vim.v.lnum - 1) or 1)
-      local maxline = vim.fn.line('$')
-      self.foldlevel_after = vim.fn.foldlevel((vim.v.lnum < maxline) and (vim.v.lnum + 1 ) or maxline)
+      self.foldinfo = ffi.C.fold_info(wp, vim.v.lnum) or { start = 0, level = 0, llevel = 0, lines = 0 }
+      self.foldclosed = self.foldinfo.lines > 0
+
       self.icons = {
         foldclose = vim.opt_local.fillchars:get().foldclose,
         foldopen = vim.opt_local.fillchars:get().foldopen,
+        foldsep = vim.opt_local.fillchars:get().foldsep,
       }
     end
-
   end,
   on_click = {
     callback = function (_, ...)
@@ -88,28 +95,37 @@ M.folds = {
     end,
     name = 'heirline_statuscolumn_folds',
   }, {
+    -- folds are disabled
     condition = function (self)
       return self.width == 0
     end,
-    provider = '',
+    provider = ''
   }, {
+    -- line does not have any folds
     condition = function (self)
-      return self.foldclosed > 0 and self.foldclosed == vim.v.lnum
+      return self.foldinfo.level == 0
+    end,
+    provider = ' ',
+  }, {
+    -- line is first line in a closed fold
+    condition = function (self)
+      return self.foldinfo.lines > 0
     end,
     provider = function (self)
       return self.icons.foldclose
     end,
   }, {
+    -- line is the first line in an open fold
     condition = function (self)
-      return self.foldlevel > self.foldlevel_before and self.foldlevel <= self.foldlevel_after
+      return self.foldinfo.start == vim.v.lnum
     end,
     provider = function (self)
       return self.icons.foldopen
     end,
   }, {
-    provider = function ()
-      return ' '
-    end
+    provider = function (self)
+      return self.icons.foldsep
+    end,
   },
   hl = 'FoldColumn',
 }
