@@ -1,6 +1,6 @@
 local M = {}
 
-local term = require('rkernan.floating_terminal')
+local term = require('rkernan.floating-terminal')
 
 local function on_start(terminal)
   -- better terminal colors
