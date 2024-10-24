@@ -45,6 +45,9 @@ vim.opt.foldlevel = 99
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
 
+-- extend selection instead of opening popup menu
+vim.opt.mousemodel = 'extend'
+
 if vim.fn.executable('rg') == 1 then
   vim.opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
   vim.opt.grepprg = 'rg --vimgrep --no-heading --smart-case'
