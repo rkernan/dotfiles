@@ -127,7 +127,12 @@ return {
     require('mini.icons').setup()
     MiniIcons.mock_nvim_web_devicons()
 
-    require('mini.jump').setup()
+    require('mini.jump').setup({
+      mappings = {
+        repeat_jump = '',
+      },
+    })
+
     require('mini.jump2d').setup()
 
     require('mini.move').setup({
