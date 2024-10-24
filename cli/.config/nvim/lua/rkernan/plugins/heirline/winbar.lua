@@ -1,9 +1,6 @@
 local components = require('rkernan.plugins.heirline.components')
 local conditions = require('heirline.conditions')
 
-local buftype_disable = { 'nofile', 'help', 'prompt', 'quickfix', 'terminal' }
-local filetype_disable = { 'minipick', }
-
 return {
   hl = function ()
     if conditions.is_active() then
@@ -14,17 +11,6 @@ return {
   end,
   fallthrough = false,
   {
-    condition = function ()
-      return conditions.buffer_matches({
-        buftype = buftype_disable,
-        filetype = filetype_disable,
-      })
-    end,
-    init = function ()
-      -- disable winbar
-      vim.opt_local.winbar = nil
-    end,
-  }, {
     components.filename,
     components.space,
     components.gitsigns.added,
