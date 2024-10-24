@@ -54,14 +54,26 @@ return {
     'VonHeikemen/lsp-zero.nvim',
     branch = 'v4.x',
     lazy = true,
-    config = false,
+  },
+
+  -- neovim completion
+  {
+    'folke/lazydev.nvim',
+    ft = 'lua',
+    opts = {
+      library = {
+        { path = 'luvit-meta/library', words = { 'vim%.uv' }},
+      },
+    },
+  }, {
+    'Bilal2453/luvit-meta',
+    lazy = true,
   },
 
   -- statusline breadcrumbs
   {
     'SmiteshP/nvim-navic',
     lazy = true,
-    config = false,
   },
 
   -- autocompletion
