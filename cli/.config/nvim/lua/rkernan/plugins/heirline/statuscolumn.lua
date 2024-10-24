@@ -3,7 +3,7 @@ local conditions = require('heirline.conditions')
 local utils = require('heirline.utils')
 
 local buftype_disable = { 'nofile', 'help', 'prompt', 'quickfix', 'terminal' }
-local filetype_disable = {}
+local filetype_disable = { 'minipick', }
 
 return {
   fallthrough = false,

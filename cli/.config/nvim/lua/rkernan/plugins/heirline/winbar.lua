@@ -2,7 +2,7 @@ local components = require('rkernan.plugins.heirline.components')
 local conditions = require('heirline.conditions')
 
 local buftype_disable = { 'nofile', 'help', 'prompt', 'quickfix', 'terminal' }
-local filetype_disable = {}
+local filetype_disable = { 'minipick', }
 
 return {
   hl = function ()
