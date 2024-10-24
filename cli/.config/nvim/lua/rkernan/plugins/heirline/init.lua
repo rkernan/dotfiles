@@ -1,6 +1,3 @@
-local buftype_disable = { 'nofile', 'help', 'prompt', 'quickfix', 'terminal' }
-local filetype_disable = { 'minipick', }
-
 return {
   'rebelot/heirline.nvim',
   lazy = false,
@@ -12,8 +9,8 @@ return {
       opts = {
         disable_winbar_cb = function ()
           return require('heirline.conditions').buffer_matches({
-            buftype = buftype_disable,
-            filetype = filetype_disable,
+            buftype = { 'nofile', 'help', 'prompt', 'quickfix', 'terminal' },
+            filetype = {},
           })
         end
       },
