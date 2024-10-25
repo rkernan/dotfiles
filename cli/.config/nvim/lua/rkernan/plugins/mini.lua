@@ -23,8 +23,10 @@ return {
     { '<Leader>j', function () MiniExtra.pickers.marks() end, desc = 'Marks' },
   },
   config = function()
-    require('mini.ai').setup()
-    require('mini.align').setup()
+    require('mini.deps').setup()
+
+    MiniDeps.later(function () require('mini.ai').setup() end)
+    MiniDeps.later(function () require('mini.align').setup() end)
 
     require('mini.basics').setup({
       options = {
@@ -40,7 +42,7 @@ return {
       },
     })
 
-    require('mini.bracketed').setup()
+    MiniDeps.later(function () require('mini.bracketed').setup() end)
 
     local minimove_trigger = '<Leader>m'
     local minimove_mappings = {
@@ -54,100 +56,108 @@ return {
       line_right = { mode = 'x', keys = minimove_trigger .. 'l', postkeys = minimove_trigger },
     }
     local minimove_clues = gen_clues(minimove_mappings)
-    local miniclue = require('mini.clue')
 
-    miniclue.setup({
-      triggers = {
-        -- Leader triggers
-        { mode = 'n', keys = '<Leader>' },
-        { mode = 'x', keys = '<Leader>' },
-        -- Built-in completion
-        { mode = 'i', keys = '<C-x>' },
-        -- `g` key
-        { mode = 'n', keys = 'g' },
-        { mode = 'x', keys = 'g' },
-        -- Marks
-        { mode = 'n', keys = "'" },
-        { mode = 'n', keys = '`' },
-        { mode = 'x', keys = "'" },
-        { mode = 'x', keys = '`' },
-        -- Registers
-        { mode = 'n', keys = '"' },
-        { mode = 'x', keys = '"' },
-        { mode = 'i', keys = '<C-r>' },
-        { mode = 'c', keys = '<C-r>' },
-        -- Window commands
-        { mode = 'n', keys = '<C-w>' },
-        -- `z` key
-        { mode = 'n', keys = 'z' },
-        { mode = 'x', keys = 'z' },
-        -- mini.basic
-        { mode = 'n', keys = '\\' },
-        -- mini.bracketed
-        { mode = 'n', keys = ']' },
-        { mode = 'x', keys = ']' },
-        -- mini.surround
-        { mode = 'n', keys = 's' },
-        { mode = 'x', keys = 's' },
-      },
-      clues = {
-        miniclue.gen_clues.builtin_completion(),
-        miniclue.gen_clues.g(),
-        miniclue.gen_clues.marks(),
-        miniclue.gen_clues.registers(),
-        miniclue.gen_clues.windows({ submode_move = true, submode_resize = true }),
-        miniclue.gen_clues.z(),
-        minimove_clues,
-        require('rkernan.plugins.dap.keys').clues,
-      },
-      window = {
-        -- delay = 500,
-        config = {
-          width = 'auto',
+    MiniDeps.later(function ()
+      local miniclue = require('mini.clue')
+      miniclue.setup({
+        triggers = {
+          -- Leader triggers
+          { mode = 'n', keys = '<Leader>' },
+          { mode = 'x', keys = '<Leader>' },
+          -- Built-in completion
+          { mode = 'i', keys = '<C-x>' },
+          -- `g` key
+          { mode = 'n', keys = 'g' },
+          { mode = 'x', keys = 'g' },
+          -- Marks
+          { mode = 'n', keys = "'" },
+          { mode = 'n', keys = '`' },
+          { mode = 'x', keys = "'" },
+          { mode = 'x', keys = '`' },
+          -- Registers
+          { mode = 'n', keys = '"' },
+          { mode = 'x', keys = '"' },
+          { mode = 'i', keys = '<C-r>' },
+          { mode = 'c', keys = '<C-r>' },
+          -- Window commands
+          { mode = 'n', keys = '<C-w>' },
+          -- `z` key
+          { mode = 'n', keys = 'z' },
+          { mode = 'x', keys = 'z' },
+          -- mini.basic
+          { mode = 'n', keys = '\\' },
+          -- mini.bracketed
+          { mode = 'n', keys = ']' },
+          { mode = 'x', keys = ']' },
+          -- mini.surround
+          { mode = 'n', keys = 's' },
+          { mode = 'x', keys = 's' },
+        },
+        clues = {
+          miniclue.gen_clues.builtin_completion(),
+          miniclue.gen_clues.g(),
+          miniclue.gen_clues.marks(),
+          miniclue.gen_clues.registers(),
+          miniclue.gen_clues.windows({ submode_move = true, submode_resize = true }),
+          miniclue.gen_clues.z(),
+          minimove_clues,
+          require('rkernan.plugins.dap.keys').clues,
+        },
+        window = {
+          -- delay = 500,
+          config = {
+            width = 'auto',
+          }
         }
-      }
-    })
+      })
+    end)
 
-    require('mini.comment').setup()
-    require('mini.extra').setup()
-    require('mini.files').setup()
+    MiniDeps.later(function () require('mini.comment').setup() end)
+    MiniDeps.later(function () require('mini.extra').setup() end)
+    MiniDeps.later(function () require('mini.files').setup() end)
 
-    local hipatterns = require('mini.hipatterns')
-    hipatterns.setup({
-      highlighters = {
-        -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
-        fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
-        hack  = { pattern = '%f[%w]()HACK()%f[%W]',  group = 'MiniHipatternsHack'  },
-        todo  = { pattern = '%f[%w]()TODO()%f[%W]',  group = 'MiniHipatternsTodo'  },
-        note  = { pattern = '%f[%w]()NOTE()%f[%W]',  group = 'MiniHipatternsNote'  },
-        -- Highlight hex color strings (`#rrggbb`) using that color
-        hex_color = hipatterns.gen_highlighter.hex_color(),
-      }
-    })
+    MiniDeps.later(function ()
+      local hipatterns = require('mini.hipatterns')
+      hipatterns.setup({
+        highlighters = {
+          -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
+          fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
+          hack  = { pattern = '%f[%w]()HACK()%f[%W]',  group = 'MiniHipatternsHack'  },
+          todo  = { pattern = '%f[%w]()TODO()%f[%W]',  group = 'MiniHipatternsTodo'  },
+          note  = { pattern = '%f[%w]()NOTE()%f[%W]',  group = 'MiniHipatternsNote'  },
+          -- Highlight hex color strings (`#rrggbb`) using that color
+          hex_color = hipatterns.gen_highlighter.hex_color(),
+        }
+      })
+    end)
 
     require('mini.icons').setup()
     MiniIcons.mock_nvim_web_devicons()
 
-    require('mini.jump').setup({
-      mappings = {
-        repeat_jump = '',
-      },
-    })
+    MiniDeps.later(function ()
+      require('mini.jump').setup({
+        mappings = {
+          repeat_jump = '',
+        },
+      })
+    end)
 
-    require('mini.jump2d').setup()
+    MiniDeps.later(function () require('mini.jump2d').setup() end)
 
-    require('mini.move').setup({
-      mappings = {
-        left       = minimove_mappings.left.keys,
-        down       = minimove_mappings.down.keys,
-        up         = minimove_mappings.up.keys,
-        right      = minimove_mappings.right.keys,
-        line_left  = minimove_mappings.line_left.keys,
-        line_down  = minimove_mappings.line_down.keys,
-        line_up    = minimove_mappings.line_up.keys,
-        line_right = minimove_mappings.line_right.keys,
-      },
-    })
+    MiniDeps.later(function ()
+      require('mini.move').setup({
+        mappings = {
+          left       = minimove_mappings.left.keys,
+          down       = minimove_mappings.down.keys,
+          up         = minimove_mappings.up.keys,
+          right      = minimove_mappings.right.keys,
+          line_left  = minimove_mappings.line_left.keys,
+          line_down  = minimove_mappings.line_down.keys,
+          line_up    = minimove_mappings.line_up.keys,
+          line_right = minimove_mappings.line_right.keys,
+        },
+      })
+    end)
 
     require('mini.notify').setup({
       window = {
@@ -159,13 +169,15 @@ return {
     })
     MiniNotify.make_notify()
 
-    require('mini.operators').setup()
-    require('mini.pairs').setup()
+    MiniDeps.later(function () require('mini.operators').setup() end)
+    MiniDeps.later(function () require('mini.pairs').setup() end)
 
-    require('mini.pick').setup()
-    vim.ui.select = MiniPick.ui_select
+    MiniDeps.later(function ()
+      require('mini.pick').setup()
+      vim.ui.select = MiniPick.ui_select
+    end)
 
-    require('mini.surround').setup()
-    require('mini.trailspace').setup()
+    MiniDeps.later(function () require('mini.surround').setup() end)
+    MiniDeps.later(function () require('mini.trailspace').setup() end)
   end,
 }
