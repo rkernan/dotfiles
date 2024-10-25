@@ -63,8 +63,6 @@ M.folds = {
     self.width = ffi.C.compute_foldcolumn(wp, 0)
     if self.width > 0 then
       self.foldinfo = ffi.C.fold_info(wp, vim.v.lnum) or { start = 0, level = 0, llevel = 0, lines = 0 }
-      self.foldclosed = self.foldinfo.lines > 0
-
       self.icons = {
         foldclose = vim.opt_local.fillchars:get().foldclose,
         foldopen = vim.opt_local.fillchars:get().foldopen,
