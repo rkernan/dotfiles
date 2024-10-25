@@ -20,6 +20,7 @@ return {
     { '<Leader>/', function () MiniPick.builtin.grep_live() end, desc = 'Live grep' },
     { '<Leader>e', function () MiniExtra.pickers.diagnostic({ scope = 'current' }) end, desc = 'Diagnostics' },
     { '<Leader>E', function () MiniExtra.pickers.diagnostic({ scope = 'all' }) end, desc = 'Workspace diagnostics' },
+    { '<Leader>j', function () MiniExtra.pickers.marks() end, desc = 'Marks' },
   },
   config = function()
     require('mini.ai').setup()
