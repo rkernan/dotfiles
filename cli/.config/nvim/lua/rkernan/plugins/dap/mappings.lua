@@ -1,74 +1,68 @@
-local trigger = '<Leader>d'
-local mappings = {
+local M = {}
+
+M.trigger = '<Leader>d'
+M.mappings = {
   {
     mode     = 'n',
-    keys     = trigger .. 'c',
+    keys     = M.trigger .. 'c',
     desc     = 'DAP continue',
     cmd      = function () require('dap').continue() end,
-    postkeys = trigger,
+    postkeys = M.trigger,
   }, {
     mode     = 'n',
-    keys     = trigger .. 'x',
+    keys     = M.trigger .. 'x',
     desc     = 'DAP close',
     cmd      = function () require('dap').terminate() end,
     postkeys = nil,
   }, {
     mode     = 'n',
-    keys     = trigger .. 'n',
+    keys     = M.trigger .. 'n',
     desc     = 'Step over',
     cmd      = function () require('dap').step_over() end,
-    postkeys = trigger,
+    postkeys = M.trigger,
   }, {
     mode     = 'n',
-    keys     = trigger .. 'b',
+    keys     = M.trigger .. 'b',
     desc     = 'Toggle breakpoint',
     cmd      = function () require('dap').toggle_breakpoint() end,
     postkeys = nil,
   }, {
     mode     = 'n',
-    keys     = trigger .. 'B',
+    keys     = M.trigger .. 'B',
     desc     = 'Set breakpoint',
     cmd      = function () require('dap').set_breakpoint() end,
     postkeys = nil,
   }, {
     mode     = 'n',
-    keys     = trigger .. 'i',
+    keys     = M.trigger .. 'i',
     desc     = 'Step into',
     cmd      = function () require('dap').step_into() end,
-    postkeys = trigger,
+    postkeys = M.trigger,
   }, {
     mode     = 'n',
-    keys     = trigger .. 'o',
+    keys     = M.trigger .. 'o',
     desc     = 'Step out',
     cmd      = function () require('dap').step_out() end,
-    postkeys = trigger,
+    postkeys = M.trigger,
   }, {
     mode     = 'n',
-    keys     = trigger .. 'r',
+    keys     = M.trigger .. 'r',
     desc     = 'Toggle repl',
     cmd      = function () require('dap').repl.toggle() end,
-    postkeys = trigger,
+    postkeys = M.trigger,
   },
 }
 
-local function gen_keys()
+function M.keys()
   local keys = {}
-  for _, mapping in ipairs(mappings) do
+  for _, mapping in ipairs(M.mappings) do
     table.insert(keys, { mapping.keys, mapping.cmd, desc = mapping.desc })
   end
   return keys
 end
 
-local function gen_clues()
-  local clues = {}
-  for _, mapping in ipairs(mappings) do
-    table.insert(clues, { mode = mapping.mode, keys = mapping.keys, postkeys = mapping.postkeys })
-  end
-  return clues
+function M.clues()
+  return require('rkernan.plugins.mini-clue.helpers').igen_clues(M.mappings)
 end
 
-return {
-  trigger = trigger,
-  keys = gen_keys(),
-  clues = gen_clues(),
-}
+return M
