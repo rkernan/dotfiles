@@ -52,3 +52,8 @@ if vim.fn.executable('rg') == 1 then
   vim.opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
   vim.opt.grepprg = 'rg --vimgrep --no-heading --smart-case'
 end
+
+---@diagnostic disable-next-line: duplicate-set-field
+vim.ui.select = function (...)
+  return require('mini.pick').ui_select(...)
+end
