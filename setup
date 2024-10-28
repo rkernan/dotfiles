@@ -49,11 +49,6 @@ install_brew() {
   fi
 }
 
-install_vf() {
-  python3 -m pip install --upgrade --user virtualfish
-  vf install auto_activation global_requirements
-}
-
 setup_brew_fzf() {
   if ! check_command brew &> /dev/null; then
     (>&2 echo "Brew isn't installed!")
@@ -65,6 +60,10 @@ setup_brew_fzf() {
     (>&2 echo "FZF installer not found!")
   fi
   $installer --key-bindings --completion --no-update-rc --xdg
+}
+
+setup_vf() {
+  vf install auto_activation global_requirements environment
 }
 
 setup_gpg_agent() {
@@ -120,8 +119,8 @@ for target in $targets; do
     setup_brew_fzf)
       setup_brew_fzf
       ;;
-    install_vf)
-      install_vf
+    setup_vf)
+      setup_vf
       ;;
     unstow)
       for d in $(find . -mindepth 1 -maxdepth 1 -type d -not -path '*/\.git/*' -printf '%P\n'); do
