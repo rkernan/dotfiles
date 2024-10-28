@@ -201,16 +201,6 @@ return {
       }
 
       lspconfig.bashls.setup(lsp_defaults)
-      lspconfig.basedpyright.setup(vim.tbl_deep_extend(
-        'force',
-        lsp_defaults,
-        {
-          settings = {
-            basedpyright = {
-              typeCheckingMode = 'basic',
-            },
-          },
-        }))
       lspconfig.gopls.setup(lsp_defaults)
       lspconfig.groovyls.setup(vim.tbl_deep_extend(
         'force',
@@ -219,8 +209,22 @@ return {
       ))
       lspconfig.jsonls.setup(lsp_defaults)
       lspconfig.lua_ls.setup(lsp_defaults)
-      -- fallback for older python versions
-      lspconfig.pyright.setup(lsp_defaults)
+
+      if vim.fn.executable('pyright-langserver') > 0 then
+        -- fallback to pyright-langserver for older python versions
+        lspconfig.pyright.setup(lsp_defaults)
+      else
+        lspconfig.basedpyright.setup(vim.tbl_deep_extend(
+          'force',
+          lsp_defaults,
+          {
+            settings = {
+              basedpyright = {
+                typeCheckingMode = 'basic',
+              },
+            },
+          }))
+      end
 
       local augroup = vim.api.nvim_create_augroup('rkernan.plugins.lspconfig', { clear = true })
       vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
