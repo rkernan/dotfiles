@@ -75,6 +75,17 @@ setup_gpg_agent() {
   popd > /dev/null
 }
 
+install_groovyls() {
+  mkdir -p "${HOME}/.local/lib"
+  pushd "${HOME}/.local/lib"
+  rm -rf "groovy-language-server"
+  git clone https://github.com/GroovyLanguageServer/groovy-language-server.git
+  pushd "groovy-language-server"
+  ./gradlew build
+  popd
+  popd
+}
+
 readonly targets=${*:-$(guess_target)}
 
 # don't clobber these directories
@@ -121,6 +132,9 @@ for target in $targets; do
       ;;
     setup_vf)
       setup_vf
+      ;;
+    install_groovyls)
+      install_groovyls
       ;;
     unstow)
       for d in $(find . -mindepth 1 -maxdepth 1 -type d -not -path '*/\.git/*' -printf '%P\n'); do
