@@ -87,6 +87,7 @@ for target in $targets; do
   case $target in
     checkhealth)
       # commands
+      check_command asdf    || true
       check_command bat     || true
       check_command brew    || true
       check_command cargo   || true
@@ -111,6 +112,10 @@ for target in $targets; do
       ;;
     install_brew)
       install_brew
+      ;;
+    setup_asdf)
+      asdf plugin-add python
+      asdf global python system
       ;;
     setup_brew_fzf)
       setup_brew_fzf
