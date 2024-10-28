@@ -212,6 +212,11 @@ return {
           },
         }))
       lspconfig.gopls.setup(lsp_defaults)
+      lspconfig.groovyls.setup(vim.tbl_deep_extend(
+        'force',
+        lsp_defaults,
+        { cmd = { 'java', '-jar', vim.fn.expand('~/Workspace/groovy-language-server/build/libs/groovy-language-server-all.jar') }}
+      ))
       lspconfig.jsonls.setup(lsp_defaults)
       lspconfig.lua_ls.setup(lsp_defaults)
       -- fallback for older python versions
