@@ -6,11 +6,11 @@ return {
   fallthrough = false,
   {
     condition = conditions.is_not_active,
-    utils.surround({ '', ' '}, nil, components.column.folds),
+    components.column.folds,
     utils.surround({ '%=', '' }, nil, components.column.line_number),
     components.column.signs,
   }, {
-    utils.surround({ '', ' '}, nil, components.column.folds),
+    components.column.folds,
     utils.surround({ '%=', '' }, nil, components.column.line_number),
     components.column.signs,
   }

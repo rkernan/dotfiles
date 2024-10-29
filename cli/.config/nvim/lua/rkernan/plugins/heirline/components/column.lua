@@ -103,14 +103,14 @@ M.folds = {
     condition = function (self)
       return self.foldinfo.level == 0
     end,
-    provider = ' ',
+    provider = '  ',
   }, {
     -- line is first line in a closed fold
     condition = function (self)
       return self.foldinfo.lines > 0
     end,
     provider = function (self)
-      return self.icons.foldclose
+      return self.icons.foldclose .. ' '
     end,
   }, {
     -- line is the first line in an open fold
@@ -118,11 +118,11 @@ M.folds = {
       return self.foldinfo.start == vim.v.lnum
     end,
     provider = function (self)
-      return self.icons.foldopen
+      return self.icons.foldopen .. ' '
     end,
   }, {
     provider = function (self)
-      return self.icons.foldsep
+      return self.icons.foldsep .. ' '
     end,
   },
   hl = 'FoldColumn',
