@@ -6,12 +6,14 @@ return {
   fallthrough = false,
   {
     condition = conditions.is_not_active,
-    utils.surround({ '', ' '}, nil, components.column.folds),
+    components.column.folds,
+    components.column.diagnostics,
     utils.surround({ '%=', '' }, nil, components.column.line_number),
-    components.column.signs,
+    components.column.gitsigns,
   }, {
-    utils.surround({ '', ' '}, nil, components.column.folds),
+    components.column.folds,
+    components.column.diagnostics,
     utils.surround({ '%=', '' }, nil, components.column.line_number),
-    components.column.signs,
+    components.column.gitsigns,
   }
 }

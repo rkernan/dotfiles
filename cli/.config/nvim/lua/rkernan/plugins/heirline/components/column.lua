@@ -3,6 +3,7 @@ local M = {}
 local ffi = require('ffi')
 
 ffi.cdef([[
+  uint64_t display_tick;
   typedef struct {} Error;
   typedef struct {} win_T;
   typedef struct {
@@ -103,14 +104,14 @@ M.folds = {
     condition = function (self)
       return self.foldinfo.level == 0
     end,
-    provider = ' ',
+    provider = '  ',
   }, {
     -- line is first line in a closed fold
     condition = function (self)
       return self.foldinfo.lines > 0
     end,
     provider = function (self)
-      return self.icons.foldclose
+      return self.icons.foldclose .. ' '
     end,
   }, {
     -- line is the first line in an open fold
@@ -118,11 +119,11 @@ M.folds = {
       return self.foldinfo.start == vim.v.lnum
     end,
     provider = function (self)
-      return self.icons.foldopen
+      return self.icons.foldopen .. ' '
     end,
   }, {
     provider = function (self)
-      return self.icons.foldsep
+      return self.icons.foldsep .. ' '
     end,
   },
   hl = 'FoldColumn',
@@ -130,6 +131,215 @@ M.folds = {
 
 M.signs = {
   provider = '%s',
+}
+
+local SignsCache = {
+}
+
+function SignsCache:new()
+  local o = {
+    signs = {},
+    last_display_tick = {},
+  }
+  setmetatable(o, self)
+  self.__index = self
+  return o
+end
+
+function SignsCache:setup()
+  -- augroup = vim.api.nvim_create_augroup('SignsCache', { clear = true })
+  vim.api.nvim_create_autocmd('BufDelete', {
+    -- group = augroup,
+    callback = function (args)
+      self:reset(args.buf)
+      table.remove(self.last_display_tick, args.buf)
+    end,
+  })
+end
+
+function SignsCache:insert(bufnr, row, sign)
+  -- initialize rows
+  self.signs[bufnr] = self.signs[bufnr] or {}
+  self.signs[bufnr][sign.ns_id] = self.signs[bufnr][sign.ns_id] or {}
+  self.signs[bufnr][sign.ns_id][row] = self.signs[bufnr][sign.ns_id][row] or {}
+  -- trim whitespace
+  sign.sign_text = sign.sign_text:gsub('%s+', '')
+  -- insert
+  table.insert(self.signs[bufnr][sign.ns_id][row], sign)
+  -- sort by priority
+  table.sort(self.signs[bufnr][sign.ns_id][row], function (a, b) return a.priority > b.priority end)
+end
+
+function SignsCache:reset(bufnr)
+  table.remove(self.signs, bufnr)
+end
+
+function SignsCache:update(bufnr)
+  -- only update once per display tick
+  self.last_display_tick[bufnr] = self.last_display_tick[bufnr] or 0
+  if self.last_display_tick[bufnr] > ffi.C.display_tick then
+    return false
+  elseif self.last_display_tick[bufnr] == ffi.C.display_tick then
+    return true
+  end
+  self.last_display_tick[bufnr] = ffi.C.display_tick
+  -- reset buffer signs
+  self:reset(bufnr)
+  -- gather all signs
+  local extmarks = vim.api.nvim_buf_get_extmarks(bufnr, -1, 0, -1, { type = 'sign', details = true })
+  for _, extmark in ipairs(extmarks) do
+    self:insert(bufnr, extmark[2], extmark[4])
+  end
+  return true
+end
+
+function SignsCache:get(bufnr, ns_id, row)
+  if self.signs[bufnr] and self.signs[bufnr][ns_id] and self.signs[bufnr][ns_id][row] then
+    return self.signs[bufnr][ns_id][row]
+  end
+  return {}
+end
+
+function SignsCache:pop(bufnr, ns_id, row)
+  local res = {}
+  if self.signs[bufnr] and self.signs[bufnr][ns_id] and self.signs[bufnr][ns_id][row] then
+    res = self.signs[bufnr][ns_id][row]
+    table.remove(self.signs[bufnr][ns_id], row)
+  end
+  return res
+end
+
+function SignsCache:has_buf_signs(bufnr, ns_id)
+  if self.signs[bufnr] and self.signs[bufnr][ns_id] then
+    return #self.signs[bufnr][ns_id]
+  end
+  return false
+end
+
+local signs_cache = SignsCache:new()
+signs_cache:setup()
+
+local gitsigns_display_cache = nil
+M.gitsigns = {
+  fallthrough = false,
+  init = function (self)
+    -- setup cache if it doesn't exist
+    if not gitsigns_display_cache then
+      gitsigns_display_cache = SignsCache:new()
+      gitsigns_display_cache:setup()
+    end
+
+    self.bufnr = vim.fn.bufnr()
+    -- gather namespaces
+    self.ns_ids = {}
+    self.ns_ids.staged = vim.api.nvim_get_namespaces()['gitsigns_signs_staged']
+    self.ns_ids.unstaged = vim.api.nvim_get_namespaces()['gitsigns_signs_']
+    -- update signs cache
+    if signs_cache:update(self.bufnr) then
+      -- gather signs from rolling cache
+      gitsigns_display_cache:reset(self.bufnr)
+      for _, sign in ipairs(signs_cache:pop(self.bufnr, self.ns_ids.staged, vim.v.lnum - 1)) do
+        gitsigns_display_cache:insert(self.bufnr, vim.v.lnum - 1, sign)
+      end
+      for _, sign in ipairs(signs_cache:pop(self.bufnr, self.ns_ids.unstaged, vim.v.lnum - 1)) do
+        gitsigns_display_cache:insert(self.bufnr, vim.v.lnum - 1, sign)
+      end
+    end
+    -- gather signs from display cache
+    self.signs = {}
+    self.signs.staged = gitsigns_display_cache:get(self.bufnr, self.ns_ids.staged, vim.v.lnum - 1)
+    self.signs.unstaged = gitsigns_display_cache:get(self.bufnr, self.ns_ids.unstaged, vim.v.lnum - 1)
+  end,
+  {
+    condition = function (self)
+      return not signs_cache:has_buf_signs(self.bufnr, self.ns_ids.staged) and not signs_cache:has_buf_signs(self.bufnr, self.ns_ids.unstaged)
+    end,
+    provider = ''
+  }, {
+    condition = function (self)
+      return #self.signs.staged > 0
+    end,
+    provider = function (self)
+      return self.signs.staged[1].sign_text
+    end,
+    hl = function (self)
+      return self.signs.staged[1].sign_hl_group
+    end,
+  }, {
+    condition = function (self)
+      return #self.signs.unstaged > 0
+    end,
+    provider = function (self)
+      return self.signs.unstaged[1].sign_text
+    end,
+    hl = function (self)
+      return self.signs.unstaged[1].sign_hl_group
+    end,
+  }, {
+    provider = ' ',
+  }
+}
+
+local diagnostics_display_cache = nil
+M.diagnostics = {
+  -- FIXME only update on DiagnosticChanged
+  fallthrough = false,
+  init = function (self)
+    -- setup cache if it doesn't exist
+    if not diagnostics_display_cache then
+      diagnostics_display_cache = SignsCache:new()
+      diagnostics_display_cache:setup()
+    end
+
+    self.bufnr = vim.fn.bufnr()
+    -- gather namespaces
+    self.ns_ids = {}
+    self.has_buf_signs = false
+    for namespace, ns_id in pairs(vim.api.nvim_get_namespaces()) do
+      if string.match(namespace, 'diagnostic/signs') then
+        table.insert(self.ns_ids, ns_id)
+        -- check if we have any buffer signs
+        self.has_buf_signs = self.has_buf_signs or signs_cache:has_buf_signs(self.bufnr, ns_id)
+      end
+    end
+    -- update signs cache
+    if signs_cache:update(self.bufnr) then
+      -- gather from rolling cache
+      diagnostics_display_cache:reset(self.bufnr)
+      for _, ns_id in ipairs(self.ns_ids) do
+        for _, sign in ipairs(signs_cache:pop(self.bufnr, ns_id, vim.v.lnum - 1)) do
+          diagnostics_display_cache:insert(self.bufnr, vim.v.lnum - 1, sign)
+        end
+      end
+    end
+    -- gather signs from display cache
+    self.signs = {}
+    for _, ns_id in ipairs(self.ns_ids) do
+      for _, sign in ipairs(diagnostics_display_cache:get(self.bufnr, ns_id, vim.v.lnum - 1)) do
+        table.insert(self.signs, sign)
+      end
+    end
+    -- sort by priority
+    table.sort(self.signs, function (a, b) return a.priority > b.priority end)
+  end,
+  {
+    condition = function (self)
+      return not self.has_buf_signs
+    end,
+    provider = '',
+  }, {
+    condition = function (self)
+      return #self.signs > 0
+    end,
+    provider = function (self)
+      return self.signs[1].sign_text
+    end,
+    hl = function (self)
+      return self.signs[1].sign_hl_group
+    end,
+  }, {
+    provider = ' '
+  }
 }
 
 return M
