@@ -40,7 +40,7 @@ vim.opt.sidescrolloff = 5
 
 vim.opt.laststatus = 3
 
-vim.opt.foldcolumn = 'auto'
+vim.opt.foldcolumn = '0'
 vim.opt.foldlevel = 99
 vim.opt.foldmethod = 'expr'
 vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
