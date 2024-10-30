@@ -30,3 +30,13 @@ vim.api.nvim_create_autocmd({ 'BufLeave', 'FocusLost', 'InsertEnter', 'WinLeave'
     end
   end
 })
+
+-- disable hlsearch on cursor move
+vim.api.nvim_create_autocmd('CursorMoved', {
+  group = augroup,
+  callback = function ()
+    if vim.v.hlsearch and vim.fn.searchcount().exact_match == 0 then
+      vim.schedule(function () vim.cmd.nohlsearch() end)
+    end
+  end,
+})
