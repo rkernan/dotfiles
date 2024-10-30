@@ -71,117 +71,26 @@ return {
   },
 
   -- autocompletion
+  -- TODO https://github.com/deathbeam/autocomplete.nvim
   {
-    'hrsh7th/nvim-cmp',
-    event = { 'InsertEnter', 'CmdlineEnter' },
+    'echasnovski/mini.completion',
     dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
-      'hrsh7th/nvim-cmp',
-      'hrsh7th/cmp-nvim-lsp-document-symbol',
-      'hrsh7th/cmp-nvim-lsp-signature-help',
+      'echasnovski/mini.icons',
     },
-    config = function()
-      local mini_icons = require('mini.icons')
-      local kind_icons = {
-        Text = mini_icons.get('lsp', 'text'),
-        Method = mini_icons.get('lsp', 'method'),
-        Function = mini_icons.get('lsp', 'function'),
-        Constructor = mini_icons.get('lsp', 'constructor'),
-        Field = mini_icons.get('lsp', 'field'),
-        Variable = mini_icons.get('lsp', 'variable'),
-        Class = mini_icons.get('lsp', 'class'),
-        Interface = mini_icons.get('lsp', 'interface'),
-        Module = mini_icons.get('lsp', 'module'),
-        Property = mini_icons.get('lsp', 'property'),
-        Unit = mini_icons.get('lsp', 'unit'),
-        Value = mini_icons.get('lsp', 'value'),
-        Enum = mini_icons.get('lsp', 'enum'),
-        Keyword = mini_icons.get('lsp', 'keyword'),
-        Snippet = mini_icons.get('lsp', 'snippet'),
-        Color = mini_icons.get('lsp', 'color'),
-        File = mini_icons.get('lsp', 'file'),
-        Reference = mini_icons.get('lsp', 'reference'),
-        Folder = mini_icons.get('lsp', 'folder'),
-        EnumMember = mini_icons.get('lsp', 'enum_member'),
-        Constant = mini_icons.get('lsp', 'constant'),
-        Struct = mini_icons.get('lsp', 'struct'),
-        Event = mini_icons.get('lsp', 'event'),
-        Operator = mini_icons.get('lsp', 'operator'),
-        TypeParameter = mini_icons.get('lsp', 'type_parameter'),
-      }
-
-      local cmp = require('cmp')
-      cmp.setup({
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'nvim_lsp_signature_help' },
-        }, {
-          { name = 'buffer' },
-        }),
-        mapping = cmp.mapping.preset.insert({
-          ['<C-Space>'] = cmp.mapping.complete(),
-          ['<C-u>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-d>'] = cmp.mapping.scroll_docs(4),
-          ['<Tab>'] = cmp.mapping(function (fallback)
-            if not cmp.select_next_item() then
-              if vim.snippet.active({ direction = 1 }) then
-                vim.snippet.jump(1)
-              else
-                fallback()
-              end
-            end
-          end),
-          ['<S-Tab>'] = cmp.mapping(function (fallback)
-            if not cmp.select_prev_item() then
-              if vim.snippet.active({ direction = -1 }) then
-                vim.snippet.jump(-1)
-              else
-                fallback()
-              end
-            end
-          end),
-        }),
-        snippet = {
-          expand = function(args)
-            vim.snippet.expand(args.body)
-          end,
-        },
+    lazy = false,
+    config = function ()
+      require('mini.icons').tweak_lsp_kind()
+      require('mini.completion').setup({
         window = {
-          documentation = cmp.config.window.bordered(),
-        },
-        formatting = {
-          expandable_indicator = true,
-          fields = { 'abbr', 'kind', 'menu' },
-          format = function (_, vim_item)
-            vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind)
-            return vim_item
-          end,
+          signature = {
+            border = 'single',
+          },
         },
       })
 
-      cmp.setup.cmdline({'/', '?'}, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp_document_symbols' },
-        }, {
-          { name = 'buffer' },
-        }),
-      })
-
-      cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline({
-          ['<C-n>'] = cmp.config.disable,
-          ['<C-p>'] = cmp.config.disable,
-        }),
-        sources = cmp.config.sources({
-          { name = 'path' },
-        }, {
-          { name = 'cmdline' },
-        }),
-      })
+      -- tab navigation
+      vim.keymap.set('i', '<Tab>',   [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
+      vim.keymap.set('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
     end
   },
 
@@ -190,13 +99,10 @@ return {
     'neovim/nvim-lspconfig',
     cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
     event = { 'BufReadPre', 'BufNewFile' },
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-    },
     config = function()
       local lspconfig = require('lspconfig')
       local lsp_defaults = {
-        capabilities = vim.tbl_deep_extend('force', lspconfig.util.default_config.capabilities, require('cmp_nvim_lsp').default_capabilities()),
+        capabilities = lspconfig.util.default_config.capabilities,
         handlers = {
           ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
         },
