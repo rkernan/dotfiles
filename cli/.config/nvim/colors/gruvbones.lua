@@ -78,9 +78,6 @@ local specs = lush.extends({ base_specs }).with(function (injected_functions)
     sym('@text.todo')({ gui = 'none' }),
     sym('@text.warning')({ gui = 'none' }),
 
-    -- mini.jump - nicer looking labels
-    MiniJump({ base_specs.none, gui = 'underline' }),
-
     ---@diagnostic enable: undefined-global
   }
 end)
