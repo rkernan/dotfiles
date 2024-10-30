@@ -26,8 +26,7 @@ vim.g.loaded_ruby_provider = 0
 
 -- space as leader
 vim.g.mapleader = ' '
--- comma as localleader
-vim.g.maplocalleader = ','
+vim.g.maplocalleader = ' '
 
 require('rkernan.keymaps')
 require('rkernan.autocmds')
