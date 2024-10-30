@@ -82,6 +82,7 @@ return {
   },
   keys = {
     { '<Leader>a', function () require('harpoon'):list():add() end, desc = 'Harpoon add' },
+    { '<Leader>x', function () require('harpoon'):list():remove() end, desc = 'Harpoon remove' },
     { '<Leader>h', function () harpoon_pick() end, desc = 'Harpoon list' },
     -- quick jump
     { '<C-h>', function () require('harpoon'):list():select(1) end, desc = 'Harpoon 1' },
