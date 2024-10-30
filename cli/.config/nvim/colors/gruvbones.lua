@@ -81,9 +81,6 @@ local specs = lush.extends({ base_specs }).with(function (injected_functions)
     -- mini.jump - nicer looking labels
     MiniJump({ base_specs.none, gui = 'underline' }),
 
-    -- indent-blankline scope
-    IblScope({ base_specs.IblIdent, fg = base_specs.Whitespace.fg.lighten(5) }),
-
     ---@diagnostic enable: undefined-global
   }
 end)
