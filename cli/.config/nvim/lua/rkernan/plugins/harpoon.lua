@@ -81,14 +81,14 @@ return {
     'echasnovski/mini.pick',
   },
   keys = {
-    { '<Leader>a', function () require('harpoon'):list():add() end, desc = 'Harpoon add' },
-    { '<Leader>x', function () require('harpoon'):list():remove() end, desc = 'Harpoon remove' },
-    { '<Leader>h', function () harpoon_pick() end, desc = 'Harpoon list' },
+    { '<Leader>ha', function () require('harpoon'):list():add() end, desc = 'Harpoon add' },
+    { '<Leader>hx', function () require('harpoon'):list():remove() end, desc = 'Harpoon remove' },
+    { '<Leader>hh', function () harpoon_pick() end, desc = 'Harpoon list' },
     -- prev/next harpoon
-    { '<Leader>N', function () require('harpoon'):list():select(#require('harpoon'):list()) end, desc = 'Harpoon last' },
-    { '<Leader>P', function () require('harpoon'):list():select(1) end, desc = 'Harpoon first' },
-    { '<Leader>n', function () require('harpoon'):list():next({ ui_nav_wrap = true }) end, desc = 'Harpoon next' },
-    { '<Leader>p', function () require('harpoon'):list():prev({ ui_nav_wrap = true }) end, desc = 'Harpoon prev' },
+    { '<Leader>hN', function () require('harpoon'):list():select(#require('harpoon'):list()) end, desc = 'Harpoon last' },
+    { '<Leader>hP', function () require('harpoon'):list():select(1) end, desc = 'Harpoon first' },
+    { '<Leader>hn', function () require('harpoon'):list():next({ ui_nav_wrap = true }) end, desc = 'Harpoon next' },
+    { '<Leader>hp', function () require('harpoon'):list():prev({ ui_nav_wrap = true }) end, desc = 'Harpoon prev' },
     -- quick jump
     { '<C-h>', function () require('harpoon'):list():select(1) end, desc = 'Harpoon 1' },
     { '<C-j>', function () require('harpoon'):list():select(2) end, desc = 'Harpoon 2' },
