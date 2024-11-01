@@ -17,7 +17,5 @@ return {
     { '<Leader>E', function () require('mini.extra').pickers.diagnostic({ scope = 'all' }) end, desc = 'Workspace diagnostics' },
     { '<Leader>j', function () require('mini.extra').pickers.marks() end, desc = 'Marks' },
   },
-  config = function ()
-    require('mini.pick').setup()
-  end,
+  config = true,
 }
