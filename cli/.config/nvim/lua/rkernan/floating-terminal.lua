@@ -38,6 +38,7 @@ function FloatingTerminal:show()
   if not self:is_buf_valid() then
     self.bufnr = vim.api.nvim_create_buf(false, true)
     started = true
+    vim.notify(string.format('created FloatingTerminal bufnr %d', self.bufnr), vim.log.levels.DEBUG)
   end
 
   if not self:is_win_valid() then
@@ -54,12 +55,14 @@ function FloatingTerminal:show()
       }
     )
     started = true
+    vim.notify(string.format('created FloatingTerminal winnr %d %s', self.winnr, vim.json.encode(dimensions)), vim.log.levels.DEBUG)
   end
 
   if self.terminal == nil then
     self.terminal = vim.fn.termopen(self.command and self.command or os.getenv('SHELL'),
       { on_exit = function () self:on_exit() end })
     started = true
+    vim.notify(string.format('start FloatingTerminal %d', self.terminal), vim.log.levels.DEBUG)
   end
 
   vim.api.nvim_command([[startinsert]])
@@ -75,11 +78,13 @@ function FloatingTerminal:run(cmd)
     type(cmd) == 'table' and table.concat(cmd, ' ') or cmd,
     vim.api.nvim_replace_termcodes('<cr>', true, true, true)
   })
+  vim.notify(string.format('run FloatingTerminal %d command `%s`', self.terminal, cmd), vim.log.levels.DEBUG)
   vim.api.nvim_chan_send(self.terminal, cmd)
 end
 
 function FloatingTerminal:hide()
   if self.winnr then
+    vim.notify(string.format('close FloatingTerminal %d winnr %d', self.terminal, self.winnr), vim.log.levels.DEBUG)
     vim.api.nvim_win_close(self.winnr, true)
     self.winnr = nil
   end
@@ -89,10 +94,12 @@ function FloatingTerminal:exit()
   self:hide()
 
   if self.bufnr then
+    vim.notify(string.format('delete FloatingTerminal %d bufnr %d', self.terminal, self.bufnr), vim.log.levels.DEBUG)
     vim.api.nvim_buf_delete(self.bufnr, { force = true })
   end
 
   if self.terminal then
+    vim.notify(string.format('exit FloatingTerminal %d', self.terminal), vim.log.levels.DEBUG)
     vim.fn.jobstop(self.terminal)
     self.terminal = nil
   end
