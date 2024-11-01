@@ -54,12 +54,6 @@ if vim.fn.executable('rg') == 1 then
   vim.opt.grepprg = 'rg --vimgrep --no-heading --smart-case'
 end
 
--- use mini.pick for ui_select
----@diagnostic disable-next-line: duplicate-set-field
-vim.ui.select = function (...)
-  return require('mini.pick').ui_select(...)
-end
-
 -- tab navigation in popup menu
 vim.keymap.set('i', '<Tab>',   [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
 vim.keymap.set('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })

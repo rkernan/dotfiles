@@ -1,3 +1,9 @@
+-- use mini.pick for ui_select - outside setup because require will force lazy load
+---@diagnostic disable-next-line: duplicate-set-field
+vim.ui.select = function (...)
+  return require('mini.pick').ui_select(...)
+end
+
 return {
   'echasnovski/mini.pick',
   dependencies = {
