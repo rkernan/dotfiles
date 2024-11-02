@@ -1,6 +1,8 @@
-local bookmarks = require('rkernan.bookmarks'):new()
-bookmarks:setup_autocmds()
-local bookmarks_mini_pick = require('rkernan.bookmarks.mini-pick')
+local bookmarks = require('rkernan.bookmarks').Bookmarks:new()
+bookmarks:setup()
+bookmarks:setup_persistence()
+
+local bookmarks_mini_pick = require('rkernan.bookmarks.extensions.mini-pick')
 
 vim.keymap.set('n', '<Leader>ha', function () bookmarks:add() end, { desc = 'Bookmarks add' })
 vim.keymap.set('n', '<Leader>hx', function () bookmarks:remove_file() end, { desc = 'Bookmarks remove' })
