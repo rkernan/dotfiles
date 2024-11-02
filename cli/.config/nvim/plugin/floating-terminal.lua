@@ -1,5 +1,3 @@
-local M = {}
-
 local term = require('rkernan.floating-terminal')
 
 local function on_start(terminal)
@@ -9,7 +7,7 @@ local function on_start(terminal)
   vim.wo[terminal.winnr].winblend = 0
 end
 
-M.terminal = term:new({ on_start = function (terminal)
+local terminal = term:new({ on_start = function (terminal)
   on_start(terminal)
   -- setup keymap to close
   vim.keymap.set('t', '<A-i>', function ()
@@ -19,14 +17,5 @@ M.terminal = term:new({ on_start = function (terminal)
   end)
 end})
 
-vim.keymap.set('n', '<Leader>t', function () M.terminal:show() end, { desc = 'Terminal' })
-vim.keymap.set('n', '<Leader>s',
-  function ()
-    term:new({
-      on_start = on_start,
-      title = 'Scratch',
-    }):show()
-  end,
-  { desc = 'Scratch terminal' })
-
-return M
+vim.keymap.set('n', '<Leader>t', function () terminal:show() end, { desc = 'Terminal' })
+vim.keymap.set('n', '<Leader>s', function () term:new({ on_start = on_start, title = 'Scratch' }):show() end, { desc = 'Scratch terminal' })
