@@ -5,7 +5,7 @@ bookmarks:setup_persistence()
 local bookmarks_mini_pick = require('rkernan.bookmarks.extensions.mini-pick')
 
 vim.keymap.set('n', '<Leader>ha', function () bookmarks:add() end, { desc = 'Bookmarks add' })
-vim.keymap.set('n', '<Leader>hx', function () bookmarks:remove_file() end, { desc = 'Bookmarks remove' })
+vim.keymap.set('n', '<Leader>hx', function () bookmarks:remove() end, { desc = 'Bookmarks remove' })
 vim.keymap.set('n', '<Leader>hh', function () bookmarks_mini_pick.pick(bookmarks) end, { desc = 'Bookmarks pick' })
 -- prev/next bookmark
 vim.keymap.set('n', '<Leader>hP', function () bookmarks:jump_to(1) end, { desc = 'Bookmarks first' })
