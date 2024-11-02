@@ -24,11 +24,9 @@ function Persist:load()
   local persist_file = self:__persist_file()
   local fp = io.open(persist_file, 'r')
   if not fp then
-    vim.notify(string.format('persistent bookmarks %s not readable', persist_file), vim.log.levels.DEBUG)
     return {}
   end
   local bookmarks_json = fp:read('*a')
-  vim.notify(string.format('load persistent bookmarks %s from %s', bookmarks_json, persist_file), vim.log.levels.DEBUG)
   fp:close()
   return vim.json.decode(bookmarks_json)
 end
@@ -47,7 +45,6 @@ function Persist:save(bookmarks)
     fp:flush()
     fp:close()
   else
-    vim.notify(string.format('remove empty persistent bookmarks %s', persist_file), vim.log.levels.DEBUG)
     os.remove(persist_file)
   end
 end
