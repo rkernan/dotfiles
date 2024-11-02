@@ -40,13 +40,17 @@ vim.api.nvim_create_autocmd('CursorMoved', {
 vim.api.nvim_create_autocmd('VimEnter', {
   group = augroup,
   callback = function ()
-    local dirs = { '.venv', '.git' }
-    for _, dir in ipairs(dirs) do
-      local path = vim.fn.fnamemodify(vim.fn.finddir(dir, '.;'), ':h')
-      if path ~= '.' then
+    local roots = { '.venv', '.git' }
+    for _, root in ipairs(roots) do
+      local path = vim.fn.finddir(root, '.;')
+      if path == '' then
+        path = vim.fn.findfile(root, '.;')
+      end
+      if path ~= '' then
+        path = vim.fn.fnamemodify(path, ':h')
         vim.api.nvim_set_current_dir(path)
         return
-      end
+    end
     end
   end,
 })
