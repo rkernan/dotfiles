@@ -30,6 +30,9 @@ local function lsp_attach(args)
 
   -- setup navic
   require('nvim-navic').attach(client, bufnr)
+
+  -- setup mini-completion
+  vim.opt.omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
 end
 
 local function lsp_detach(args)
@@ -85,6 +88,10 @@ return {
           signature = {
             border = 'single',
           },
+        },
+        lsp_completion = {
+          source_func = 'omnifunc',
+          auto_setup = false,
         },
       })
     end
