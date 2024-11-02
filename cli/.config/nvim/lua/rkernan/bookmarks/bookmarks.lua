@@ -71,6 +71,7 @@ function Bookmarks:add(path, cursor)
   cursor = cursor or vim.api.nvim_win_get_cursor(0)
   local file = self.bookmarks[self:get_file_index(path)]
   if not file then
+    vim.notify(string.format('bookmark %s', path), vim.log.levels.INFO)
     table.insert(self.bookmarks, { path = path })
   end
   self:update(path, cursor)
@@ -85,6 +86,7 @@ end
 
 function Bookmarks:remove(idx)
   idx = idx or self:get_file_index()
+  vim.notify(string.format('un-bookmark %s', self.bookmarks[idx].path))
   table.remove(self.bookmarks, idx)
 end
 
