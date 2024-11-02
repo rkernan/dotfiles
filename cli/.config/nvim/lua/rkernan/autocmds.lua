@@ -35,3 +35,18 @@ vim.api.nvim_create_autocmd('CursorMoved', {
     end
   end,
 })
+
+-- automatically cd to project root
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = augroup,
+  callback = function ()
+    local dirs = { '.venv', '.git' }
+    for _, dir in ipairs(dirs) do
+      local path = vim.fn.fnamemodify(vim.fn.finddir(dir, '.;'), ':h')
+      if path ~= '.' then
+        vim.api.nvim_set_current_dir(path)
+        return
+      end
+    end
+  end,
+})
