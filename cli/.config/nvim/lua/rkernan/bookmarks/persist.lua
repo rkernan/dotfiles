@@ -25,7 +25,7 @@ function Persist:load()
   local fp = io.open(persist_file, 'r')
   if not fp then
     vim.notify(string.format('persistent bookmarks %s not readable', persist_file), vim.log.levels.DEBUG)
-    return
+    return {}
   end
   local bookmarks_json = fp:read('*a')
   vim.notify(string.format('load persistent bookmarks %s from %s', bookmarks_json, persist_file), vim.log.levels.DEBUG)
