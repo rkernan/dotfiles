@@ -1,6 +1,6 @@
 return {
   'echasnovski/mini.notify',
-  lazy = false,
+  event = 'VeryLazy',
   config = function ()
     require('mini.notify').setup({
       window = {
