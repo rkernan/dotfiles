@@ -14,6 +14,7 @@ return {
   {
     components.shortmode,
     components.space,
+    utils.insert(components.git.head, components.space),
     utils.insert(components.environment('VIRTUAL_ENV', { fg = 'cyan' },
       function (str) return string.format(' %s', vim.fn.fnamemodify(str, ':t')) end),
       components.space),

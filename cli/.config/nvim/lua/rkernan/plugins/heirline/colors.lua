@@ -23,6 +23,8 @@ local function setup_colors()
     file_modified = vim.g.terminal_color_2, -- green
     recording_fg  = vim.g.terminal_color_0, -- black
     recording_bg  = vim.g.terminal_color_2, -- green
+    -- git
+    git_head = vim.g.terminal_color_5, -- magenta
     -- mini.diff
     minidiff_add    = utils.get_highlight('MiniDiffSignAdd').fg,
     minidiff_change = utils.get_highlight('MiniDiffSignChange').fg,
