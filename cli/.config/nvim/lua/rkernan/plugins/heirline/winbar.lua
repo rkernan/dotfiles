@@ -1,5 +1,6 @@
 local components = require('rkernan.plugins.heirline.components')
 local conditions = require('heirline.conditions')
+local utils = require('heirline.utils')
 
 return {
   hl = function ()
@@ -13,9 +14,9 @@ return {
   {
     components.filename,
     components.space,
-    components.gitsigns.added,
-    components.gitsigns.changed,
-    components.gitsigns.deleted,
+    utils.insert(components.mini.diff.add, components.space),
+    utils.insert(components.mini.diff.change, components.space),
+    utils.insert(components.mini.diff.delete, components.space),
     components.navic,
     components.fill,
     components.diagnostics,

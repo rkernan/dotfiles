@@ -23,11 +23,10 @@ local function setup_colors()
     file_modified = vim.g.terminal_color_2, -- green
     recording_fg  = vim.g.terminal_color_0, -- black
     recording_bg  = vim.g.terminal_color_2, -- green
-    -- gitsigns
-    gitsigns_head    = vim.g.terminal_color_5, -- magenta
-    gitsigns_added   = utils.get_highlight('GitSignsAdd').fg,
-    gitsigns_changed = utils.get_highlight('GitSignsChange').fg,
-    gitsigns_deleted = utils.get_highlight('GitSignsDelete').fg,
+    -- mini.diff
+    minidiff_add    = utils.get_highlight('MiniDiffSignAdd').fg,
+    minidiff_change = utils.get_highlight('MiniDiffSignChange').fg,
+    minidiff_delete = utils.get_highlight('MiniDiffSignDelete').fg,
     -- diagnostics
     diagnostics_error = utils.get_highlight('DiagnosticSignError').fg,
     diagnostics_warn  = utils.get_highlight('DiagnosticSignWarn').fg,

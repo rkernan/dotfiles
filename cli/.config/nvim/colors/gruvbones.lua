@@ -78,6 +78,11 @@ local specs = lush.extends({ base_specs }).with(function (injected_functions)
     sym('@text.todo')({ gui = 'none' }),
     sym('@text.warning')({ gui = 'none' }),
 
+    -- mini.diff - link to GitSigns
+    MiniDiffSignAdd({ base_specs.GitSignsAdd }),
+    MiniDiffSignChange({ base_specs.GitSignsChange }),
+    MiniDiffSignDelete({ base_specs.GitSignsDelete }),
+
     ---@diagnostic enable: undefined-global
   }
 end)
