@@ -36,7 +36,7 @@ end
 function Bookmarks:setup_persistence()
   self.persist = Persist:new()
   local augroup = vim.api.nvim_create_augroup('rkernan.bookmarks.persist', { clear = true })
-  vim.api.nvim_create_autocmd({ 'VimEnter', 'VimResume', 'SessionLoadPost', 'DirChanged' }, {
+  vim.api.nvim_create_autocmd({ 'DirChanged', 'SessionLoadPost', 'TabEnter', 'VimEnter', 'VimResume' }, {
     group = augroup,
     desc = 'Load persistent bookmarks',
     callback = function ()
