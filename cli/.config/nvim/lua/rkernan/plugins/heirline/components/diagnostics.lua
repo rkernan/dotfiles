@@ -21,9 +21,6 @@ return {
   end,
   update = {
     'DiagnosticChanged',
-    callback = vim.schedule_wrap(function ()
-      vim.cmd([[redrawstatus]])
-    end)
   }, {
     {
       -- errors

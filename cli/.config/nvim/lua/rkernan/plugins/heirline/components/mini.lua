@@ -1,14 +1,6 @@
 local M = {}
 
-local diff_shared = {
-  update = {
-    'User',
-    pattern = 'MiniDiffUpdated',
-    callback = vim.schedule_wrap(function ()
-      vim.cmd([[redrawstatus]])
-    end)
-  },
-}
+local diff_shared = { update = { 'User', pattern = 'MiniDiffUpdated' }}
 
 M.diff = {
   add = vim.tbl_extend('force', diff_shared, {
