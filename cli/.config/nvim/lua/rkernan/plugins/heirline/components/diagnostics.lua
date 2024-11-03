@@ -19,8 +19,12 @@ return {
       info  = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO }),
     }
   end,
-  update = { 'DiagnosticChanged', 'BufEnter' },
-  {
+  update = {
+    'DiagnosticChanged',
+    callback = vim.schedule_wrap(function ()
+      vim.cmd([[redrawstatus]])
+    end)
+  }, {
     {
       -- errors
       provider = function (self)
