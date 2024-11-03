@@ -59,5 +59,4 @@ return {
     return self.child:eval()
   end,
   hl = { fg = "dim" },
-  update = 'CursorMoved',
 }
