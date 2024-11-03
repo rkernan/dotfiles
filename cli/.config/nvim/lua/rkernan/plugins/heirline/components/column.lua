@@ -37,8 +37,8 @@ M.line_number = {
       if args.mousepos.line ~= curpos[2] then
         vim.api.nvim_win_set_cursor(args.mousepos.winid, { args.mousepos.line, math.min(curpos[3], vim.fn.col('$')) })
       else
-        local available, dap = pcall(require, 'dap')
-        if available then
+        local ok, dap = pcall(require, 'dap')
+        if ok then
           dap.toggle_breakpoint()
         end
       end
