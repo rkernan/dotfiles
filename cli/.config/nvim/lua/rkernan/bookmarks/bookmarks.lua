@@ -130,8 +130,11 @@ function Bookmarks:jump_to(idx)
     -- don't jump to file we're already in
     return
   end
-  vim.api.nvim_win_set_buf(0, bufnr)
-  vim.api.nvim_win_set_cursor(0, file.cursor)
+
+  vim.schedule(function ()
+    vim.api.nvim_win_set_buf(0, bufnr)
+    vim.api.nvim_win_set_cursor(0, file.cursor)
+  end)
 end
 
 function Bookmarks:jump(steps, opts)
