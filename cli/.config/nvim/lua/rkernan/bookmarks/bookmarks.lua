@@ -66,8 +66,10 @@ function Bookmarks:get_file_index(path)
 end
 
 function Bookmarks:add(path, cursor)
-  -- FIXME only track valid buffers
   path = path or self:__get_path()
+  if not vim.api.nvim_buf_is_valid(0) or path == '' then
+    return
+  end
   cursor = cursor or vim.api.nvim_win_get_cursor(0)
   local file = self.bookmarks[self:get_file_index(path)]
   if not file then
