@@ -88,6 +88,9 @@ end
 
 function Bookmarks:remove(idx)
   idx = idx or self:get_file_index()
+  if not idx then
+    return
+  end
   vim.notify(string.format('un-bookmark %s', self.bookmarks[idx].path))
   table.remove(self.bookmarks, idx)
 end
