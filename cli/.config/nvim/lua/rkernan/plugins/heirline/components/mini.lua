@@ -1,7 +1,17 @@
 local M = {}
 
+local diff_shared = {
+  update = {
+    'User',
+    pattern = 'MiniDiffUpdated',
+    callback = vim.schedule_wrap(function ()
+      vim.cmd([[redrawstatus]])
+    end)
+  },
+}
+
 M.diff = {
-  add = {
+  add = vim.tbl_extend('force', diff_shared, {
     static = {
       icon = '+',
     },
@@ -12,8 +22,8 @@ M.diff = {
       return string.format('%s%d', self.icon, vim.b.minidiff_summary.add)
     end,
     hl = { fg = 'minidiff_add' },
-  },
-  change = {
+  }),
+  change = vim.tbl_extend('force', diff_shared, {
     static = {
       icon = '~',
     },
@@ -24,8 +34,8 @@ M.diff = {
       return string.format('%s%d', self.icon, vim.b.minidiff_summary.change)
     end,
     hl = { fg = 'minidiff_change' },
-  },
-  delete = {
+  }),
+  delete = vim.tbl_extend('force', diff_shared, {
     static = {
       icon = '-',
     },
@@ -36,7 +46,7 @@ M.diff = {
       return string.format('%s%d', self.icon, vim.b.minidiff_summary.delete)
     end,
     hl = { fg = 'minidiff_delete' },
-  },
+  }),
 }
 
 return M
