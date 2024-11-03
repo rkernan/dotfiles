@@ -52,17 +52,17 @@ vim.api.nvim_create_autocmd('VimEnter', {
 -- set vim.g.git_head if we're in a repo
 vim.api.nvim_create_autocmd({ 'DirChanged', 'SessionLoadPost', 'TabEnter', 'VimEnter', 'VimResume' }, {
   group = augroup,
-  callback = function ()
-    vim.schedule(function ()
-      if #vim.fs.find('.git', { limit = 1, upward = true, type = 'directory' }) > 0 then
-        local cmd = { 'git', '--no-pager', '--no-optional-locks', '--literal-pathspecs', '-c', 'gc.auto=0', 'rev-parse' }
-        vim.g.git_head = vim.system(vim.list_extend(cmd, { '--abbrev-ref', 'HEAD' }), { text = true }):wait().stdout:gsub('%s+', '')
-        if vim.g.git_head == 'HEAD' then
-          vim.g.git_head = vim.system(vim.list_extend(cmd, { '--short', 'HEAD' }), { text = true }):wait().stdout:gsub('%s+', '')
-        end
-      else
-        vim.g.git_head = nil
+  callback = vim.schedule_wrap(function ()
+    if #vim.fs.find('.git', { limit = 1, upward = true, type = 'directory' }) > 0 then
+      local cmd = { 'git', '--no-pager', '--no-optional-locks', '--literal-pathspecs', '-c', 'gc.auto=0', 'rev-parse' }
+      vim.g.git_head = vim.system(vim.list_extend(cmd, { '--abbrev-ref', 'HEAD' }), { text = true }):wait().stdout:gsub('%s+', '')
+      if vim.g.git_head == 'HEAD' then
+        vim.g.git_head = vim.system(vim.list_extend(cmd, { '--short', 'HEAD' }), { text = true }):wait().stdout:gsub('%s+', '')
       end
-    end)
-  end,
+    else
+      vim.g.git_head = nil
+    end
+
+    vim.api.nvim_exec_autocmds('User', { pattern = 'GitHeadUpdate' })
+  end),
 })
