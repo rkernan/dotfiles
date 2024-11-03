@@ -65,9 +65,14 @@ function Bookmarks:get_file_index(path)
   end
 end
 
+function Bookmarks:__is_valid_buf(bufnr)
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
+  return vim.bo[bufnr].buftype == ''
+end
+
 function Bookmarks:add(path, cursor)
   path = path or self:__get_path()
-  if not vim.api.nvim_buf_is_valid(0) or path == '' then
+  if not self:__is_valid_buf() or path == '' then
     return
   end
   cursor = cursor or vim.api.nvim_win_get_cursor(0)
