@@ -15,7 +15,7 @@ function Bookmarks:new()
 end
 
 function Bookmarks:__get_path(bufnr)
-  bufnr = bufnr or 0
+  bufnr = bufnr or vim.api.nvim_get_current_buf()
   return vim.fn.fnamemodify(vim.api.nvim_buf_get_name(bufnr), ':.')
 end
 
