@@ -1,75 +1,107 @@
-local conditions = require('heirline.conditions')
-local diagnostic_signs = require('rkernan.diagnostics').signs
+local M = {}
 
-return {
-  condition = conditions.has_diagnostics,
+local diagnostic_signs = require('rkernan.diagnostics').signs
+local utils = require('rkernan.plugins.heirline.utils')
+
+M.error = {
   static = {
-    icons = {
-      error = diagnostic_signs[vim.diagnostic.severity.ERROR],
-      warn  = diagnostic_signs[vim.diagnostic.severity.WARN],
-      info  = diagnostic_signs[vim.diagnostic.severity.INFO],
-      hint  = diagnostic_signs[vim.diagnostic.severity.HINT],
-    },
+    icon = diagnostic_signs[vim.diagnostic.severity.ERROR],
+  },
+  on_click = {
+    callback = function (...)
+      vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+    end,
+    name = 'heirline_diagnostics_error',
   },
   init = function (self)
-    self.count = {
-      error = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR }),
-      warn  = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN }),
-      hint  = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT }),
-      info  = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO }),
-    }
+    if not rawget(self, 'once') then
+      vim.api.nvim_create_autocmd('DiagnosticChanged', { callback = function () utils.reset_win_cache(self) end })
+      self.once = true
+    end
   end,
-  update = {
-    'DiagnosticChanged',
-  }, {
-    {
-      -- errors
-      provider = function (self)
-        return self.count.error > 0 and string.format('%s %d ', self.icons.error, self.count.error)
-      end,
-      on_click = {
-        callback = function (...)
-          vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
-        end,
-        name = 'heirline_diagnostics_error',
-      },
-      hl = { fg = 'diagnostics_error' },
-    }, {
-      -- warnings
-      provider = function (self)
-        return self.count.warn > 0 and string.format('%s %d ', self.icons.warn, self.count.warn)
-      end,
-      on_click = {
-        callback = function (...)
-          vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
-        end,
-        name = 'heirline_diagnostics_warn',
-      },
-      hl = { fg = 'diagnostics_warn' },
-    }, {
-      -- info
-      provider = function (self)
-        return self.count.info > 0 and string.format('%s %d ', self.icons.info, self.count.info)
-      end,
-      on_click = {
-        callback = function (...)
-          vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.INFO })
-        end,
-        name = 'heirline_diagnostics_info',
-      },
-      hl = { fg = 'diagnostics_info' },
-    }, {
-      -- hints
-      provider = function (self)
-        return self.count.hint > 0 and string.format('%s %d ', self.icons.hint, self.count.hint)
-      end,
-      on_click = {
-        callback = function (...)
-          vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.HINT })
-        end,
-        name = 'heirline_diagnostics_hint',
-      },
-      hl = { fg = 'diagnostics_hint' },
-    }
-  }
+  condition = function ()
+    return #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR }) > 0
+  end,
+  provider = function (self)
+    return string.format('%s %s', self.icon, #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR }))
+  end,
+  hl = { fg = 'diagnostics_error' },
 }
+
+M.warn = {
+  static = {
+    icon = diagnostic_signs[vim.diagnostic.severity.WARN],
+  },
+  on_click = {
+    callback = function (...)
+      vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
+    end,
+    name = 'heirline_diagnostics_warn',
+  },
+  init = function (self)
+    if not rawget(self, 'once') then
+      vim.api.nvim_create_autocmd('DiagnosticChanged', { callback = function () utils.reset_win_cache(self) end })
+      self.once = true
+    end
+  end,
+  condition = function ()
+    return #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN }) > 0
+  end,
+  provider = function (self)
+    return string.format('%s %s', self.icon, #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN }))
+  end,
+  hl = { fg = 'diagnostics_warn' },
+}
+
+M.info = {
+  static = {
+    icon = diagnostic_signs[vim.diagnostic.severity.INFO],
+  },
+  on_click = {
+    callback = function (...)
+      vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.INFO })
+    end,
+    name = 'heirline_diagnostics_info',
+  },
+  init = function (self)
+    if not rawget(self, 'once') then
+      vim.api.nvim_create_autocmd('DiagnosticChanged', { callback = function () utils.reset_win_cache(self) end })
+      self.once = true
+    end
+  end,
+  condition = function ()
+    return #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO }) > 0
+  end,
+  provider = function (self)
+    return string.format('%s %s', self.icon, #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO }) > 0)
+  end,
+  hl = { fg = 'diagnostics_info' },
+}
+
+M.hint = {
+  static = {
+    icon = diagnostic_signs[vim.diagnostic.severity.HINT],
+  },
+  on_click = {
+    callback = function (...)
+      vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.HINT })
+    end,
+    name = 'heirline_diagnostics_hint',
+  },
+  init = function (self)
+    if not rawget(self, 'once') then
+      vim.api.nvim_create_autocmd('DiagnosticChanged', { callback = function () utils.reset_win_cache(self) end })
+      self.once = true
+    end
+  end,
+  condition = function ()
+    return #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT }) > 0
+  end,
+  provider = function (self)
+    return string.format('%s %s', self.icon, #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT }) > 0)
+  end,
+  hl = { fg = 'diagnostics_hint' },
+
+}
+
+return M

@@ -18,7 +18,10 @@ return {
     utils.insert(components.mini.diff.change, components.space),
     utils.insert(components.mini.diff.delete, components.space),
     components.fill,
-    components.diagnostics,
+    utils.insert(components.diagnostics.error, components.space),
+    utils.insert(components.diagnostics.warn, components.space),
+    utils.insert(components.diagnostics.info, components.space),
+    utils.insert(components.diagnostics.hint, components.space),
     components.ruler,
   },
 }
