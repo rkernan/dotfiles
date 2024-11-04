@@ -8,7 +8,7 @@ local function bookmarks_mini_pick_items(bookmarks)
       path = bookmark.path,
       lnum = bookmark.cursor[1],
       col = bookmark.cursor[2] + 1,
-      text = string.format('[%d] %s', idx, bookmark.path)
+      text = string.format('%d %s', idx, bookmark.path)
     })
   end
   return items
