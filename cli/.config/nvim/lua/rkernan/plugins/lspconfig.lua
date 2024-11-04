@@ -52,73 +52,46 @@ local function lsp_detach(args)
 end
 
 return {
-  -- autocompletion
-  -- TODO https://github.com/deathbeam/autocomplete.nvim
-  {
-    'echasnovski/mini.completion',
-    dependencies = {
-      'echasnovski/mini.icons',
-    },
-    lazy = false,
-    config = function ()
-      require('mini.icons').tweak_lsp_kind()
-      require('mini.completion').setup({
-        window = {
-          signature = {
-            border = 'single',
-          },
-        },
-        lsp_completion = {
-          source_func = 'omnifunc',
-          auto_setup = false,
-        },
-      })
-    end
-  },
+  'neovim/nvim-lspconfig',
+  cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
+  event = { 'BufReadPre', 'BufNewFile' },
+  config = function()
+    local lspconfig = require('lspconfig')
+    local lsp_defaults = {
+      capabilities = lspconfig.util.default_config.capabilities,
+      handlers = {
+        ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
+      },
+    }
 
-  -- LSP
-  {
-    'neovim/nvim-lspconfig',
-    cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      local lspconfig = require('lspconfig')
-      local lsp_defaults = {
-        capabilities = lspconfig.util.default_config.capabilities,
-        handlers = {
-          ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
-        },
-      }
+    lspconfig.bashls.setup(lsp_defaults)
+    lspconfig.gopls.setup(lsp_defaults)
+    lspconfig.groovyls.setup(vim.tbl_deep_extend(
+      'force',
+      lsp_defaults,
+      { cmd = { 'java', '-jar', vim.fn.expand('~/.local/lib/groovy-language-server/build/libs/groovy-language-server-all.jar') }}
+    ))
+    lspconfig.jsonls.setup(lsp_defaults)
+    lspconfig.lua_ls.setup(lsp_defaults)
 
-      lspconfig.bashls.setup(lsp_defaults)
-      lspconfig.gopls.setup(lsp_defaults)
-      lspconfig.groovyls.setup(vim.tbl_deep_extend(
+    if vim.fn.executable('pyright-langserver') > 0 then
+      -- fallback to pyright-langserver for older python versions
+      lspconfig.pyright.setup(lsp_defaults)
+    else
+      lspconfig.basedpyright.setup(vim.tbl_deep_extend(
         'force',
         lsp_defaults,
-        { cmd = { 'java', '-jar', vim.fn.expand('~/.local/lib/groovy-language-server/build/libs/groovy-language-server-all.jar') }}
-      ))
-      lspconfig.jsonls.setup(lsp_defaults)
-      lspconfig.lua_ls.setup(lsp_defaults)
-
-      if vim.fn.executable('pyright-langserver') > 0 then
-        -- fallback to pyright-langserver for older python versions
-        lspconfig.pyright.setup(lsp_defaults)
-      else
-        lspconfig.basedpyright.setup(vim.tbl_deep_extend(
-          'force',
-          lsp_defaults,
-          {
-            settings = {
-              basedpyright = {
-                typeCheckingMode = 'basic',
-              },
+        {
+          settings = {
+            basedpyright = {
+              typeCheckingMode = 'basic',
             },
-          }))
-      end
-
-      local augroup = vim.api.nvim_create_augroup('rkernan.plugins.lspconfig', { clear = true })
-      vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
-      vim.api.nvim_create_autocmd('LspDetach', { group = augroup, callback = lsp_detach })
+          },
+        }))
     end
-  }
+
+    local augroup = vim.api.nvim_create_augroup('rkernan.plugins.lspconfig', { clear = true })
+    vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
+    vim.api.nvim_create_autocmd('LspDetach', { group = augroup, callback = lsp_detach })
+  end
 }
