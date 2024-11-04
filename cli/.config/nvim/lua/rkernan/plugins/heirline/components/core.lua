@@ -88,7 +88,7 @@ M.cwd = {
   static = {
     icon = ''
   },
-  flexible = 1,
+  flexible = 10,
   {
     provider = function (self)
       return string.format('%s %s%s', self.icon, self.cwd, self.trail)
@@ -129,7 +129,7 @@ M.filename = utils.insert({
     init = function (self)
       self.lfilename = vim.fn.fnamemodify(self.filename, ':.')
     end,
-    flexible = 2,
+    flexible = 11,
     {
       provider = function (self)
         return self.lfilename
@@ -155,33 +155,53 @@ M.filename = utils.insert({
   })
 
 M.filetype = {
-  provider = function ()
-    return vim.bo.filetype
-  end,
+  flexible = 3,
+  {
+    provider = function ()
+      return vim.bo.filetype
+    end,
+  }, {
+    provider = '',
+  },
 }
 M.fileformat = {
-  provider = function ()
-    return vim.bo.fileformat
-  end,
+  flexible = 3,
+  {
+    provider = function ()
+      return vim.bo.fileformat
+    end,
+  }, {
+    provider = '',
+  },
 }
 
 M.fileencoding = {
-  condition = function ()
-    return #vim.bo.fileencoding > 0
-  end,
-  provider = function ()
-    return vim.bo.fileencoding
-  end,
+  flexible = 3,
+  {
+    condition = function ()
+      return #vim.bo.fileencoding > 0
+    end,
+    provider = function ()
+      return vim.bo.fileencoding
+    end,
+  }, {
+    provider = '',
+  },
 }
 
 M.tabsummary = {
-  provider = function ()
-    if vim.bo.expandtab then
-      return string.format('tab:%d,et', vim.bo.shiftwidth)
-    else
-      return string.format('tab:%d', vim.bo.tabstop)
-    end
-  end,
+  flexible = 2,
+  {
+    provider = function ()
+      if vim.bo.expandtab then
+        return string.format('tab:%d,et', vim.bo.shiftwidth)
+      else
+        return string.format('tab:%d', vim.bo.tabstop)
+      end
+    end,
+  }, {
+    provider = '',
+  },
 }
 
 M.ruler = {
@@ -225,9 +245,14 @@ function M.environment(env_var, hl, formatter)
     condition = function (self)
       return self.environ and #self.environ > 0
     end,
-    provider = function (self)
-      return self.formatter and self.formatter(self.environ) or self.environ
-    end,
+    flexible = 1,
+    {
+      provider = function (self)
+        return self.formatter and self.formatter(self.environ) or self.environ
+      end,
+    }, {
+      provider = ''
+    },
     hl = hl,
   }
 end

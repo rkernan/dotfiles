@@ -16,11 +16,16 @@ local diagnostics_shared = {
   -- condition = function (self)
   --   return self.count > 0
   -- end,
-  provider = function (self)
-    if self.count > 0 then
-      return string.format('%s %s ', self.icon, self.count)
-    end
-  end,
+  flexible = 4,
+  {
+    provider = function (self)
+      if self.count > 0 then
+        return string.format('%s %s ', self.icon, self.count)
+      end
+    end,
+  }, {
+    provider = '',
+  },
 }
 
 M.error = utils.insert({

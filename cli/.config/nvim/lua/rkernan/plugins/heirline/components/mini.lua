@@ -15,11 +15,16 @@ local diff_shared = {
   -- condition = function (self)
   --   return self.count > 0
   -- end,
-  provider = function (self)
-    if self.count and self.count > 0 then
+  flexible = 5,
+  {
+    provider = function (self)
+      if self.count and self.count > 0 then
         return string.format('%s%d ', self.icon, self.count)
+      end
     end
-  end
+  }, {
+    provider = '',
+  },
 }
 
 M.diff = {}

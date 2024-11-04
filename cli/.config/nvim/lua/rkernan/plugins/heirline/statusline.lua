@@ -1,6 +1,5 @@
 local components = require('rkernan.plugins.heirline.components')
 local conditions = require('heirline.conditions')
-local utils = require('heirline.utils')
 
 return {
   hl = function ()
@@ -15,9 +14,12 @@ return {
     components.shortmode,
     components.space,
     components.git.head,
-    utils.insert(components.environment('VIRTUAL_ENV', { fg = 'cyan' },
-      function (str) return string.format(' %s', vim.fn.fnamemodify(str, ':t')) end),
-      components.space),
+    components.environment(
+      'VIRTUAL_ENV',
+      { fg = 'cyan' },
+      function (str)
+        return string.format(' %s ', vim.fn.fnamemodify(str, ':t'))
+      end),
     components.cwd,
     components.space,
     components.recording_macro,
