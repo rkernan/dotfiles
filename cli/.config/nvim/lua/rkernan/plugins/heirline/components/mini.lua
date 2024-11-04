@@ -1,62 +1,57 @@
 local M = {}
 
-local utils = require('rkernan.plugins.heirline.utils')
+local utils = require('heirline.utils')
+local myutils = require('rkernan.plugins.heirline.utils')
 
 local diff_shared = {
   init = function (self)
     if not rawget(self, 'once') then
-      vim.api.nvim_create_autocmd('User', { pattern = 'MiniDiffUpdated', callback = function () utils.reset_win_cache(self) end })
+      vim.api.nvim_create_autocmd('User', { pattern = 'MiniDiffUpdated', callback = function () myutils.reset_win_cache(self) end })
       self.once = true
     end
+    self.count = self.get_count()
   end,
+  -- FIXME condition is not re-evaluated on events
+  -- condition = function (self)
+  --   return self.count > 0
+  -- end,
+  provider = function (self)
+    if self.count and self.count > 0 then
+        return string.format('%s%d ', self.icon, self.count)
+    end
+  end
 }
 
-M.diff = {
-  add = vim.tbl_extend('force', diff_shared, {
-    static = {
-      icon = '+',
-    },
-    -- FIXME condition is not re-evaluated on events
-    -- condition = function (self)
-    --   return self.count > 0
-    -- end,
-    provider = function (self)
-      if vim.b.minidiff_summary and (vim.b.minidiff_summary.add or 0) > 0 then
-        return string.format('%s%d ', self.icon, vim.b.minidiff_summary.add)
-      end
+M.diff = {}
+
+M.diff.add = utils.insert({
+  static = {
+    icon = '+',
+    get_count = function ()
+      return vim.b.minidiff_summary and rawget(vim.b.minidiff_summary, 'add')
     end,
-    hl = { fg = 'minidiff_add' },
-  }),
-  change = vim.tbl_extend('force', diff_shared, {
-    static = {
-      icon = '~',
-    },
-    -- FIXME condition is not re-evaluated on events
-    -- condition = function (self)
-    --   return self.count > 0
-    -- end,
-    provider = function (self)
-      if vim.b.minidiff_summary and (vim.b.minidiff_summary.change or 0) > 0 then
-        return string.format('%s%d ', self.icon, vim.b.minidiff_summary.change)
-      end
+  },
+  hl = { fg = 'minidiff_add' },
+}, diff_shared)
+
+M.diff.change = utils.insert({
+  static = {
+    icon = '~',
+    get_count = function ()
+      return vim.b.minidiff_summary and rawget(vim.b.minidiff_summary, 'change')
+    end
+  },
+  hl = { fg = 'minidiff_change' },
+}, diff_shared)
+
+M.diff.delete = utils.insert({
+  static = {
+    icon = '-',
+    get_count = function ()
+      return vim.b.minidiff_summary and rawget(vim.b.minidiff_summary, 'delete')
     end,
-    hl = { fg = 'minidiff_change' },
-  }),
-  delete = vim.tbl_extend('force', diff_shared, {
-    static = {
-      icon = '-',
-    },
-    -- FIXME condition is not re-evaluated on events
-    -- condition = function (self)
-    --   return self.count > 0
-    -- end,
-    provider = function (self)
-      if vim.b.minidiff_summary and (vim.b.minidiff_summary.delete or 0) > 0 then
-        return string.format('%s%d ', self.icon, vim.b.minidiff_summary.delete)
-      end
-    end,
-    hl = { fg = 'minidiff_delete' },
-  }),
-}
+  },
+  hl = { fg = 'minidiff_delete' },
+}, diff_shared)
 
 return M
