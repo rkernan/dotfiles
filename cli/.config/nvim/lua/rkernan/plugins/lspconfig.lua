@@ -28,9 +28,6 @@ local function lsp_attach(args)
     { buffer = bufnr, desc = 'LSP toggle inlay hints'}
   )
 
-  -- setup navic
-  require('nvim-navic').attach(client, bufnr)
-
   -- setup mini-completion
   vim.opt.omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
 end
@@ -64,12 +61,6 @@ return {
     },
   }, {
     'Bilal2453/luvit-meta',
-    lazy = true,
-  },
-
-  -- statusline breadcrumbs
-  {
-    'SmiteshP/nvim-navic',
     lazy = true,
   },
 

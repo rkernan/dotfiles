@@ -17,7 +17,6 @@ return {
     utils.insert(components.mini.diff.add, components.space),
     utils.insert(components.mini.diff.change, components.space),
     utils.insert(components.mini.diff.delete, components.space),
-    components.navic,
     components.fill,
     components.diagnostics,
     components.ruler,
