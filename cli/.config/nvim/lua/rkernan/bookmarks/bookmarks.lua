@@ -23,7 +23,6 @@ function Bookmarks:setup()
   local augroup = vim.api.nvim_create_augroup('rkernan.bookmarks', { clear = true })
   vim.api.nvim_create_autocmd({ 'BufLeave', 'VimLeave' }, {
     group = augroup,
-    desc = 'Update tracked bookmark',
     callback = function ()
       local path = self:__get_path()
       if self:get_file_index(path) then
@@ -31,21 +30,16 @@ function Bookmarks:setup()
       end
     end,
   })
-end
 
-function Bookmarks:setup_persistence()
   self.persist = Persist:new()
-  local augroup = vim.api.nvim_create_augroup('rkernan.bookmarks.persist', { clear = true })
   vim.api.nvim_create_autocmd({ 'DirChanged', 'SessionLoadPost', 'TabEnter', 'VimEnter', 'VimResume' }, {
     group = augroup,
-    desc = 'Load persistent bookmarks',
     callback = function ()
       self.bookmarks = self.persist:load()
     end,
   })
-  vim.api.nvim_create_autocmd({ 'VimSuspend', 'VimLeave', 'SessionWritePost' }, {
+  vim.api.nvim_create_autocmd({ 'SessionWritePost', 'VimLeave', 'VimSuspend' }, {
     group = augroup,
-    desc = 'Save persistent bookmarks',
     callback = function ()
       self.persist:save(self.bookmarks)
     end,

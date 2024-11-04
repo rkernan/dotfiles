@@ -1,6 +1,5 @@
 local bookmarks = require('rkernan.bookmarks').Bookmarks:new()
 bookmarks:setup()
-bookmarks:setup_persistence()
 
 local bookmarks_mini_pick = require('rkernan.bookmarks.extensions.mini-pick')
 
