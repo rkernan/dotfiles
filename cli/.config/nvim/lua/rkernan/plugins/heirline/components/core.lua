@@ -121,9 +121,6 @@ M.filename = utils.insert({
     -- file name
     init = function (self)
       self.lfilename = vim.fn.fnamemodify(self.filename, ':.')
-      if self.lfilename == '' then
-        self.lfilename = '[No Name]'
-      end
     end,
     flexible = 2,
     {
