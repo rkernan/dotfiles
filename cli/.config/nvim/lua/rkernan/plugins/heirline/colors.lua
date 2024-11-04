@@ -34,8 +34,6 @@ local function setup_colors()
     diagnostics_warn  = utils.get_highlight('DiagnosticSignWarn').fg,
     diagnostics_info  = utils.get_highlight('DiagnosticSignInfo').fg,
     diagnostics_hint  = utils.get_highlight('DiagnosticSignHint').fg,
-    -- codeaction
-    codeaction = vim.g.terminal_color_3, -- yellow
     -- mode colors
     mode_fg          = vim.g.terminal_color_0, -- black
     mode_normal_bg   = vim.g.terminal_color_7, -- white
