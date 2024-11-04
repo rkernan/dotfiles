@@ -36,6 +36,7 @@ function Bookmarks:setup()
     group = augroup,
     callback = function ()
       self.bookmarks = self.persist:load()
+      self:__exec_BookmarksChanged()
     end,
   })
   vim.api.nvim_create_autocmd({ 'SessionWritePost', 'VimLeave', 'VimSuspend' }, {
