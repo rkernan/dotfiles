@@ -12,11 +12,14 @@ M.head = {
       self.once = true
     end
   end,
-  condition = function ()
-    return vim.g.git_head
-  end,
+  -- FIXME condition is not re-evaluated on events
+  -- condition = function ()
+  --   return vim.g.git_head
+  -- end,
   provider = function (self)
-    return string.format('%s %s', self.icon, vim.g.git_head)
+    if vim.g.git_head then
+      return string.format('%s %s ', self.icon, vim.g.git_head)
+    end
   end,
   hl = { fg = 'git_head' },
 }

@@ -18,12 +18,16 @@ M.error = {
       vim.api.nvim_create_autocmd('DiagnosticChanged', { callback = function () utils.reset_win_cache(self) end })
       self.once = true
     end
+    self.count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
   end,
-  condition = function ()
-    return #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR }) > 0
-  end,
+  -- FIXME condition is not re-evaluated on events
+  -- condition = function (self)
+  --   return self.count > 0
+  -- end,
   provider = function (self)
-    return string.format('%s %s', self.icon, #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR }))
+    if self.count > 0 then
+      return string.format('%s %s ', self.icon, self.count)
+    end
   end,
   hl = { fg = 'diagnostics_error' },
 }
@@ -43,12 +47,16 @@ M.warn = {
       vim.api.nvim_create_autocmd('DiagnosticChanged', { callback = function () utils.reset_win_cache(self) end })
       self.once = true
     end
+    self.count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
   end,
-  condition = function ()
-    return #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN }) > 0
-  end,
+  -- FIXME condition is not re-evaluated on events
+  -- condition = function (self)
+  --   return self.count > 0
+  -- end,
   provider = function (self)
-    return string.format('%s %s', self.icon, #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN }))
+    if self.count > 0 then
+      return string.format('%s %s ', self.icon, self.count)
+    end
   end,
   hl = { fg = 'diagnostics_warn' },
 }
@@ -68,12 +76,16 @@ M.info = {
       vim.api.nvim_create_autocmd('DiagnosticChanged', { callback = function () utils.reset_win_cache(self) end })
       self.once = true
     end
+    self.count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO })
   end,
-  condition = function ()
-    return #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO }) > 0
-  end,
+  -- FIXME condition is not re-evaluated on events
+  -- condition = function (self)
+  --   return self.count > 0
+  -- end,
   provider = function (self)
-    return string.format('%s %s', self.icon, #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.INFO }) > 0)
+    if self.count > 0 then
+      return string.format('%s %s ', self.icon, self.count)
+    end
   end,
   hl = { fg = 'diagnostics_info' },
 }
@@ -93,12 +105,16 @@ M.hint = {
       vim.api.nvim_create_autocmd('DiagnosticChanged', { callback = function () utils.reset_win_cache(self) end })
       self.once = true
     end
+    self.count = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT })
   end,
-  condition = function ()
-    return #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT }) > 0
-  end,
+  -- FIXME condition is not re-evaluated on events
+  -- condition = function (self)
+  --   return self.count > 0
+  -- end,
   provider = function (self)
-    return string.format('%s %s', self.icon, #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.HINT }) > 0)
+    if self.count > 0 then
+      return string.format('%s %s ', self.icon, self.count)
+    end
   end,
   hl = { fg = 'diagnostics_hint' },
 

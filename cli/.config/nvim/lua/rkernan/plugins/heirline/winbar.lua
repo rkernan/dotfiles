@@ -1,6 +1,5 @@
 local components = require('rkernan.plugins.heirline.components')
 local conditions = require('heirline.conditions')
-local utils = require('heirline.utils')
 
 return {
   hl = function ()
@@ -14,15 +13,15 @@ return {
   {
     components.filename,
     components.space,
-    utils.insert(components.bookmarks, components.space),
-    utils.insert(components.mini.diff.add, components.space),
-    utils.insert(components.mini.diff.change, components.space),
-    utils.insert(components.mini.diff.delete, components.space),
+    components.bookmarks,
+    components.mini.diff.add,
+    components.mini.diff.change,
+    components.mini.diff.delete,
     components.fill,
-    utils.insert(components.diagnostics.error, components.space),
-    utils.insert(components.diagnostics.warn, components.space),
-    utils.insert(components.diagnostics.info, components.space),
-    utils.insert(components.diagnostics.hint, components.space),
+    components.diagnostics.error,
+    components.diagnostics.warn,
+    components.diagnostics.info,
+    components.diagnostics.hint,
     components.ruler,
   },
 }
