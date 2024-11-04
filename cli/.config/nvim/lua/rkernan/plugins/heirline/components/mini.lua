@@ -1,6 +1,15 @@
 local M = {}
 
-local diff_shared = { update = { 'User', pattern = 'MiniDiffUpdated' }}
+local utils = require('rkernan.plugins.heirline.utils')
+
+local diff_shared = {
+  init = function (self)
+    if not rawget(self, 'once') then
+      vim.api.nvim_create_autocmd('User', { pattern = 'MiniDiffUpdated', callback = function () utils.reset_win_cache(self) end })
+      self.once = true
+    end
+  end,
+}
 
 M.diff = {
   add = vim.tbl_extend('force', diff_shared, {
