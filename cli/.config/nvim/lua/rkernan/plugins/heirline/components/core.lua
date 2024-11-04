@@ -108,8 +108,15 @@ M.filename = utils.insert({
   }, {
     -- file icon
     init = function (self)
-      local extension = vim.fn.fnamemodify(self.filename, ':e')
-      self.icon, self.color = require('nvim-web-devicons').get_icon_color(self.filename, extension)
+      local ok, mini_icons = pcall(require, 'mini.icons')
+      if ok then
+        local hl
+        self.icon, hl, _ = mini_icons.get('file', self.filename)
+        self.color = utils.get_highlight(hl).fg
+      else
+        self.icon = '󰈔'
+        self.color = 'Normal'
+      end
     end,
     provider = function (self)
       return self.icon and string.format('%s ', self.icon)
