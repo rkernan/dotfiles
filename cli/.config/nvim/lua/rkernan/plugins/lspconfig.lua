@@ -52,20 +52,6 @@ local function lsp_detach(args)
 end
 
 return {
-  -- neovim completion
-  {
-    'folke/lazydev.nvim',
-    ft = 'lua',
-    opts = {
-      library = {
-        { path = 'luvit-meta/library', words = { 'vim%.uv' }},
-      },
-    },
-  }, {
-    'Bilal2453/luvit-meta',
-    lazy = true,
-  },
-
   -- autocompletion
   -- TODO https://github.com/deathbeam/autocomplete.nvim
   {
