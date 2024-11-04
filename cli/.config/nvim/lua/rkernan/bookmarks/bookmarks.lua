@@ -21,7 +21,7 @@ end
 
 function Bookmarks:setup()
   local augroup = vim.api.nvim_create_augroup('rkernan.bookmarks', { clear = true })
-  vim.api.nvim_create_autocmd('BufLeave', {
+  vim.api.nvim_create_autocmd({ 'BufLeave', 'VimLeave' }, {
     group = augroup,
     desc = 'Update tracked bookmark',
     callback = function ()
