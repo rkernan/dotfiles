@@ -78,11 +78,16 @@ function Bookmarks:add(path, cursor)
   self:update(path, cursor)
 end
 
+function Bookmarks:__exec_BookmarksChanged()
+  vim.api.nvim_exec_autocmds('User', { pattern = 'BookmarksChanged' })
+end
+
 function Bookmarks:update(path, cursor)
   path = path or self:__get_path()
   cursor = cursor or vim.api.nvim_win_get_cursor(0)
   local idx = self:get_file_index(path)
   self.bookmarks[idx].cursor = cursor
+  self:__exec_BookmarksChanged()
 end
 
 function Bookmarks:remove(idx)
@@ -92,12 +97,14 @@ function Bookmarks:remove(idx)
   end
   vim.notify(string.format('un-bookmark %s', self.bookmarks[idx].path))
   table.remove(self.bookmarks, idx)
+  self:__exec_BookmarksChanged()
 end
 
 function Bookmarks:swap(idx_a, idx_b)
   local file_a = self.bookmarks[idx_a]
   self.bookmarks[idx_a] = self.bookmarks[idx_b]
   self.bookmarks[idx_b] = file_a
+  self:__exec_BookmarksChanged()
 end
 
 function Bookmarks:__get_bufnr(file)

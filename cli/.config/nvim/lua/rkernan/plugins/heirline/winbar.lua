@@ -14,6 +14,7 @@ return {
   {
     components.filename,
     components.space,
+    utils.insert(components.bookmarks, components.space),
     utils.insert(components.mini.diff.add, components.space),
     utils.insert(components.mini.diff.change, components.space),
     utils.insert(components.mini.diff.delete, components.space),

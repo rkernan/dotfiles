@@ -1,6 +1,10 @@
 local bookmarks = require('rkernan.bookmarks').Bookmarks:new()
 bookmarks:setup()
 
+function Bookmarks()
+  return bookmarks
+end
+
 local bookmarks_mini_pick = require('rkernan.bookmarks.extensions.mini-pick')
 
 vim.keymap.set('n', '<Leader>a', function () bookmarks:add() end, { desc = 'Bookmarks add' })
