@@ -1,6 +1,7 @@
 local M = {}
 
 local utils = require('heirline.utils')
+local myutils = require('rkernan.plugins.heirline.utils')
 
 M.fill = { provider = '%=' }
 
@@ -240,15 +241,22 @@ M.search_count = {
   static = {
     icon = '',
   },
-  condition = function ()
-    return vim.o.cmdheight == 0 and vim.v.hlsearch ~= 0
+  init = function (self)
+    if not rawget(self, 'once') then
+      vim.api.nvim_create_autocmd('User', { pattern = 'HlSearchDisabled', callback = function () myutils.reset_win_cache(self) end })
+      self.once = true
+    end
+    self.search = vim.fn.searchcount()
   end,
-  utils.surround({ ' ', ' ' }, nil, {
-    provider = function (self)
-      local search = vim.fn.searchcount()
-      return string.format('%s %d/%d', self.icon, search.current, search.total)
-    end,
-  }),
+  -- FIXME condition is not re-evaluated on events
+  -- condition = function ()
+  --   return vim.o.cmdheight == 0 and vim.v.hlsearch ~= 0
+  -- end,
+  provider = function (self)
+    if vim.o.cmdheight == 0 and vim.v.hlsearch ~= 0 and self.search.total > 0 then
+      return string.format(' %s %d/%d ', self.icon, self.search.current, self.search.total)
+    end
+  end,
   hl = { fg = 'search_fg', bg = 'search_bg' },
 }
 
