@@ -31,7 +31,7 @@ vim.api.nvim_create_autocmd('CursorMoved', {
   group = augroup,
   callback = function ()
     if vim.v.hlsearch and vim.fn.searchcount().exact_match == 0 then
-      vim.cmd.nohlsearch()
+      vim.schedule(function () vim.cmd.nohlsearch() end)
     end
   end,
 })
