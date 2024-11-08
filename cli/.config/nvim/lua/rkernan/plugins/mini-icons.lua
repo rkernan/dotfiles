@@ -1,5 +1,5 @@
 return {
   'echasnovski/mini.icons',
-  lazy = false,
+  lazy = true,
   config = true,
 }
