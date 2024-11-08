@@ -35,5 +35,5 @@ require('rkernan.lazy')
 require('rkernan.options')
 
 vim.opt.termguicolors = true
-vim.cmd([[set background=dark]])
-vim.cmd([[colorscheme gruvbones]])
+vim.cmd.set('background=dark')
+vim.cmd.colorscheme('gruvbones')

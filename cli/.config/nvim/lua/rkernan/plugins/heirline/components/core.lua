@@ -58,7 +58,7 @@ local mode_base = {
     pattern = '*:*',
     -- allow statusline to be re-evaluated when entering operator-pending mode
     callback = vim.schedule_wrap(function ()
-      vim.cmd([[redrawstatus]])
+      vim.cmd.redrawstatus()
     end)
   }
 }
