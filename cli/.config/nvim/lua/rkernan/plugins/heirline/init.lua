@@ -1,5 +1,8 @@
 return {
   'rebelot/heirline.nvim',
+  dependencies = {
+    'echasnovski/mini.icons',
+  },
   lazy = false,
   config = function ()
     require('heirline').setup({
