@@ -24,6 +24,8 @@ local function setup_colors()
     recording_fg  = vim.g.terminal_color_0, -- black
     recording_bg  = vim.g.terminal_color_2, -- green
     bookmarks_fg  = vim.g.terminal_color_4, -- blue
+    search_fg     = vim.g.terminal_color_0, -- black
+    search_bg     = vim.g.terminal_color_3, -- yellow
     -- git
     git_head = vim.g.terminal_color_5, -- magenta
     -- mini.diff

@@ -236,6 +236,22 @@ M.recording_macro = {
   }
 }
 
+M.search_count = {
+  static = {
+    icon = '',
+  },
+  condition = function ()
+    return vim.o.cmdheight == 0 and vim.v.hlsearch ~= 0
+  end,
+  utils.surround({ ' ', ' ' }, nil, {
+    provider = function (self)
+      local search = vim.fn.searchcount()
+      return string.format('%s %d/%d', self.icon, search.current, search.total)
+    end,
+  }),
+  hl = { fg = 'search_fg', bg = 'search_bg' },
+}
+
 function M.environment(env_var, hl, formatter)
   return {
     static = {

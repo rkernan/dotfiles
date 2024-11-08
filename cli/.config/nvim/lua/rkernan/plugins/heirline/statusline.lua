@@ -22,6 +22,7 @@ return {
       end),
     components.cwd,
     components.space,
+    components.search_count,
     components.recording_macro,
     components.fill,
     components.tabsummary,
