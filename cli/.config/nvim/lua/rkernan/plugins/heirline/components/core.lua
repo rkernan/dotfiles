@@ -9,6 +9,10 @@ M.space = { provider = ' ' }
 
 local mode_base = {
   init = function (self)
+    if not rawget(self, 'once') then
+      vim.api.nvim_create_autocmd('ModeChanged', { pattern = '*:*', callback = function () myutils.reset_win_cache(self) end })
+      self.once = true
+    end
     self.mode = vim.fn.mode(1)
   end,
   static = {
@@ -54,14 +58,6 @@ local mode_base = {
   hl = function (self)
     return self.modes[self.mode].hl
   end,
-  update = {
-    'ModeChanged',
-    pattern = '*:*',
-    -- allow statusline to be re-evaluated when entering operator-pending mode
-    callback = vim.schedule_wrap(function ()
-      vim.cmd.redrawstatus()
-    end)
-  }
 }
 
 M.mode = utils.insert(mode_base, {
