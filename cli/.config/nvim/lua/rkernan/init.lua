@@ -33,6 +33,7 @@ require('rkernan.autocmds')
 require('rkernan.diagnostics').setup()
 require('rkernan.lazy')
 require('rkernan.options')
+require('rkernan.ui')
 
 require('rkernan.floating-terminal').setup()
 require('rkernan.persistent-bookmarks').setup()
