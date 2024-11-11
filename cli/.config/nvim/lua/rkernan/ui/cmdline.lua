@@ -1,43 +1,38 @@
+local class = require('middleclass')
+local Window = require('rkernan.utils.window')
+
 local namespace = vim.api.nvim_create_namespace('cmdline')
 
-local CmdlineWindow = {}
+local CmdlineWindow = Window:subclass('CmdlineWindow')
 
-function CmdlineWindow:new()
-  local o = {
-    bufnr = -1,
-    winnr = -1,
-    min_width = 50,
-  }
-  setmetatable(o, self)
-  self.__index = self
-  return o
-end
-
-function CmdlineWindow:open()
-  if not vim.api.nvim_buf_is_valid(self.bufnr) then
-    self.bufnr = vim.api.nvim_create_buf(false, true)
-    vim.bo[self.bufnr].buftype = 'nofile'
-    vim.bo[self.bufnr].bufhidden = 'wipe'
-    vim.api.nvim_buf_set_name(self.bufnr, 'cmdline')
-    vim.api.nvim_create_autocmd({ 'BufHidden', 'BufLeave' }, { buffer = self.bufnr, callback = function () self:close() end })
-  end
-
-  if not vim.api.nvim_win_is_valid(self.winnr) then
-    self.winnr = vim.api.nvim_open_win(self.bufnr, false, {
+function CmdlineWindow:initialize()
+  self.min_width = 50
+  Window.initialize(
+    self,
+    {
       relative = 'editor',
       zindex = 200,
-      row = vim.o.lines - 2,
       col = 4,
       style = 'minimal',
       height = 1,
       width = self.min_width,
-    })
-    vim.wo[self.winnr].winfixbuf = true
-    vim.wo[self.winnr].virtualedit = 'all,onemore'
-    vim.wo[self.winnr].winhighlight = 'Normal:StatusLine,Search:StatusLine'
-    vim.wo[self.winnr].winblend = 0
-  end
+    },
+    function (window)
+      vim.api.nvim_set_option_value('buftype', 'nofile', { buf = window.bufnr })
+      vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = window.bufnr })
+      vim.api.nvim_buf_set_name(window.bufnr, 'cmdline')
+      vim.api.nvim_create_autocmd({ 'BufHidden', 'BufLeave' }, { buffer = window.bufnr, callback = function () window:close() end })
+      vim.api.nvim_set_option_value('winfixbuf', true, { win = window.winnr })
+      vim.api.nvim_set_option_value('virtualedit', 'all,onemore', { win = window.winnr })
+      -- FIXME bad highlight
+      vim.api.nvim_set_option_value('winhighlight', 'Normal:StatusLine,Search:StatusLine', { win = window.winnr })
+      vim.api.nvim_set_option_value('winblend', 0, { win = window.winnr })
+    end
+  )
+end
 
+function CmdlineWindow:open()
+  Window.open(self, { row = vim.o.lines - 2 })
   vim.api.nvim__redraw({ cursor = true, flush = true })
 end
 
@@ -53,21 +48,12 @@ function CmdlineWindow:update(firstc, prompt, command, position, block)
     })
   end
 
-
   local width = math.max(self.min_width, #virt_prompt + #command)
   -- FIXME width needs padding?
   vim.api.nvim_win_set_config(self.winnr, { width = width + 6, height = block })
-
   vim.api.nvim_buf_set_lines(self.bufnr, -2, -1, false, { command })
   vim.api.nvim_win_set_cursor(self.winnr, { 1, position })
   vim.api.nvim__redraw({ cursor = true, flush = true, win = self.winnr })
-end
-
-function CmdlineWindow:close()
-  if not vim.api.nvim_win_is_valid(self.winnr) then
-    return
-  end
-  vim.api.nvim_win_close(self.winnr, true)
 end
 
 local Cmdline = {}

@@ -4,11 +4,19 @@ local Window = require('rkernan.utils.window')
 local MessagesWindow = Window:subclass('MessagesWindow')
 
 function MessagesWindow:initialize(display)
-  Window.initialize(self, {
-    split = 'below',
-    height = 20,
-    style = 'minimal',
-  })
+  Window.initialize(
+    self, {
+      split = 'below',
+      height = 20,
+      style = 'minimal',
+    },
+    function (window)
+      vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = window.bufnr })
+      vim.api.nvim_set_option_value('modifiable', false, { buf = window.bufnr })
+      vim.api.nvim_buf_set_name(window.bufnr, string.format('[MsgArea - %s]', window.display))
+      vim.api.nvim_set_option_value('winfixbuf', true, { win = window.winnr })
+    end
+  )
   self.display = display
 end
 
@@ -29,12 +37,7 @@ function MessagesWindow:update(lines, clear)
 end
 
 function MessagesWindow:open(lines, clear)
-  if Window.open(self, {}, false, true, true) then
-    vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = self.bufnr })
-    vim.api.nvim_set_option_value('modifiable', false, { buf = self.bufnr })
-    vim.api.nvim_buf_set_name(self.bufnr, string.format('[MsgArea - %s]', self.display))
-    vim.api.nvim_set_option_value('winfixbuf', true, { win = self.winnr })
-  end
+  Window.open(self, {})
   self:update(lines, clear)
 end
 
