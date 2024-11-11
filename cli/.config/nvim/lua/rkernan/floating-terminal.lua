@@ -1,9 +1,8 @@
-local class = require('middleclass')
 local Window = require('rkernan.utils.window')
 
 local M = {}
 
-local FloatingTerminal = class('FloatingTerminal', Window)
+local FloatingTerminal = Window:subclass('FloatingTerminal')
 
 function FloatingTerminal:initialize(win_opts, on_open, command)
   Window.initialize(self, vim.tbl_extend('force', {
@@ -31,15 +30,7 @@ function FloatingTerminal:get_dimensions()
 end
 
 function FloatingTerminal:open()
-  local opened = not self:_is_buf_valid() or not self:_is_win_valid()
-  Window.open(self, self:get_dimensions(), false, true, true)
-
-  if not self.terminal then
-    self.terminal = vim.fn.termopen(self.command, { on_exit = function () self:exit() end })
-    opened = true
-  end
-
-  if opened then
+  if Window.open(self, self:get_dimensions(), false, true, true) then
     -- make prettier
     vim.api.nvim_set_option_value('winhighlight', 'Normal:Normal,FloatBorder:FloatBorder', { win = self.winnr })
     vim.api.nvim_set_option_value('winblend', 0, { win = self.winnr })
@@ -47,6 +38,10 @@ function FloatingTerminal:open()
     if self.on_open then
       self.on_open(self)
     end
+  end
+
+  if not self.terminal then
+    self.terminal = vim.fn.termopen(self.command, { on_exit = function () self:exit() end })
   end
 
   vim.api.nvim_command([[startinsert]])
