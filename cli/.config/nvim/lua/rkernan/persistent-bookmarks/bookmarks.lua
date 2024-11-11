@@ -61,7 +61,7 @@ end
 
 function Bookmarks:is_valid_buf(bufnr)
   bufnr = bufnr or vim.api.nvim_get_current_buf()
-  return vim.bo[bufnr].buftype == ''
+  return vim.api.nvim_get_option_value('buftype', { buf = bufnr })
 end
 
 function Bookmarks:add(path, cursor)

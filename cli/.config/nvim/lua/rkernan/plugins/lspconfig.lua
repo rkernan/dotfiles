@@ -29,7 +29,7 @@ local function lsp_attach(args)
   )
 
   -- setup mini-completion
-  vim.bo[bufnr].omnifunc = 'v:lua.MiniCompletion.completefunc_lsp'
+  vim.api.nvim_set_option_value('omnifunc', 'v:lua.MiniCompletion.completefunc_lsp', { buf = bufnr })
 end
 
 local function lsp_detach(args)
@@ -48,7 +48,7 @@ local function lsp_detach(args)
   pcall(vim.keymap.del, 'n', '<Leader><Leader>O', { buffer = bufnr })
   pcall(vim.keymap.del, 'n', '<Leader><Leader>i', { buffer = bufnr })
   -- disable mini-completion
-  vim.bo[bufnr].omnifunc = ''
+  vim.api.nvim_set_option_value('omnifunc', '', { buf = bufnr })
 end
 
 return {
