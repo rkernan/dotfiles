@@ -5,7 +5,7 @@ function _fzf_search_git_log
 
   git log --color | _fzf_wrapper --prompt='Commits> ' --preview='git show --color {1}' --query=(commandline -t) -m --ansi | awk '{print $1}' |
     while read -l r
-      set result $result (git rev-parse (string escape $r))
+      set -f result $result (git rev-parse (string escape $r))
     end
 
   commandline -rt -- (string join ' ' $result)
