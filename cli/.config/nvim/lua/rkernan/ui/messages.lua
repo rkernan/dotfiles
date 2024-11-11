@@ -1,18 +1,19 @@
-local MessagesWindow = {}
+local class = require('middleclass')
+local Window = require('rkernan.utils.window')
 
-function MessagesWindow:new(display)
-  local o = {
-    display = display,
-    bufnr = -1,
-    winnr = -1,
-  }
-  setmetatable(o, self)
-  self.__index = self
-  return o
+local MessagesWindow = Window:subclass('MessagesWindow')
+
+function MessagesWindow:initialize(display)
+  Window.initialize(self, {
+    split = 'below',
+    height = 20,
+    style = 'minimal',
+  })
+  self.display = display
 end
 
 function MessagesWindow:update(lines, clear)
-  if not vim.api.nvim_buf_is_valid(self.bufnr) or not vim.api.nvim_win_is_valid(self.winnr) then
+  if not self:is_buf_valid() or not self:is_win_valid() then
     return
   end
 
@@ -22,40 +23,53 @@ function MessagesWindow:update(lines, clear)
     start_line = vim.deep_equal(buflines, { '' }) and 0 or #buflines
   end
 
-  vim.bo[self.bufnr].modifiable = true
+  vim.api.nvim_set_option_value('modifiable', true, { buf = self.bufnr })
   vim.api.nvim_buf_set_lines(self.bufnr, start_line, -1, false, lines)
-  vim.bo[self.bufnr].modifiable = false
+  vim.api.nvim_set_option_value('modifiable', false, { buf = self.bufnr })
 end
 
-function MessagesWindow:show(lines, clear)
-  if not vim.api.nvim_buf_is_valid(self.bufnr) then
-    self.bufnr = vim.api.nvim_create_buf(false, true)
-    vim.bo[self.bufnr].bufhidden = 'wipe'
-    vim.bo[self.bufnr].modifiable = false
+function MessagesWindow:open(lines, clear)
+  if Window.open(self, {}, false, true, true) then
+    vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = self.bufnr })
+    vim.api.nvim_set_option_value('modifiable', false, { buf = self.bufnr })
     vim.api.nvim_buf_set_name(self.bufnr, string.format('[MsgArea - %s]', self.display))
+    vim.api.nvim_set_option_value('winfixbuf', true, { win = self.winnr })
   end
-
-  if not vim.api.nvim_win_is_valid(self.winnr) then
-    self.winnr = vim.api.nvim_open_win(self.bufnr, true, { split = 'below', height = 20, style = 'minimal' })
-    vim.wo[self.winnr].winfixbuf = true
-  end
-
   self:update(lines, clear)
 end
 
-local Messages = {}
+local Messages = class('Messages')
 
-function Messages:new()
-  local o = {
-    history = {},
-    history_size = 200,
-    history_win = MessagesWindow:new('history'),
-    output_win = MessagesWindow:new('output'),
-    confirm_win = -1,
+Messages.static.EVENT = {
+  MSG_SHOW = 'msg_show',
+  MSG_HISTORY_SHOW = 'msg_history_show',
+}
+
+Messages.static.KIND = {
+  RETURN_PROMPT = 'return_prompt',
+  CONFIRM = 'confirm',
+  CONFIRM_SUB = 'confirm_sub',
+  SEARCH_COUNT = 'search_count',
+  QUICKFIX = 'quickfile',
+  ECHO = 'echo',
+  ECHOES = {
+    'rpc_error',
+    'lua_error',
+    'echoerr',
+    'echomsg',
+    'emsg',
+    'echo',
+    'wmsg',
   }
-  setmetatable(o, self)
-  self.__index = self
-  return o
+}
+
+function Messages:initialize()
+  self.history = {}
+  self.history_size = 200
+  self.history_win = MessagesWindow:new('history')
+  self.output_win = MessagesWindow:new('output')
+  -- FIXME PopupWindow?
+  self.confirm_win = -1
 end
 
 function Messages:content_to_lines(content)
@@ -100,7 +114,7 @@ function Messages:history_show(clear)
     vim.notify('Message history is empty', vim.log.levels.INFO)
     return
   end
-  self.history_win:show(self.history, clear)
+  self.history_win:open(self.history, clear)
 end
 
 function Messages:notify(kind, lines)
@@ -111,8 +125,9 @@ function Messages:notify(kind, lines)
 
   -- TODO message filters
   self:history_insert(lines)
-  if kind == 'echo' then
+  if kind == Messages.KIND.ECHO then
     if msg:find('^/') then
+      -- filter out search messages
       return
     end
     vim.notify(msg, vim.log.levels.INFO)
@@ -134,11 +149,11 @@ function Messages:confirm(kind, lines)
     border = 'single',
   }
 
-  if kind == 'confirm' then
+  if kind == Messages.KIND.CONFIRM then
     win_opts.title = text[1]
     win_opts.height = #text - 1
     table.remove(text, 1)
-  elseif kind == 'confirm_sub' then
+  elseif kind == Messages.KIND.CONFIRM_SUB then
     vim.opt.hlsearch = true
     vim.api.nvim__redraw({ flush = true, cursor = true })
     if vim.api.nvim_win_is_valid(self.confirm_win) then
@@ -173,27 +188,27 @@ function Messages:msg_show(kind, content)
         self:notify('echo', lines)
       end
     else
-      vim.schedule(function () self.output_win:show(lines, false) end)
+      vim.schedule(function () self.output_win:open(lines, false) end)
     end
-  elseif kind == 'return_prompt' then
+  elseif kind == Messages.KIND.RETURN_PROMPT then
     vim.api.nvim_input('<CR>')
-  elseif vim.tbl_contains({ 'rpc_error', 'lua_error', 'echoerr', 'echomsg', 'emsg', 'echo', 'wmsg' }, kind) then
+  elseif vim.tbl_contains(Messages.KIND.ECHOES, kind) then
     self:notify(kind, lines)
-  elseif kind == 'confirm' or kind == 'confirm_sub' then
+  elseif kind == Messages.KIND.CONFIRM or kind == Messages.KIND.CONFIRM_SUB then
     self:confirm(kind, lines)
-  elseif kind == 'search_count' then
+  elseif kind == Messages.KIND.SEARCH_COUNT then
     -- skip
     return
-  elseif kind == 'quickfix' then
+  elseif kind == Messages.KIND.QUICKFIX then
     -- skip
     return
   end
 end
 
 function Messages:handle(event, kind, content)
-  if event == 'msg_show' then
+  if event == Messages.EVENT.MSG_SHOW then
     self:msg_show(kind, content)
-  elseif event == 'msg_history_show' then
+  elseif event == Messages.EVENT.MSG_HISTORY_SHOW then
     self:history_show(true)
   end
 end
