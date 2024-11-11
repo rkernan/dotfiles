@@ -23,7 +23,7 @@ local function setup_colors()
     file_modified = vim.g.terminal_color_2, -- green
     recording_fg  = vim.g.terminal_color_0, -- black
     recording_bg  = vim.g.terminal_color_2, -- green
-    bookmarks_fg  = vim.g.terminal_color_4, -- blue
+    bookmarks_fg  = vim.g.terminal_color_5, -- magenta
     search_fg     = vim.g.terminal_color_0, -- black
     search_bg     = vim.g.terminal_color_3, -- yellow
     -- git
