@@ -1,4 +1,4 @@
-local Persist = require('rkernan.bookmarks.persist')
+local Persist = require('rkernan.persistent-bookmarks.persist')
 
 local Bookmarks = {}
 
@@ -6,7 +6,6 @@ function Bookmarks:new()
   local o = {
     bookmarks = {},
     augroup = nil,
-    is_setup = false,
     persist = nil,
   }
   setmetatable(o, self)

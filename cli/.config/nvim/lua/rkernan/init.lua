@@ -34,6 +34,10 @@ require('rkernan.diagnostics').setup()
 require('rkernan.lazy')
 require('rkernan.options')
 
+require('rkernan.floating-terminal').setup()
+require('rkernan.persistent-bookmarks').setup()
+require('rkernan.set-tabs').setup()
+
 vim.opt.termguicolors = true
 vim.cmd.set('background=dark')
 vim.cmd.colorscheme('gruvbones')

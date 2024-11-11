@@ -13,7 +13,7 @@ return {
   {
     components.filename,
     components.space,
-    components.bookmarks,
+    components.persistent_bookmarks,
     components.mini.diff.add,
     components.mini.diff.change,
     components.mini.diff.delete,
