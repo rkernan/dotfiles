@@ -1,12 +1,9 @@
-local Persist = {}
+local class = require('middleclass')
 
-function Persist:new()
-  local o = {
-    path = vim.fn.stdpath('state') .. '/nvim/persistent_bookmarks',
-  }
-  setmetatable(o, self)
-  self.__index = self
-  return o
+local Persist = class('Persist')
+
+function Persist:initialize()
+  self.path = vim.fn.stdpath('state') .. '/nvim/persistent_bookmarks'
 end
 
 function Persist:normalize_path_to_filename(path)

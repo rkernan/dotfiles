@@ -1,16 +1,12 @@
+local class = require('middleclass')
 local Persist = require('rkernan.persistent-bookmarks.persist')
 
-local Bookmarks = {}
+local Bookmarks = class('Bookmarks')
 
-function Bookmarks:new()
-  local o = {
-    bookmarks = {},
-    augroup = nil,
-    persist = nil,
-  }
-  setmetatable(o, self)
-  self.__index = self
-  return o
+function Bookmarks:initialize()
+  self.bookmarks = {}
+  self.augroup = nil
+  self.persist = nil
 end
 
 function Bookmarks:get_path(bufnr)
