@@ -1,39 +1,35 @@
 local class = require('middleclass')
 local Window = require('rkernan.utils.window')
 
+local function min_width()
+  return math.floor(vim.o.columns / 4)
+end
+
 local namespace = vim.api.nvim_create_namespace('cmdline')
 
 local CmdlineWindow = Window:subclass('CmdlineWindow')
 
 function CmdlineWindow:initialize()
-  self.min_width = 50
   Window.initialize(
     self,
     {
       relative = 'editor',
       zindex = 200,
-      col = 4,
+      col = 0,
       style = 'minimal',
       height = 1,
-      width = self.min_width,
+      width = min_width(),
     },
     function (window)
+      vim.api.nvim_buf_set_name(window.bufnr, 'cmdline')
       vim.api.nvim_set_option_value('buftype', 'nofile', { buf = window.bufnr })
       vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = window.bufnr })
-      vim.api.nvim_buf_set_name(window.bufnr, 'cmdline')
-      vim.api.nvim_create_autocmd({ 'BufHidden', 'BufLeave' }, { buffer = window.bufnr, callback = function () window:close() end })
       vim.api.nvim_set_option_value('winfixbuf', true, { win = window.winnr })
       vim.api.nvim_set_option_value('virtualedit', 'all,onemore', { win = window.winnr })
-      -- FIXME bad highlight
-      vim.api.nvim_set_option_value('winhighlight', 'Normal:StatusLine,Search:StatusLine', { win = window.winnr })
+      vim.api.nvim_set_option_value('winhighlight', 'Normal:StatusLine,Search:StatusLine,IncSearch:StatusLine', { win = window.winnr })
       vim.api.nvim_set_option_value('winblend', 0, { win = window.winnr })
     end
   )
-end
-
-function CmdlineWindow:open()
-  Window.open(self, { row = vim.o.lines - 2 })
-  vim.api.nvim__redraw({ cursor = true, flush = true })
 end
 
 function CmdlineWindow:update(firstc, prompt, command, position, block)
@@ -48,7 +44,7 @@ function CmdlineWindow:update(firstc, prompt, command, position, block)
     })
   end
 
-  local width = math.max(self.min_width, #virt_prompt + #command)
+  local width = math.max(min_width(), #virt_prompt + #command)
   -- FIXME width needs padding?
   vim.api.nvim_win_set_config(self.winnr, { width = width + 6, height = block })
   vim.api.nvim_buf_set_lines(self.bufnr, -2, -1, false, { command })
