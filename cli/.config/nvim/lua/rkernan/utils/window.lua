@@ -2,10 +2,11 @@ local class = require('middleclass')
 
 local Window = class('Window')
 
-function Window:initialize(win_opts)
+function Window:initialize(win_opts, on_open)
   self.winnr = -1
   self.bufnr = -1
   self.win_opts = win_opts
+  self.on_open = on_open
 end
 
 function Window:is_buf_valid()
@@ -16,32 +17,44 @@ function Window:is_win_valid()
   return vim.api.nvim_win_is_valid(self.winnr)
 end
 
-function Window:open(win_opts, listed, scratch, enter)
-  local opened = false
+function Window:_create_buf()
+  return vim.api.nvim_create_buf(false, true)
+end
+
+function Window:_open_win(win_opts)
+  return vim.api.nvim_open_win(self.bufnr, true, win_opts)
+end
+
+function Window:open(win_opts)
+  local new = false
   if not self:is_buf_valid() then
-    self.bufnr = vim.api.nvim_create_buf(listed, scratch)
-    opened = true
+    self.bufnr = self:_create_buf()
+    new = true
   end
 
   if not self:is_win_valid() then
-    self.winnr = vim.api.nvim_open_win(self.bufnr, enter, vim.tbl_extend('force', self.win_opts, win_opts))
-    opened = true
+    self.winnr = self:_open_win(vim.tbl_extend('force', self.win_opts, win_opts))
+    new = true
   end
 
-  return opened
+  if new and self.on_open then
+    self.on_open(self)
+  end
 end
 
 function Window:close()
-  if self:is_win_valid() then
-    vim.api.nvim_win_close(self.winnr, true)
+  if not self:is_win_valid() then
+    return
   end
+  vim.api.nvim_win_close(self.winnr, true)
 end
 
 function Window:exit()
-  self:close()
-  if self:is_buf_valid() then
-    vim.api.nvim_buf_delete(self.bufnr, { force = true })
+  if not self:is_buf_valid() then
+    return
   end
+  self:close()
+  vim.api.nvim_buf_delete(self.bufnr, { force = true })
 end
 
 return Window

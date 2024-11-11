@@ -4,14 +4,25 @@ local M = {}
 
 local FloatingTerminal = Window:subclass('FloatingTerminal')
 
-function FloatingTerminal:initialize(win_opts, on_open, command)
-  Window.initialize(self, vim.tbl_extend('force', {
-    relative = 'editor',
-    style = 'minimal',
-    border = 'single',
-  }, win_opts))
+function FloatingTerminal:initialize(win_opts, command, on_open)
+  Window.initialize(
+    self,
+    vim.tbl_extend('force', {
+      relative = 'editor',
+      style = 'minimal',
+      border = 'single',
+    }, win_opts),
+    function (terminal)
+      -- make prettier
+      vim.api.nvim_set_option_value('winhighlight', 'Normal:Normal,FloatBorder:FloatBorder', { win = terminal.winnr })
+      vim.api.nvim_set_option_value('winblend', 0, { win = terminal.winnr })
+      -- trigger real on_open callback if exists
+      if on_open then
+        on_open(terminal)
+      end
+    end
+  )
   self.command = command or os.getenv('SHELL')
-  self.on_open = on_open
   self.terminal = nil
 end
 
@@ -30,16 +41,7 @@ function FloatingTerminal:get_dimensions()
 end
 
 function FloatingTerminal:open()
-  if Window.open(self, self:get_dimensions(), false, true, true) then
-    -- make prettier
-    vim.api.nvim_set_option_value('winhighlight', 'Normal:Normal,FloatBorder:FloatBorder', { win = self.winnr })
-    vim.api.nvim_set_option_value('winblend', 0, { win = self.winnr })
-    -- trigger on_open callback
-    if self.on_open then
-      self.on_open(self)
-    end
-  end
-
+  Window.open(self, self:get_dimensions())
   if not self.terminal then
     self.terminal = vim.fn.termopen(self.command, { on_exit = function () self:exit() end })
   end
@@ -58,7 +60,7 @@ end
 M.FloatingTerminal = FloatingTerminal
 
 function M.setup()
-  local terminal = FloatingTerminal:new({}, function (terminal)
+  local terminal = FloatingTerminal:new({}, nil, function (terminal)
     vim.keymap.set('t', '<A-i>', function () terminal:close() end, { buffer = terminal.bufnr })
   end)
 
