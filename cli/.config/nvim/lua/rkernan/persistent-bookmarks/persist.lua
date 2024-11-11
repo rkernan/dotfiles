@@ -9,19 +9,19 @@ function Persist:new()
   return o
 end
 
-function Persist:__normalize_path_to_filename(path)
+function Persist:normalize_path_to_filename(path)
   if vim.fn.has('win32') then
     path = path:gsub('\\', '/')
   end
   return path:gsub('/', '_')
 end
 
-function Persist:__persist_file()
-  return string.format('%s/%s', self.path, self:__normalize_path_to_filename(vim.uv.cwd()))
+function Persist:persist_file()
+  return string.format('%s/%s', self.path, self:normalize_path_to_filename(vim.uv.cwd()))
 end
 
 function Persist:load()
-  local persist_file = self:__persist_file()
+  local persist_file = self:persist_file()
   local fp = io.open(persist_file, 'r')
   if not fp then
     return {}
@@ -33,7 +33,7 @@ end
 
 function Persist:save(bookmarks)
   vim.fn.mkdir(self.path, 'p')
-  local persist_file = self:__persist_file()
+  local persist_file = self:persist_file()
   if #bookmarks > 0 then
     local fp = io.open(persist_file, 'w')
     if not fp then
