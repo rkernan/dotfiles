@@ -59,6 +59,24 @@ end
 
 local Cmdline = class('Cmdline')
 
+Cmdline.static.EVENTS = {
+  SHOW = 'cmdline_show',
+  POS = 'cmdline_pos',
+  HIDE = 'cmdline_hide',
+  SPECIAL_CHAR = 'cmdline_special_char',
+  BLOCK_SHOW = 'cmdline_block_show',
+  BLOCK_APPEND = 'cmdline_block_append',
+  BLOCK_HIDE = 'cmdline_block_hide',
+}
+
+function Cmdline:initialize()
+  self.command = nil
+  self.position = 0
+  self.firstc = nil
+  self.prompt = nil
+  self.block = 1
+  self.window = CmdlineWindow:new()
+end
 
 function Cmdline:exit()
   self.window:close()
@@ -111,19 +129,19 @@ function Cmdline:block_hide()
 end
 
 function Cmdline:handle(event, ...)
-  if event == 'cmdline_show' then
+  if event == Cmdline.EVENTS.SHOW then
     self:show(...)
-  elseif event == 'cmdline_pos' then
+  elseif event == Cmdline.EVENTS.POS then
     self:pos(...)
-  elseif event == 'cmdline_hide' then
+  elseif event == Cmdline.EVENTS.HIDE then
     self:hide()
-  elseif event == 'cmdline_special_char' then
+  elseif event == Cmdline.EVENTS.SPECIAL_CHAR then
     self:special_char(...)
-  elseif event == 'cmdline_block_show' then
+  elseif event == Cmdline.EVENTS.BLOCK_SHOW then
     self:block_show()
-  elseif event == 'cmdline_block_append' then
+  elseif event == Cmdline.EVENTS.BLOCK_APPEND then
     self:block_append()
-  elseif event == 'cmdline_block_hide' then
+  elseif event == Cmdline.EVENTS.BLOCK_HIDE then
     self:block_hide()
   end
 end

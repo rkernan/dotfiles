@@ -43,12 +43,12 @@ end
 
 local Messages = class('Messages')
 
-Messages.static.EVENT = {
+Messages.static.EVENTS = {
   MSG_SHOW = 'msg_show',
   MSG_HISTORY_SHOW = 'msg_history_show',
 }
 
-Messages.static.KIND = {
+Messages.static.KINDS = {
   RETURN_PROMPT = 'return_prompt',
   CONFIRM = 'confirm',
   CONFIRM_SUB = 'confirm_sub',
@@ -128,7 +128,7 @@ function Messages:notify(kind, lines)
 
   -- TODO message filters
   self:history_insert(lines)
-  if kind == Messages.KIND.ECHO then
+  if kind == Messages.KINDS.ECHO then
     if msg:find('^/') then
       -- filter out search messages
       return
@@ -152,11 +152,11 @@ function Messages:confirm(kind, lines)
     border = 'single',
   }
 
-  if kind == Messages.KIND.CONFIRM then
+  if kind == Messages.KINDS.CONFIRM then
     win_opts.title = text[1]
     win_opts.height = #text - 1
     table.remove(text, 1)
-  elseif kind == Messages.KIND.CONFIRM_SUB then
+  elseif kind == Messages.KINDS.CONFIRM_SUB then
     vim.opt.hlsearch = true
     vim.api.nvim__redraw({ flush = true, cursor = true })
     if vim.api.nvim_win_is_valid(self.confirm_win) then
@@ -193,25 +193,25 @@ function Messages:msg_show(kind, content)
     else
       vim.schedule(function () self.output_win:open(lines, false) end)
     end
-  elseif kind == Messages.KIND.RETURN_PROMPT then
+  elseif kind == Messages.KINDS.RETURN_PROMPT then
     vim.api.nvim_input('<CR>')
-  elseif vim.tbl_contains(Messages.KIND.ECHOES, kind) then
+  elseif vim.tbl_contains(Messages.KINDS.ECHOES, kind) then
     self:notify(kind, lines)
-  elseif kind == Messages.KIND.CONFIRM or kind == Messages.KIND.CONFIRM_SUB then
+  elseif kind == Messages.KINDS.CONFIRM or kind == Messages.KINDS.CONFIRM_SUB then
     self:confirm(kind, lines)
-  elseif kind == Messages.KIND.SEARCH_COUNT then
+  elseif kind == Messages.KINDS.SEARCH_COUNT then
     -- skip
     return
-  elseif kind == Messages.KIND.QUICKFIX then
+  elseif kind == Messages.KINDS.QUICKFIX then
     -- skip
     return
   end
 end
 
 function Messages:handle(event, kind, content)
-  if event == Messages.EVENT.MSG_SHOW then
+  if event == Messages.EVENTS.MSG_SHOW then
     self:msg_show(kind, content)
-  elseif event == Messages.EVENT.MSG_HISTORY_SHOW then
+  elseif event == Messages.EVENTS.MSG_HISTORY_SHOW then
     self:history_show(true)
   end
 end
