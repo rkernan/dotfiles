@@ -56,21 +56,13 @@ function CmdlineWindow:update(firstc, prompt, command, position, block)
   vim.api.nvim__redraw({ cursor = true, flush = true, win = self.winnr })
 end
 
-local Cmdline = {}
-
-function Cmdline:new()
-  local o = {
-    command = nil,
-    position = 0,
-    firstc = nil,
-    prompt = nil,
-    block = 1,
-    window = CmdlineWindow:new(),
-  }
-  setmetatable(o, self)
-  self.__index = self
-  return o
+function CmdlineWindow:open()
+  Window.open(self, { row = vim.o.lines - 2 })
+  vim.api.nvim__redraw({ cursor = true, flush = true })
 end
+
+local Cmdline = class('Cmdline')
+
 
 function Cmdline:exit()
   self.window:close()
