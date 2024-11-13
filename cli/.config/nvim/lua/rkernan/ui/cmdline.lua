@@ -5,7 +5,7 @@ local function min_width()
   return math.floor(vim.o.columns / 4)
 end
 
-local namespace = vim.api.nvim_create_namespace('cmdline')
+local namespace = vim.api.nvim_create_namespace('rkernan.ui.cmdline')
 
 local CmdlineWindow = Window:subclass('CmdlineWindow')
 
