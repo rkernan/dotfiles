@@ -1,61 +1,5 @@
 local class = require('middleclass')
-local Window = require('rkernan.utils.window')
-
-local function min_width()
-  return math.floor(vim.o.columns / 4)
-end
-
-local namespace = vim.api.nvim_create_namespace('rkernan.ui.cmdline')
-
-local CmdlineWindow = Window:subclass('CmdlineWindow')
-
-function CmdlineWindow:initialize()
-  Window.initialize(
-    self,
-    {
-      relative = 'editor',
-      zindex = 200,
-      col = 0,
-      style = 'minimal',
-      height = 1,
-      width = min_width(),
-    },
-    function (window)
-      vim.api.nvim_buf_set_name(window.bufnr, 'cmdline')
-      vim.api.nvim_set_option_value('buftype', 'nofile', { buf = window.bufnr })
-      vim.api.nvim_set_option_value('bufhidden', 'wipe', { buf = window.bufnr })
-      vim.api.nvim_set_option_value('winfixbuf', true, { win = window.winnr })
-      vim.api.nvim_set_option_value('virtualedit', 'all,onemore', { win = window.winnr })
-      vim.api.nvim_set_option_value('winhighlight', 'Normal:StatusLine,Search:StatusLine,IncSearch:StatusLine', { win = window.winnr })
-      vim.api.nvim_set_option_value('winblend', 0, { win = window.winnr })
-    end
-  )
-end
-
-function CmdlineWindow:update(firstc, prompt, command, position, block)
-  local virt_prompt = firstc .. prompt
-  if not vim.api.nvim_win_is_valid(self.winnr) then
-    self:open()
-    -- set prompt virtual text
-    vim.api.nvim_buf_set_extmark(self.bufnr, namespace, 0, 0, {
-      right_gravity = false,
-      virt_text_pos = 'inline',
-      virt_text = {{ virt_prompt, 'NormalFloat' }},
-    })
-  end
-
-  local width = math.max(min_width(), #virt_prompt + #command)
-  -- FIXME width needs padding?
-  vim.api.nvim_win_set_config(self.winnr, { width = width + 6, height = block })
-  vim.api.nvim_buf_set_lines(self.bufnr, -2, -1, false, { command })
-  vim.api.nvim_win_set_cursor(self.winnr, { 1, position })
-  vim.api.nvim__redraw({ cursor = true, flush = true, win = self.winnr })
-end
-
-function CmdlineWindow:open()
-  Window.open(self, { row = vim.o.lines - 2 })
-  vim.api.nvim__redraw({ cursor = true, flush = true })
-end
+local InputWindow = require('rkernan.utils.input-window')
 
 local Cmdline = class('Cmdline')
 
@@ -75,7 +19,14 @@ function Cmdline:initialize()
   self.firstc = nil
   self.prompt = nil
   self.block = 1
-  self.window = CmdlineWindow:new()
+  self.window = InputWindow:new(
+    { row = vim.o.lines - 2 },
+    function (window)
+      vim.api.nvim_buf_set_name(window.bufnr, 'cmdline')
+      vim.api.nvim_set_option_value('winhighlight', 'Normal:StatusLine,Search:StatusLine,IncSearch:StatusLine', { win = window.winnr })
+      vim.api.nvim_set_option_value('winblend', 0, { win = window.winnr })
+      -- TODO completion
+    end)
 end
 
 function Cmdline:exit()
@@ -98,12 +49,12 @@ function Cmdline:show(content, position, firstc, prompt)
   end
 
   self.command = command
-  self.window:update(self.firstc, self.prompt, self.command, self.position, self.block)
+  self.window:update(self.firstc .. self.prompt, self.command, { 1, self.position }, {})
 end
 
 function Cmdline:pos(position)
   self.position = position
-  self.window:update(self.firstc, self.prompt, self.command, self.position, self.block)
+  self.window:update(self.firstc .. self.prompt, self.command, { 1, self.position }, {})
 end
 
 function Cmdline:hide()
@@ -112,7 +63,7 @@ end
 
 function Cmdline:special_char(char)
   self.command = self.command:sub(1, self.position) .. char .. self.command:sub(self.position + 1)
-  self.window:update(self.firstc, self.prompt, self.command, self.position, self.block)
+  self.window:update(self.firstc .. self.prompt, self.command, { 1, self.position }, {})
 end
 
 function Cmdline:block_show(...)
