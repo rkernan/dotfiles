@@ -1,11 +1,10 @@
 local cmdline = require('rkernan.ui.cmdline')
+local input = require('rkernan.ui.input')
 local messages = require('rkernan.ui.messages')
 
 -- use custom ui_input
 ---@diagnostic disable-next-line: duplicate-set-field
-vim.ui.input = function(...)
-  -- TODO
-end
+vim.ui.input = input.input
 
 -- use mini.pick for ui_select
 ---@diagnostic disable-next-line: duplicate-set-field

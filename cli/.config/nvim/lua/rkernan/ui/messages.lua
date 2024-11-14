@@ -1,5 +1,6 @@
 local class = require('middleclass')
 local Window = require('rkernan.utils.window')
+local InputWindow = require('rkernan.utils.input-window')
 
 local MessagesWindow = Window:subclass('MessagesWindow')
 
@@ -71,8 +72,7 @@ function Messages:initialize()
   self.history_size = 200
   self.history_win = MessagesWindow:new('history')
   self.output_win = MessagesWindow:new('output')
-  -- FIXME PopupWindow?
-  self.confirm_win = -1
+  self.confirm_win = InputWindow:new({ border = 'single' })
 end
 
 function Messages:content_to_lines(content)
@@ -126,7 +126,6 @@ function Messages:notify(kind, lines)
     return
   end
 
-  -- TODO message filters
   self:history_insert(lines)
   if kind == Messages.KINDS.ECHO then
     if msg:find('^/') then
@@ -142,38 +141,22 @@ end
 function Messages:confirm(kind, lines)
   local text = vim.tbl_filter(function (line) return line ~= '' end, lines)
 
-  local win_opts = {
-    relative = 'editor',
-    row = vim.o.lines / 2 - 1,
-    col = math.floor((vim.o.columns - 30) / 2),
-    width = math.max(unpack(vim.tbl_map(function (line) return #line end, text))),
-    height = #text,
-    style = 'minimal',
-    border = 'single',
-  }
-
+  local height = #text
   if kind == Messages.KINDS.CONFIRM then
-    win_opts.title = text[1]
-    win_opts.height = #text - 1
+    -- FIXME why?
+    height = #text - 1
     table.remove(text, 1)
-  elseif kind == Messages.KINDS.CONFIRM_SUB then
-    vim.opt.hlsearch = true
-    vim.api.nvim__redraw({ flush = true, cursor = true })
-    if vim.api.nvim_win_is_valid(self.confirm_win) then
-      return
-    end
   end
+  local width = math.max(unpack(vim.tbl_map(function (line) return #line end, text)))
+  local col = math.ceil((vim.o.columns - width) * 0.5)
+  local row = math.ceil((vim.o.lines - height) * 0.5)
 
-  local bufnr = vim.api.nvim_create_buf(false, true)
-  vim.bo[bufnr].bufhidden = 'wipe'
-  self.confirm_win = vim.api.nvim_open_win(bufnr, false, win_opts)
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, text)
-  vim.schedule(function ()
-    vim.api.nvim_win_close(self.confirm_win, true)
-    self.confirm_win = -1
-    vim.opt.hlsearch = false
-  end)
-  vim.api.nvim__redraw({ flush = true, cursor = true })
+  self.confirm_win:update('', text, {1, 1 }, {
+    height = height,
+    width = width,
+    col = col,
+    row = row,
+  })
 end
 
 function Messages:msg_show(kind, content)
