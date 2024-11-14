@@ -33,7 +33,7 @@ function Window:open(win_opts)
   end
 
   if not self:is_win_valid() then
-    self.winnr = self:_open_win(vim.tbl_extend('force', self.win_opts, win_opts))
+    self.winnr = self:_open_win(vim.tbl_deep_extend('force', self.win_opts, win_opts))
     new = true
   end
 

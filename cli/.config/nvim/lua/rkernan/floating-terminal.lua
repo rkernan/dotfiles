@@ -7,16 +7,16 @@ local FloatingTerminal = Window:subclass('FloatingTerminal')
 function FloatingTerminal:initialize(win_opts, command, on_open)
   Window.initialize(
     self,
-    vim.tbl_extend('force', {
+    vim.tbl_deep_extend('force', {
       relative = 'editor',
       style = 'minimal',
       border = 'single',
     }, win_opts),
     function (terminal)
-      -- make prettier
+      -- common settings
       vim.api.nvim_set_option_value('winhighlight', 'Normal:Normal,FloatBorder:FloatBorder', { win = terminal.winnr })
       vim.api.nvim_set_option_value('winblend', 0, { win = terminal.winnr })
-      -- trigger real on_open callback if exists
+      -- trigger on_open parameter callback
       if on_open then
         on_open(terminal)
       end
