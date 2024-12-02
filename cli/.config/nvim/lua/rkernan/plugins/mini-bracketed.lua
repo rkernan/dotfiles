@@ -1,5 +1,7 @@
 return {
   'echasnovski/mini.bracketed',
   event = 'VeryLazy',
-  config = true,
+  opts = {
+    diagnostic = { options = { float = false }},
+  },
 }
