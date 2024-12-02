@@ -16,18 +16,11 @@ M.sign_hl = {
 
 function M.setup()
   vim.diagnostic.config({
+    virtual_text = false,
     signs = {
       text = M.signs,
     },
-    severity_sort = true,
-    update_in_insert = false,
-    virtual_text = {
-      prefix = function (message)
-        return M.signs[message.severity]
-      end,
-      spacing = 2,
-      severity = { min = vim.diagnostic.severity.INFO },
-    },
+    update_in_insert = true,
     float = {
       border = 'single',
       header = '',
