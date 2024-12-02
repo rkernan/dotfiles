@@ -48,7 +48,7 @@ local function lsp_detach(args)
   pcall(vim.keymap.del, 'n', '<Leader><Leader>O', { buffer = bufnr })
   pcall(vim.keymap.del, 'n', '<Leader><Leader>i', { buffer = bufnr })
   -- disable mini-completion
-  vim.api.nvim_set_option_value('omnifunc', '', { buf = bufnr })
+  pcall(vim.api.nvim_set_option_value, 'omnifunc', '', { buf = bufnr })
 end
 
 return {
