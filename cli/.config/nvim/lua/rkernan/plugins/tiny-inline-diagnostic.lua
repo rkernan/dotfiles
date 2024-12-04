@@ -3,7 +3,10 @@ return {
   event = 'VeryLazy',
   priority = 1000,
   opts = {
-    preset = 'minimal',
+    preset = 'simple',
+    signs = {
+      diag = '',
+    },
     options = {
       enable_on_insert = true,
       show_all_diags_on_cursorline = true,
