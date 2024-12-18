@@ -3,17 +3,10 @@ return {
   event = 'VeryLazy',
   priority = 1000,
   opts = {
-    preset = 'simple',
-    signs = {
-      diag = '',
-    },
+    preset = 'SIMPLE',
     options = {
-      enable_on_insert = true,
-      show_all_diags_on_cursorline = true,
-      format = function (diagnostic)
-        local icon = require('rkernan.diagnostics').signs[diagnostic.severity]
-        return string.format('%s %s [%s]', icon, diagnostic.message, diagnostic.source)
-      end,
+      show_source = true,
+      use_icons_from_diagnostic = true,
     },
   },
 }
