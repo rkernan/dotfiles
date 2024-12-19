@@ -27,9 +27,6 @@ local function lsp_attach(args)
     function () vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled()) end,
     { buffer = bufnr, desc = 'LSP toggle inlay hints'}
   )
-
-  -- setup mini-completion
-  vim.api.nvim_set_option_value('omnifunc', 'v:lua.MiniCompletion.completefunc_lsp', { buf = bufnr })
 end
 
 local function lsp_detach(args)
@@ -47,18 +44,19 @@ local function lsp_detach(args)
   pcall(vim.keymap.del, 'n', '<Leader><Leader>o', { buffer = bufnr })
   pcall(vim.keymap.del, 'n', '<Leader><Leader>O', { buffer = bufnr })
   pcall(vim.keymap.del, 'n', '<Leader><Leader>i', { buffer = bufnr })
-  -- disable mini-completion
-  pcall(vim.api.nvim_set_option_value, 'omnifunc', '', { buf = bufnr })
 end
 
 return {
   'neovim/nvim-lspconfig',
+  dependencies = {
+    'saghen/blink.cmp',
+  },
   cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
   event = { 'BufReadPre', 'BufNewFile' },
   config = function()
     local lspconfig = require('lspconfig')
     local lsp_defaults = {
-      capabilities = lspconfig.util.default_config.capabilities,
+      capabilities = require('blink.cmp').get_lsp_capabilities(lspconfig.util.default_config.capabilities),
       handlers = {
         ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
       },
