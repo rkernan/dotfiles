@@ -5,6 +5,7 @@ return {
     view = {
       style = 'sign',
       signs = { add = '┃', change = '┃', delete = '┃' },
+      priority = 9,
     },
   },
 }
