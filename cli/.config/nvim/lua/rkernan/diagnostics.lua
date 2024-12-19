@@ -16,6 +16,7 @@ M.sign_hl = {
 
 function M.setup()
   vim.diagnostic.config({
+    severity_sort = true,
     virtual_text = false,
     signs = {
       text = M.signs,
@@ -32,6 +33,10 @@ function M.setup()
       end,
     },
   })
+
+  vim.keymap.set('n', '<C-e>', function ()
+    vim.diagnostic.open_float()
+  end, { desc = 'Open diagnostic float' })
 end
 
 return M
