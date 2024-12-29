@@ -64,13 +64,22 @@ return {
 
     lspconfig.bashls.setup(lsp_defaults)
     lspconfig.gopls.setup(lsp_defaults)
-    lspconfig.groovyls.setup(vim.tbl_deep_extend(
-      'force',
-      lsp_defaults,
-      { cmd = { 'java', '-jar', vim.fn.expand('~/.local/lib/groovy-language-server/build/libs/groovy-language-server-all.jar') }}
-    ))
+    lspconfig.groovyls.setup(vim.tbl_deep_extend('force', lsp_defaults, {
+      cmd = {
+        'java', '-jar', vim.fn.expand('~/.local/lib/groovy-language-server/build/libs/groovy-language-server-all.jar')
+      },
+    }))
     lspconfig.jsonls.setup(lsp_defaults)
-    lspconfig.lua_ls.setup(lsp_defaults)
+    lspconfig.lua_ls.setup(vim.tbl_deep_extend('force', lsp_defaults, {
+      settings =
+        {
+          Lua = {
+            telemetry = {
+              enable = false
+            }
+          }
+        }
+    }))
 
     if vim.fn.executable('pyright-langserver') > 0 then
       -- fallback to pyright-langserver for older python versions
