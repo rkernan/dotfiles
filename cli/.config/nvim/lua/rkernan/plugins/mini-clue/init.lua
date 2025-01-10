@@ -46,6 +46,7 @@ return {
         miniclue.gen_clues.z(),
         require('rkernan.plugins.mini-move.mappings').clues(),
         require('rkernan.plugins.dap.mappings').clues(),
+        require('rkernan.plugins.treewalker.mappings').clues(),
       },
       window = {
         -- delay = 500,
