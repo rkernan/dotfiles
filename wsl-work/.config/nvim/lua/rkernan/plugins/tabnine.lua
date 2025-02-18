@@ -6,7 +6,7 @@ return {
     'cd chat; cargo build --release',
   },
   opts = {
-    tabnine_enterprise_host = os.getenv("TABNINE_HOST") or nil,
+    tabnine_enterprise_host = os.getenv("TABNINE_ENTERPRISE_HOST") or nil,
     disable_auto_comment = true,
     accept_keymap = '<C-n>',
     dismiss_keymap = '<C-]>',
