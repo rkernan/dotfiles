@@ -10,8 +10,7 @@ return {
     disable_auto_comment = true,
     accept_keymap = '<C-f>',
   },
-  config = function (opts)
-    vim.print(opts)
+  config = function (_, opts)
     require('tabnine').setup(opts)
   end,
 }
