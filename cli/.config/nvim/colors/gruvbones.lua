@@ -61,10 +61,12 @@ local specs = lush.extends({ base_specs }).with(function (injected_functions)
     sym('@float')({ Float }),
 
     -- sky booleans
+    ---@diagnostic disable-next-line: undefined-field
     Boolean({ Constant, fg = palette.sky, gui = 'italic' }),
     sym('@boolean')({ Boolean }),
 
     -- rose italic statements
+    ---@diagnostic disable-next-line: undefined-field
     Statement({ base_specs.Statement, fg = palette.rose, gui = 'italic' }),
     sym('@statement')({ Statement }),
 
