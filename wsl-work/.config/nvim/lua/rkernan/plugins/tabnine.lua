@@ -8,8 +8,7 @@ return {
   opts = {
     tabnine_enterprise_host = os.getenv("TABNINE_ENTERPRISE_HOST") or nil,
     disable_auto_comment = true,
-    accept_keymap = '<C-n>',
-    dismiss_keymap = '<C-]>',
+    accept_keymap = '<C-f>',
   },
   config = function (opts)
     vim.print(opts)
