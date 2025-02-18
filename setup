@@ -3,16 +3,19 @@
 set -e
 
 stow() {
-  command stow -t "$HOME" -v "$1"
+  local pkg="$1"
+  command stow -t "$HOME" -v $@ "$pkg"
 }
 
 unstow() {
-  command stow -t "$HOME" -vD "$1"
+  local pkg="$1"
+  shift 1
+  command stow -t "$HOME" -vD $@ "$pkg"
 }
 
 check_command() {
   local cmd="$1"
-  local exec="$(which "$cmd" 2>/dev/null || true)"
+  local exec="$(which "$cmd" 2> /dev/null || true)"
   if [ -z "$exec" ]; then
     (>&2 echo -e "$cmd\t->")
     return 1
@@ -114,7 +117,7 @@ for target in $targets; do
       check_command vf      || true
       ;;
     cli)
-      stow cli
+      stow cli --defer='.config/nvim/lazy-lock.json'
       ;;
     gui)
       stow gui
@@ -146,7 +149,7 @@ for target in $targets; do
       check_command fish &> /dev/null && fish -c "set -Ux AUTOSTART_TMUX 1" || true
       ;;
     wsl-work)
-      stow wsl-work
+      stow wsl-work --override='.config/nvim/lazy-lock.json'
       ;;
     *)
       (>&2 echo "Unknown target $target")
