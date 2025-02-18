@@ -83,6 +83,9 @@ local specs = lush.extends({ base_specs }).with(function (injected_functions)
     MiniDiffSignChange({ base_specs.GitSignsChange }),
     MiniDiffSignDelete({ base_specs.GitSignsDelete }),
 
+    -- tabnine
+    TabnineSuggestion({ fg = base_specs.Normal.fg.da(50), gui = 'italic' }),
+
     ---@diagnostic enable: undefined-global
   }
 end)
