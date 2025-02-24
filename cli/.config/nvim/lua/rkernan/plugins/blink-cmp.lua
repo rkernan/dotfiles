@@ -2,8 +2,6 @@ return {
   -- TODO https://github.com/deathbeam/autocomplete.nvim
   'saghen/blink.cmp',
   version = 'v0.*',
-  ---@module blink.cmp
-  ---@type blink.cmp.config
   opts = {
     keymap = {
       preset = 'default',
