@@ -69,15 +69,6 @@ setup_vf() {
   vf install auto_activation global_requirements environment
 }
 
-setup_gpg_agent() {
-  mkdir -p "${HOME}/.config/systemd/user"
-  pushd "${HOME}/.config/systemd/user"
-  cp -f /usr/share/doc/gnupg/examples/systemd-user/* .
-  systemctl --user daemon-reload
-  systemctl --user enable *.socket
-  popd
-}
-
 install_groovyls() {
   mkdir -p "${HOME}/.local/lib"
   pushd "${HOME}/.local/lib"
@@ -121,7 +112,6 @@ for target in $targets; do
       ;;
     gui)
       stow gui
-      setup_gpg_agent
       ;;
     install_brew)
       install_brew
