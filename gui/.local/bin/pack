@@ -17,6 +17,7 @@ usage() {
   echo "If using 'paru' AUR helper, run the following first: paru --gendb && paru --devel --save"
   echo "Usage: $0 [command] [options]"
   echo "  clean               : Clean the pacman cache"
+  echo "  clean-pkg           : Remove /var/cache/pacman/pkg/*"
   echo "  deptree             : List dependency tree of a given package"
   echo "  diff                : Clean up pacnew files"
   echo "  downgrade           : Downgrade a package"
@@ -51,6 +52,9 @@ case $CMD in
   clean)
     no_params_or_die $*
     exec $(which paccache) -r
+    ;;
+  clean-pkg)
+    sudo rm -f /var/cache/pacman/pkg/*
     ;;
   deptree)
     exec $(which pactree) $*

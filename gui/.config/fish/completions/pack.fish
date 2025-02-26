@@ -10,6 +10,7 @@ complete -c $progname -e
 complete -c $progname -f
 
 complete -c $progname -n "$noopt" -f -a clean -d "Clean the pacman cache"
+complete -c $progname -n "$noopt" -f -a clean-pkg -d "Remove /var/cache/pacman/pkg/*"
 complete -c $progname -n "$noopt" -f -a deptree -d "List dependency tree of a given package"
 complete -c $progname -n "$noopt" -f -a diff -d "Clean up pacnew files"
 complete -c $progname -n "$noopt" -f -a downgrade -d "Downgrade a package"
