@@ -117,8 +117,7 @@ for target in $targets; do
       install_brew
       ;;
     setup_asdf)
-      asdf plugin-add python
-      asdf global python system
+      asdf plugin add python
       ;;
     setup_brew_fzf)
       setup_brew_fzf
