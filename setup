@@ -44,42 +44,6 @@ guess_target() {
   echo "checkhealth"
 }
 
-install_brew() {
-  if ! check_command brew &> /dev/null; then
-    curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s
-  else
-    brew update
-  fi
-}
-
-setup_brew_fzf() {
-  if ! check_command brew &> /dev/null; then
-    (>&2 echo "Brew isn't installed!")
-    exit 1
-  fi
-
-  local installer=$(brew --prefix)/opt/fzf/install
-  if ! -e $installer; then
-    (>&2 echo "FZF installer not found!")
-  fi
-  $installer --key-bindings --completion --no-update-rc --xdg
-}
-
-setup_vf() {
-  vf install auto_activation global_requirements environment
-}
-
-install_groovyls() {
-  mkdir -p "${HOME}/.local/lib"
-  pushd "${HOME}/.local/lib"
-  rm -rf "groovy-language-server"
-  git clone https://github.com/GroovyLanguageServer/groovy-language-server.git
-  pushd "groovy-language-server"
-  ./gradlew build
-  popd
-  popd
-}
-
 readonly targets=${*:-$(guess_target)}
 
 # don't clobber these directories
@@ -113,20 +77,29 @@ for target in $targets; do
     gui)
       stow gui
       ;;
-    install_brew)
-      install_brew
-      ;;
-    setup_asdf)
+    homebrew)
+      if ! check_command brew &> /dev/null; then
+        curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s
+      else
+        brew update
+      fi
+      brew bundle --upgrade
+      # setup asdf
       asdf plugin add python
+      # setup fzf
+      $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc --xdg
+      # setup virtualfish
+      vf install auto_activation global_requirements environment
       ;;
-    setup_brew_fzf)
-      setup_brew_fzf
-      ;;
-    setup_vf)
-      setup_vf
-      ;;
-    install_groovyls)
-      install_groovyls
+    groovyls)
+      mkdir -p "${HOME}/.local/lib"
+      pushd "${HOME}/.local/lib"
+      rm -rf "groovy-language-server"
+      git clone https://github.com/GroovyLanguageServer/groovy-language-server.git
+      pushd "groovy-language-server"
+      ./gradlew build
+      popd
+      popd
       ;;
     unstow)
       for d in $(find . -mindepth 1 -maxdepth 1 -type d -not -path '*/\.git/*' -printf '%P\n'); do
