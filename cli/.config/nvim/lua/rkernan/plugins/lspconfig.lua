@@ -5,7 +5,7 @@ local function lsp_attach(args)
   end
 
   local bufnr = args.buf
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, { buffer = bufnr, desc = 'LSP hover' })
+  vim.keymap.set('n', 'K', function () vim.lsp.buf.hover({ border = 'single' }) end, { buffer = bufnr, desc = 'LSP hover' })
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, desc = 'LSP definition' })
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc = 'LSP declaration' })
   -- vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { buffer = bufnr, desc = 'LSP implementation' })
@@ -57,9 +57,6 @@ return {
     local lspconfig = require('lspconfig')
     local lsp_defaults = {
       capabilities = require('blink.cmp').get_lsp_capabilities(lspconfig.util.default_config.capabilities),
-      handlers = {
-        ['textDocument/hover'] = vim.lsp.with(vim.lsp.handlers.hover, { border = 'single' }),
-      },
     }
 
     lspconfig.bashls.setup(lsp_defaults)
