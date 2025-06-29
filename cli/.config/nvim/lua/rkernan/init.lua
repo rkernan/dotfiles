@@ -28,7 +28,7 @@ vim.g.loaded_ruby_provider = 0
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-require('rkernan.keymaps')
+require('rkernan.mappings')
 require('rkernan.autocmds')
 require('rkernan.diagnostics').setup()
 require('rkernan.lazy')
