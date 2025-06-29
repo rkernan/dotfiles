@@ -129,7 +129,7 @@ return {
         }))
     end
 
-    lspconfig.yamlls.setup(lsp_defaults)
+    lspconfig.yamlls.setup(vim.tbl_extend('force', lsp_defaults, { settings = { redhat = { telemetry = { enabled = false }}}}))
 
     local augroup = vim.api.nvim_create_augroup('rkernan.plugins.lspconfig', { clear = true })
     vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
