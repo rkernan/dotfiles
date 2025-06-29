@@ -129,6 +129,8 @@ return {
         }))
     end
 
+    lspconfig.yamlls.setup(lsp_defaults)
+
     local augroup = vim.api.nvim_create_augroup('rkernan.plugins.lspconfig', { clear = true })
     vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
     vim.api.nvim_create_autocmd('LspDetach', { group = augroup, callback = lsp_detach })
