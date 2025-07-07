@@ -1,7 +1,7 @@
 local M = {}
 
 local utils = require('heirline.utils')
-local myutils = require('rkernan.plugins.heirline.utils')
+local myutils = require('rkernan.heirline.utils')
 
 M.fill = { provider = '%=' }
 

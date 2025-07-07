@@ -1,5 +1,4 @@
-return {
-  'nmac427/guess-indent.nvim',
-  event = { 'BufReadPost', 'FileReadPost' },
-  config = true,
-}
+local add, later = MiniDeps.add, MiniDeps.later
+
+add({ source = 'nmac427/guess-indent.nvim' })
+later(function () require('guess-indent').setup() end)

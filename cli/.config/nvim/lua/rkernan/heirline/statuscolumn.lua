@@ -1,4 +1,4 @@
-local components = require('rkernan.plugins.heirline.components')
+local components = require('rkernan.heirline.components')
 local conditions = require('heirline.conditions')
 local utils = require('heirline.utils')
 

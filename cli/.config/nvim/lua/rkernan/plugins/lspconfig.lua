@@ -5,6 +5,9 @@ local function lsp_attach(args)
   end
 
   local bufnr = args.buf
+
+  vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
+
   vim.keymap.set('n', 'K', function () vim.lsp.buf.hover({ border = 'single' }) end, { buffer = bufnr, desc = 'LSP hover' })
   vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = bufnr, desc = 'LSP definition' })
   vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { buffer = bufnr, desc = 'LSP declaration' })
@@ -46,93 +49,86 @@ local function lsp_detach(args)
   pcall(vim.keymap.del, 'n', '<Leader><Leader>i', { buffer = bufnr })
 end
 
-return {
-  'neovim/nvim-lspconfig',
-  dependencies = {
-    'saghen/blink.cmp',
-  },
-  cmd = { 'LspInfo', 'LspInstall', 'LspStart' },
-  event = { 'BufReadPre', 'BufNewFile' },
-  config = function()
-    local lspconfig = require('lspconfig')
-    local lsp_defaults = {
-      capabilities = require('blink.cmp').get_lsp_capabilities(lspconfig.util.default_config.capabilities),
-    }
+local add, now = MiniDeps.add, MiniDeps.now
 
-    lspconfig.bashls.setup(lsp_defaults)
-    lspconfig.gopls.setup(lsp_defaults)
-    lspconfig.groovyls.setup(vim.tbl_deep_extend('force', lsp_defaults, {
-      cmd = {
-        'java', '-jar', vim.fn.expand('~/.local/lib/groovy-language-server/build/libs/groovy-language-server-all.jar')
-      },
-    }))
-    lspconfig.jsonls.setup(lsp_defaults)
-    lspconfig.lua_ls.setup(vim.tbl_deep_extend('force', lsp_defaults, {
-      settings =
-        {
-          Lua = {
-            telemetry = {
-              enable = false
-            }
+add({ source = 'neovim/nvim-lspconfig' })
+now(function ()
+  local lspconfig = require('lspconfig')
+  local lsp_defaults = { capabilities = lspconfig.util.default_config.capabilities }
+
+  lspconfig.bashls.setup(lsp_defaults)
+  lspconfig.gopls.setup(lsp_defaults)
+  lspconfig.groovyls.setup(vim.tbl_deep_extend('force', lsp_defaults, {
+    cmd = {
+      'java', '-jar', vim.fn.expand('~/.local/lib/groovy-language-server/build/libs/groovy-language-server-all.jar')
+    },
+  }))
+  lspconfig.jsonls.setup(lsp_defaults)
+  lspconfig.lua_ls.setup(vim.tbl_deep_extend('force', lsp_defaults, {
+    settings =
+      {
+        Lua = {
+          telemetry = {
+            enable = false
           }
-        },
-      on_init = function (client)
-        local path = client.workspace_folders[1].name
+        }
+      },
+    on_init = function (client)
+      local path = client.workspace_folders[1].name
 
-        -- Don't do anything if there is project local config
-        if vim.uv.fs_stat(vim.fs.joinpath(path, '.luarc.json')) or vim.uv.fs_stat(vim.fs.joinpath(path, '.luarc.jsonc')) then
-          return
-        end
-
-        -- Apply neovim specific settings
-        local runtime_path = vim.split(package.path, ';')
-        table.insert(runtime_path, vim.fs.joinpath('lua', '?.lua'))
-        table.insert(runtime_path, vim.fs.joinpath('lua', '?', 'init.lua'))
-
-        client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
-          runtime = {
-            -- tell the language server which version of Lua you're using
-            version = 'LuaJIT',
-            path = runtime_path,
-          },
-          diagnostics = {
-            -- get the language server to recognize the `vim` global
-            globals = { 'vim' },
-          },
-          workspace = {
-            checkThirdParty = false,
-            library = {
-              -- make the server aware of Neovim runtime files
-              vim.env.VIMRUNTIME,
-              vim.fn.stdpath('config'),
-              -- for vim.uv functions
-              '${3rd}/luv/library',
-            },
-          },
-        })
+      -- Don't do anything if there is project local config
+      if vim.uv.fs_stat(vim.fs.joinpath(path, '.luarc.json')) or vim.uv.fs_stat(vim.fs.joinpath(path, '.luarc.jsonc')) then
+        return
       end
-    }))
 
-    if vim.fn.executable('pyright-langserver') > 0 then
-      -- fallback to pyright-langserver for older python versions
-      lspconfig.pyright.setup(lsp_defaults)
-    else
-      lspconfig.basedpyright.setup(vim.tbl_deep_extend(
-        'force',
-        lsp_defaults,
-        {
-          settings = {
-            basedpyright = {
-              typeCheckingMode = 'basic',
-            },
+      -- Apply neovim specific settings
+      local runtime_path = vim.split(package.path, ';')
+      table.insert(runtime_path, vim.fs.joinpath('lua', '?.lua'))
+      table.insert(runtime_path, vim.fs.joinpath('lua', '?', 'init.lua'))
+
+      client.config.settings.Lua = vim.tbl_deep_extend('force', client.config.settings.Lua, {
+        runtime = {
+          -- tell the language server which version of Lua you're using
+          version = 'LuaJIT',
+          path = runtime_path,
+        },
+        diagnostics = {
+          -- get the language server to recognize the `vim` global
+          globals = { 'vim' },
+        },
+        workspace = {
+          checkThirdParty = false,
+          library = {
+            -- make the server aware of Neovim runtime files
+            vim.env.VIMRUNTIME,
+            vim.fn.stdpath('config'),
+            -- for vim.uv functions
+            '${3rd}/luv/library',
           },
-        }))
+        },
+      })
     end
+  }))
 
-    lspconfig.yamlls.setup(vim.tbl_extend('force', lsp_defaults, { settings = { redhat = { telemetry = { enabled = false }}}}))
-
-    local augroup = vim.api.nvim_create_augroup('rkernan.plugins.lspconfig', { clear = true })
-    vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
-    vim.api.nvim_create_autocmd('LspDetach', { group = augroup, callback = lsp_detach })
+  if vim.fn.executable('pyright-langserver') > 0 then
+    -- fallback to pyright-langserver for older python versions
+    lspconfig.pyright.setup(lsp_defaults)
+  else
+    lspconfig.basedpyright.setup(vim.tbl_deep_extend(
+      'force',
+      lsp_defaults,
+      {
+        settings = {
+          basedpyright = {
+            typeCheckingMode = 'basic',
+          },
+        },
+      }))
   end
-}
+
+  lspconfig.yamlls.setup(vim.tbl_extend('force', lsp_defaults, { settings = { redhat = { telemetry = { enabled = false }}}}))
+
+  local augroup = vim.api.nvim_create_augroup('rkernan.plugins.lspconfig', { clear = true })
+  vim.api.nvim_create_autocmd('LspAttach', { group = augroup, callback = lsp_attach })
+  vim.api.nvim_create_autocmd('LspDetach', { group = augroup, callback = lsp_detach })
+end)

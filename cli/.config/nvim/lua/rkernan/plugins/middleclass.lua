@@ -1,4 +1,3 @@
-return {
-  'anuvyklack/middleclass',
-  lazy = true,
-}
+local add = MiniDeps.add
+
+add({ source = 'anuvyklack/middleclass' })

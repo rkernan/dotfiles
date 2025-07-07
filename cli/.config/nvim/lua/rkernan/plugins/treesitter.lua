@@ -1,18 +1,14 @@
-return {
-  'nvim-treesitter/nvim-treesitter',
-  event = { 'BufNewFile', 'BufReadPost' },
-  build = ':TSUpdate',
-  dependencies = {
-    'nvim-treesitter/nvim-treesitter-textobjects',
-    'RRethy/nvim-treesitter-endwise',
-  },
-  config = function ()
-    require('nvim-treesitter.configs').setup({
-      auto_install = true,
-      highlight = { enable = true },
-      indent = { enable = true },
-      endwise = { enable = true },
-      additional_vim_regex_highlighting = false,
-    })
-  end,
-}
+local add, now = MiniDeps.add, MiniDeps.now
+
+add({ source = 'nvim-treesitter/nvim-treesitter' })
+add({ source = 'nvim-treesitter/nvim-treesitter-textobjects', depends = { 'nvim-treesitter/nvim-treesitter' } })
+add({ source = 'RRethy/nvim-treesitter-endwise', depends = { 'nvim-treesitter/nvim-treesitter' } })
+now(function ()
+  require('nvim-treesitter.configs').setup({
+    auto_install = true,
+    highlight = { enable = true },
+    indent = { enable = true },
+    endwise = { enable = true },
+    additional_vim_regex_highlighting = false,
+  })
+end)

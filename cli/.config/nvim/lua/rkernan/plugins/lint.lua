@@ -1,14 +1,14 @@
+local add, later = MiniDeps.add, MiniDeps.later
+
 local function try_lint()
   require('lint').try_lint()
   -- always check spelling
   -- require('lint').try_lint('cspell')
 end
 
-return {
-  'mfussenegger/nvim-lint',
-  event = { 'BufReadPre', 'BufWritePre' },
-  config = function ()
-    local lint = require('lint')
+add({ source = 'mfussenegger/nvim-lint' })
+later(function ()
+  local lint = require('lint')
     lint.linters_by_ft = {
       python = {
         'pycodestyle',
@@ -21,6 +21,6 @@ return {
       return diagnostic
     end)
 
+    -- FIXME augroup
     vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, { callback = try_lint })
-  end
-}
+end)

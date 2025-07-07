@@ -1,6 +1,6 @@
 local M = {}
 
-local utils = require('rkernan.plugins.heirline.utils')
+local utils = require('rkernan.heirline.utils')
 
 M.head = {
   static = {

@@ -1,4 +1,4 @@
-local components = require('rkernan.plugins.heirline.components')
+local components = require('rkernan.heirline.components')
 local conditions = require('heirline.conditions')
 
 return {
@@ -13,7 +13,6 @@ return {
   {
     components.filename,
     components.space,
-    components.persistent_bookmarks,
     components.mini.diff.add,
     components.mini.diff.change,
     components.mini.diff.delete,

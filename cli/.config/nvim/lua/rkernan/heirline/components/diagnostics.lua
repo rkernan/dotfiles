@@ -2,7 +2,7 @@ local M = {}
 
 local utils = require('heirline.utils')
 local diagnostic_signs = require('rkernan.diagnostics').signs
-local myutils = require('rkernan.plugins.heirline.utils')
+local myutils = require('rkernan.heirline.utils')
 
 local diagnostics_shared = {
   init = function (self)
