@@ -10,3 +10,5 @@ require('rkernan.plugins.lspconfig')
 require('rkernan.plugins.middleclass')
 require('rkernan.plugins.treesitter')
 require('rkernan.plugins.zenbones')
+-- try to load tabnine
+pcall(require, 'rkernan.plugins.tabnine')
