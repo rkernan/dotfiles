@@ -12,7 +12,8 @@ now(function ()
           buftype = { 'nofile', 'help', 'prompt', 'quickfix', 'terminal' },
           filetype = {},
         })
-      end
+      end,
+      colors = require('rkernan.heirline.colors').setup_colors(),
     },
   })
 
