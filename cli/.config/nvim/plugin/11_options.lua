@@ -86,3 +86,24 @@ end
 
 vim.opt.termguicolors = true
 vim.cmd.set('background=dark')
+
+-- setup diagnostics
+local diagnostics = require('rkernan.diagnostics')
+vim.diagnostic.config({
+  severity_sort = true,
+  virtual_text = false,
+  signs = {
+    text = diagnostics.signs,
+  },
+  update_in_insert = true,
+  float = {
+    border = 'single',
+    header = '',
+    source = true,
+    prefix = function (diagnostic)
+      local sign = string.format('%s ', diagnostics.signs[diagnostic.severity])
+      local hl = diagnostics.sign_hl[diagnostic.severity]
+      return sign, hl
+    end,
+  },
+})

@@ -27,3 +27,6 @@ vim.keymap.set('n', '<C-i>', function ()
   local res = vim.treesitter.get_captures_at_cursor(0)
   print(vim.inspect(res))
 end, { desc = 'Highlight under cursor' })
+
+-- open diagnostics in Floating window
+vim.keymap.set('n', '<C-e>', function () vim.diagnostic.open_float() end, { desc = 'Open diagnostic float' })

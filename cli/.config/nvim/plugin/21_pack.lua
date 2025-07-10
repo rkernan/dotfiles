@@ -15,3 +15,8 @@ pcall(require, 'rkernan.plugins.tabnine')
 
 require('rkernan.plugins.heirline')
 require('rkernan.plugins.zenbones')
+
+-- TODO(nvim0.12) convert to local packs
+local later = MiniDeps.later
+later(function () require('rkernan.floating-terminal').setup() end)
+later(function () require('rkernan.set-tabs').setup() end)
