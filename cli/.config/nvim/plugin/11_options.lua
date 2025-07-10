@@ -86,6 +86,7 @@ end
 
 vim.opt.termguicolors = true
 vim.cmd.set('background=dark')
+vim.cmd('colorscheme gruvbones')
 
 -- setup diagnostics
 local diagnostics = require('rkernan.diagnostics')

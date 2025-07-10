@@ -2,14 +2,14 @@ local utils = require('heirline.utils')
 
 local function setup_colors()
   local base_colors = {
-    black          = vim.g.terminal_color_0,
-    red            = vim.g.terminal_color_1,
-    green          = vim.g.terminal_color_2,
-    yellow         = vim.g.terminal_color_3,
-    blue           = vim.g.terminal_color_4,
-    magenta        = vim.g.terminal_color_5,
-    cyan           = vim.g.terminal_color_6,
-    white          = vim.g.terminal_color_7,
+    black   = vim.g.terminal_color_0,
+    red     = vim.g.terminal_color_1,
+    green   = vim.g.terminal_color_2,
+    yellow  = vim.g.terminal_color_3,
+    blue    = vim.g.terminal_color_4,
+    magenta = vim.g.terminal_color_5,
+    cyan    = vim.g.terminal_color_6,
+    white   = vim.g.terminal_color_7,
   }
   -- terminal colors may not be defined, fallback
   if base_colors.black == nil then base_colors.black = 'black' end
