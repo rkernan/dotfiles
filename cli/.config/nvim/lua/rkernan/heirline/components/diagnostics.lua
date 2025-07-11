@@ -35,7 +35,7 @@ M.error = utils.insert({
   },
   on_click = {
     callback = function ()
-      vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.ERROR })
+      vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.ERROR })
     end,
     name = 'heirline_diagnostics_error',
   },
@@ -49,7 +49,7 @@ M.warn = utils.insert({
   },
   on_click = {
     callback = function ()
-      vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.WARN })
+      vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.WARN })
     end,
     name = 'heirline_diagnostics_warn',
   },
@@ -63,7 +63,7 @@ M.info = utils.insert({
   },
   on_click = {
     callback = function ()
-      vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.INFO })
+      vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.INFO })
     end,
     name = 'heirline_diagnostics_info',
   },
@@ -77,7 +77,7 @@ M.hint = utils.insert({
   },
   on_click = {
     callback = function ()
-      vim.diagnostic.goto_next({ severity = vim.diagnostic.severity.HINT })
+      vim.diagnostic.jump({ count = 1, severity = vim.diagnostic.severity.HINT })
     end,
     name = 'heirline_diagnostics_hint',
   },
