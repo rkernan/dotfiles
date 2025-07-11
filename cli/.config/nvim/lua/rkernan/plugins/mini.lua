@@ -17,6 +17,7 @@ require('mini.deps').setup({ path = { package = path_package } })
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 ---@diagnostic enable: undefined-global
 
+
 add({ name = 'mini.nvim', checkout = 'stable' })
 
 later(function () require('mini.ai').setup() end)
@@ -140,12 +141,13 @@ later(function ()
   })
 end)
 
-later(function ()
+now(function ()
+  require('mini.keymap').setup()
   local map_multistep = require('mini.keymap').map_multistep
-  map_multistep('i', '<Tab>', { 'pmenu_next' })
-  map_multistep('i', '<S-Tab>', { 'pmenu_prev' })
-  map_multistep('i', '<CR>', { 'pmenu_accept', 'minipairs_cr' })
-  map_multistep('i', '<BS>', { 'minipairs_bs' })
+  map_multistep('i', '<Tab>',   { 'pmenu_next',   'increase_indent' })
+  map_multistep('i', '<S-Tab>', { 'pmenu_prev',   'decrease_indent' })
+  map_multistep('i', '<CR>',    { 'pmenu_accept', 'minipairs_cr' })
+  map_multistep('i', '<BS>',    { 'hungry_bs',    'minipairs_bs' })
 end)
 
 later(function () require('mini.operators').setup() end)
