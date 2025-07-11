@@ -1,7 +1,7 @@
 -- disable ex mode mapping
 vim.keymap.set('n', 'Q', '<NOP>')
 
--- keep cursor centered
+-- keep cursor centered on search
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 
@@ -17,12 +17,6 @@ vim.keymap.set('n', 'gk', 'k', { desc = 'Prev line' })
 -- keep highlight after changing indent
 vim.keymap.set('x', '>', '>gv')
 vim.keymap.set('x', '<', '<gv')
-
--- inspect treesitter highlighting
-vim.keymap.set('n', '<C-i>', function ()
-  local res = vim.treesitter.get_captures_at_cursor(0)
-  print(vim.inspect(res))
-end, { desc = 'Highlight under cursor' })
 
 -- open diagnostics in Floating window
 vim.keymap.set('n', '<C-e>', function () vim.diagnostic.open_float() end, { desc = 'Open diagnostic float' })
