@@ -3,9 +3,6 @@ local augroup = vim.api.nvim_create_augroup('rkernan.autocmds', { clear = true }
 -- resize windows automatically
 vim.api.nvim_create_autocmd('VimResized', { group = augroup, command = [[wincmd =]] })
 
--- restore last cursor position
-vim.api.nvim_create_autocmd('BufReadPost', { group = augroup, pattern = { '*' }, command = [[silent! normal! g`"zv]] })
-
 -- disable hlsearch on cursor move
 vim.api.nvim_create_autocmd('CursorMoved', {
   group = augroup,
@@ -16,17 +13,6 @@ vim.api.nvim_create_autocmd('CursorMoved', {
         vim.api.nvim_exec_autocmds('User', { pattern = 'HlSearchDisabled' })
       end
       )
-    end
-  end,
-})
-
--- automatically cd to project root
-vim.api.nvim_create_autocmd('VimEnter', {
-  group = augroup,
-  callback = function ()
-    local found = vim.fs.find({ '.venv', '.git' }, { limit = 1, upward = true })
-    if #found > 0 then
-      vim.schedule(function () vim.api.nvim_set_current_dir(vim.fn.fnamemodify(found[1], ':h')) end)
     end
   end,
 })

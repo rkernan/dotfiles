@@ -142,6 +142,9 @@ end)
 
 later(function () require('mini.operators').setup() end)
 
+now(function () require('mini.misc').setup_auto_root({ '.venv', '.git' }) end)
+now(function () require('mini.misc').setup_restore_cursor() end)
+
 later(function () require('mini.pairs').setup() end)
 
 later(function ()
