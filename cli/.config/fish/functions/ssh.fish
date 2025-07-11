@@ -13,6 +13,6 @@ function ssh
 
   if test -n $last_window_name
     tmux rename-window "$last_window_name"
-    tmux set-window-option automatic-rename "on"
   end
+  tmux set-window-option automatic-rename "on"
 end
