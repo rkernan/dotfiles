@@ -1,4 +1,6 @@
+---@diagnostic disable: undefined-global
 local add, now = MiniDeps.add, MiniDeps.now
+---@diagnostic enable: undefined-global
 
 add({ source = 'rebelot/heirline.nvim' })
 now(function ()

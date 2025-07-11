@@ -1,4 +1,6 @@
+---@diagnostic disable: undefined-global
 local add, later = MiniDeps.add, MiniDeps.later
+---@diagnostic enable: undefined-global
 
 local function build(args)
   vim.notify("Building tabnine-nvim...")

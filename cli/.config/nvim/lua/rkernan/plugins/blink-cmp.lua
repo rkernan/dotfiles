@@ -1,4 +1,6 @@
+---@diagnostic disable: undefined-global
 local add, now = MiniDeps.add, MiniDeps.now
+---@diagnostic enable: undefined-global
 
 local function build(args)
   vim.notify('Building blink.cmp...', vim.log.levels.INFO)

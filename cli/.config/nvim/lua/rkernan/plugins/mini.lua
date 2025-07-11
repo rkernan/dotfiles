@@ -13,7 +13,9 @@ end
 
 require('mini.deps').setup({ path = { package = path_package } })
 
+---@diagnostic disable: undefined-global
 local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
+---@diagnostic enable: undefined-global
 
 add({ name = 'mini.nvim', checkout = 'stable' })
 
@@ -152,7 +154,9 @@ later(function ()
   vim.keymap.set('n', '<Leader>E', function () require('mini.extra').pickers.diagnostic({ scope = 'all' }) end, { desc = 'Workspace diagnostics' })
   vim.keymap.set('n', '<Leader>j', function () require('mini.extra').pickers.marks() end, { desc = 'Marks' })
   -- set ui.select
+  ---@diagnostic disable: duplicate-set-field
   vim.ui.select = function (...) return require('mini.pick').ui_select(...) end
+  ---@diagnostic enable: duplicate-set-field
 end)
 
 later(function () require('mini.surround').setup() end)

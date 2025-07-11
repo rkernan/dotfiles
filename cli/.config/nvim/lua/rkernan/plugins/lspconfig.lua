@@ -49,7 +49,9 @@ local function lsp_detach(args)
   pcall(vim.keymap.del, 'n', '<Leader><Leader>i', { buffer = bufnr })
 end
 
+---@diagnostic disable: undefined-global
 local add, now = MiniDeps.add, MiniDeps.now
+---@diagnostic enable: undefined-global
 
 add({ source = 'neovim/nvim-lspconfig' })
 now(function ()

@@ -1,4 +1,6 @@
+---@diagnostic disable: undefined-global
 local add, later = MiniDeps.add, MiniDeps.later
+---@diagnostic enable: undefined-global
 
 add({ source = 'stevearc/conform.nvim' })
 later(function ()
