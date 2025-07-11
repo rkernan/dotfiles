@@ -18,10 +18,6 @@ vim.keymap.set('n', 'gk', 'k', { desc = 'Prev line' })
 vim.keymap.set('x', '>', '>gv')
 vim.keymap.set('x', '<', '<gv')
 
--- tab navigation in popup menu
-vim.keymap.set('i', '<Tab>',   [[pumvisible() ? "\<C-n>" : "\<Tab>"]], { expr = true })
-vim.keymap.set('i', '<S-Tab>', [[pumvisible() ? "\<C-p>" : "\<S-Tab>"]], { expr = true })
-
 -- inspect treesitter highlighting
 vim.keymap.set('n', '<C-i>', function ()
   local res = vim.treesitter.get_captures_at_cursor(0)
