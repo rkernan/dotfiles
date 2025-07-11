@@ -43,7 +43,7 @@ end
 function FloatingTerminal:open()
   Window.open(self, self:get_dimensions())
   if not self.terminal then
-    self.terminal = vim.fn.termopen(self.command, { on_exit = function () self:exit() end })
+    self.terminal = vim.fn.jobstart(self.command, { on_exit = function () self:exit() end, term = true })
   end
 
   vim.api.nvim_command([[startinsert]])
