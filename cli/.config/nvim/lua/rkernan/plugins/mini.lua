@@ -103,14 +103,13 @@ end)
 
 later(function ()
   local hipatterns = require('mini.hipatterns')
+  local hi_words = require('mini.extra').gen_highlighter.words
   hipatterns.setup({
     highlighters = {
-      -- Highlight standalone 'FIXME', 'HACK', 'TODO', 'NOTE'
-      fixme = { pattern = '%f[%w]()FIXME()%f[%W]', group = 'MiniHipatternsFixme' },
-      hack  = { pattern = '%f[%w]()HACK()%f[%W]',  group = 'MiniHipatternsHack'  },
-      todo  = { pattern = '%f[%w]()TODO()%f[%W]',  group = 'MiniHipatternsTodo'  },
-      note  = { pattern = '%f[%w]()NOTE()%f[%W]',  group = 'MiniHipatternsNote'  },
-      -- Highlight hex color strings (`#rrggbb`) using that color
+      fixme = hi_words({ 'FIXME', 'fixme' }, 'MiniHipatternsFixme'),
+      hack  = hi_words({ 'HACK',  'hack'  }, 'MiniHipatternsHack'),
+      todo  = hi_words({ 'TODO',  'todo'  }, 'MiniHipatternsTodo'),
+      note  = hi_words({ 'NOTE',  'note'  }, 'MiniHipatternsNote'),
       hex_color = hipatterns.gen_highlighter.hex_color(),
     }
   })
