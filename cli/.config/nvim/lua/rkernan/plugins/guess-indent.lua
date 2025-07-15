@@ -1,5 +1,5 @@
 ---@diagnostic disable: undefined-global
-local add, no = MiniDeps.add, MiniDeps.now
+local add, now = MiniDeps.add, MiniDeps.now
 ---@diagnostic enable: undefined-global
 
 add({ source = 'nmac427/guess-indent.nvim' })
