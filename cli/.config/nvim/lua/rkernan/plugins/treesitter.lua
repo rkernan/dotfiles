@@ -2,10 +2,10 @@
 local add, now = MiniDeps.add, MiniDeps.now
 ---@diagnostic enable: undefined-global
 
-add({ source = 'nvim-treesitter/nvim-treesitter' })
-add({ source = 'nvim-treesitter/nvim-treesitter-textobjects', depends = { 'nvim-treesitter/nvim-treesitter' } })
-add({ source = 'RRethy/nvim-treesitter-endwise', depends = { 'nvim-treesitter/nvim-treesitter' } })
 now(function ()
+  add({ source = 'nvim-treesitter/nvim-treesitter' })
+  add({ source = 'nvim-treesitter/nvim-treesitter-textobjects', depends = { 'nvim-treesitter/nvim-treesitter' } })
+  add({ source = 'RRethy/nvim-treesitter-endwise', depends = { 'nvim-treesitter/nvim-treesitter' } })
   require('nvim-treesitter.configs').setup({
     auto_install = true,
     highlight = { enable = true },

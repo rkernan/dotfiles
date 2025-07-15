@@ -2,8 +2,8 @@
 local add, later = MiniDeps.add, MiniDeps.later
 ---@diagnostic enable: undefined-global
 
-add({ source = 'stevearc/conform.nvim' })
 later(function ()
+  add({ source = 'stevearc/conform.nvim' })
   require('conform').setup({
     formatters_by_ft = {
       go = {

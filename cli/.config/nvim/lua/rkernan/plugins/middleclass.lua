@@ -1,5 +1,7 @@
 ---@diagnostic disable: undefined-global
-local add = MiniDeps.add
+local add, now = MiniDeps.add, MiniDeps.now
 ---@diagnostic enable: undefined-global
 
-add({ source = 'anuvyklack/middleclass' })
+now(function ()
+  add({ source = 'anuvyklack/middleclass' })
+end)

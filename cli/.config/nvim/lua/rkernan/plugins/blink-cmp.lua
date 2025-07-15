@@ -7,8 +7,8 @@ local function build(args)
   vim.system({ 'cargo', 'build', '--release' }, { cwd = args.path }):wait()
 end
 
-add({ source = 'saghen/blink.cmp', hooks = { post_install = build, post_checkout = build }})
 now(function ()
+  add({ source = 'saghen/blink.cmp', hooks = { post_install = build, post_checkout = build }})
   require('blink-cmp').setup({
     keymap = {
       preset = 'default',

@@ -2,8 +2,9 @@
 local add, now = MiniDeps.add, MiniDeps.now
 ---@diagnostic enable: undefined-global
 
-add({ source = 'rebelot/heirline.nvim' })
 now(function ()
+  add({ source = 'rebelot/heirline.nvim' })
+
   require('heirline').setup({
     statuscolumn = require('rkernan.heirline.statuscolumn'),
     statusline = require('rkernan.heirline.statusline'),

@@ -2,5 +2,7 @@
 local add, now = MiniDeps.add, MiniDeps.now
 ---@diagnostic enable: undefined-global
 
-add({ source = 'nmac427/guess-indent.nvim' })
-now(function () require('guess-indent').setup() end)
+now(function ()
+  add({ source = 'nmac427/guess-indent.nvim' })
+  require('guess-indent').setup()
+end)

@@ -18,7 +18,7 @@ local add, now, later = MiniDeps.add, MiniDeps.now, MiniDeps.later
 ---@diagnostic enable: undefined-global
 
 
-add({ name = 'mini.nvim', checkout = 'stable' })
+now(function () add({ name = 'mini.nvim', checkout = 'stable' }) end)
 
 later(function () require('mini.ai').setup() end)
 

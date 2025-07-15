@@ -8,8 +8,8 @@ local function build(args)
   vim.system({ 'cargo', 'build', '--release' }, { cwd = args.path .. '/chat' }):wait()
 end
 
-add({ source = 'codota/tabnine-nvim', hooks = { post_install = build, post_checkout = build }})
 later(function ()
+  add({ source = 'codota/tabnine-nvim', hooks = { post_install = build, post_checkout = build }})
   require('tabnine').setup({
     tabnine_enterprise_host = os.getenv("TABNINE_ENTERPRISE_HOST") or nil,
     disable_auto_comment = true,

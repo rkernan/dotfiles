@@ -2,7 +2,7 @@
 local add, later = MiniDeps.add, MiniDeps.later
 ---@diagnostic enable: undefined-global
 
-add({ source = 'pteroctopus/faster.nvim' })
 later(function ()
+  add({ source = 'pteroctopus/faster.nvim' })
   require('faster').setup()
 end)

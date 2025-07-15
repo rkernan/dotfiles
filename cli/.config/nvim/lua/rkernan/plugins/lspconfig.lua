@@ -53,8 +53,9 @@ end
 local add, now = MiniDeps.add, MiniDeps.now
 ---@diagnostic enable: undefined-global
 
-add({ source = 'neovim/nvim-lspconfig' })
 now(function ()
+  add({ source = 'neovim/nvim-lspconfig' })
+
   local lspconfig = require('lspconfig')
   local lsp_defaults = { capabilities = lspconfig.util.default_config.capabilities }
 
