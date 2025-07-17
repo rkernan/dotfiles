@@ -1,7 +1,5 @@
 require('rkernan.plugins.mini')
 
-require('rkernan.plugins.middleclass')
-
 require('rkernan.plugins.blink-cmp')
 require('rkernan.plugins.conform')
 require('rkernan.plugins.faster')
@@ -19,5 +17,8 @@ pcall(require, 'rkernan.plugins.tabnine')
 local later = MiniDeps.later
 ---@diagnostic enable: undefined-global
 
-later(function () require('rkernan.floating-terminal').setup() end)
+later(function ()
+  require('rkernan.plugins.middleclass')
+  require('rkernan.floating-terminal').setup()
+end)
 later(function () require('rkernan.set-tabs').setup() end)
