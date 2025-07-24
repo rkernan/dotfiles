@@ -14,11 +14,14 @@ pcall(require, 'rkernan.plugins.tabnine')
 
 -- TODO(nvim0.12) convert to local packs
 ---@diagnostic disable: undefined-global
-local later = MiniDeps.later
+local add, later = MiniDeps.add, MiniDeps.later
 ---@diagnostic enable: undefined-global
 
 later(function ()
-  require('rkernan.plugins.middleclass')
+  add({ source = 'anuvyklack/middleclass' })
   require('rkernan.floating-terminal').setup()
 end)
-later(function () require('rkernan.set-tabs').setup() end)
+
+later(function ()
+  require('rkernan.set-tabs').setup()
+end)
