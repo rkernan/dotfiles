@@ -2,10 +2,22 @@ font-family = JetBrainsMono Nerd Font Mono
 font-size = 10.5
 theme = dark:gruvbones-dark,light:gruvbones-light
 
+keybind =
+
+keybind = ctrl+a>r=reload_config
+keybind = ctrl+a>i=inspector:toggle
+
 keybind = performable:ctrl+c=copy_to_clipboard
 keybind = performable:ctrl+v=paste_from_clipboard
 
-keybind = ctrl+a>r=reload_config
+keybind = page_up=scroll_page_up
+keybind = page_down=scroll_page_down
+keybind = home=scroll_to_top
+keybind = end=scroll_to_bottom
+
+keybind = ctrl+plus=increase_font_size:0.5
+keybind = ctrl+minus=decrease_font_size:0.5
+keybind = ctrl+0=reset_font_size
 
 keybind = ctrl+a>c=new_tab
 keybind = ctrl+a>n=next_tab
