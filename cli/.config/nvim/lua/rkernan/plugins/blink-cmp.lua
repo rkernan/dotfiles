@@ -4,7 +4,12 @@ local add, now = MiniDeps.add, MiniDeps.now
 
 local function build(args)
   vim.notify('Building blink.cmp...', vim.log.levels.INFO)
-  vim.system({ 'cargo', 'build', '--release' }, { cwd = args.path }):wait()
+  local res = vim.system({ 'cargo', 'build', '--release' }, { cwd = args.path }):wait()
+  if res.code == 0 then
+    vim.notify("Building blink.cmp done", vim.log.levels.INFO)
+  else
+    vim.notify("Building blink.cmp failed", vim.log.levels.ERROR)
+  end
 end
 
 now(function ()
