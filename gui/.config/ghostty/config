@@ -1,3 +1,32 @@
 font-family = JetBrainsMono Nerd Font Mono
-font-size = 11
+font-size = 10
 theme = dark:gruvbones-dark,light:gruvbones-light
+
+keybind = performable:ctrl+c=copy_to_clipboard
+keybind = performable:ctrl+v=paste_from_clipboard
+
+keybind = ctrl+a>r=reload_config
+
+keybind = ctrl+a>c=new_tab
+keybind = ctrl+a>n=next_tab
+keybind = ctrl+a>p=previous_tab
+keybind = ctrl+a>x=close_surface
+keybind = ctrl+a>1=goto_tab:1
+keybind = ctrl+a>2=goto_tab:2
+keybind = ctrl+a>3=goto_tab:3
+keybind = ctrl+a>4=goto_tab:4
+keybind = ctrl+a>5=goto_tab:5
+keybind = ctrl+a>6=goto_tab:6
+keybind = ctrl+a>7=goto_tab:7
+keybind = ctrl+a>8=goto_tab:8
+keybind = ctrl+a>9=goto_tab:9
+
+keybind = ctrl+a>s=new_split:down
+keybind = ctrl+a>v=new_split:right
+keybind = ctrl+a>o=goto_split:previous
+keybind = ctrl+a>h=goto_split:left
+keybind = ctrl+a>j=goto_split:down
+keybind = ctrl+a>k=goto_split:up
+keybind = ctrl+a>l=goto_split:right
+keybind = ctrl+a>z=toggle_split_zoom
+keybind = ctrl+a>space=equalize_splits
