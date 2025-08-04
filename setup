@@ -83,7 +83,7 @@ def guess_target() -> list[InstallTarget]:
     if shutil.which("pacman"):
         return [InstallTarget.CLI, InstallTarget.GUI, *always]
     elif shutil.which("wsl.exe"):
-        if Path("~/.work").exists():
+        if Path(Path.home(), ".work").exists():
             return [InstallTarget.CLI, InstallTarget.WSL, InstallTarget.WSL_WORK, *always]
         return [InstallTarget.CLI, InstallTarget.WSL, *always]
     return [InstallTarget.CLI, *always]
@@ -97,9 +97,9 @@ if __name__ == "__main__":
     if not targets:
         targets = guess_target()
     # always create these directories
-    Path("~/.config").mkdir(parents=True, exist_ok=True)
-    Path("~/.local/bin").mkdir(parents=True, exist_ok=True)
-    Path("~/.virtualenvs").mkdir(parents=True, exist_ok=True)
+    Path(Path.home(), ".config").mkdir(parents=True, exist_ok=True)
+    Path(Path.home(), ".local", "bin").mkdir(parents=True, exist_ok=True)
+    Path(Path.home(), ".virtualenvs").mkdir(parents=True, exist_ok=True)
     # install targets
     with pushd(Path(__file__).parent):
         for target in targets:
@@ -140,7 +140,7 @@ if __name__ == "__main__":
                 check_call(f"{brew_prefix}/opt/fzf/install --key-bindings --completion --no-update-rc --xdg")
                 check_call("vf install auto_activation global_requirements environment")
             elif target is InstallTarget.INSTALL_GROOVYLS:
-                git_path = Path("~", ".local", "lib", "groovy-language-server")
+                git_path = Path(Path.home(), ".local", "lib", "groovy-language-server")
                 git_path.parent.mkdir(parents=True, exist_ok=True)
                 if not git_path.exists():
                     check_call(f"git clone https://github.com/GroovyLanguageServer/groovy-language-server.git {git_path}")
