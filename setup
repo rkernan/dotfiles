@@ -80,12 +80,12 @@ class InstallTarget(Enum):
 
 def guess_target() -> list[InstallTarget]:
     always = [InstallTarget.CHECKHEALTH]
-    if shutil.which("pacman"):
-        return [InstallTarget.CLI, InstallTarget.GUI, *always]
-    elif shutil.which("wsl.exe"):
+    if shutil.which("wsl.exe"):
         if Path(Path.home(), ".work").exists():
             return [InstallTarget.CLI, InstallTarget.WSL, InstallTarget.WSL_WORK, *always]
         return [InstallTarget.CLI, InstallTarget.WSL, *always]
+    elif shutil.which("pacman"):
+        return [InstallTarget.CLI, InstallTarget.GUI, *always]
     return [InstallTarget.CLI, *always]
 
 
