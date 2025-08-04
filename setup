@@ -1,122 +1,133 @@
-#!/usr/bin/env bash
+#!/usr/bin/env python3
 
-set -e
+import os
+import shutil
+import subprocess
+from argparse import ArgumentParser
+from contextlib import contextmanager
+from enum import Enum
+from pathlib import Path
+from typing import Any, Generator
 
-stow() {
-  local pkg="$1"
-  command stow -t "$HOME" -v $@ "$pkg"
-}
 
-unstow() {
-  local pkg="$1"
-  shift 1
-  command stow -t "$HOME" -vD $@ "$pkg"
-}
+def check_call(cmd: str, **kwargs: Any) -> None:
+    print(">", cmd)
+    kwargs["shell"] = True
+    kwargs["stderr"] = subprocess.STDOUT
+    try:
+        res = subprocess.check_output(cmd, **kwargs)
+        if res:
+            print(res.decode("utf-8").strip())
+    except subprocess.CalledProcessError as err:
+        print(err.output.decode("utf-8").strip())
+        raise
 
-check_command() {
-  local cmd="$1"
-  local exec="$(which "$cmd" 2> /dev/null || true)"
-  if [ -z "$exec" ]; then
-    (>&2 echo -e "$cmd\t->")
-    return 1
-  else
-    echo -e "$cmd\t-> $exec"
-    return 0
-  fi
-}
 
-guess_target() {
-  if [ $(command -v pacman) ]; then
-    # arch linux
-    echo "cli gui"
-  elif [ $(command -v wsl.exe) ]; then
-    # WSL
-    if [ -e ~/.work ]; then
-      echo "cli wsl wsl-work"
-    else
-      echo "cli wsl"
-    fi
-  else
-    # other
-    echo "cli"
-  fi
-  # always check health
-  echo "checkhealth"
-}
+def stow(path: Path) -> None:
+    check_call(f"stow {path!s}")
 
-readonly targets=${*:-$(guess_target)}
 
-# don't clobber these directories
-mkdir -p "${HOME}/.config"
-mkdir -p "${HOME}/.local/bin"
-mkdir -p "${HOME}/.virtualenvs"
+def unstow(path: Path) -> None:
+    check_call(f"stow -t {path!s}")
 
-for target in $targets; do
-  case $target in
-    checkhealth)
-      # commands
-      check_command asdf    || true
-      check_command bat     || true
-      check_command brew    || true
-      check_command cargo   || true
-      check_command fd      || true
-      check_command fish    || true
-      check_command fzf     || true
-      check_command git-lfs || true
-      check_command go      || true
-      check_command nvim    || true
-      check_command rg      || true
-      check_command rustup  || true
-      check_command stow    || true
-      check_command tmux    || true
-      check_command vf      || true
-      ;;
-    cli)
-      stow cli --defer='.config/nvim/lazy-lock.json'
-      ;;
-    gui)
-      stow gui
-      ;;
-    homebrew)
-      if ! check_command brew &> /dev/null; then
-        curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s
-      else
-        brew update
-      fi
-      brew bundle --upgrade
-      # setup asdf
-      asdf plugin add python
-      # setup fzf
-      $(brew --prefix)/opt/fzf/install --key-bindings --completion --no-update-rc --xdg
-      # setup virtualfish
-      vf install auto_activation global_requirements environment
-      ;;
-    groovyls)
-      mkdir -p "${HOME}/.local/lib"
-      pushd "${HOME}/.local/lib"
-      rm -rf "groovy-language-server"
-      git clone https://github.com/GroovyLanguageServer/groovy-language-server.git
-      pushd "groovy-language-server"
-      ./gradlew build
-      popd
-      popd
-      ;;
-    unstow)
-      for d in $(find . -mindepth 1 -maxdepth 1 -type d -not -path '*/\.git/*' -printf '%P\n'); do
-        unstow $d || true
-      done
-      ;;
-    wsl)
-      stow wsl
-      # wsl still uses tmux - https://github.com/microsoft/terminal/issues/1334
-      check_command fish &> /dev/null && fish -c "set -Ux AUTOSTART_TMUX 1" || true
-      ;;
-    wsl-work)
-      stow wsl-work --override='.config/nvim/lazy-lock.json'
-      ;;
-    *)
-      (>&2 echo "Unknown target $target")
-      exit 1
-      ;;
-  esac
-done
+
+def print_command(cmd: str) -> None:
+    print(cmd, "->", shutil.which(cmd))
+
+
+@contextmanager
+def pushd(path: Path) -> Generator[Path, None, None]:
+    previous_path = Path(os.getcwd())
+    os.chdir(path)
+    try:
+        yield path
+    finally:
+        os.chdir(previous_path)
+
+
+class InstallTarget(Enum):
+    CHECKHEALTH = "checkhealth"
+    CLI = "cli"
+    GUI = "gui"
+    WSL = "wsl"
+    WSL_WORK = "wsl-work"
+    UNINSTALL = "uninstall"
+    INSTALL_HOMEBREW = "install-homebrew"
+    INSTALL_GROOVYLS = "install-groovyls"
+
+    def __str__(self) -> str:
+        return self.value
+
+
+def guess_target() -> list[InstallTarget]:
+    always = [InstallTarget.CHECKHEALTH]
+    if shutil.which("pacman"):
+        return [InstallTarget.CLI, InstallTarget.GUI, *always]
+    elif shutil.which("wsl.exe"):
+        if Path("~/.work").exists():
+            return [InstallTarget.CLI, InstallTarget.WSL, InstallTarget.WSL_WORK, *always]
+        return [InstallTarget.CLI, InstallTarget.WSL, *always]
+    return [InstallTarget.CLI, *always]
+
+
+if __name__ == "__main__":
+    parser = ArgumentParser()
+    parser.add_argument("targets", type=InstallTarget, nargs="*", choices=list(InstallTarget))
+    args = parser.parse_args()
+    targets = args.targets
+    if not targets:
+        targets = guess_target()
+    # always create these directories
+    Path("~/.config").mkdir(parents=True, exist_ok=True)
+    Path("~/.local/bin").mkdir(parents=True, exist_ok=True)
+    Path("~/.virtualenvs").mkdir(parents=True, exist_ok=True)
+    # install targets
+    with pushd(Path(__file__).parent):
+        for target in targets:
+            print("==>", target)
+            if target in (InstallTarget.CLI, InstallTarget.GUI, InstallTarget.WSL, InstallTarget.WSL_WORK):
+                stow(Path(".", target.value))
+
+            if target is InstallTarget.CHECKHEALTH:
+                print_command("asdf")
+                print_command("bash-language-server")
+                print_command("bat")
+                print_command("brew")
+                print_command("cargo")
+                print_command("clangd")
+                print_command("fd")
+                print_command("fish")
+                print_command("fzf")
+                print_command("git-lfs")
+                print_command("go")
+                print_command("groovy-language-server")
+                print_command("lua-language-server")
+                print_command("nvim")
+                print_command("rg")
+                print_command("rustup")
+                print_command("stow")
+                print_command("tmux")
+                print_command("vf")
+                print_command("vscode-json-language-server")
+            elif target is InstallTarget.WSL and shutil.which("fish") is not None:
+                check_call("fish -c 'set -Ux AUTOSTART_TMUX 1'")
+            elif target is InstallTarget.INSTALL_HOMEBREW:
+                if shutil.which("brew") is None:
+                    check_call("curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s")
+                check_call("brew update")
+                check_call("brew bundle --upgrade")
+                check_call("asdf plugin add python")
+                brew_prefix = subprocess.check_output("brew --prefix", shell=True).decode("utf-8").strip()
+                check_call(f"{brew_prefix}/opt/fzf/install --key-bindings --completion --no-update-rc --xdg")
+                check_call("vf install auto_activation global_requirements environment")
+            elif target is InstallTarget.INSTALL_GROOVYLS:
+                git_path = Path("~", ".local", "lib", "groovy-language-server")
+                git_path.parent.mkdir(parents=True, exist_ok=True)
+                if not git_path.exists():
+                    check_call(f"git clone https://github.com/GroovyLanguageServer/groovy-language-server.git {git_path}")
+                with pushd(git_path):
+                    check_call("git pull")
+                    check_call("./gradlew build")
+            elif target is InstallTarget.UNINSTALL:
+                for path in ("cli", "gui", "wsl", "wsl-work"):
+                    unstow(Path(".", path))
