@@ -10,8 +10,23 @@ from pathlib import Path
 from typing import Any, Generator
 
 
+class TerminalCode(Enum):
+    RESET = "\033[0m"
+    BOLD = "\033[1m"
+    UNDERLIZE = "\033[4m"
+    RED = "\033[91m"
+    GREEN = "\033[92m"
+    YELLOW = "\033[93m"
+
+
+def termcode(s: str, color: TerminalCode, *args: TerminalCode) -> str:
+    if args:
+        s = termcode(s, *args)
+    return f"{color.value}{s}{TerminalCode.RESET.value}"
+
+
 def check_call(cmd: str, **kwargs: Any) -> None:
-    print(">", cmd)
+    print(">", termcode(cmd, TerminalCode.BOLD))
     kwargs["shell"] = True
     kwargs["stderr"] = subprocess.STDOUT
     try:
@@ -32,7 +47,11 @@ def unstow(path: Path) -> None:
 
 
 def print_command(cmd: str) -> None:
-    print(cmd, "->", shutil.which(cmd))
+    which = shutil.which(cmd)
+    status = termcode("OK", TerminalCode.GREEN)
+    if which is None:
+        status = termcode("FAIL", TerminalCode.RED)
+    print(status, cmd, "->", shutil.which(cmd))
 
 
 @contextmanager
@@ -84,7 +103,7 @@ if __name__ == "__main__":
     # install targets
     with pushd(Path(__file__).parent):
         for target in targets:
-            print("==>", target)
+            print(termcode(target.value, TerminalCode.BOLD, TerminalCode.UNDERLIZE))
             if target in (InstallTarget.CLI, InstallTarget.GUI, InstallTarget.WSL, InstallTarget.WSL_WORK):
                 stow(Path(".", target.value))
 
