@@ -128,6 +128,7 @@ if __name__ == "__main__":
                 print_command("tmux")
                 print_command("vf")
                 print_command("vscode-json-language-server")
+                print_command("yaml-language-server")
             elif target is InstallTarget.CLI:
                 if shutil.which("asdf"):
                     check_call("asdf plugin add python")
