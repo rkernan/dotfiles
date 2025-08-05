@@ -131,6 +131,7 @@ if __name__ == "__main__":
             elif target is InstallTarget.CLI:
                 if shutil.which("asdf"):
                     check_call("asdf plugin add python")
+                    check_call("asdf plugin update --all")
                 if shutil.which("vf"):
                     check_call("vf install auto_activation global_requirements environment")
             elif target is InstallTarget.WSL and shutil.which("fish"):
