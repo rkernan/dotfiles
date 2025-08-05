@@ -128,17 +128,20 @@ if __name__ == "__main__":
                 print_command("tmux")
                 print_command("vf")
                 print_command("vscode-json-language-server")
-            elif target is InstallTarget.WSL and shutil.which("fish") is not None:
+            elif target is InstallTarget.CLI:
+                if shutil.which("asdf"):
+                    check_call("asdf plugin add python")
+                if shutil.which("vf"):
+                    check_call("vf install auto_activation global_requirements environment")
+            elif target is InstallTarget.WSL and shutil.which("fish"):
                 check_call("fish -c 'set -Ux AUTOSTART_TMUX 1'")
             elif target is InstallTarget.INSTALL_HOMEBREW:
                 if shutil.which("brew") is None:
                     check_call("curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s")
                 check_call("brew update")
                 check_call("brew bundle --upgrade")
-                check_call("asdf plugin add python")
                 brew_prefix = subprocess.check_output("brew --prefix", shell=True).decode("utf-8").strip()
                 check_call(f"{brew_prefix}/opt/fzf/install --key-bindings --completion --no-update-rc --xdg")
-                check_call("vf install auto_activation global_requirements environment")
             elif target is InstallTarget.INSTALL_GROOVYLS:
                 git_path = Path(Path.home(), ".local", "lib", "groovy-language-server")
                 git_path.parent.mkdir(parents=True, exist_ok=True)
