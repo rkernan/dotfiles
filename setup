@@ -39,11 +39,11 @@ def check_call(cmd: str, **kwargs: Any) -> None:
 
 
 def stow(path: Path) -> None:
-    check_call(f"stow {path!s}")
+    check_call(f"stow -t {Path.home()} -vS {path!s}")
 
 
 def unstow(path: Path) -> None:
-    check_call(f"stow -t {path!s}")
+    check_call(f"stow -t {Path.home()} -vD {path!s}")
 
 
 def print_command(cmd: str) -> None:
