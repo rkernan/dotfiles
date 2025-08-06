@@ -42,10 +42,6 @@ def stow(path: Path) -> None:
     check_call(f"stow -t {Path.home()} -vS {path!s}")
 
 
-def unstow(path: Path) -> None:
-    check_call(f"stow -t {Path.home()} -vD {path!s}")
-
-
 def print_command(cmd: str) -> None:
     which = shutil.which(cmd)
     status = termcode("OK", TerminalCode.GREEN)
@@ -70,9 +66,6 @@ class InstallTarget(Enum):
     GUI = "gui"
     WSL = "wsl"
     WSL_WORK = "wsl-work"
-    UNINSTALL = "uninstall"
-    INSTALL_HOMEBREW = "install-homebrew"
-    INSTALL_GROOVYLS = "install-groovyls"
 
     def __str__(self) -> str:
         return self.value
@@ -138,7 +131,7 @@ if __name__ == "__main__":
                     check_call("vf install auto_activation global_requirements environment")
             elif target is InstallTarget.WSL and shutil.which("fish"):
                 check_call("fish -c 'set -Ux AUTOSTART_TMUX 1'")
-            elif target is InstallTarget.INSTALL_HOMEBREW:
+                # install and setup brew
                 if shutil.which("brew") is None:
                     check_call("curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s")
                 check_call("brew update")
@@ -146,14 +139,3 @@ if __name__ == "__main__":
                 brew_prefix = subprocess.check_output("brew --prefix", shell=True).decode("utf-8").strip()
                 fzf_install = Path(brew_prefix, "opt", "fzf", "install")
                 check_call(f"{fzf_install} --key-bindings --completion --no-update-rc --xdg")
-            elif target is InstallTarget.INSTALL_GROOVYLS:
-                git_path = Path(Path.home(), ".local", "lib", "groovy-language-server")
-                git_path.parent.mkdir(parents=True, exist_ok=True)
-                if not git_path.exists():
-                    check_call(f"git clone https://github.com/GroovyLanguageServer/groovy-language-server.git {git_path}")
-                with pushd(git_path):
-                    check_call("git pull")
-                    check_call("./gradlew build")
-            elif target is InstallTarget.UNINSTALL:
-                for path in ("cli", "gui", "wsl", "wsl-work"):
-                    unstow(Path(".", path))
