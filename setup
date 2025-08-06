@@ -72,14 +72,14 @@ class InstallTarget(Enum):
 
 
 def guess_target() -> list[InstallTarget]:
-    always = [InstallTarget.CHECKHEALTH]
+    targets = [InstallTarget.CHECKHEALTH, InstallTarget.CLI]
     if shutil.which("wsl.exe"):
+        targets = [*targets, InstallTarget.WSL]
         if Path(Path.home(), ".work").exists():
-            return [InstallTarget.CLI, InstallTarget.WSL, InstallTarget.WSL_WORK, *always]
-        return [InstallTarget.CLI, InstallTarget.WSL, *always]
+            targets = [*targets, InstallTarget.WSL_WORK]
     elif shutil.which("pacman"):
-        return [InstallTarget.CLI, InstallTarget.GUI, *always]
-    return [InstallTarget.CLI, *always]
+        targets = [*targets, InstallTarget.GUI]
+    return targets
 
 
 if __name__ == "__main__":
@@ -89,53 +89,59 @@ if __name__ == "__main__":
     targets = args.targets
     if not targets:
         targets = guess_target()
-    # always create these directories
-    Path(Path.home(), ".config").mkdir(parents=True, exist_ok=True)
-    Path(Path.home(), ".local", "bin").mkdir(parents=True, exist_ok=True)
-    Path(Path.home(), ".virtualenvs").mkdir(parents=True, exist_ok=True)
-    # install targets
-    with pushd(Path(__file__).parent):
-        for target in targets:
-            print(termcode(target.value, TerminalCode.BOLD, TerminalCode.UNDERLIZE))
-            if target in (InstallTarget.CLI, InstallTarget.GUI, InstallTarget.WSL, InstallTarget.WSL_WORK):
-                stow(Path(".", target.value))
 
-            if target is InstallTarget.CHECKHEALTH:
-                print_command("asdf")
-                print_command("bash-language-server")
-                print_command("bat")
-                print_command("brew")
-                print_command("carapace")
-                print_command("cargo")
-                print_command("clangd")
-                print_command("fd")
-                print_command("fish")
-                print_command("fzf")
-                print_command("git-lfs")
-                print_command("go")
-                print_command("groovy-language-server")
-                print_command("lua-language-server")
-                print_command("nvim")
-                print_command("rg")
-                print_command("rustup")
-                print_command("stow")
-                print_command("tmux")
-                print_command("vf")
-                print_command("vscode-json-language-server")
-                print_command("yaml-language-server")
-            elif target is InstallTarget.CLI:
-                if shutil.which("asdf"):
-                    check_call("asdf plugin add python")
-                    check_call("asdf plugin update --all")
-                if shutil.which("vf"):
-                    check_call("vf install auto_activation global_requirements environment")
-            elif target is InstallTarget.WSL and shutil.which("fish"):
+    with pushd(Path(__file__).parent):
+        Path(Path.home(), ".config").mkdir(parents=True, exist_ok=True)
+        Path(Path.home(), ".local", "bin").mkdir(parents=True, exist_ok=True)
+        Path(Path.home(), ".virtualenvs").mkdir(parents=True, exist_ok=True)
+
+        if InstallTarget.CLI in targets:
+            stow(Path(".", "cli"))
+            if shutil.which("asdf"):
+                check_call("asdf plugin add python")
+                check_call("asdf plugin update --all")
+            if shutil.which("vf"):
+                check_call("vf install auto_activation global_requirements environment")
+
+        if InstallTarget.GUI in targets:
+            stow(Path(".", "gui"))
+
+        if InstallTarget.WSL in targets:
+            stow(Path(".", "wsl"))
+            if shutil.which("fish"):
                 check_call("fish -c 'set -Ux AUTOSTART_TMUX 1'")
-                # install and setup brew
-                if shutil.which("brew") is None:
-                    check_call("curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s")
-                check_call("brew update")
-                check_call("brew bundle --upgrade")
-                brew_prefix = subprocess.check_output("brew --prefix", shell=True).decode("utf-8").strip()
-                fzf_install = Path(brew_prefix, "opt", "fzf", "install")
-                check_call(f"{fzf_install} --key-bindings --completion --no-update-rc --xdg")
+            # install and setup brew
+            if shutil.which("brew") is None:
+                check_call("curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s")
+            check_call("brew update")
+            check_call("brew bundle --upgrade")
+            brew_prefix = subprocess.check_output("brew --prefix", shell=True).decode("utf-8").strip()
+            fzf_install = Path(brew_prefix, "opt", "fzf", "install")
+            check_call(f"{fzf_install} --key-bindings --completion --no-update-rc --xdg")
+
+        if InstallTarget.WSL_WORK in targets:
+            stow(Path(".", "wsl-work"))
+
+        if InstallTarget.CHECKHEALTH in targets:
+            print_command("asdf")
+            print_command("bash-language-server")
+            print_command("bat")
+            print_command("brew")
+            print_command("carapace")
+            print_command("cargo")
+            print_command("clangd")
+            print_command("fd")
+            print_command("fish")
+            print_command("fzf")
+            print_command("git-lfs")
+            print_command("go")
+            print_command("groovy-language-server")
+            print_command("lua-language-server")
+            print_command("nvim")
+            print_command("rg")
+            print_command("rustup")
+            print_command("stow")
+            print_command("tmux")
+            print_command("vf")
+            print_command("vscode-json-language-server")
+            print_command("yaml-language-server")
