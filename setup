@@ -13,10 +13,8 @@ from typing import Any, Generator
 class TerminalCode(Enum):
     RESET = "\033[0m"
     BOLD = "\033[1m"
-    UNDERLIZE = "\033[4m"
     RED = "\033[91m"
     GREEN = "\033[92m"
-    YELLOW = "\033[93m"
 
 
 def termcode(s: str, color: TerminalCode, *args: TerminalCode) -> str:
@@ -40,14 +38,6 @@ def check_call(cmd: str, **kwargs: Any) -> None:
 
 def stow(path: Path) -> None:
     check_call(f"stow -t {Path.home()} -vS {path!s}")
-
-
-def print_command(cmd: str) -> None:
-    which = shutil.which(cmd)
-    status = termcode("OK", TerminalCode.GREEN)
-    if which is None:
-        status = termcode("FAIL", TerminalCode.RED)
-    print(status, cmd, "->", shutil.which(cmd))
 
 
 @contextmanager
@@ -91,11 +81,34 @@ if __name__ == "__main__":
         targets = guess_target()
 
     with pushd(Path(__file__).parent):
+        checkhealth_bins = [
+            "asdf",
+            "bash-language-server",
+            "bat",
+            "carapace",
+            "cargo",
+            "clangd",
+            "fd",
+            "fish",
+            "fzf",
+            "git-lfs",
+            "go",
+            "lua-language-server",
+            "nvim",
+            "rg",
+            "rustup",
+            "stow",
+            "vf",
+            "vscode-json-language-server",
+            "yaml-language-server",
+        ]
+
         Path(Path.home(), ".config").mkdir(parents=True, exist_ok=True)
         Path(Path.home(), ".local", "bin").mkdir(parents=True, exist_ok=True)
         Path(Path.home(), ".virtualenvs").mkdir(parents=True, exist_ok=True)
 
         if InstallTarget.CLI in targets:
+            print(termcode(f"==> {InstallTarget.CLI.value}", TerminalCode.BOLD))
             stow(Path(".", "cli"))
             if shutil.which("asdf"):
                 check_call("asdf plugin add python")
@@ -104,9 +117,12 @@ if __name__ == "__main__":
                 check_call("vf install auto_activation global_requirements environment")
 
         if InstallTarget.GUI in targets:
+            print(termcode(f"==> {InstallTarget.GUI.value}", TerminalCode.BOLD))
             stow(Path(".", "gui"))
 
         if InstallTarget.WSL in targets:
+            print(termcode(f"==> {InstallTarget.WSL.value}", TerminalCode.BOLD))
+            checkhealth_bins = [*checkhealth_bins, "brew", "tmux"]
             stow(Path(".", "wsl"))
             if shutil.which("fish"):
                 check_call("fish -c 'set -Ux AUTOSTART_TMUX 1'")
@@ -120,28 +136,15 @@ if __name__ == "__main__":
             check_call(f"{fzf_install} --key-bindings --completion --no-update-rc --xdg")
 
         if InstallTarget.WSL_WORK in targets:
+            print(termcode(f"==> {InstallTarget.WSL_WORK.value}", TerminalCode.BOLD))
+            checkhealth_bins = [*checkhealth_bins, "groovy-language-server"]
             stow(Path(".", "wsl-work"))
 
         if InstallTarget.CHECKHEALTH in targets:
-            print_command("asdf")
-            print_command("bash-language-server")
-            print_command("bat")
-            print_command("brew")
-            print_command("carapace")
-            print_command("cargo")
-            print_command("clangd")
-            print_command("fd")
-            print_command("fish")
-            print_command("fzf")
-            print_command("git-lfs")
-            print_command("go")
-            print_command("groovy-language-server")
-            print_command("lua-language-server")
-            print_command("nvim")
-            print_command("rg")
-            print_command("rustup")
-            print_command("stow")
-            print_command("tmux")
-            print_command("vf")
-            print_command("vscode-json-language-server")
-            print_command("yaml-language-server")
+            print(termcode(f"==> {InstallTarget.CHECKHEALTH.value}", TerminalCode.BOLD))
+            for bin in sorted(set(checkhealth_bins)):
+                which = shutil.which(bin)
+                if which:
+                    print(termcode("OK", TerminalCode.GREEN), bin, "->", which)
+                else:
+                    print(termcode("MISSING", TerminalCode.RED), bin)
