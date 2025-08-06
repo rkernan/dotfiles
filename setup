@@ -144,7 +144,8 @@ if __name__ == "__main__":
                 check_call("brew update")
                 check_call("brew bundle --upgrade")
                 brew_prefix = subprocess.check_output("brew --prefix", shell=True).decode("utf-8").strip()
-                check_call(f"{brew_prefix}/opt/fzf/install --key-bindings --completion --no-update-rc --xdg")
+                fzf_install = Path(brew_prefix, "opt", "fzf", "install")
+                check_call(f"{fzf_install} --key-bindings --completion --no-update-rc --xdg")
             elif target is InstallTarget.INSTALL_GROOVYLS:
                 git_path = Path(Path.home(), ".local", "lib", "groovy-language-server")
                 git_path.parent.mkdir(parents=True, exist_ok=True)
