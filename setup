@@ -112,6 +112,7 @@ if __name__ == "__main__":
                 print_command("bash-language-server")
                 print_command("bat")
                 print_command("brew")
+                print_command("carapace")
                 print_command("cargo")
                 print_command("clangd")
                 print_command("fd")

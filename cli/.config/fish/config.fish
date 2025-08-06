@@ -30,6 +30,11 @@ if test -e $cargo_path
   source $cargo_path
 end
 
+if type -q carapace
+  set -Ux CARAPACE_BRIDGES 'zsh,fish,bash,inshellisense'
+  carapace _carapace | source
+end
+
 # env
 set -x EDITOR nvim
 set -x PAGER less
