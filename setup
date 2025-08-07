@@ -118,6 +118,7 @@ if __name__ == "__main__":
 
         if InstallTarget.GUI in targets:
             print(termcode(f"==> {InstallTarget.GUI.value}", TerminalCode.BOLD))
+            checkhealth_bins = [*checkhealth_bins, "btop"]
             stow(Path(".", "gui"))
 
         if InstallTarget.WSL in targets:
