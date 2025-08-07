@@ -82,7 +82,6 @@ if __name__ == "__main__":
 
     with pushd(Path(__file__).parent):
         checkhealth_bins = [
-            "asdf",
             "bash-language-server",
             "bat",
             "carapace",
@@ -95,6 +94,7 @@ if __name__ == "__main__":
             "go",
             "lua-language-server",
             "nvim",
+            "pipx",
             "rg",
             "rustup",
             "stow",
@@ -135,6 +135,8 @@ if __name__ == "__main__":
             brew_prefix = subprocess.check_output("brew --prefix", shell=True).decode("utf-8").strip()
             fzf_install = Path(brew_prefix, "opt", "fzf", "install")
             check_call(f"{fzf_install} --key-bindings --completion --no-update-rc --xdg")
+            check_call("pipx install virtualfish")
+            check_call("virtualfish install")
 
         if InstallTarget.WSL_WORK in targets:
             print(termcode(f"==> {InstallTarget.WSL_WORK.value}", TerminalCode.BOLD))
