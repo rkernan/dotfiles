@@ -84,7 +84,6 @@ if __name__ == "__main__":
         checkhealth_bins = [
             "bash-language-server",
             "bat",
-            "carapace",
             "cargo",
             "clangd",
             "fd",
