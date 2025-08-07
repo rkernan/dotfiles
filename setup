@@ -109,9 +109,6 @@ if __name__ == "__main__":
         if InstallTarget.CLI in targets:
             print(termcode(f"==> {InstallTarget.CLI.value}", TerminalCode.BOLD))
             stow(Path(".", "cli"))
-            if shutil.which("asdf"):
-                check_call("asdf plugin add python")
-                check_call("asdf plugin update --all")
             if shutil.which("vf"):
                 check_call("vf install auto_activation global_requirements environment")
 
