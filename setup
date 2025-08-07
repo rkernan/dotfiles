@@ -94,6 +94,7 @@ if __name__ == "__main__":
             "lua-language-server",
             "nvim",
             "pipx",
+            "pyenv",
             "rg",
             "rustup",
             "stow",
@@ -109,6 +110,8 @@ if __name__ == "__main__":
         if InstallTarget.CLI in targets:
             print(termcode(f"==> {InstallTarget.CLI.value}", TerminalCode.BOLD))
             stow(Path(".", "cli"))
+            if shutil.which("pyenv"):
+                check_call("pyenv init - fish | fish")
             if shutil.which("vf"):
                 check_call("vf install auto_activation global_requirements environment")
 
