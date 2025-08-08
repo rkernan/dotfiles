@@ -34,15 +34,19 @@ end
 set -x EDITOR nvim
 set -x PAGER less
 
-# install fisher to custom directory
-set -U fisher_path $HOME"/.config/fisher"
-
 #=========================#
 # interactive mode config #
 #=========================#
 status is-interactive || exit
 
 _autostart_tmux
+
+if not functions -q fundle
+  eval (curl -sfL https://git.io/fundle-install)
+end
+fundle plugin 'jorgebucaran/autopair.fish'
+fundle plugin 'andreiborisov/sponge'
+fundle init
 
 # fzf config
 set -x FZF_DEFAULT_OPTS "--cycle --layout=reverse --border=none --preview-window=border-sharp,right:60% --height=60% --info=inline"
