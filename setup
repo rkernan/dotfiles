@@ -117,6 +117,7 @@ if __name__ == "__main__":
             check_call("vf install auto_activation environment global_requirements")
 
         if InstallTarget.GUI in targets:
+            Path(Path.home(), ".config", "environment.d").mkdir(parents=True, exist_ok=True)
             print(termcode(f"==> {InstallTarget.GUI.value}", TerminalCode.BOLD))
             checkhealth_bins = [*checkhealth_bins, "btop"]
             stow(Path(".", "gui"))
