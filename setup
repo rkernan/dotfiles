@@ -67,7 +67,7 @@ def guess_target() -> list[InstallTarget]:
         targets = [*targets, InstallTarget.WSL]
         if Path(Path.home(), ".work").exists():
             targets = [*targets, InstallTarget.WSL_WORK]
-    elif shutil.which("pacman"):
+    elif os.environ.get("XDG_CURRENT_DESKTOP", None) is not None:
         targets = [*targets, InstallTarget.GUI]
     return targets
 
