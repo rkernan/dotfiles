@@ -24,13 +24,33 @@ end
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.opt.showbreak = '⌙'
+vim.opt.undofile = true
+vim.opt.mouse = 'a'
+vim.cmd.filetype('plugin indent on')
+vim.opt.cursorline = true
+vim.opt.number = true
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+vim.opt.ruler = false
+vim.opt.showmode = false
+vim.opt.wrap = false
+vim.opt.signcolumn = 'yes'
 vim.opt.fillchars = {
   eob = ' ',
   foldopen = '',
   foldclose = '',
   foldsep = ' ',
 }
+vim.opt.ignorecase = true
+vim.opt.infercase = true
+vim.opt.smartcase = true
+vim.opt.smartindent = true
+vim.opt.completeopt = 'menuone,noselect'
+vim.opt.shortmess = vim.opt.shortmess:append('IWcC')
+vim.opt.scrolloff = 5
+vim.opt.pumblend = 10
+vim.opt.pumheight = 10
+vim.opt.winblend = 10
 vim.opt.listchars = {
   eol = '¬',
   tab = '»·',
@@ -39,17 +59,8 @@ vim.opt.listchars = {
   extends = '→',
   precedes = '←',
 }
-
+vim.opt.showbreak = '⌙'
 vim.opt.list = false
-vim.opt.shortmess = vim.opt.shortmess + 'I'
-vim.opt.scrolloff = 5
-vim.opt.sidescrolloff = 5
+vim.cmd('syntax enable')
 vim.opt.laststatus = 3
-vim.opt.foldcolumn = '0'
-vim.opt.foldlevel = 99
-vim.opt.foldmethod = 'expr'
-vim.opt.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-vim.opt.mousemodel = 'extend'
-vim.opt.termguicolors = true
-vim.cmd.set('background=dark')
 vim.cmd('colorscheme gruvbones')

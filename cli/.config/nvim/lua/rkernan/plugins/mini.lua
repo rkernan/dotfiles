@@ -24,21 +24,6 @@ later(function () require('mini.ai').setup() end)
 
 later(function () require('mini.align').setup() end)
 
-now(function()
-  require('mini.basics').setup({
-    options = {
-      basic = true,
-      extra_ui = true,
-    },
-    mappings = {
-      basic = false,
-    },
-    autocommands = {
-      basic = false,
-    },
-  })
-end)
-
 later(function () require('mini.bracketed').setup() end)
 
 later(function ()
