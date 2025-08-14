@@ -1,12 +1,15 @@
-local class = require('middleclass')
+local Window = {}
 
-local Window = class('Window')
-
-function Window:initialize(win_opts, on_open)
-  self.winnr = -1
-  self.bufnr = -1
-  self.win_opts = win_opts
-  self.on_open = on_open
+function Window:new(win_opts, on_open)
+  local opts = {
+    winnr = -1,
+    bufnr = -1,
+    win_opts = win_opts,
+    on_open = on_open,
+  }
+  setmetatable(opts, self)
+  self.__index = self
+  return opts
 end
 
 function Window:is_buf_valid()

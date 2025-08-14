@@ -11,17 +11,3 @@ require('rkernan.plugins.treesitter')
 
 -- try to load tabnine
 pcall(require, 'rkernan.plugins.tabnine')
-
--- TODO(nvim0.12) convert to local packs
----@diagnostic disable: undefined-global
-local add, later = MiniDeps.add, MiniDeps.later
----@diagnostic enable: undefined-global
-
-later(function ()
-  add({ source = 'anuvyklack/middleclass' })
-  require('rkernan.floating-terminal').setup()
-end)
-
-later(function ()
-  require('rkernan.set-tabs').setup()
-end)
