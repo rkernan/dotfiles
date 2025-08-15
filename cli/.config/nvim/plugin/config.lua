@@ -63,3 +63,8 @@ vim.opt.showbreak = '⌙'
 vim.opt.list = false
 vim.cmd('syntax enable')
 vim.cmd('colorscheme gruvbones')
+
+-- fix for tmux terms
+if os.getenv('TERM'):find('-256color') then
+  vim.opt.termguicolors = true
+end
