@@ -1,5 +1,5 @@
 ---@diagnostic disable: undefined-global
-local add, now = MiniDeps.add, MiniDeps.now
+local add = MiniDeps.add
 ---@diagnostic enable: undefined-global
 
 local function build(args)
@@ -12,22 +12,20 @@ local function build(args)
   end
 end
 
-now(function ()
-  add({ source = 'saghen/blink.cmp', hooks = { post_install = build, post_checkout = build }})
-  require('blink-cmp').setup({
-    keymap = {
-      preset = 'default',
-      ['<S-Tab>'] = { 'select_prev', 'fallback' },
-      ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
-    },
-    completion = {
-      list = {
-        selection = {
-          preselect = false,
-          auto_insert = true,
-        },
+add({ source = 'saghen/blink.cmp', hooks = { post_install = build, post_checkout = build }})
+require('blink-cmp').setup({
+  keymap = {
+    preset = 'default',
+    ['<S-Tab>'] = { 'select_prev', 'fallback' },
+    ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
+  },
+  completion = {
+    list = {
+      selection = {
+        preselect = false,
+        auto_insert = true,
       },
     },
-    signature = { enabled = true },
-  })
-end)
+  },
+  signature = { enabled = true },
+})

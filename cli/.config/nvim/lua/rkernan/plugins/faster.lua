@@ -1,8 +1,6 @@
 ---@diagnostic disable: undefined-global
-local add, later = MiniDeps.add, MiniDeps.later
+local add = MiniDeps.add
 ---@diagnostic enable: undefined-global
 
-later(function ()
-  add({ source = 'pteroctopus/faster.nvim' })
-  require('faster').setup()
-end)
+add({ source = 'pteroctopus/faster.nvim' })
+require('faster').setup()

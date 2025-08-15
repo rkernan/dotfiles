@@ -1,8 +1,6 @@
 ---@diagnostic disable: undefined-global
-local add, now = MiniDeps.add, MiniDeps.now
+local add = MiniDeps.add
 ---@diagnostic enable: undefined-global
 
-now(function ()
-  add({ source = 'nmac427/guess-indent.nvim' })
-  require('guess-indent').setup()
-end)
+add({ source = 'nmac427/guess-indent.nvim' })
+require('guess-indent').setup()

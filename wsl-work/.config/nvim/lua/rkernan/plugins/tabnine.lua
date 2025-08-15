@@ -1,5 +1,5 @@
 ---@diagnostic disable: undefined-global
-local add, later = MiniDeps.add, MiniDeps.later
+local add = MiniDeps.add
 ---@diagnostic enable: undefined-global
 
 local function build(args)
@@ -19,12 +19,10 @@ local function build(args)
   end
 end
 
-later(function ()
-  add({ source = 'codota/tabnine-nvim', hooks = { post_install = build, post_checkout = build }})
-  require('tabnine').setup({
-    tabnine_enterprise_host = os.getenv("TABNINE_ENTERPRISE_HOST") or nil,
-    disable_auto_comment = true,
-    accept_keymap = '<C-f>',
-    codelens_enabled = false,
-  })
-end)
+add({ source = 'codota/tabnine-nvim', hooks = { post_install = build, post_checkout = build }})
+require('tabnine').setup({
+  tabnine_enterprise_host = os.getenv("TABNINE_ENTERPRISE_HOST") or nil,
+  disable_auto_comment = true,
+  accept_keymap = '<C-f>',
+  codelens_enabled = false,
+})
