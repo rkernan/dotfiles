@@ -40,7 +40,7 @@ for _, bg in pairs({'dark', 'light'}) do
       end, 4
     }, {
       patchwrite,
-      string.format('../../../../colors/%s.vim', specs_name),
+      string.format('%s.vim', specs_name),
       string.format([[" PATCH_OPEN %s]], bg),
       string.format([[" PATCH_CLOSE %s]], bg),
     }
