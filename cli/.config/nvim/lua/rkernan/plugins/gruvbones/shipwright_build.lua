@@ -1,5 +1,5 @@
 local lushwright = require('shipwright.transform.lush')
-local colorschemes = require('rkernan.plugins.gruvbones.gruvbones')
+local colorschemes = require('rkernan.plugins.gruvbones.palette')
 local specs_name = 'gruvbones'
 
 for _, bg in pairs({'dark', 'light'}) do

@@ -23,5 +23,7 @@ require('rkernan.plugins.lint')
 require('rkernan.plugins.lspconfig')
 require('rkernan.plugins.treesitter')
 
+require('rkernan.plugins.gruvbones')
+
 -- try to load tabnine
 pcall(require, 'rkernan.plugins.tabnine')
