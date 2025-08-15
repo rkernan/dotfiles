@@ -62,5 +62,4 @@ vim.opt.listchars = {
 vim.opt.showbreak = '⌙'
 vim.opt.list = false
 vim.cmd('syntax enable')
-vim.opt.laststatus = 3
 vim.cmd('colorscheme gruvbones')
