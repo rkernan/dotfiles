@@ -109,6 +109,11 @@ if __name__ == "__main__":
 
         if InstallTarget.CLI in targets:
             print(termcode(f"==> {InstallTarget.CLI.value}", TerminalCode.BOLD))
+            for path in (Path("cli", ".ssh", "config.secure"),
+                         Path("cli", ".config", "git", "secure")):
+                if not path.exists():
+                    print(">", termcode(f"touch {path}", TerminalCode.BOLD))
+                    path.touch()
             stow(Path(".", "cli"))
             if shutil.which("pyenv"):
                 check_call("pyenv init - fish | fish")
