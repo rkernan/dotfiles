@@ -64,3 +64,12 @@ end)
 
 vim.keymap.set('n', '<Leader>t', function () terminal:open() end, { desc = 'Terminal' })
 vim.keymap.set('n', '<Leader>s', function () FloatingTerminal:new({ title = 'Scratch Terminal' }):open() end, { desc = 'Scratch terminal' })
+vim.api.nvim_create_user_command('Terminal',
+  function(opts)
+    local command = opts.args
+    if opts.bang then
+      command = command .. '; sleep infinity'
+    end
+    FloatingTerminal:new({ title = opts.args }, command):open()
+  end,
+  { desc = 'Launch floating terminal with command', nargs = '+', bang = true })
