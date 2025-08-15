@@ -5,7 +5,7 @@ vim.diagnostic.config({
   signs = {
     text = diagnostic_signs.signs,
   },
-  update_in_insert = true,
+  update_in_insert = false,
   float = {
     border = 'single',
     header = '',
