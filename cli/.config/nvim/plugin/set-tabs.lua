@@ -19,5 +19,5 @@ local function set_tabs()
   summarize_tabs()
 end
 
-vim.api.nvim_create_user_command('SummarizeTabs', summarize_tabs, { nargs = 0, bang = true})
-vim.api.nvim_create_user_command('SetTabs', set_tabs, { nargs = 0, bang = true })
+vim.api.nvim_create_user_command('SummarizeTabs', summarize_tabs, { desc = 'Summarize current buffer tabs', nargs = 0 })
+vim.api.nvim_create_user_command('SetTabs', set_tabs, { desc = 'Set current buffer tabs', nargs = 0 })
