@@ -107,7 +107,6 @@ require('mini.misc').setup_restore_cursor()
 require('mini.pairs').setup()
 
 require('mini.pick').setup()
-vim.keymap.set('n', '<Leader>f', 'j', { desc = 'Next line' })
 vim.keymap.set('n', '<Leader>f', function () require('mini.pick').builtin.files() end, { desc = 'Files' })
 vim.keymap.set('n', '<Leader>b', function () require('mini.pick').builtin.buffers() end, { desc = 'Buffers' })
 vim.keymap.set('n', '<Leader>/', function () require('mini.pick').builtin.grep_live() end, { desc = 'Live grep' })
