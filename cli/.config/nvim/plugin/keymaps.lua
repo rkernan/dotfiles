@@ -20,3 +20,4 @@ vim.keymap.set('x', '<', '<gv')
 
 -- open diagnostics in Floating window
 vim.keymap.set('n', '<C-e>', function () vim.diagnostic.open_float() end, { desc = 'Open diagnostic float' })
+vim.keymap.set('n', '<C-w>z', '<C-w>_<C-w>|', { desc = 'Zoom current window' })
