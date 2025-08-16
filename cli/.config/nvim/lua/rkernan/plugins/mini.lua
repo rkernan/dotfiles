@@ -61,6 +61,9 @@ miniclue.setup({
 
 require('mini.comment').setup()
 
+require('mini.files').setup()
+vim.keymap.set('n', '<Leader>F', function () require('mini.files').open() end, { desc = 'Next line' })
+
 local hipatterns = require('mini.hipatterns')
 local hi_words = require('mini.extra').gen_highlighter.words
 hipatterns.setup({
