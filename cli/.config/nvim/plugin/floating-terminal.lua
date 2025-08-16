@@ -1,5 +1,6 @@
 local Window = require('rkernan.window')
 
+local augroup = vim.api.nvim_create_augroup('rkernan.floating-terminal', { clear = true })
 local FloatingTerminal = {}
 
 function FloatingTerminal:new(win_opts, command, on_open)
@@ -41,12 +42,19 @@ function FloatingTerminal:get_dimensions()
   }
 end
 
+function FloatingTerminal:resize()
+  self.window:set(self:get_dimensions())
+end
+
 function FloatingTerminal:open()
   self.window:open(self:get_dimensions())
+
+  vim.api.nvim_create_autocmd('VimResized',
+    { group = augroup, buffer = self.window.bufnr, callback = function () self:resize() end })
+
   if not self.terminal then
     self.terminal = vim.fn.jobstart(self.command, { on_exit = function () self:exit() end, term = true })
   end
-
   vim.api.nvim_command([[startinsert]])
 end
 

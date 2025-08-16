@@ -28,6 +28,13 @@ function Window:_open_win(win_opts)
   return vim.api.nvim_open_win(self.bufnr, true, win_opts)
 end
 
+function Window:set(win_opts)
+  if not self:is_buf_valid() or not self:is_win_valid() then
+    return
+  end
+  vim.api.nvim_win_set_config(self.winnr, vim.tbl_deep_extend('force', self.win_opts, win_opts))
+end
+
 function Window:open(win_opts)
   local new = false
   if not self:is_buf_valid() then
