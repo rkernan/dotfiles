@@ -29,16 +29,14 @@ function FloatingTerminal:new(win_opts, command, on_open)
 end
 
 function FloatingTerminal:get_dimensions()
-  local width = math.ceil(vim.o.columns * 0.8)
-  local height = math.ceil(vim.o.lines * 0.8)
-  local col = math.ceil((vim.o.columns - width) * 0.5)
-  local row = math.ceil((vim.o.lines - height) * 0.5)
-
   return {
-    width = width,
-    height = height,
-    col = col,
-    row = row,
+    relative = 'laststatus',
+    anchor = 'SW',
+    col = 0,
+    row = 0,
+    width = vim.o.columns,
+    height = vim.o.lines - (vim.o.laststatus > 0 and 4 or 3),
+    border = 'single',
   }
 end
 
