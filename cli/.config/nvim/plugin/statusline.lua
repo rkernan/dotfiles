@@ -269,6 +269,12 @@ end
 local augroup = vim.api.nvim_create_augroup('rkernan.statusline', { clear = true })
 vim.api.nvim_create_autocmd({'VimEnter', 'ColorScheme'}, { callback = setup_colors, group = augroup })
 
+vim.opt.laststatus = 3
+vim.opt.statusline = '%!v:lua.Statusline()'
+
+vim.opt.signcolumn = 'yes'
+vim.opt.statuscolumn = '%!v:lua.StatusColumn()'
+
 local function should_skip(bufnr)
   for _, pattern in ipairs({ 'nofile', 'help', 'prompt', 'quickfix', 'terminal' }) do
     if vim.bo[bufnr].buftype:find(pattern) then
@@ -304,7 +310,3 @@ end
 
 vim.api.nvim_create_autocmd('DiagnosticChanged', { group = augroup, callback = redraw_status })
 vim.api.nvim_create_autocmd({ 'User' }, { pattern = { 'GitHeadUpdate', 'MiniDiffUpdated' }, group = augroup, callback = redraw_status })
-
-vim.opt.laststatus = 3
-vim.opt.statusline = '%!v:lua.Statusline()'
-vim.opt.statuscolumn = '%!v:lua.StatusColumn()'

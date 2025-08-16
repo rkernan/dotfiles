@@ -34,7 +34,6 @@ vim.opt.splitright = true
 vim.opt.ruler = false
 vim.opt.showmode = false
 vim.opt.wrap = false
-vim.opt.signcolumn = 'yes'
 vim.opt.fillchars = {
   eob = ' ',
   foldopen = '',
