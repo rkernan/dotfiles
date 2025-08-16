@@ -107,6 +107,7 @@ map_multistep('i', '<BS>',    { 'hungry_bs',    'minipairs_bs' })
 require('mini.operators').setup()
 require('mini.misc').setup_auto_root({ '.venv', '.git' })
 require('mini.misc').setup_restore_cursor()
+
 require('mini.pairs').setup()
 
 require('mini.pick').setup()
