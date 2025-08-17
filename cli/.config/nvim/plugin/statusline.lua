@@ -288,7 +288,7 @@ local function should_skip(bufnr)
   return false
 end
 
-vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
+vim.api.nvim_create_autocmd({ 'FileType', 'WinEnter' }, {
   group = augroup,
   callback = function (args)
     if should_skip(args.buf) then
@@ -298,7 +298,7 @@ vim.api.nvim_create_autocmd({ 'WinEnter', 'BufEnter' }, {
   end
 })
 
-vim.api.nvim_create_autocmd({ 'WinLeave', 'BufLeave' }, {
+vim.api.nvim_create_autocmd({ 'WinLeave' }, {
   group = augroup,
   callback = function (args)
     if should_skip(args.buf) then
