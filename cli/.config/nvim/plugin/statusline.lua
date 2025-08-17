@@ -276,6 +276,10 @@ vim.opt.signcolumn = 'yes'
 vim.opt.statuscolumn = '%!v:lua.StatusColumn()'
 
 local function should_skip(bufnr)
+  if vim.bo[bufnr].buftype == '' and vim.bo[bufnr].filetype == '' then
+    return true
+  end
+
   for _, pattern in ipairs({ 'nofile', 'help', 'prompt', 'quickfix', 'terminal' }) do
     if vim.bo[bufnr].buftype:find(pattern) then
       return true
