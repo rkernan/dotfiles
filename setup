@@ -36,8 +36,9 @@ def check_call(cmd: str, **kwargs: Any) -> None:
         raise
 
 
-def stow(path: Path) -> None:
-    check_call(f"stow -t {Path.home()} -vS {path!s}")
+def stow(install: list[Path]) -> None:
+    targets = " ".join([str(p) for p in install])
+    check_call(f"stow -t {Path.home()} -vS {targets!s}")
 
 
 @contextmanager
@@ -106,16 +107,24 @@ if __name__ == "__main__":
         Path(Path.home(), ".config").mkdir(parents=True, exist_ok=True)
         Path(Path.home(), ".local", "bin").mkdir(parents=True, exist_ok=True)
         Path(Path.home(), ".virtualenvs").mkdir(parents=True, exist_ok=True)
+        for path, filetype in ((Path("cli", ".ssh", "config.secure"), "sshconfig"),
+                               (Path("cli", ".config", "git", "secure"), "gitconfig")):
+            if not path.exists():
+                with open(path, "w") as fd:
+                    fd.write(f"# vi: ft={filetype}\n")
+
+        stow_targets = []
+        stow_target_names = []
+        for target in targets:
+            target_path = Path(".", target.value)
+            if target_path.exists():
+                stow_targets = [*stow_targets, target_path]
+                stow_target_names = [*stow_target_names, target.value]
+        print(termcode(f"==> stow: {stow_target_names}", TerminalCode.BOLD))
+        stow(stow_targets)
 
         if InstallTarget.CLI in targets:
             print(termcode(f"==> {InstallTarget.CLI.value}", TerminalCode.BOLD))
-            for path, filetype in ((Path("cli", ".ssh", "config.secure"), "sshconfig"),
-                                   (Path("cli", ".config", "git", "secure"), "gitconfig")):
-                if not path.exists():
-                    print(">", termcode(f"create {path}, ft={filetype}", TerminalCode.BOLD))
-                    with open(path, "w") as fd:
-                        fd.write(f"# vi: ft={filetype}\n")
-            stow(Path(".", "cli"))
             if shutil.which("pyenv"):
                 check_call("pyenv init - fish | fish")
             if shutil.which("vf") is None:
@@ -126,12 +135,10 @@ if __name__ == "__main__":
             Path(Path.home(), ".config", "environment.d").mkdir(parents=True, exist_ok=True)
             print(termcode(f"==> {InstallTarget.GUI.value}", TerminalCode.BOLD))
             checkhealth_bins = [*checkhealth_bins, "btop"]
-            stow(Path(".", "gui"))
 
         if InstallTarget.WSL in targets:
             print(termcode(f"==> {InstallTarget.WSL.value}", TerminalCode.BOLD))
             checkhealth_bins = [*checkhealth_bins, "brew", "tmux"]
-            stow(Path(".", "wsl"))
             if shutil.which("fish"):
                 check_call("fish -c 'set -Ux AUTOSTART_TMUX 1'")
             # install and setup brew
@@ -146,7 +153,6 @@ if __name__ == "__main__":
         if InstallTarget.WSL_WORK in targets:
             print(termcode(f"==> {InstallTarget.WSL_WORK.value}", TerminalCode.BOLD))
             checkhealth_bins = [*checkhealth_bins, "groovy-language-server"]
-            stow(Path(".", "wsl-work"))
 
         if InstallTarget.CHECKHEALTH in targets:
             print(termcode(f"==> {InstallTarget.CHECKHEALTH.value}", TerminalCode.BOLD))
