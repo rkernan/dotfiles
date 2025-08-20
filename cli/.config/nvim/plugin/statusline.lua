@@ -78,10 +78,6 @@ local function git_head()
   return Part:new(vim.g.git_head or '')
 end
 
-local function get_current_bufnr()
-  return vim.api.nvim_win_get_buf(vim.g.statusline_winid)
-end
-
 local function cwd()
   local part = Part:new(vim.fn.fnamemodify(vim.fn.getcwd(), ':~'))
   if part.value:sub(-1) == '/' then
@@ -90,33 +86,34 @@ local function cwd()
   return part:format('%s/')
 end
 
-local function file_icon()
+local function file_icon(name)
   local ok, mini_icons = pcall(require, 'mini.icons')
   if ok then
-    local icon, hl, _ = mini_icons.get('file', vim.api.nvim_buf_get_name(get_current_bufnr()))
+    local icon, hl, _ = mini_icons.get('file', name)
     return Part:new(icon):hl(hl)
   else
     return Part:new('󰈔')
   end
 end
 
-local function modified()
-  if vim.bo[get_current_bufnr()].modified then
+local function modified(bufnr)
+  bufnr = bufnr or 0
+  if vim.bo[bufnr].modified then
     return Part:new('+')
   end
   return Part:new('')
 end
 
-local function readonly()
-  local bufnr = get_current_bufnr()
+local function readonly(bufnr)
+  bufnr = bufnr or 0
   if not vim.bo[bufnr].modifiable or vim.bo[bufnr].readonly then
     return Part:new('')
   end
   return Part:new('')
 end
 
-local function tabsummary()
-  local bufnr = get_current_bufnr()
+local function tabsummary(bufnr)
+  bufnr = bufnr or 0
   if vim.bo[bufnr].expandtab then
     return Part:new(string.format('tab:%d,et', vim.bo[bufnr].shiftwidth))
   else
@@ -124,21 +121,23 @@ local function tabsummary()
   end
 end
 
-local function fileformat()
-  return Part:new(vim.bo[get_current_bufnr()].fileformat)
+local function fileformat(bufnr)
+  bufnr = bufnr or 0
+  return Part:new(vim.bo[bufnr].fileformat)
 end
 
-local function fileencoding()
-  return Part:new(vim.bo[get_current_bufnr()].fileencoding)
+local function fileencoding(bufnr)
+  bufnr = bufnr or 0
+  return Part:new(vim.bo[bufnr].fileencoding)
 end
 
 local diff = {}
 
-local function _diff(v)
+local function _diff(bufnr, field)
+  bufnr = bufnr or 0
   local count = 0
-  local bufnr = get_current_bufnr()
   if vim.b[bufnr].minidiff_summary then
-    count = vim.b[bufnr].minidiff_summary[v] or 0
+    count = vim.b[bufnr].minidiff_summary[field] or 0
   end
 
   if count > 0 then
@@ -147,42 +146,43 @@ local function _diff(v)
   return Part:new('')
 end
 
-function diff.add()
-  return _diff('add')
+function diff.add(bufnr)
+  return _diff(bufnr, 'add')
 end
 
-function diff.change()
-  return _diff('change')
+function diff.change(bufnr)
+  return _diff(bufnr, 'change')
 end
 
-function diff.delete()
-  return _diff('delete')
+function diff.delete(bufnr)
+  return _diff(bufnr, 'delete')
 end
 
 local diagnostics = {}
 
-local function _diagnostics(severity)
-  local count = #vim.diagnostic.get(get_current_bufnr(), { severity = severity })
+local function _diagnostics(bufnr, severity)
+  bufnr = bufnr or 0
+  local count = #vim.diagnostic.get(bufnr, { severity = severity })
   if count > 0 then
     return Part:new(tostring(count))
   end
     return Part:new('')
 end
 
-function diagnostics.error()
-  return _diagnostics(vim.diagnostic.severity.ERROR)
+function diagnostics.error(bufnr)
+  return _diagnostics(bufnr, vim.diagnostic.severity.ERROR)
 end
 
-function diagnostics.warn()
-  return _diagnostics(vim.diagnostic.severity.WARN)
+function diagnostics.warn(bufnr)
+  return _diagnostics(bufnr, vim.diagnostic.severity.WARN)
 end
 
-function diagnostics.info()
-  return _diagnostics(vim.diagnostic.severity.INFO)
+function diagnostics.info(bufnr)
+  return _diagnostics(bufnr, vim.diagnostic.severity.INFO)
 end
 
-function diagnostics.hint()
-  return _diagnostics(vim.diagnostic.severity.HINT)
+function diagnostics.hint(bufnr)
+  return _diagnostics(bufnr, vim.diagnostic.severity.HINT)
 end
 
 function MyStatusline()
@@ -199,37 +199,39 @@ function MyStatusline()
 end
 
 function MyWinBarActive()
+  local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
   return table.concat({
-    file_icon():format('%s ').value,
+    file_icon(vim.api.nvim_buf_get_name(bufnr)):format('%s ').value,
     '%f',
-    modified():format(' %s'):hl('WinBarModified').value,
-    readonly():format(' %s'):hl('WinBarReadonly').value,
-    diff.add():format(' +%s'):hl('WinBarDiffAdd').value,
-    diff.change():format(' ~%s'):hl('WinBarDiffChange').value,
-    diff.delete():format(' -%s'):hl('WinBarDiffDelete').value,
+    modified(bufnr):format(' %s'):hl('WinBarModified').value,
+    readonly(bufnr):format(' %s'):hl('WinBarReadonly').value,
+    diff.add(bufnr):format(' +%s'):hl('WinBarDiffAdd').value,
+    diff.change(bufnr):format(' ~%s'):hl('WinBarDiffChange').value,
+    diff.delete(bufnr):format(' -%s'):hl('WinBarDiffDelete').value,
     "%=",
-    diagnostics.error():format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.ERROR])):hl('WinBarDiagnosticError').value,
-    diagnostics.warn():format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.WARN])):hl('WinBarDiagnosticWarn').value,
-    diagnostics.info():format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.INFO])):hl('WinBarDiagnosticInfo').value,
-    diagnostics.hint():format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.HINT])):hl('WinBarDiagnosticHint').value,
+    diagnostics.error(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.ERROR])):hl('WinBarDiagnosticError').value,
+    diagnostics.warn(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.WARN])):hl('WinBarDiagnosticWarn').value,
+    diagnostics.info(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.INFO])):hl('WinBarDiagnosticInfo').value,
+    diagnostics.hint(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.HINT])):hl('WinBarDiagnosticHint').value,
     ' %l:%L %P',
   })
 end
 
 function MyWinBarInactive()
+  local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
   return table.concat({
-    file_icon():format('%s ').value,
+    file_icon(vim.api.nvim_buf_get_name(bufnr)):format('%s ').value,
     '%f%m%r',
-    modified():format(' %s'):hl('WinBarModified').value,
-    readonly():format(' %s'):hl('WinBarReadonly').value,
-    diff.add():format(' +%s'):hl('WinBarDiffAdd').value,
-    diff.change():format(' ~%s'):hl('WinBarDiffChange').value,
-    diff.delete():format(' -%s'):hl('WinBarDiffDelete').value,
+    modified(bufnr):format(' %s'):hl('WinBarModified').value,
+    readonly(bufnr):format(' %s'):hl('WinBarReadonly').value,
+    diff.add(bufnr):format(' +%s'):hl('WinBarDiffAdd').value,
+    diff.change(bufnr):format(' ~%s'):hl('WinBarDiffChange').value,
+    diff.delete(bufnr):format(' -%s'):hl('WinBarDiffDelete').value,
     "%=",
-    diagnostics.error():format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.ERROR])):hl('WinBarDiagnosticError').value,
-    diagnostics.warn():format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.WARN])):hl('WinBarDiagnosticWarn').value,
-    diagnostics.info():format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.INFO])):hl('WinBarDiagnosticInfo').value,
-    diagnostics.hint():format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.HINT])):hl('WinBarDiagnosticHint').value,
+    diagnostics.error(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.ERROR])):hl('WinBarDiagnosticError').value,
+    diagnostics.warn(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.WARN])):hl('WinBarDiagnosticWarn').value,
+    diagnostics.info(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.INFO])):hl('WinBarDiagnosticInfo').value,
+    diagnostics.hint(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.HINT])):hl('WinBarDiagnosticHint').value,
     ' %l:%L %P',
   })
 end
