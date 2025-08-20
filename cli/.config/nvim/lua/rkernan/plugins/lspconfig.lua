@@ -8,6 +8,7 @@ local function lsp_attach(args)
 
   vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
 
+  vim.keymap.set('n', '<C-e>', function () vim.diagnostic.open_float() end, { desc = 'Open diagnostic float' })
   vim.keymap.set({ 'i', 'v', }, '<C-s>', function () vim.lsp.buf.hover({ border = 'single' }) end, { buffer = bufnr, desc = 'LSP hover' })
   vim.keymap.set('n', 'S', function () vim.lsp.buf.hover({ border = 'single' }) end, { buffer = bufnr, desc = 'LSP hover' })
   vim.keymap.set('n', 'grr', function () require('mini.extra').pickers.lsp({ scope = 'references' }) end, { buffer = bufnr, desc = 'LSP references' })
@@ -16,7 +17,11 @@ end
 
 local function lsp_detach(args)
   local bufnr = args.buf
+  pcall(vim.keymap.del, 'n', '<C-e>', { buffer = bufnr })
   pcall(vim.keymap.del, 'n', 'S', { buffer = bufnr })
+  pcall(vim.keymap.del, { 'i', 'v' }, '<C-s>', { buffer =bufnr })
+  pcall(vim.keymap.del, 'n', 'grr', { buffer = bufnr })
+  pcall(vim.keymap.del, 'n', 'gO', { buffer = bufnr })
 end
 
 ---@diagnostic disable: undefined-global
