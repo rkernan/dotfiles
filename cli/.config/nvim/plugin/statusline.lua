@@ -86,14 +86,21 @@ local function cwd()
   return part:format('%s/')
 end
 
-local function file_icon(name)
+local function file_icon(bufnr)
+  bufnr = bufnr or 0
+
   local ok, mini_icons = pcall(require, 'mini.icons')
-  if ok then
-    local icon, hl, _ = mini_icons.get('file', name)
-    return Part:new(icon):hl(hl)
-  else
+  if not ok then
     return Part:new('󰈔')
   end
+
+  if vim.bo[bufnr].buftype == 'terminal' then
+    return Part:new('')
+  end
+
+  local name = vim.api.nvim_buf_get_name(bufnr)
+  local icon, _, _ = mini_icons.get('file', name)
+  return Part:new(icon)
 end
 
 local function modified(bufnr)
@@ -201,7 +208,7 @@ end
 function MyWinBarActive()
   local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
   return table.concat({
-    file_icon(vim.api.nvim_buf_get_name(bufnr)):format('%s ').value,
+    file_icon(bufnr):format('%s ').value,
     '%f',
     modified(bufnr):format(' %s'):hl('WinBarModified').value,
     readonly(bufnr):format(' %s'):hl('WinBarReadonly').value,
@@ -220,7 +227,7 @@ end
 function MyWinBarInactive()
   local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
   return table.concat({
-    file_icon(vim.api.nvim_buf_get_name(bufnr)):format('%s ').value,
+    file_icon(bufnr):format('%s ').value,
     '%f%m%r',
     modified(bufnr):format(' %s'):hl('WinBarModified').value,
     readonly(bufnr):format(' %s'):hl('WinBarReadonly').value,
