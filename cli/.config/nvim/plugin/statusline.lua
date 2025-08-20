@@ -185,7 +185,7 @@ function diagnostics.hint()
   return _diagnostics(vim.diagnostic.severity.HINT)
 end
 
-function Statusline()
+function MyStatusline()
   return table.concat({
     mode().value,
     git_head():format('  %s'):hl('StatusLineGitHead').value,
@@ -198,7 +198,7 @@ function Statusline()
   })
 end
 
-function WinBarActive()
+function MyWinBarActive()
   return table.concat({
     file_icon():format('%s ').value,
     '%f',
@@ -216,7 +216,7 @@ function WinBarActive()
   })
 end
 
-function WinBarInactive()
+function MyWinBarInactive()
   return table.concat({
     file_icon():format('%s ').value,
     '%f%m%r',
@@ -234,7 +234,7 @@ function WinBarInactive()
   })
 end
 
-function StatusColumn()
+function MyStatusColumn()
   return '%C%=%l %s'
 end
 
@@ -270,10 +270,10 @@ local augroup = vim.api.nvim_create_augroup('rkernan.statusline', { clear = true
 vim.api.nvim_create_autocmd({'VimEnter', 'ColorScheme'}, { callback = setup_colors, group = augroup })
 
 vim.opt.laststatus = 3
-vim.opt.statusline = '%!v:lua.Statusline()'
+vim.opt.statusline = '%!v:lua.MyStatusline()'
 
 vim.opt.signcolumn = 'yes'
-vim.opt.statuscolumn = '%!v:lua.StatusColumn()'
+vim.opt.statuscolumn = '%!v:lua.MyStatusColumn()'
 
 local function should_skip(bufnr)
   if vim.bo[bufnr].buftype == '' and vim.bo[bufnr].filetype == '' then
@@ -294,7 +294,7 @@ vim.api.nvim_create_autocmd({ 'FileType', 'WinEnter' }, {
     if should_skip(args.buf) then
       return
     end
-    vim.opt_local.winbar = '%!v:lua.WinBarActive()'
+    vim.opt_local.winbar = '%!v:lua.MyWinBarActive()'
   end
 })
 
@@ -304,7 +304,7 @@ vim.api.nvim_create_autocmd({ 'WinLeave' }, {
     if should_skip(args.buf) then
       return
     end
-    vim.opt_local.winbar = '%!v:lua.WinBarInactive()'
+    vim.opt_local.winbar = '%!v:lua.MyWinBarInactive()'
   end
 })
 
