@@ -56,6 +56,11 @@ local function gen_specs(palette, bg)
       MiniDiffSignChange({ base_specs.GitSignsChange }),
       MiniDiffSignDelete({ base_specs.GitSignsDelete }),
 
+      -- TabLine
+      TabLine({ base_specs.StatusLineNC }),
+      TabLineSel({ base_specs.StatusLine }),
+      TabLineFill({ base_specs.NonText }),
+
       -- tabnine
       TabnineSuggestion({ fg = base_specs.Normal.fg.da(50), gui = 'italic' }),
 

@@ -247,6 +247,46 @@ function MyStatusColumn()
   return '%C%=%l %s'
 end
 
+local function tab_entry_title(bufnr)
+  local name = vim.api.nvim_buf_get_name(bufnr)
+  local buftype = vim.bo[bufnr].buftype
+
+  if buftype == 'terminal' then
+    local _, match = string.match(name, "term:(.*):(.*)")
+    return match ~= nil and match or vim.fs.basename(vim.env.SHELL)
+  elseif name == '' then
+    return '[No Name]'
+  else
+    return vim.fn.pathshorten(vim.fn.fnamemodify(name, ':p:~:t'))
+  end
+end
+
+local function tabline_entry(index)
+  local bufnr = vim.fn.tabpagebuflist(index)[vim.fn.tabpagewinnr(index)]
+  local entry = table.concat({
+    string.format('%%%dT', index),
+    ' ',
+    Part:new(tostring(index)):format('%s ').value,
+    file_icon(bufnr):format('%s ').value,
+    tab_entry_title(bufnr),
+    ' ',
+    '%T'
+  })
+  if vim.fn.tabpagenr() == index then
+    return Part:new(entry):hl('TabLineSel').value
+  end
+  return Part:new(entry):hl('TabLine').value
+end
+
+function MyTabLine()
+  local line = ''
+  for i = 1, vim.fn.tabpagenr('$') do
+    line = line .. tabline_entry(i)
+  end
+  line = line .. '%#TabLineFill#%='
+  return line
+end
+
 local function setup_colors()
   local statusline        = vim.api.nvim_get_hl(0, { name = 'StatusLine',          link = false })
   local minidiff_add      = vim.api.nvim_get_hl(0, { name = 'MiniDiffSignAdd',     link = false })
@@ -283,6 +323,8 @@ vim.opt.statusline = '%!v:lua.MyStatusline()'
 
 vim.opt.signcolumn = 'yes'
 vim.opt.statuscolumn = '%!v:lua.MyStatusColumn()'
+
+vim.opt.tabline = '%!v:lua.MyTabLine()'
 
 local function should_skip(bufnr)
   if vim.bo[bufnr].buftype == '' and vim.bo[bufnr].filetype == '' then

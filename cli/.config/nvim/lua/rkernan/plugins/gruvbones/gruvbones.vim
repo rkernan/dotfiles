@@ -221,6 +221,7 @@ if &background ==# 'dark'
     highlight NoiceCompletionItemKindDefault guifg=#AFA280 guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight NonText guifg=#616161 guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight! link EndOfBuffer NonText
+    highlight! link TabLineFill NonText
     highlight! link Whitespace NonText
     highlight NormalFloat guifg=NONE guibg=#393939 guisp=NONE blend=NONE gui=NONE
     highlight! link SnacksPickerBorder NormalFloat
@@ -296,14 +297,13 @@ if &background ==# 'dark'
     highlight! link @markup.title.markdown Statement
     highlight! link @statement Statement
     highlight StatusLine guifg=#EBDCB4 guibg=#3E3E3E guisp=NONE blend=NONE gui=NONE
-    highlight! link TabLine StatusLine
+    highlight! link TabLineSel StatusLine
     highlight! link WinBar StatusLine
     highlight StatusLineNC guifg=#F0E4CA guibg=#323232 guisp=NONE blend=NONE gui=NONE
-    highlight! link TabLineFill StatusLineNC
+    highlight! link TabLine StatusLineNC
     highlight! link WinBarNC StatusLineNC
     highlight String guifg=#AFA280 guibg=NONE guisp=NONE blend=NONE gui=italic
     highlight! link @string String
-    highlight TabLineSel guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=bold
     highlight! link BufferCurrent TabLineSel
     highlight TabnineSuggestion guifg=#706751 guibg=NONE guisp=NONE blend=NONE gui=italic
     highlight TelescopeBorder guifg=#848484 guibg=NONE guisp=NONE blend=NONE gui=NONE
@@ -640,6 +640,7 @@ else
     highlight NoiceCompletionItemKindDefault guifg=#6B6461 guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight NonText guifg=#BEAE5E guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight! link EndOfBuffer NonText
+    highlight! link TabLineFill NonText
     highlight! link Whitespace NonText
     highlight NormalFloat guifg=NONE guibg=#EEDB78 guisp=NONE blend=NONE gui=NONE
     highlight! link SnacksPickerBorder NormalFloat
@@ -715,14 +716,13 @@ else
     highlight! link @markup.title.markdown Statement
     highlight! link @statement Statement
     highlight StatusLine guifg=#3C3836 guibg=#E5D273 guisp=NONE blend=NONE gui=NONE
-    highlight! link TabLine StatusLine
+    highlight! link TabLineSel StatusLine
     highlight! link WinBar StatusLine
     highlight StatusLineNC guifg=#706966 guibg=#F4E07B guisp=NONE blend=NONE gui=NONE
-    highlight! link TabLineFill StatusLineNC
+    highlight! link TabLine StatusLineNC
     highlight! link WinBarNC StatusLineNC
     highlight String guifg=#6B6461 guibg=NONE guisp=NONE blend=NONE gui=italic
     highlight! link @string String
-    highlight TabLineSel guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=bold
     highlight! link BufferCurrent TabLineSel
     highlight TabnineSuggestion guifg=#221F1E guibg=NONE guisp=NONE blend=NONE gui=italic
     highlight TelescopeBorder guifg=#7D723C guibg=NONE guisp=NONE blend=NONE gui=NONE
