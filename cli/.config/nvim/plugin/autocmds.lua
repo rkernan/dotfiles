@@ -21,7 +21,7 @@ vim.api.nvim_create_autocmd('CursorMoved', {
 vim.api.nvim_create_autocmd({ 'DirChanged', 'SessionLoadPost', 'TabEnter', 'VimEnter', 'VimResume' }, {
   group = augroup,
   callback = function ()
-    if #vim.fs.find('.git', { limit = 1, upward = true, type = 'directory' }) > 0 then
+    if vim.fs.root(0, '.git') then
       local cmd = { 'git', '--no-pager', '--no-optional-locks', '--literal-pathspecs', '-c', 'gc.auto=0', 'rev-parse' }
       vim.g.git_head = vim.system(vim.list_extend(cmd, { '--abbrev-ref', 'HEAD' }), { text = true }):wait().stdout:gsub('%s+', '')
       if vim.g.git_head == 'HEAD' then
