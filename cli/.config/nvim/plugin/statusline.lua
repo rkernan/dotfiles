@@ -253,7 +253,10 @@ local function tab_entry_title(bufnr)
 
   if buftype == 'terminal' then
     local _, match = string.match(name, "term:(.*):(.*)")
-    return match ~= nil and match or vim.fs.basename(vim.env.SHELL)
+    if match == vim.env.SHELL then
+      return vim.fs.basename(match)
+    end
+    return match
   elseif name == '' then
     return '[No Name]'
   else
