@@ -32,7 +32,7 @@ end
 
 function _prompt_pwd
   set_color $fish_prompt_color_pwd
-  echo -n (prompt_pwd)' '
+  echo -n (prompt_pwd)
 end
 
 function fish_prompt
