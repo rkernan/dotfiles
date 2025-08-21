@@ -3,6 +3,7 @@
 import os
 import shutil
 import subprocess
+import sys
 from argparse import ArgumentParser
 from contextlib import contextmanager
 from enum import Enum
@@ -113,6 +114,16 @@ if __name__ == "__main__":
                 with open(path, "w") as fd:
                     fd.write(f"# vi: ft={filetype}\n")
 
+        if InstallTarget.WSL in targets:
+            print(termcode(f"==> {InstallTarget.WSL.value}", TerminalCode.BOLD))
+            if shutil.which("brew") is None:
+                check_call("curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s")
+                sys.exit(0)
+            check_call("brew update")
+            check_call("brew bundle --upgrade")
+            if shutil.which("rustup") is None:
+                check_call("curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh")
+
         stow_targets = []
         stow_target_names = []
         for target in targets:
@@ -141,17 +152,13 @@ if __name__ == "__main__":
             checkhealth_bins = [*checkhealth_bins, "brew", "tmux"]
             if shutil.which("fish"):
                 check_call("fish -c 'set -Ux AUTOSTART_TMUX 1'")
-            # install and setup brew
-            if shutil.which("brew") is None:
-                check_call("curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s")
-            check_call("brew update")
-            check_call("brew bundle --upgrade")
             brew_prefix = subprocess.check_output("brew --prefix", shell=True).decode("utf-8").strip()
             fzf_install = Path(brew_prefix, "opt", "fzf", "install")
-            check_call(f"{fzf_install} --key-bindings --completion --no-update-rc --xdg")
+            check_call(f"{fzf_install} --all --xdg")
 
         if InstallTarget.WSL_WORK in targets:
             print(termcode(f"==> {InstallTarget.WSL_WORK.value}", TerminalCode.BOLD))
+            Path(Path.home(), ".work").touch()
             checkhealth_bins = [*checkhealth_bins, "groovy-language-server"]
 
         if InstallTarget.CHECKHEALTH in targets:
