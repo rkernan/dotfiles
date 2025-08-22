@@ -36,11 +36,7 @@ local lsp_defaults = { capabilities = lspconfig.util.default_config.capabilities
 lspconfig.bashls.setup(lsp_defaults)
 lspconfig.clangd.setup(lsp_defaults)
 lspconfig.gopls.setup(lsp_defaults)
-lspconfig.groovyls.setup(vim.tbl_deep_extend('force', lsp_defaults, {
-  cmd = {
-    'java', '-jar', vim.fn.expand('~/.local/lib/groovy-language-server/build/libs/groovy-language-server-all.jar')
-  },
-}))
+lspconfig.groovyls.setup(vim.tbl_deep_extend('force', lsp_defaults, { cmd = { 'groovy-language-server' }}))
 lspconfig.jsonls.setup(lsp_defaults)
 lspconfig.lua_ls.setup(vim.tbl_deep_extend('force', lsp_defaults, {
   settings =
