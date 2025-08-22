@@ -15,11 +15,19 @@ require('tabnine').setup({
   tabnine_enterprise_host = os.getenv('TABNINE_ENTERPRISE_HOST'),
   workspace_folders = {
     get_paths = function ()
-      local root = vim.fs.root(0, { '.git'})
-      if root then
-        return { root }
+      local paths = {}
+      for _, dir in ipairs({ 'src', 'tests' }) do
+        local path = vim.fs.find(dir, { limit = 1, type = 'directory', upward = true })
+        if #path then
+          table.insert(paths, path[1])
+        end
       end
-      return { vim.fs.abspath('.') }
+
+      if #paths then
+        return paths
+      else
+        return { vim.fs.abspath('.') }
+      end
     end
   }
 })
