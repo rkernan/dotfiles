@@ -1,5 +1,8 @@
 local augroup = vim.api.nvim_create_augroup('rkernan.autocmds', { clear = true })
 
+-- automatic insert mode in terms
+vim.api.nvim_create_autocmd({ 'TermOpen', 'BufEnter' }, { group = augroup, pattern = 'term://*', command = [[startinsert]] })
+
 -- resize windows automatically
 vim.api.nvim_create_autocmd('VimResized', { group = augroup, command = [[wincmd =]] })
 
