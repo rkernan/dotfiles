@@ -2,3 +2,4 @@
 /conf.d/virtualfish-loader.fish
 /functions/fzf_key_bindings.fish
 /functions/fundle.fish
+/fundle
