@@ -166,6 +166,8 @@ if __name__ == "__main__":
             print(termcode(f"==> {InstallTarget.WSL.value}", TerminalCode.BOLD))
             if shutil.which("fish"):
                 check_call("fish -c 'set -U AUTOSTART_TMUX 1'")
+                check_call("fish -c 'set -Ux GALLIUM_DRIVER d3d12'")
+                check_call("fish -c 'set -Ux LIBVA_DRIVER_NAME d3d12'")
 
         if InstallTarget.CHECKHEALTH in targets:
             print(termcode(f"==> {InstallTarget.CHECKHEALTH.value}", TerminalCode.BOLD))
