@@ -192,6 +192,14 @@ function diagnostics.hint(bufnr)
   return _diagnostics(bufnr, vim.diagnostic.severity.HINT)
 end
 
+local function tabnine_status()
+  local ok, status = pcall(require, 'tabnine.status')
+  if ok then
+    return Part:new(status.status())
+  end
+  return Part:new('')
+end
+
 function MyStatusline()
   return table.concat({
     mode().value,
@@ -199,6 +207,7 @@ function MyStatusline()
     environment('VIRTUAL_ENV'):apply(vim.fs.basename):format('  %s'):hl('StatusLineVirtualEnv').value,
     cwd():format('  %s').value,
     "%=",
+    tabnine_status():format('(%s) ').value,
     tabsummary().value,
     fileformat():format(' %s').value,
     fileencoding():format(' %s').value,
