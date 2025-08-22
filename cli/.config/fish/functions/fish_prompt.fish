@@ -37,6 +37,11 @@ end
 
 function fish_prompt
   set -l last_pipestatus $pipestatus
-  echo -s '┌─ ' (_prompt_jobs) (_prompt_last_pipestatus $last_pipestatus) (_prompt_git) (_prompt_virtualenv) (_prompt_hostname) (_prompt_pwd)
-  echo -s '└→ ' (set_color normal)
+  echo -ns (_prompt_jobs)                      \
+    (_prompt_last_pipestatus $last_pipestatus) \
+    (_prompt_git)                              \
+    (_prompt_virtualenv)                       \
+    (_prompt_hostname)                         \
+    (_prompt_pwd)                              \
+    (set_color normal) ' > '
 end
