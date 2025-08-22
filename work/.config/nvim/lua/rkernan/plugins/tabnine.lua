@@ -9,8 +9,17 @@ end
 
 add({ source = 'codota/tabnine-nvim', hooks = { post_install = build, post_checkout = build }})
 require('tabnine').setup({
-  tabnine_enterprise_host = os.getenv("TABNINE_ENTERPRISE_HOST") or nil,
   disable_auto_comment = true,
   accept_keymap = '<C-f>',
-  codelens_enabled = false,
+  debounce_ms = 800,
+  tabnine_enterprise_host = os.getenv('TABNINE_ENTERPRISE_HOST'),
+  workspace_folders = {
+    get_paths = function ()
+      local root = vim.fs.root(0, { '.git'})
+      if root then
+        return { root }
+      end
+      return { vim.fs.abspath('.') }
+    end
+  }
 })
