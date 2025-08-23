@@ -94,13 +94,6 @@ require('mini.diff').setup({
   },
 })
 
-require('mini.keymap').setup()
-local map_multistep = require('mini.keymap').map_multistep
-map_multistep('i', '<Tab>',   { 'pmenu_next',   'increase_indent' })
-map_multistep('i', '<S-Tab>', { 'pmenu_prev',   'decrease_indent' })
-map_multistep('i', '<CR>',    { 'pmenu_accept', 'minipairs_cr' })
-map_multistep('i', '<BS>',    { 'hungry_bs',    'minipairs_bs' })
-
 require('mini.operators').setup()
 require('mini.misc').setup_auto_root({ '.venv', '.git' })
 require('mini.misc').setup_restore_cursor()
