@@ -5,24 +5,7 @@ local add = MiniDeps.add
 add({ source = 'stevearc/conform.nvim' })
 require('conform').setup({
   formatters_by_ft = {
-    go = {
-      'goimports',
-      'gofmt',
-    },
-    python = {
-      'isort',
-      -- 'black',
-    },
-    ['*'] = {
-      'trim_whitespace',
-    },
+    ['*'] = { 'trim_whitespace' },
   },
-  format_on_save = {
-    timeout_ms = 500,
-  },
-  formatters = {
-    isort = {
-      prepend_args = { '--profile', 'black' }
-    }
-  }
+  format_on_save = { timeout_ms = 500 }
 })
