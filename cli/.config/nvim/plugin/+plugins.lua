@@ -14,15 +14,11 @@ end
 require('mini.deps').setup({ path = { package = path_package } })
 
 require('rkernan.plugins.mini')
-
 require('rkernan.plugins.blink-cmp')
 require('rkernan.plugins.conform')
 require('rkernan.plugins.faster')
 require('rkernan.plugins.guess-indent')
 require('rkernan.plugins.lint')
 require('rkernan.plugins.treesitter')
-
 require('rkernan.plugins.gruvbones')
-
--- try to load tabnine
 pcall(require, 'rkernan.plugins.tabnine')

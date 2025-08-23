@@ -8,6 +8,10 @@ require('mini.ai').setup()
 require('mini.align').setup()
 require('mini.bracketed').setup()
 require('mini.comment').setup()
+require('mini.operators').setup()
+require('mini.pairs').setup()
+require('mini.pick').setup()
+require('mini.surround').setup()
 
 local hipatterns = require('mini.hipatterns')
 local hi_words = require('mini.extra').gen_highlighter.words
@@ -21,37 +25,11 @@ hipatterns.setup({
   }
 })
 
-local notify = require('mini.notify')
-notify.setup({
-  window = {
-    config = {
-      -- don't draw over winbar
-      row = 1,
-    },
-  },
-})
-
--- override vim.notify
-vim.notify = notify.make_notify({ INFO = { hl_group = 'MiniNotifyNormal' }})
+require('mini.notify').setup({ window = { config = { row = 1 }}})
 
 require('mini.diff').setup({
   view = {
     style = 'sign',
     signs = { add = '┃', change = '┃', delete = '┃' },
-    priority = 9,
   },
 })
-
-require('mini.operators').setup()
-require('mini.misc').setup_auto_root({ '.venv', '.git' })
-require('mini.misc').setup_restore_cursor()
-
-require('mini.pairs').setup()
-
-require('mini.pick').setup()
--- set ui.select
----@diagnostic disable: duplicate-set-field
-vim.ui.select = function (...) return require('mini.pick').ui_select(...) end
----@diagnostic enable: duplicate-set-field
-
-require('mini.surround').setup()

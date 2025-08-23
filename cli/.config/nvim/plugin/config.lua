@@ -67,3 +67,9 @@ vim.cmd('colorscheme gruvbones')
 if os.getenv('TERM'):find('-256color') then
   vim.opt.termguicolors = true
 end
+
+vim.notify = require('mini.notify').make_notify({ INFO = { hl_group = 'MiniNotifyNormal' }})
+
+---@diagnostic disable: duplicate-set-field
+vim.ui.select = function (...) return require('mini.pick').ui_select(...) end
+---@diagnostic enable: duplicate-set-field
