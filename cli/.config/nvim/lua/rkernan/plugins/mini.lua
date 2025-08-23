@@ -13,6 +13,13 @@ require('mini.pairs').setup()
 require('mini.pick').setup()
 require('mini.surround').setup()
 
+require('mini.diff').setup({
+  view = {
+    style = 'sign',
+    signs = { add = '┃', change = '┃', delete = '┃' },
+  },
+})
+
 local hipatterns = require('mini.hipatterns')
 local hi_words = require('mini.extra').gen_highlighter.words
 hipatterns.setup({
@@ -27,9 +34,5 @@ hipatterns.setup({
 
 require('mini.notify').setup({ window = { config = { row = 1 }}})
 
-require('mini.diff').setup({
-  view = {
-    style = 'sign',
-    signs = { add = '┃', change = '┃', delete = '┃' },
-  },
-})
+require('mini.icons').setup()
+require('mini.icons').tweak_lsp_kind()
