@@ -20,7 +20,6 @@ require('rkernan.plugins.conform')
 require('rkernan.plugins.faster')
 require('rkernan.plugins.guess-indent')
 require('rkernan.plugins.lint')
-require('rkernan.plugins.lspconfig')
 require('rkernan.plugins.treesitter')
 
 require('rkernan.plugins.gruvbones')
