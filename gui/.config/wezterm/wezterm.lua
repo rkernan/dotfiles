@@ -21,7 +21,7 @@ config.keys = {
   { key = '-', mods = 'CTRL', action = wezterm.action.DecreaseFontSize },
   { key = '0', mods = 'CTRL', action = wezterm.action.ResetFontSize },
   -- tabs
-  { key = 'c', mods = 'LEADER', action = wezterm.action.SpawnTab('DefaultDomain') },
+  { key = 'c', mods = 'LEADER', action = wezterm.action.SpawnTab('CurrentPaneDomain') },
   { key = 'X', mods = 'LEADER', action = wezterm.action.CloseCurrentTab({ confirm = true }) },
   { key = 'n', mods = 'LEADER', action = wezterm.action.ActivateTabRelative(1) },
   { key = 'p', mods = 'LEADER', action = wezterm.action.ActivateTabRelative(-1) },
