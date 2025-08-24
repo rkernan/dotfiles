@@ -165,9 +165,13 @@ if __name__ == "__main__":
         if InstallTarget.WSL in targets:
             print(termcode(f"==> {InstallTarget.WSL.value}", TerminalCode.BOLD))
             if shutil.which("fish"):
-                check_call("fish -c 'set -U AUTOSTART_TMUX 1'")
                 check_call("fish -c 'set -Ux GALLIUM_DRIVER d3d12'")
                 check_call("fish -c 'set -Ux LIBVA_DRIVER_NAME d3d12'")
+            userprofile = os.environ.get("USERPROFILE", None)
+            if userprofile is not None:
+                wezterm_config = Path(userprofile, ".config", "wezterm")
+                shutil.rmtree(wezterm_config, ignore_errors=True)
+                shutil.copytree(Path("gui", ".config", "wezterm"), wezterm_config, dirs_exist_ok=True)
 
         if InstallTarget.CHECKHEALTH in targets:
             print(termcode(f"==> {InstallTarget.CHECKHEALTH.value}", TerminalCode.BOLD))
