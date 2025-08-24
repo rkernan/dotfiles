@@ -2,6 +2,8 @@ font-family = JetBrainsMono Nerd Font Mono
 font-size = 10.5
 theme = dark:gruvbones-dark,light:gruvbones-light
 
+gtk-custom-css = tab-style.css
+
 keybind =
 
 keybind = ctrl+a>r=reload_config
