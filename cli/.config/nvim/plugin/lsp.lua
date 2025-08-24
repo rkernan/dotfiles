@@ -26,8 +26,6 @@ local function lsp_attach(args)
 
   local bufnr = args.buf
 
-  vim.lsp.completion.enable(true, client.id, bufnr, { autotrigger = true })
-
   vim.keymap.set('n', '<C-e>', function () vim.diagnostic.open_float() end, { desc = 'Open diagnostic float' })
   vim.keymap.set({ 'i', 'v', }, '<C-s>', function () vim.lsp.buf.hover({ border = 'single' }) end, { buffer = bufnr, desc = 'LSP hover' })
   vim.keymap.set('n', 'S', function () vim.lsp.buf.hover({ border = 'single' }) end, { buffer = bufnr, desc = 'LSP hover' })
