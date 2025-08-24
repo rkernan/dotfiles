@@ -1,0 +1,14 @@
+[colors]
+foreground = '#3C3836'
+background = '#FBF1C9'
+cursor_bg = '#3C3836'
+cursor_border = '#3C3836'
+cursor_fg = '#FBF1C9'
+selection_bg = '#DDD9D7'
+selection_fg = '#3C3836'
+ansi    = ['#FBF1C9', '#9C0003', '#7A750E', '#B67616', '#086576', '#903F71', '#427B58', '#3C3836']
+brights = ['#D9C76B', '#860002', '#656106', '#97610D', '#055565', '#812E63', '#306646', '#66605C']
+# copy_mode_active_highlight_bg = '#D66DAC'
+# copy_mode_active_highlight_fg = '#FBF1C9'
+# copy_mode_inactive_highlight_bg = '#E9B9D3'
+# copy_mode_inactive_highlight_fg = '#3C3836'
