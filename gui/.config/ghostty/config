@@ -1,7 +1,6 @@
 font-family = JetBrainsMono Nerd Font Mono
 font-size = 10.5
 theme = dark:gruvbones-dark,light:gruvbones-light
-unfocused-split-opacity = 1
 
 keybind =
 
