@@ -1,5 +1,6 @@
 status is-interactive || exit
 
+set fish_color_cwd brwhite
 set fish_color_host brwhite
 set fish_color_host_remote brwhite
 set fish_color_user brwhite
