@@ -6,12 +6,9 @@ vim.keymap.set('n', 'gj', 'j', { desc = 'Next line' })
 vim.keymap.set('n', 'gk', 'k', { desc = 'Previous line' })
 vim.keymap.set('x', '>', '>gv', { desc = 'Increase indent' })
 vim.keymap.set('x', '<', '<gv', { desc = 'Decrease indent' })
--- terminal movement
-vim.keymap.set('t', '<A-i>', function () vim.cmd('buffer #') end)
-vim.keymap.set('t', '<C-w>h', [[<C-\><C-n><C-w>h]])
-vim.keymap.set('t', '<C-w>j', [[<C-\><C-n><C-w>j]])
-vim.keymap.set('t', '<C-w>k', [[<C-\><C-n><C-w>k]])
-vim.keymap.set('t', '<C-w>l', [[<C-\><C-n><C-w>l]])
+
+vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], { remap = true })
+vim.keymap.set('t', '<C-]>', [[<C-\><C-n>]])
 
 vim.keymap.set('n', '<Leader>f', function () require('mini.pick').builtin.files() end, { desc = 'Files' })
 vim.keymap.set('n', '<Leader>b', function () require('mini.pick').builtin.buffers() end, { desc = 'Buffers' })
