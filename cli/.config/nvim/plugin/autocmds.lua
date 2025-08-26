@@ -40,3 +40,10 @@ vim.api.nvim_create_autocmd({ 'DirChanged', 'SessionLoadPost', 'TabEnter', 'VimE
 
 require('mini.misc').setup_auto_root({ '.venv', '.git' })
 require('mini.misc').setup_restore_cursor()
+
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, {
+  group = augroup,
+  callback = function ()
+    require('lint').try_lint()
+  end,
+})

@@ -4,6 +4,3 @@ local add = MiniDeps.add
 
 add({ source = 'mfussenegger/nvim-lint' })
 require('lint').linters_by_ft = {}
-
-local augroup = vim.api.nvim_create_augroup('rkernan.lint', { clear = true })
-vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, { callback = function () require('lint').try_lint() end, group = augroup })
