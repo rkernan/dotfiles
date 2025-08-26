@@ -24,17 +24,18 @@ def termcode(s: str, color: TerminalCode, *args: TerminalCode) -> str:
     return f"{color.value}{s}{TerminalCode.RESET.value}"
 
 
-def check_call(cmd: str, **kwargs: Any) -> None:
+def check_call(cmd: str) -> None:
     print(">", termcode(cmd, TerminalCode.BOLD))
-    kwargs["shell"] = True
-    kwargs["stderr"] = subprocess.STDOUT
-    try:
-        res = subprocess.check_output(cmd, **kwargs)
-        if res:
-            print(res.decode("utf-8").strip())
-    except subprocess.CalledProcessError as err:
-        print(err.output.decode("utf-8").strip())
-        raise
+    output = []
+    with subprocess.Popen(cmd, shell=True, stderr=subprocess.STDOUT) as proc:
+        while proc.poll() is None:
+            if proc.stdout is None:
+                continue
+            for line in proc.stdout:
+                output = [*output, line.decode("utf-8").rstrip("\n")]
+                print(output[-1])
+        if proc.returncode != 0:
+            raise subprocess.CalledProcessError(proc.returncode, cmd, "\n".join(output))
 
 
 def stow(install: list[Path]) -> None:
