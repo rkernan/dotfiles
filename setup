@@ -31,7 +31,7 @@ def check_call(cmd: str) -> None:
         while proc.poll() is None:
             if proc.stdout is None:
                 continue
-            for line in proc.stdout:
+            for line in proc.stdout.readlines():
                 output = [*output, line.decode("utf-8").rstrip("\n")]
                 print(output[-1])
         if proc.returncode != 0:
