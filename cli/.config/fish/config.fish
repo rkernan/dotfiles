@@ -64,6 +64,40 @@ set -x RIPGREP_CONFIG_PATH $HOME"/.ripgreprc"
 abbr e $EDITOR
 abbr p $PAGER
 
+function subcommand_abbr -a cmd short long
+  # check that these strings are safe
+  if not string match --regex --quiet '^[a-z]*$' "$short"
+    echo "unsupported alias: $short"
+    exit 1
+  end
+
+  set -l abbr_fn_name (string join "_" "abbr" "$cmd" "$short")
+  set -l abbr_fn "
+function $abbr_fn_name
+  set --local tokens (commandline --tokenize)
+  if test \$tokens[1] = \"$cmd\"
+    echo $long
+  else
+    echo $short
+  end
+end
+abbr --add $short --position anywhere --function $abbr_fn_name
+  "
+  eval "$abbr_fn"
+end
+
+abbr g git
+subcommand_abbr git a add
+subcommand_abbr git aa "add --all"
+subcommand_abbr git ap "add --patch"
+subcommand_abbr git unstage "restore --staged"
+subcommand_abbr git co checkout
+subcommand_abbr git cob "checkout -b"
+subcommand_abbr git ci commit
+subcommand_abbr git amend "commit --amend"
+subcommand_abbr git unwind "reset --soft HEAD^"
+subcommand_abbr git scrap "reset --hard HEAD^"
+
 abbr cp cp -i
 abbr ln ln -i
 abbr mv mv -i

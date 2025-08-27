@@ -60,25 +60,6 @@
 [mergetool "nvim"]
 	cmd = nvim -d -c 'wincmd l' -c 'norm ]c' $LOCAL $MERGED $REMOTE
 
-[alias]
-	# stage changes
-	a  = add
-	aa = add --all
-	ap = add --patch
-	# unstage changes
-	unstage = restore --staged
-	# checkout
-	co  = checkout
-	cob = checkout -b
-	# commit
-	ci = commit
-	# unwind previous commit
-	unwind = reset --soft HEAD^
-	# scrap previous commit
-	scrap  = reset --hard HEAD^
-	# amend previous commit
-	amend  = commit --amend
-
 [init]
 	defaultBranch = develop
 
