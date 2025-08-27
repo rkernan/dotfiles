@@ -95,8 +95,6 @@ subcommand_abbr git co checkout
 subcommand_abbr git cob "checkout -b"
 subcommand_abbr git ci commit
 subcommand_abbr git amend "commit --amend"
-subcommand_abbr git unwind "reset --soft HEAD^"
-subcommand_abbr git scrap "reset --hard HEAD^"
 
 abbr cp cp -i
 abbr ln ln -i
