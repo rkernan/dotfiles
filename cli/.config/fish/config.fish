@@ -65,12 +65,6 @@ abbr e $EDITOR
 abbr p $PAGER
 
 function subcommand_abbr -a cmd short long
-  # check that these strings are safe
-  if not string match --regex --quiet '^[a-z]*$' "$short"
-    echo "unsupported alias: $short"
-    exit 1
-  end
-
   set -l abbr_fn_name (string join "_" "abbr" "$cmd" "$short")
   set -l abbr_fn "
 function $abbr_fn_name
