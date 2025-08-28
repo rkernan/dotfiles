@@ -12,10 +12,8 @@ if test -d $brew_prefix
 end
 
 # go
-set -l go_path $HOME"/workspace/go"
-if test -d $go_path
-  set -x GOPATH $go_path
-  fish_add_path $GOPATH"/bin"
+if type -q go
+  fish_add_path (go env GOPATH)"/bin"
 end
 
 # rust
