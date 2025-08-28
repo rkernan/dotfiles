@@ -27,15 +27,13 @@ def termcode(s: str, color: TerminalCode, *args: TerminalCode) -> str:
 def check_call(cmd: str) -> None:
     print(">", termcode(cmd, TerminalCode.BOLD))
     output = []
-    with subprocess.Popen(cmd, shell=True, stderr=subprocess.STDOUT) as proc:
-        while proc.poll() is None:
-            if proc.stdout is None:
-                continue
-            for line in proc.stdout:
-                output = [*output, line.decode("utf-8").rstrip("\n")]
+    with subprocess.Popen(cmd, shell=True, stderr=subprocess.STDOUT, text=True, bufsize=1) as proc:
+        if proc.stdout:
+            for line in iter(proc.stdout.readline, ''):
+                output = [*output, line.rstrip("\n")]
                 print(output[-1])
-        if proc.returncode != 0:
-            raise subprocess.CalledProcessError(proc.returncode, cmd, "\n".join(output))
+    if proc.returncode != 0:
+        raise subprocess.CalledProcessError(proc.returncode, cmd, "\n".join(output))
 
 
 def stow(install: list[Path]) -> None:
