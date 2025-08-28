@@ -11,12 +11,6 @@ if test -d $brew_prefix
   set -gx fish_complete_path $fish_complete_path $brew_prefix"/share/fish/vendor_completions.d"
 end
 
-# asdf
-set -l asdf_brew_path $brew_prefix"/opt/asdf/libexec/asdf.fish"
-if test -e $asdf_brew_path
-  source $asdf_brew_path
-end
-
 # go
 set -l go_path $HOME"/workspace/go"
 if test -d $go_path
