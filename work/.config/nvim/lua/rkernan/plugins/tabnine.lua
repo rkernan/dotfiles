@@ -12,6 +12,7 @@ require('tabnine').setup({
   disable_auto_comment = true,
   accept_keymap = '<C-f>',
   debounce_ms = 800,
+  codelens_enabled = false,
   tabnine_enterprise_host = os.getenv('TABNINE_ENTERPRISE_HOST'),
   workspace_folders = {
     get_paths = function ()
