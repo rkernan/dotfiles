@@ -72,10 +72,6 @@ local function environment(variable)
   return Part:new(vim.fn.environ()[variable] or '')
 end
 
-local function git_head()
-  return Part:new(vim.g.git_head or '')
-end
-
 local function cwd()
   local part = Part:new(vim.fn.fnamemodify(vim.fn.getcwd(), ':~'))
   if part.value:sub(-1) == '/' then
@@ -193,10 +189,10 @@ end
 function MyStatusline()
   return table.concat({
     mode().value,
-    git_head():format('  %s'):hl('StatusLineGitHead').value,
-    environment('VIRTUAL_ENV'):apply(vim.fs.basename):format('  %s'):hl('StatusLineVirtualEnv').value,
     cwd():format('  %s').value,
     '%=',
+    Part:new(vim.g.git_head or ''):format(' %s ' ):hl('StatusLineGitHead').value,
+    environment('VIRTUAL_ENV'):apply(vim.fs.basename):format(' %s '):hl('StatusLineVirtualEnv').value,
     tabsummary():hl('StatusLineDim').value,
     fileformat():format(' %s'):hl('StatusLineDim').value,
     fileencoding():format(' %s'):hl('StatusLineDim').value,
