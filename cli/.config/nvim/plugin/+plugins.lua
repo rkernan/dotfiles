@@ -13,6 +13,10 @@ end
 
 require('mini.deps').setup({ path = { package = path_package } })
 
+---@diagnostic disable: undefined-global
+local add = MiniDeps.add
+---@diagnostic enable: undefined-global
+
 require('rkernan.plugins.mini')
 require('rkernan.plugins.blink-cmp')
 require('rkernan.plugins.conform')
@@ -22,3 +26,4 @@ require('rkernan.plugins.lint')
 require('rkernan.plugins.treesitter')
 require('rkernan.plugins.gruvbones')
 pcall(require, 'rkernan.plugins.tabnine')
+add({ source = 'neovim/nvim-lspconfig' })
