@@ -14,6 +14,15 @@ require('blink-cmp').setup({
     ['<Tab>'] = { 'select_next', 'snippet_forward', 'fallback' },
   },
   completion = {
+    menu = {
+      border = 'none',
+    },
+    documentation = {
+      auto_show = true,
+      window = {
+        border = 'none',
+      }
+    },
     list = {
       selection = {
         preselect = false,
@@ -21,5 +30,10 @@ require('blink-cmp').setup({
       },
     },
   },
-  signature = { enabled = true },
+  signature = {
+    enabled = true,
+    window = {
+      border = 'none',
+    },
+  },
 })

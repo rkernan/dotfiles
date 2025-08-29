@@ -50,6 +50,7 @@ vim.opt.scrolloff = 5
 vim.opt.pumblend = 10
 vim.opt.pumheight = 10
 vim.opt.winblend = 10
+vim.opt.winborder = 'single'
 vim.opt.listchars = {
   eol = '¬',
   tab = '»·',
