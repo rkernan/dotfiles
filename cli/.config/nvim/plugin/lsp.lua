@@ -1,9 +1,3 @@
----@diagnostic disable: undefined-global
-local add = MiniDeps.add
----@diagnostic enable: undefined-global
-
-add({ source = 'neovim/nvim-lspconfig' })
-
 local function lsp_attach(args)
   local client = vim.lsp.get_client_by_id(args.data.client_id)
   if not client then
@@ -38,22 +32,15 @@ else
   vim.lsp.enable('basedpyright')
 end
 
-local diagnostic_signs = require('rkernan.diagnostics')
 vim.diagnostic.config({
-  severity_sort = true,
   virtual_text = false,
+  severity_sort = true,
   signs = {
-    text = diagnostic_signs.signs,
-  },
-  update_in_insert = false,
-  float = {
-    border = 'single',
-    header = '',
-    source = true,
-    prefix = function (diagnostic)
-      local sign = string.format('%s ', diagnostic_signs.signs[diagnostic.severity])
-      local hl = diagnostic_signs.sign_hl[diagnostic.severity]
-      return sign, hl
-    end,
+    text = {
+      [vim.diagnostic.severity.ERROR] = '󰔶',
+      [vim.diagnostic.severity.WARN]  = '󰔶',
+      [vim.diagnostic.severity.INFO]  = '󰝤',
+      [vim.diagnostic.severity.HINT]  = '󰝤',
+    },
   },
 })

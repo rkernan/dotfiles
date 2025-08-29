@@ -1,5 +1,3 @@
-local diagnostics_icons = require('rkernan.diagnostics').signs
-
 local Part = {}
 
 function Part:new(value)
@@ -216,10 +214,10 @@ function MyWinBarActive()
     diff.change(bufnr):format(' ~%s'):hl('WinBarDiffChange').value,
     diff.delete(bufnr):format(' -%s'):hl('WinBarDiffDelete').value,
     "%=",
-    diagnostics.error(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.ERROR])):hl('WinBarDiagnosticError').value,
-    diagnostics.warn(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.WARN])):hl('WinBarDiagnosticWarn').value,
-    diagnostics.info(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.INFO])):hl('WinBarDiagnosticInfo').value,
-    diagnostics.hint(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.HINT])):hl('WinBarDiagnosticHint').value,
+    diagnostics.error(bufnr):format('󰔶 %s '):hl('WinBarDiagnosticError').value,
+    diagnostics.warn(bufnr):format('󰔶 %s '):hl('WinBarDiagnosticWarn').value,
+    diagnostics.info(bufnr):format('󰝤 %s '):hl('WinBarDiagnosticInfo').value,
+    diagnostics.hint(bufnr):format('󰝤 %s '):hl('WinBarDiagnosticHint').value,
     ' %l:%L %P',
   })
 end
@@ -235,10 +233,10 @@ function MyWinBarInactive()
     diff.change(bufnr):format(' ~%s'):hl('WinBarDiffChange').value,
     diff.delete(bufnr):format(' -%s'):hl('WinBarDiffDelete').value,
     "%=",
-    diagnostics.error(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.ERROR])):hl('WinBarDiagnosticError').value,
-    diagnostics.warn(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.WARN])):hl('WinBarDiagnosticWarn').value,
-    diagnostics.info(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.INFO])):hl('WinBarDiagnosticInfo').value,
-    diagnostics.hint(bufnr):format(string.format('%s %%s ', diagnostics_icons[vim.diagnostic.severity.HINT])):hl('WinBarDiagnosticHint').value,
+    diagnostics.error(bufnr):format('󰔶 %s '):hl('WinBarDiagnosticError').value,
+    diagnostics.warn(bufnr):format('󰔶 %s '):hl('WinBarDiagnosticWarn').value,
+    diagnostics.info(bufnr):format('󰝤 %s '):hl('WinBarDiagnosticInfo').value,
+    diagnostics.hint(bufnr):format('󰝤 %s '):hl('WinBarDiagnosticHint').value,
     ' %l:%L %P',
   })
 end
