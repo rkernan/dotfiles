@@ -196,10 +196,10 @@ function MyStatusline()
     git_head():format('  %s'):hl('StatusLineGitHead').value,
     environment('VIRTUAL_ENV'):apply(vim.fs.basename):format('  %s'):hl('StatusLineVirtualEnv').value,
     cwd():format('  %s').value,
-    "%=",
-    tabsummary().value,
-    fileformat():format(' %s').value,
-    fileencoding():format(' %s').value,
+    '%=',
+    tabsummary():hl('StatusLineDim').value,
+    fileformat():format(' %s'):hl('StatusLineDim').value,
+    fileencoding():format(' %s'):hl('StatusLineDim').value,
   })
 end
 

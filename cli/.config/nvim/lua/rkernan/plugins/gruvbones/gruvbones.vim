@@ -299,6 +299,7 @@ if &background ==# 'dark'
     highlight StatusLine guifg=#EBDCB4 guibg=#3E3E3E guisp=NONE blend=NONE gui=NONE
     highlight! link TabLineSel StatusLine
     highlight! link WinBar StatusLine
+    highlight StatusLineDim guifg=#A19576 guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight StatusLineNC guifg=#F0E4CA guibg=#323232 guisp=NONE blend=NONE gui=NONE
     highlight! link TabLine StatusLineNC
     highlight! link WinBarNC StatusLineNC
@@ -718,6 +719,7 @@ else
     highlight StatusLine guifg=#3C3836 guibg=#E5D273 guisp=NONE blend=NONE gui=NONE
     highlight! link TabLineSel StatusLine
     highlight! link WinBar StatusLine
+    highlight StatusLineDim guifg=#2C2928 guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight StatusLineNC guifg=#706966 guibg=#F4E07B guisp=NONE blend=NONE gui=NONE
     highlight! link TabLine StatusLineNC
     highlight! link WinBarNC StatusLineNC
