@@ -57,7 +57,7 @@ local function gen_specs(palette, bg)
       MiniDiffSignDelete({ base_specs.GitSignsDelete }),
 
       -- StatusLine
-      StatusLineDim({ fg = base_specs.StatusLine.fg.da(30) }),
+      StatusLineDim({ fg = base_specs.StatusLine.fg.da(25) }),
 
       -- TabLine
       TabLine({ base_specs.StatusLineNC }),
