@@ -189,7 +189,7 @@ end
 function MyStatusline()
   return table.concat({
     mode().value,
-    cwd():format('  %s').value,
+    cwd():format(' %s').value,
     '%=',
     Part:new(vim.g.git_head or ''):format(' %s ' ):hl('StatusLineGitHead').value,
     environment('VIRTUAL_ENV'):apply(vim.fs.basename):format(' %s '):hl('StatusLineVirtualEnv').value,

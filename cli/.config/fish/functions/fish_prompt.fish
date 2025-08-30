@@ -13,9 +13,9 @@ end
 
 function _prompt_pwd
   if set -q SSH_CLIENT || set -q SSH_TTY
-    string join ' ' -- (prompt_login) ':' (set_color $fish_color_cwd) (prompt_pwd)
+    string join '' -- (prompt_login) ':' (set_color $fish_color_cwd) (prompt_pwd)
   else
-    string join ' ' -- (set_color $fish_color_cwd) (prompt_pwd)
+    string join '' -- (set_color $fish_color_cwd) (prompt_pwd)
   end
 end
 
