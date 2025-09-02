@@ -19,6 +19,17 @@ function _prompt_pwd
   end
 end
 
+function _prompt_git
+  set_color $__fish_git_prompt_color_branch
+  string join '' -- (fish_git_prompt ' %s')
+end
+
+function _prompt_virtualenv
+  if set -q VIRTUAL_ENV
+    string join '' -- (set_color $fish_color_venv) ' ' (basename "$VIRTUAL_ENV")
+  end
+end
+
 function _prompt_symbol
   switch (whoami)
     case root
@@ -28,7 +39,9 @@ function _prompt_symbol
   end
 end
 
+
 function fish_prompt
   set -l last_status $status
-  string join ' ' -- (_prompt_pwd) (_prompt_jobs) (_prompt_last_status $last_status) (_prompt_symbol)
+  string join ' ' -- (_prompt_git) (_prompt_virtualenv) (_prompt_pwd)
+  string join ' ' -- (_prompt_jobs) (_prompt_last_status $last_status) (_prompt_symbol)
 end
