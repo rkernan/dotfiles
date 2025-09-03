@@ -20,8 +20,7 @@ function _prompt_pwd
 end
 
 function _prompt_git
-  set_color $__fish_git_prompt_color_branch
-  string join '' -- (fish_git_prompt ' %s')
+  string trim -- (set_color $__fish_git_prompt_color_branch)(fish_git_prompt ' %s')
 end
 
 function _prompt_virtualenv
