@@ -26,7 +26,6 @@ vim.g.maplocalleader = ' '
 
 vim.opt.undofile = true
 vim.opt.mouse = 'a'
-vim.cmd.filetype('plugin indent on')
 vim.opt.cursorline = true
 vim.opt.number = true
 vim.opt.splitbelow = true
@@ -40,6 +39,9 @@ vim.opt.fillchars = {
   foldclose = '',
   foldsep = ' ',
 }
+vim.opt.foldcolumn = 'auto:1'
+vim.opt.foldmethod = 'expr'
+vim.opt.foldlevel = 99
 vim.opt.ignorecase = true
 vim.opt.infercase = true
 vim.opt.smartcase = true
@@ -62,6 +64,9 @@ vim.opt.listchars = {
 }
 vim.opt.showbreak = '⌙'
 vim.opt.list = false
+
+vim.cmd.filetype('plugin indent on')
+
 vim.cmd('syntax enable')
 vim.cmd('colorscheme gruvbones')
 
