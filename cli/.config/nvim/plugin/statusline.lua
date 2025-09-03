@@ -238,7 +238,11 @@ function MyWinBarInactive()
 end
 
 function MyStatusColumn()
-  return '%C%=%l %s'
+  return table.concat({
+    vim.wo[vim.g.statusline_winid].foldenable and '%C ' or '',
+    '%=%l ',
+    '%s'
+  })
 end
 
 local function tab_entry_title(bufnr)
