@@ -13,13 +13,7 @@ require('mini.pairs').setup()
 require('mini.pick').setup()
 require('mini.surround').setup()
 
-require('mini.diff').setup({
-  view = {
-    style = 'sign',
-    signs = { add = '┃', change = '┃', delete = '┃' },
-    priority = 1,
-  },
-})
+require('mini.diff').setup({ view = { style = 'number' }})
 
 local hipatterns = require('mini.hipatterns')
 local hi_words = require('mini.extra').gen_highlighter.words
