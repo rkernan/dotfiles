@@ -16,11 +16,6 @@ if vim.fn.has('wsl') > 0 then
   }
 end
 
-if vim.fn.executable('rg') == 1 then
-  vim.opt.grepformat = '%f:%l:%c:%m,%f:%l:%m'
-  vim.opt.grepprg = 'rg --vimgrep --no-heading --smart-case'
-end
-
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
