@@ -75,3 +75,10 @@ vim.notify = require('mini.notify').make_notify({ INFO = { hl_group = 'MiniNotif
 ---@diagnostic disable: duplicate-set-field
 vim.ui.select = function (...) return require('mini.pick').ui_select(...) end
 ---@diagnostic enable: duplicate-set-field
+
+require('rkernan.statusline')
+vim.opt.laststatus = 3
+vim.opt.statusline = '%!v:lua.MyStatusline()'
+vim.opt.signcolumn = 'yes'
+vim.opt.statuscolumn = '%!v:lua.MyStatusColumn()'
+vim.opt.tabline = '%!v:lua.MyTabLine()'

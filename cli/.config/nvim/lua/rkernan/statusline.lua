@@ -1,3 +1,5 @@
+local M = {}
+
 local Part = {}
 
 function Part:new(value)
@@ -165,7 +167,8 @@ local function _diagnostics(bufnr, severity)
   bufnr = bufnr or 0
   local count = #vim.diagnostic.get(bufnr, { severity = severity })
   if count > 0 then
-    return Part:new(tostring(count))
+    local signs = require('rkernan.diagnostic').signs
+    return Part:new(tostring(count)):format(('%s %%s'):format(signs[severity]))
   end
     return Part:new('')
 end
@@ -210,10 +213,10 @@ function MyWinBarActive()
     diff.change(bufnr):format(' ~%s'):hl('WinBarDiffChange').value,
     diff.delete(bufnr):format(' -%s'):hl('WinBarDiffDelete').value,
     "%=",
-    diagnostics.error(bufnr):format('󰔶 %s '):hl('WinBarDiagnosticError').value,
-    diagnostics.warn(bufnr):format('󰔶 %s '):hl('WinBarDiagnosticWarn').value,
-    diagnostics.info(bufnr):format('󰝤 %s '):hl('WinBarDiagnosticInfo').value,
-    diagnostics.hint(bufnr):format('󰝤 %s '):hl('WinBarDiagnosticHint').value,
+    diagnostics.error(bufnr):format('%s '):hl('WinBarDiagnosticError').value,
+    diagnostics.warn(bufnr):format('%s '):hl('WinBarDiagnosticWarn').value,
+    diagnostics.info(bufnr):format('%s '):hl('WinBarDiagnosticInfo').value,
+    diagnostics.hint(bufnr):format('%s '):hl('WinBarDiagnosticHint').value,
     ' %l:%L %P',
   })
 end
@@ -229,10 +232,10 @@ function MyWinBarInactive()
     diff.change(bufnr):format(' ~%s'):hl('WinBarDiffChange').value,
     diff.delete(bufnr):format(' -%s'):hl('WinBarDiffDelete').value,
     "%=",
-    diagnostics.error(bufnr):format('󰔶 %s '):hl('WinBarDiagnosticError').value,
-    diagnostics.warn(bufnr):format('󰔶 %s '):hl('WinBarDiagnosticWarn').value,
-    diagnostics.info(bufnr):format('󰝤 %s '):hl('WinBarDiagnosticInfo').value,
-    diagnostics.hint(bufnr):format('󰝤 %s '):hl('WinBarDiagnosticHint').value,
+    diagnostics.error(bufnr):format('%s '):hl('WinBarDiagnosticError').value,
+    diagnostics.warn(bufnr):format('%s '):hl('WinBarDiagnosticWarn').value,
+    diagnostics.info(bufnr):format('%s '):hl('WinBarDiagnosticInfo').value,
+    diagnostics.hint(bufnr):format('%s '):hl('WinBarDiagnosticHint').value,
     ' %l:%L %P',
   })
 end
@@ -288,45 +291,6 @@ function MyTabLine()
   return line
 end
 
-local function setup_colors()
-  local statusline        = vim.api.nvim_get_hl(0, { name = 'StatusLine',          link = false })
-  local minidiff_add      = vim.api.nvim_get_hl(0, { name = 'MiniDiffSignAdd',     link = false })
-  local minidiff_change   = vim.api.nvim_get_hl(0, { name = 'MiniDiffSignChange',  link = false })
-  local minidiff_delete   = vim.api.nvim_get_hl(0, { name = 'MiniDiffSignDelete',  link = false })
-  local diagnostics_error = vim.api.nvim_get_hl(0, { name = 'DiagnosticSignError', link = false })
-  local diagnostics_warn  = vim.api.nvim_get_hl(0, { name = 'DiagnosticSignWarn',  link = false })
-  local diagnostics_info  = vim.api.nvim_get_hl(0, { name = 'DiagnosticSignInfo',  link = false })
-  local diagnostics_hint  = vim.api.nvim_get_hl(0, { name = 'DiagnosticSignHint',  link = false })
-  vim.api.nvim_set_hl(0, 'StatusLineModeNormal',    { fg = statusline.bg,          bg = vim.g.terminal_color_7 })
-  vim.api.nvim_set_hl(0, 'StatusLineModeVisual',    { fg = statusline.bg,          bg = vim.g.terminal_color_1 })
-  vim.api.nvim_set_hl(0, 'StatusLineModeReplace',   { fg = statusline.bg,          bg = vim.g.terminal_color_1 })
-  vim.api.nvim_set_hl(0, 'StatusLineModeInsert',    { fg = statusline.bg,          bg = vim.g.terminal_color_4 })
-  vim.api.nvim_set_hl(0, 'StatusLineModeCommand',   { fg = statusline.bg,          bg = vim.g.terminal_color_2 })
-  vim.api.nvim_set_hl(0, 'StatusLineModeTerminal',  { fg = statusline.bg,          bg = vim.g.terminal_color_3 })
-  vim.api.nvim_set_hl(0, 'StatusLineGitHead',     { fg = vim.g.terminal_color_5 })
-  vim.api.nvim_set_hl(0, 'StatusLineVirtualEnv',  { fg = vim.g.terminal_color_6 })
-  vim.api.nvim_set_hl(0, 'WinBarModified',        { fg = vim.g.terminal_color_2 })
-  vim.api.nvim_set_hl(0, 'WinBarReadonly',        { fg = vim.g.terminal_color_1 })
-  vim.api.nvim_set_hl(0, 'WinBarDiffAdd',         { fg = minidiff_add.fg        })
-  vim.api.nvim_set_hl(0, 'WinBarDiffChange',      { fg = minidiff_change.fg     })
-  vim.api.nvim_set_hl(0, 'WinBarDiffDelete',      { fg = minidiff_delete.fg     })
-  vim.api.nvim_set_hl(0, 'WinBarDiagnosticError', { fg = diagnostics_error.fg   })
-  vim.api.nvim_set_hl(0, 'WinBarDiagnosticWarn',  { fg = diagnostics_warn.fg    })
-  vim.api.nvim_set_hl(0, 'WinBarDiagnosticInfo',  { fg = diagnostics_info.fg    })
-  vim.api.nvim_set_hl(0, 'WinBarDiagnosticHint',  { fg = diagnostics_hint.fg    })
-end
-
-local augroup = vim.api.nvim_create_augroup('rkernan.statusline', { clear = true })
-vim.api.nvim_create_autocmd({'VimEnter', 'ColorScheme'}, { callback = setup_colors, group = augroup })
-
-vim.opt.laststatus = 3
-vim.opt.statusline = '%!v:lua.MyStatusline()'
-
-vim.opt.signcolumn = 'yes'
-vim.opt.statuscolumn = '%!v:lua.MyStatusColumn()'
-
-vim.opt.tabline = '%!v:lua.MyTabLine()'
-
 local function should_skip(bufnr)
   if vim.bo[bufnr].buftype == '' and vim.bo[bufnr].filetype == '' then
     return true
@@ -340,29 +304,69 @@ local function should_skip(bufnr)
   return false
 end
 
-vim.api.nvim_create_autocmd({ 'FileType', 'WinEnter' }, {
-  group = augroup,
-  callback = function (args)
-    if should_skip(args.buf) then
-      return
-    end
-    vim.opt_local.winbar = '%!v:lua.MyWinBarActive()'
-  end
-})
-
-vim.api.nvim_create_autocmd({ 'WinLeave' }, {
-  group = augroup,
-  callback = function (args)
-    if should_skip(args.buf) then
-      return
-    end
-    vim.opt_local.winbar = '%!v:lua.MyWinBarInactive()'
-  end
-})
-
 local function redraw_status()
   vim.schedule(function () vim.cmd.redrawstatus() end)
 end
 
-vim.api.nvim_create_autocmd('DiagnosticChanged', { group = augroup, callback = redraw_status })
-vim.api.nvim_create_autocmd({ 'User' }, { pattern = { 'GitHeadUpdate', 'MiniDiffUpdated' }, group = augroup, callback = redraw_status })
+local augroup = vim.api.nvim_create_augroup('rkernan.statusline', { clear = true })
+
+function M.setup_colors()
+  vim.api.nvim_create_autocmd({'VimEnter', 'ColorScheme'}, {
+    group = augroup,
+    callback = function ()
+      local statusline        = vim.api.nvim_get_hl(0, { name = 'StatusLine',          link = false })
+      local minidiff_add      = vim.api.nvim_get_hl(0, { name = 'MiniDiffSignAdd',     link = false })
+      local minidiff_change   = vim.api.nvim_get_hl(0, { name = 'MiniDiffSignChange',  link = false })
+      local minidiff_delete   = vim.api.nvim_get_hl(0, { name = 'MiniDiffSignDelete',  link = false })
+      local diagnostics_error = vim.api.nvim_get_hl(0, { name = 'DiagnosticSignError', link = false })
+      local diagnostics_warn  = vim.api.nvim_get_hl(0, { name = 'DiagnosticSignWarn',  link = false })
+      local diagnostics_info  = vim.api.nvim_get_hl(0, { name = 'DiagnosticSignInfo',  link = false })
+      local diagnostics_hint  = vim.api.nvim_get_hl(0, { name = 'DiagnosticSignHint',  link = false })
+      vim.api.nvim_set_hl(0, 'StatusLineModeNormal',    { fg = statusline.bg,          bg = vim.g.terminal_color_7 })
+      vim.api.nvim_set_hl(0, 'StatusLineModeVisual',    { fg = statusline.bg,          bg = vim.g.terminal_color_1 })
+      vim.api.nvim_set_hl(0, 'StatusLineModeReplace',   { fg = statusline.bg,          bg = vim.g.terminal_color_1 })
+      vim.api.nvim_set_hl(0, 'StatusLineModeInsert',    { fg = statusline.bg,          bg = vim.g.terminal_color_4 })
+      vim.api.nvim_set_hl(0, 'StatusLineModeCommand',   { fg = statusline.bg,          bg = vim.g.terminal_color_2 })
+      vim.api.nvim_set_hl(0, 'StatusLineModeTerminal',  { fg = statusline.bg,          bg = vim.g.terminal_color_3 })
+      vim.api.nvim_set_hl(0, 'StatusLineGitHead',     { fg = vim.g.terminal_color_5 })
+      vim.api.nvim_set_hl(0, 'StatusLineVirtualEnv',  { fg = vim.g.terminal_color_6 })
+      vim.api.nvim_set_hl(0, 'WinBarModified',        { fg = vim.g.terminal_color_2 })
+      vim.api.nvim_set_hl(0, 'WinBarReadonly',        { fg = vim.g.terminal_color_1 })
+      vim.api.nvim_set_hl(0, 'WinBarDiffAdd',         { fg = minidiff_add.fg        })
+      vim.api.nvim_set_hl(0, 'WinBarDiffChange',      { fg = minidiff_change.fg     })
+      vim.api.nvim_set_hl(0, 'WinBarDiffDelete',      { fg = minidiff_delete.fg     })
+      vim.api.nvim_set_hl(0, 'WinBarDiagnosticError', { fg = diagnostics_error.fg   })
+      vim.api.nvim_set_hl(0, 'WinBarDiagnosticWarn',  { fg = diagnostics_warn.fg    })
+      vim.api.nvim_set_hl(0, 'WinBarDiagnosticInfo',  { fg = diagnostics_info.fg    })
+      vim.api.nvim_set_hl(0, 'WinBarDiagnosticHint',  { fg = diagnostics_hint.fg    })
+    end,
+  })
+end
+
+function M.setup_redraw()
+  vim.api.nvim_create_autocmd('DiagnosticChanged', { group = augroup, callback = redraw_status })
+  vim.api.nvim_create_autocmd({ 'User' }, { pattern = { 'GitHeadUpdate', 'MiniDiffUpdated' }, group = augroup, callback = redraw_status })
+end
+
+function M.setup_winbar()
+  vim.api.nvim_create_autocmd({ 'FileType', 'WinEnter' }, {
+    group = augroup,
+    callback = function (args)
+      if should_skip(args.buf) then
+        return
+      end
+      vim.opt_local.winbar = '%!v:lua.MyWinBarActive()'
+    end
+  })
+  vim.api.nvim_create_autocmd('WinLeave', {
+    group = augroup,
+    callback = function (args)
+      if should_skip(args.buf) then
+        return
+      end
+      vim.opt_local.winbar = '%!v:lua.MyWinBarInactive()'
+    end
+  })
+end
+
+return M
