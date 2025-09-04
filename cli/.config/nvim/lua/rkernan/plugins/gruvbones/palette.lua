@@ -45,25 +45,16 @@ local function gen_specs(palette, bg)
       Operator({ Statement, gui = 'none' }),
       sym('@operator')({ Operator }),
 
-      -- mini.hipatterns - disable gui in text elements
-      sym('@text.danger')({ gui = 'none' }),
-      sym('@text.note')({ gui = 'none' }),
-      sym('@text.todo')({ gui = 'none' }),
-      sym('@text.warning')({ gui = 'none' }),
+      StatusLineDim({ fg = base_specs.StatusLine.fg.da(25) }),
+      TabLine({ base_specs.StatusLineNC }),
+      TabLineSel({ base_specs.StatusLine }),
+      TabLineFill({ base_specs.NonText }),
+      QuickFixLine({ base_specs.Pmenu }),
 
       -- mini.diff - link to GitSigns
       MiniDiffSignAdd({ base_specs.GitSignsAdd }),
       MiniDiffSignChange({ base_specs.GitSignsChange }),
       MiniDiffSignDelete({ base_specs.GitSignsDelete }),
-
-      -- StatusLine
-      StatusLineDim({ fg = base_specs.StatusLine.fg.da(25) }),
-
-      -- TabLine
-      TabLine({ base_specs.StatusLineNC }),
-      TabLineSel({ base_specs.StatusLine }),
-      TabLineFill({ base_specs.NonText }),
-
       -- tabnine
       TabnineSuggestion({ fg = base_specs.Normal.fg.da(50), gui = 'italic' }),
 

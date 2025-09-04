@@ -240,6 +240,7 @@ if &background ==# 'dark'
     highlight Operator guifg=#FB4C36 guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight! link @operator Operator
     highlight Pmenu guifg=NONE guibg=#393939 guisp=NONE blend=NONE gui=NONE
+    highlight! link QuickFixLine Pmenu
     highlight PmenuSbar guifg=NONE guibg=#666666 guisp=NONE blend=NONE gui=NONE
     highlight PmenuSel guifg=NONE guibg=#505050 guisp=NONE blend=NONE gui=NONE
     highlight PmenuThumb guifg=NONE guibg=#8B8B8B guisp=NONE blend=NONE gui=NONE
@@ -252,7 +253,6 @@ if &background ==# 'dark'
     highlight Search guifg=#EBDCB4 guibg=#93455D guisp=NONE blend=NONE gui=NONE
     highlight! link CocSearch Search
     highlight! link MatchParen Search
-    highlight! link QuickFixLine Search
     highlight! link Sneak Search
     highlight SnacksIndent guifg=#373737 guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight SnacksIndentScope guifg=#505050 guibg=NONE guisp=NONE blend=NONE gui=NONE
@@ -399,10 +399,6 @@ if &background ==# 'dark'
     highlight! link @lsp.type.string @string
     highlight! link @lsp.typemod.string.injected @string
     highlight! link @string.documentation @string
-    highlight @text.danger guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=NONE
-    highlight @text.note guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=NONE
-    highlight @text.todo guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=NONE
-    highlight @text.warning guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight! link @lsp.type.builtinType @type.builtin
     highlight! link @lsp.typemod.class.defaultLibrary @type.builtin
     highlight! link @lsp.typemod.enum.defaultLibrary @type.builtin
@@ -660,6 +656,7 @@ else
     highlight Operator guifg=#9C0003 guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight! link @operator Operator
     highlight Pmenu guifg=NONE guibg=#EBD876 guisp=NONE blend=NONE gui=NONE
+    highlight! link QuickFixLine Pmenu
     highlight PmenuSbar guifg=NONE guibg=#B5A65A guisp=NONE blend=NONE gui=NONE
     highlight PmenuSel guifg=NONE guibg=#CDBC66 guisp=NONE blend=NONE gui=NONE
     highlight PmenuThumb guifg=NONE guibg=#FDF9EB guisp=NONE blend=NONE gui=NONE
@@ -672,7 +669,6 @@ else
     highlight Search guifg=#3C3836 guibg=#E9B9D3 guisp=NONE blend=NONE gui=NONE
     highlight! link CocSearch Search
     highlight! link MatchParen Search
-    highlight! link QuickFixLine Search
     highlight! link Sneak Search
     highlight SnacksIndent guifg=#F1E094 guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight SnacksIndentScope guifg=#C4B678 guibg=NONE guisp=NONE blend=NONE gui=NONE
@@ -819,10 +815,6 @@ else
     highlight! link @lsp.type.string @string
     highlight! link @lsp.typemod.string.injected @string
     highlight! link @string.documentation @string
-    highlight @text.danger guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=NONE
-    highlight @text.note guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=NONE
-    highlight @text.todo guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=NONE
-    highlight @text.warning guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight! link @lsp.type.builtinType @type.builtin
     highlight! link @lsp.typemod.class.defaultLibrary @type.builtin
     highlight! link @lsp.typemod.enum.defaultLibrary @type.builtin
