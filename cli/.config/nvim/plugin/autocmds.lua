@@ -20,8 +20,19 @@ vim.api.nvim_create_autocmd('CursorMoved', {
   end,
 })
 
+-- auto-chdir to project root
+vim.api.nvim_create_autocmd('VimEnter', {
+  group = augroup,
+  callback = function ()
+    local project_root = vim.fs.root(0, { '.git', '.venv', '.editorconfig' })
+    if project_root then
+      vim.fn.chdir(project_root)
+    end
+  end,
+})
+
 -- set vim.g.git_head if we're in a repo
-vim.api.nvim_create_autocmd({ 'DirChanged', 'SessionLoadPost', 'TabEnter', 'VimEnter', 'VimResume' }, {
+vim.api.nvim_create_autocmd({ 'DirChanged', 'VimEnter', 'VimResume' }, {
   group = augroup,
   callback = function ()
     if vim.fs.root(0, '.git') then
@@ -38,9 +49,39 @@ vim.api.nvim_create_autocmd({ 'DirChanged', 'SessionLoadPost', 'TabEnter', 'VimE
   end,
 })
 
-require('mini.misc').setup_auto_root({ '.venv', '.git' })
-require('mini.misc').setup_restore_cursor()
+-- restore cursor on start
+vim.api.nvim_create_autocmd('BufReadPre', {
+  group = augroup,
+  callback = function (args)
+    vim.api.nvim_create_autocmd('FileType', {
+      buffer = args.buf,
+      once = true,
+      callback = function ()
+        -- stop if not in a normal buffer
+        if vim.bo.buftype ~= '' then
+          return
+        end
+        -- stop if ignored filetype
+        if vim.tbl_contains({ 'gitcommit', 'gitrebase' }, vim.bo.filetype) then
+          return
+        end
+        -- stop if line was specified during start
+        if vim.api.nvim_win_get_cursor(0)[1] > 1 then
+          return
+        end
+        -- stop if restore mark is invalid
+        local mark = vim.api.nvim_buf_get_mark(0, [["]])[1]
+        if not (1 <= mark and mark <= vim.api.nvim_buf_line_count(0)) then
+          return
+        end
+        -- restore cursor
+        vim.cmd([[normal! g`"zv]])
+      end,
+    })
+  end,
+})
 
+-- lint file
 vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, {
   group = augroup,
   callback = function ()
