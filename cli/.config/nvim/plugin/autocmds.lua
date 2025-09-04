@@ -88,3 +88,15 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, {
     require('lint').try_lint()
   end,
 })
+
+-- auto-update diagnostics loclist
+vim.api.nvim_create_autocmd('DiagnosticChanged', {
+  group = augroup,
+  callback = function ()
+    vim.diagnostic.setloclist({ open = false })
+    -- auto-close when empty
+    if #vim.fn.getloclist(0) == 0 then
+      vim.cmd.lwindow()
+    end
+  end,
+})

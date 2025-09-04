@@ -13,6 +13,6 @@ vim.keymap.set('t', '<C-]>', [[<C-\><C-n>]])
 vim.keymap.set('n', '<Leader>f', function () require('mini.pick').builtin.files() end, { desc = 'Files' })
 vim.keymap.set('n', '<Leader>b', function () require('mini.pick').builtin.buffers() end, { desc = 'Buffers' })
 vim.keymap.set('n', '<Leader>/', function () require('mini.pick').builtin.grep_live() end, { desc = 'Live grep' })
-vim.keymap.set('n', '<Leader>e', function () require('mini.extra').pickers.diagnostic({ scope = 'current' }) end, { desc = 'Diagnostics' })
-vim.keymap.set('n', '<Leader>E', function () require('mini.extra').pickers.diagnostic({ scope = 'all' }) end, { desc = 'Workspace diagnostics' })
 vim.keymap.set('n', '<Leader>j', function () require('mini.extra').pickers.marks() end, { desc = 'Marks' })
+
+vim.keymap.set('n', '<Leader>e', vim.cmd.lwindow, { desc = 'Diagnostics' })
