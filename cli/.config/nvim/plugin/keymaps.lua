@@ -12,7 +12,6 @@ vim.keymap.set('t', '<C-]>', [[<C-\><C-n>]])
 
 vim.keymap.set('n', '<Leader>f', function () require('mini.pick').builtin.files() end, { desc = 'Files' })
 vim.keymap.set('n', '<Leader>b', function () require('mini.pick').builtin.buffers() end, { desc = 'Buffers' })
-vim.keymap.set('n', '<Leader>j', function () require('mini.extra').pickers.marks() end, { desc = 'Marks' })
 
 vim.keymap.set('n', '<Leader>e', function ()
   if #vim.fn.getloclist(0) == 0 then
