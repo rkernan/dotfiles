@@ -14,9 +14,8 @@ function M.setup_auto_loclist()
     group = augroup,
     callback = function ()
       vim.diagnostic.setloclist({ open = false })
-      -- auto-close when empty
       if #vim.fn.getloclist(0) == 0 then
-        vim.cmd.lwindow()
+        pcall(vim.cmd.lclose)
       end
     end,
   })
