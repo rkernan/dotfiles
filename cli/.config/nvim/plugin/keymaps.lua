@@ -15,4 +15,10 @@ vim.keymap.set('n', '<Leader>b', function () require('mini.pick').builtin.buffer
 vim.keymap.set('n', '<Leader>/', function () require('mini.pick').builtin.grep_live() end, { desc = 'Live grep' })
 vim.keymap.set('n', '<Leader>j', function () require('mini.extra').pickers.marks() end, { desc = 'Marks' })
 
-vim.keymap.set('n', '<Leader>e', vim.cmd.lwindow, { desc = 'Diagnostics' })
+vim.keymap.set('n', '<Leader>e', function ()
+  if #vim.fn.getloclist(0) == 0 then
+    return
+  end
+  vim.cmd.lwindow()
+end, { desc = 'Diagnostics' })
+
