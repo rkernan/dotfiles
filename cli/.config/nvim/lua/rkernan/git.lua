@@ -1,8 +1,7 @@
 local M = {}
 
-local augroup = vim.api.nvim_create_augroup('rkernan.git', { clear = true })
-
 function M.setup_head()
+  local augroup = vim.api.nvim_create_augroup('rkernan.git', { clear = true })
   vim.api.nvim_create_autocmd({ 'DirChanged', 'VimEnter', 'VimResume' }, {
     group = augroup,
     callback = function ()

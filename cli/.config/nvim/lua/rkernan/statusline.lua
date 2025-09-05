@@ -308,9 +308,8 @@ local function redraw_status()
   vim.schedule(function () vim.cmd.redrawstatus() end)
 end
 
-local augroup = vim.api.nvim_create_augroup('rkernan.statusline', { clear = true })
-
 function M.setup_colors()
+  local augroup = vim.api.nvim_create_augroup('rkernan.statusline.colors', { clear = true })
   vim.api.nvim_create_autocmd({'VimEnter', 'ColorScheme'}, {
     group = augroup,
     callback = function ()
@@ -344,11 +343,13 @@ function M.setup_colors()
 end
 
 function M.setup_redraw()
+  local augroup = vim.api.nvim_create_augroup('rkernan.statusline.redraw', { clear = true })
   vim.api.nvim_create_autocmd('DiagnosticChanged', { group = augroup, callback = redraw_status })
   vim.api.nvim_create_autocmd({ 'User' }, { pattern = { 'GitHeadUpdate', 'MiniDiffUpdated' }, group = augroup, callback = redraw_status })
 end
 
 function M.setup_winbar()
+  local augroup = vim.api.nvim_create_augroup('rkernan.statusline.winbar', { clear = true })
   vim.api.nvim_create_autocmd({ 'FileType', 'WinEnter' }, {
     group = augroup,
     callback = function (args)

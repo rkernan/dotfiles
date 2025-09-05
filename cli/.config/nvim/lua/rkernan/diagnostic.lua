@@ -7,9 +7,9 @@ M.signs = {
   [vim.diagnostic.severity.HINT]  = '󰝤',
 }
 
-local augroup = vim.api.nvim_create_augroup('rkernan.diagnostic', { clear = true })
 
 function M.setup_auto_loclist()
+  local augroup = vim.api.nvim_create_augroup('rkernan.diagnostic', { clear = true })
   vim.api.nvim_create_autocmd('DiagnosticChanged', {
     group = augroup,
     callback = function ()
