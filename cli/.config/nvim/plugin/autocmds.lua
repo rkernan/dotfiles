@@ -20,6 +20,20 @@ vim.api.nvim_create_autocmd('CursorMoved', {
   end,
 })
 
+-- auto-open quickfix
+vim.api.nvim_create_autocmd('QuickFixCmdPost', {
+  group = augroup,
+  pattern = '[^l]*',
+  callback = function () vim.cmd.cwindow() end
+})
+
+-- auto-open loclist
+vim.api.nvim_create_autocmd('QuickFixCmdPost', {
+  group = augroup,
+  pattern = 'l*',
+  callback = function () vim.cmd.lwindow() end,
+})
+
 require('rkernan.git').setup_head()
 require('rkernan.diagnostic').setup_auto_loclist()
 require('rkernan.statusline').setup_colors()
