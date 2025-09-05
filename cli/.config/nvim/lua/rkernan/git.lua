@@ -1,5 +1,6 @@
 local M = {}
 
+---Get uo auto-command that sets vim.g.git_head to current git branch
 function M.setup_head()
   local augroup = vim.api.nvim_create_augroup('rkernan.git', { clear = true })
   vim.api.nvim_create_autocmd({ 'DirChanged', 'VimEnter', 'VimResume' }, {

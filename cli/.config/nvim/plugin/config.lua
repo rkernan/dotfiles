@@ -82,3 +82,10 @@ vim.opt.statusline = '%!v:lua.MyStatusline()'
 vim.opt.signcolumn = 'yes'
 vim.opt.statuscolumn = '%!v:lua.MyStatusColumn()'
 vim.opt.tabline = '%!v:lua.MyTabLine()'
+
+vim.api.nvim_create_user_command('SummarizeTabs', function () require('rkernan.set-tabs').summarize_tabs() end, { desc = 'Summarize current buffer tabs', nargs = 0 })
+vim.api.nvim_create_user_command('SetTabs', function ()
+  local set_tabs = require('rkernan.set-tabs')
+  set_tabs.set_tabs()
+  set_tabs.summarize_tabs()
+end, { desc = 'Set current buffer tabs', nargs = 0 })
