@@ -27,3 +27,5 @@ map_multistep('i', '<Tab>',   { 'pmenu_next' })
 map_multistep('i', '<S-Tab>', { 'pmenu_prev' })
 map_multistep('i', '<CR>',    { 'pmenu_accept', 'minipairs_cr' })
 map_multistep('i', '<BS>',    { 'minipairs_bs' })
+
+vim.keymap.set('n', '<Leader>F', function () require('mini.files').open() end, { desc = 'Files' })
