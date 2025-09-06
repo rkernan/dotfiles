@@ -36,9 +36,12 @@ vim.api.nvim_create_autocmd('QuickFixCmdPost', {
 
 require('rkernan.git').setup_head()
 require('rkernan.diagnostic').setup_auto_loclist()
-require('rkernan.statusline').setup_colors()
-require('rkernan.statusline').setup_redraw()
-require('rkernan.statusline').setup_winbar()
 
-require('mini.misc').setup_auto_root({ '.git', '.venv', '.editorconfig' })
-require('mini.misc').setup_restore_cursor()
+local statusline = require('rkernan.statusline')
+statusline.setup_colors()
+statusline.setup_redraw()
+statusline.setup_winbar()
+
+local mini_misc = require('mini.misc')
+mini_misc.setup_auto_root({ '.git', '.venv', '.editorconfig' })
+mini_misc.setup_restore_cursor()

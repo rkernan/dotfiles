@@ -18,7 +18,6 @@ local add = MiniDeps.add
 ---@diagnostic enable: undefined-global
 
 require('rkernan.plugins.mini')
-require('rkernan.plugins.blink-cmp')
 require('rkernan.plugins.conform')
 require('rkernan.plugins.faster')
 require('rkernan.plugins.guess-indent')

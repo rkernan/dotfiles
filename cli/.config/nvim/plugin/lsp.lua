@@ -14,6 +14,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'S', function () vim.lsp.buf.hover({ border = 'single' }) end, { buffer = bufnr, desc = 'LSP hover' })
     vim.keymap.set('n', 'grr', function () require('mini.extra').pickers.lsp({ scope = 'references' }) end, { buffer = bufnr, desc = 'LSP references' })
     vim.keymap.set('n', 'gO', function () require('mini.extra').pickers.lsp({ scope = 'document_symbol' }) end, { buffer = bufnr, desc = 'LSP document symbols' })
+
+    vim.lsp.completion.enable(true, client.id, bufnr)
   end
 })
 
