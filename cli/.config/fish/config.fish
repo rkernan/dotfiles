@@ -41,13 +41,12 @@ fundle plugin 'andreiborisov/sponge'
 fundle init
 
 # fzf config
-set -x FZF_DEFAULT_OPTS "--cycle --layout=reverse --border=none --preview-window=border-sharp,right:60% --height=60% --info=inline"
+set -x FZF_DEFAULT_OPTS "--cycle --layout=reverse --style=minimal"
 set -x FZF_DEFAULT_COMMAND "_fzf_list_files \$dir"
-set -x FZF_CTRL_T_COMMAND $FZF_DEFAULT_COMMAND
-set -x FZF_CTRL_T_OPTS "--preview='_fzf_file_preview {}'"
-set -x FZF_CTRL_R_OPTS "$FZF_DEFAULT_OPTS --prompt='History> '"
+set -x FZF_CTRL_T_OPTS "--prompt='Files> '"
+set -x FZF_CTRL_R_OPTS "--prompt='History> '"
 set -x FZF_ALT_C_COMMAND "_fzf_list_dirs \$dir"
-set -x FZF_ALT_C_OPTS "$FZF_DEFAULT_OPTS --prompt='Dirs> '"
+set -x FZF_ALT_C_OPTS "--prompt='Dirs> '"
 
 # ripgrep config
 set -x RIPGREP_CONFIG_PATH $HOME"/.ripgreprc"
