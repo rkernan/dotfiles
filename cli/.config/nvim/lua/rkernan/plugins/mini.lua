@@ -17,6 +17,16 @@ require('mini.surround').setup()
 require('mini.diff').setup({ view = { style = 'number' }})
 
 require('mini.files').setup({
+  mappings = {
+    go_in = '',
+    go_in_plus = 'l',
+    go_out = '',
+    go_out_plus = 'h',
+    mark_goto = '',
+    mark_set = '',
+    show_help = '',
+    synchronize = 'w',
+  },
   windows = {
     max_number = 3,
   },
