@@ -9,13 +9,18 @@ require('mini.align').setup()
 require('mini.bracketed').setup()
 require('mini.comment').setup()
 require('mini.completion').setup()
-require('mini.files').setup()
 require('mini.operators').setup()
 require('mini.pairs').setup()
 require('mini.pick').setup()
 require('mini.surround').setup()
 
 require('mini.diff').setup({ view = { style = 'number' }})
+
+require('mini.files').setup({
+  windows = {
+    max_number = 3,
+  },
+})
 
 local hipatterns = require('mini.hipatterns')
 local hi_words = require('mini.extra').gen_highlighter.words
