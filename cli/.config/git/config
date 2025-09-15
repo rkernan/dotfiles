@@ -2,9 +2,6 @@
 	# local/private config
 	path = ~/.config/git/secure
 
-[user]
-	name = Robert Kernan
-
 [core]
 	editor = $EDITOR
 	excludefiles = ~/.config/git/ignore
