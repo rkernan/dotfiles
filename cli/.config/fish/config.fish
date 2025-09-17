@@ -55,6 +55,12 @@ set -x RIPGREP_CONFIG_PATH $HOME"/.ripgreprc"
 abbr e $EDITOR
 abbr p $PAGER
 
+abbr cp cp -i
+abbr g git
+abbr ln ln -i
+abbr mv mv -i
+abbr rm rm -i
+
 function subcommand_abbr -a cmd short long
   if not string match --regex --quiet '^[a-zA-Z0-9]+$' $short
     echo "subcommand_abbr validation error: $short -> $long"
@@ -76,17 +82,11 @@ abbr --add $short --position anywhere --function $abbr_fn_name
   eval "$abbr_fn"
 end
 
-abbr g git
 subcommand_abbr git a add
 subcommand_abbr git aa "add --all"
+subcommand_abbr git amend "commit --amend"
 subcommand_abbr git ap "add --patch"
-subcommand_abbr git unstage "restore --staged"
+subcommand_abbr git ci commit
 subcommand_abbr git co checkout
 subcommand_abbr git cob "checkout -b"
-subcommand_abbr git ci commit
-subcommand_abbr git amend "commit --amend"
-
-abbr cp cp -i
-abbr ln ln -i
-abbr mv mv -i
-abbr rm rm -i
+subcommand_abbr git unstage "restore --staged"
