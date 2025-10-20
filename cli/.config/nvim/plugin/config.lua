@@ -61,6 +61,7 @@ vim.opt.listchars = {
 vim.opt.showbreak = '⌙'
 vim.opt.list = false
 
+vim.opt.exrc = true
 vim.cmd.filetype('plugin indent on')
 
 vim.cmd('syntax enable')
