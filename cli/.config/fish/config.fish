@@ -81,6 +81,7 @@ subcommand_abbr git ap "add --patch"
 subcommand_abbr git ci commit
 subcommand_abbr git co checkout
 subcommand_abbr git cob "checkout -b"
+subcommand_abbr git cp "cherry-pick"
 subcommand_abbr git p push
 subcommand_abbr git pu pull
 subcommand_abbr git unstage "restore --staged"
