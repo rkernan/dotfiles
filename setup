@@ -92,7 +92,7 @@ if __name__ == "__main__":
             "clangd",
             "fd",
             "fish",
-            "fzy",
+            "fzf",
             "git-lfs",
             "go",
             "lua-language-server",
@@ -140,6 +140,8 @@ if __name__ == "__main__":
             print(termcode(f"==> {InstallTarget.BREW.value}", TerminalCode.BOLD))
             checkhealth_bins = [*checkhealth_bins, "brew", "tmux"]
             brew_prefix = subprocess.check_output("brew --prefix", shell=True).decode("utf-8").strip()
+            fzf_install = Path(brew_prefix, "opt", "fzf", "install")
+            check_call(f"{fzf_install} --all --xdg")
 
         if InstallTarget.CLI in targets:
             print(termcode(f"==> {InstallTarget.CLI.value}", TerminalCode.BOLD))

@@ -1,8 +1,7 @@
 function _list_files --description "list files under cwd"
-  set -l dir $argv
   if type -q fd
-    fd --type f --hidden --follow $dir
+    fd --type f --hidden --follow --strip-cwd-prefix $argv
   else
-    find -L $dir -type f -not -path '*/\.git/*'
+    find -L $argv -type f -not -path '*/\.git/*'
   end
 end
