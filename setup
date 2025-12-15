@@ -97,12 +97,10 @@ if __name__ == "__main__":
             "go",
             "lua-language-server",
             "nvim",
-            "pipx",
-            "pyenv",
             "rg",
             "rustup",
             "stow",
-            "vf",
+            "uv",
             "vscode-json-language-server",
             "yaml-language-server",
         ]
@@ -145,11 +143,11 @@ if __name__ == "__main__":
 
         if InstallTarget.CLI in targets:
             print(termcode(f"==> {InstallTarget.CLI.value}", TerminalCode.BOLD))
-            if shutil.which("pyenv"):
-                check_call("pyenv init - fish | fish")
-            if shutil.which("vf") is None:
-                check_call("pipx install virtualfish")
-            check_call("vf install auto_activation environment global_requirements")
+            if shutil.which("uv"):
+                for bin in ("basedpyright", "black", "isort", "pycodestyle", "pydocstyle"):
+                    if not shutil.which(bin):
+                        check_call(f"uv tool install {bin}")
+                check_call("uv tool upgrade --all")
 
         if InstallTarget.GUI in targets:
             Path(Path.home(), ".config", "environment.d").mkdir(parents=True, exist_ok=True)

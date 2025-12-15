@@ -1,7 +1,0 @@
-pyright; python_version < '3.8'
-basedpyright; python_version >= '3.8'
-black
-isort
-pycodestyle
-pydebug
-pydocstyle

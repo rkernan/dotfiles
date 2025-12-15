@@ -24,8 +24,10 @@ function _prompt_git
 end
 
 function _prompt_virtualenv
-  if set -q VIRTUAL_ENV
-    string join '' -- (set_color $fish_color_venv) ' ' (basename "$VIRTUAL_ENV")
+  # FIXME on event?
+  # _auto_virtualenv
+  if set -q VIRTUAL_ENV_PROMPT
+    string join '' -- (set_color $fish_color_venv) ' ' (basename "$VIRTUAL_ENV_PROMPT")
   end
 end
 
