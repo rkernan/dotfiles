@@ -1,12 +1,18 @@
-vim.keymap.set('n', 'Q', '<NOP>', { desc = 'Disable ex-mode mapping' })
-vim.keymap.set({ 'n', 'v' }, '<Leader>y', '"+y', { desc = 'Yank to system clipboard' })
-vim.keymap.set('n', 'j', 'gj', { desc = 'Next line-wrap' })
-vim.keymap.set('n', 'k', 'gk', { desc = 'Previous line-wrap' })
-vim.keymap.set('n', 'gj', 'j', { desc = 'Next line' })
-vim.keymap.set('n', 'gk', 'k', { desc = 'Previous line' })
+-- disable ex-mode mapping
+vim.keymap.set('n', 'Q', '<NOP>')
+
+-- only move over real lines when v:count > 0
+vim.keymap.set({'n', 'x'}, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = 'Next line', expr = true, silent = true })
+vim.keymap.set({'n', 'x'}, 'k', "v:count == 0 ? 'gk' : 'k'", { desc = 'Previous line', expr = true, silent = true })
+
+-- indent without leaving visual mode
 vim.keymap.set('x', '>', '>gv', { desc = 'Increase indent' })
 vim.keymap.set('x', '<', '<gv', { desc = 'Decrease indent' })
 
+-- don't overwite clipboard on visual paste
+vim.keymap.set('v', 'p', '_dP', {  noremap = true, silent = true })
+
+-- better terminal movement
 vim.keymap.set('t', '<C-w>', [[<C-\><C-n><C-w>]], { remap = true })
 vim.keymap.set('t', '<C-]>', [[<C-\><C-n>]])
 

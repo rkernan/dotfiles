@@ -1,6 +1,23 @@
 local augroup = vim.api.nvim_create_augroup('rkernan.autocmds', { clear = true })
 
--- automatic insert mode in terms
+-- highlight on yank
+vim.api.nvim_create_autocmd('TextYankPost', {
+  callback = function ()
+    (vim.hl or vim.highlight).on_yank()
+  end,
+  group = augroup,
+})
+
+-- auto create dir when saving
+vim.api.nvim_create_autocmd('BufWritePre', {
+  callback = function (event)
+    local file = vim.uv.fs_realpath(event.match) or event.match
+    vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
+  end,
+  group = augroup,
+})
+
+-- automatic insert mode in terminals
 vim.api.nvim_create_autocmd({ 'TermOpen', 'BufEnter' }, { group = augroup, pattern = 'term://*', command = [[startinsert]] })
 
 -- resize windows automatically

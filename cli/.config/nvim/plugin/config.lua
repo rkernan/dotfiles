@@ -19,15 +19,30 @@ end
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
-vim.opt.undofile = true
-vim.opt.mouse = 'a'
-vim.opt.cursorline = true
 vim.opt.number = true
+vim.opt.relativenumber = true
+vim.opt.cursorline = true
+vim.opt.ruler = false
+vim.opt.scrolloff = 10
+vim.opt.sidescrolloff = 8
+
+vim.opt.smartindent = true
+
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+
+vim.opt.mouse = 'a'
+vim.opt.clipboard = 'unnamedplus'
+
 vim.opt.splitbelow = true
 vim.opt.splitright = true
-vim.opt.ruler = false
+
+vim.opt.exrc = true
+vim.opt.undofile = true
+
 vim.opt.showmode = false
-vim.opt.wrap = false
+vim.opt.showcmd = false
+
 vim.opt.fillchars = {
   eob = ' ',
   foldopen = '',
@@ -37,19 +52,18 @@ vim.opt.fillchars = {
 vim.opt.foldcolumn = 'auto:1'
 vim.opt.foldmethod = 'expr'
 vim.opt.foldlevel = 99
-vim.opt.ignorecase = true
-vim.opt.infercase = true
-vim.opt.smartcase = true
-vim.opt.smartindent = true
-vim.opt.completeopt = 'menuone,noselect,fuzzy'
+
 vim.opt.wildoptions = 'pum,tagfile,fuzzy'
+
+vim.opt.completeopt = 'menuone,noselect,fuzzy'
 vim.opt.shortmess = vim.opt.shortmess:append('aIcC')
-vim.opt.showcmd = false
-vim.opt.scrolloff = 5
+
 vim.opt.pumblend = 10
 vim.opt.pumheight = 10
+
 vim.opt.winblend = 10
 vim.opt.winborder = 'rounded'
+
 vim.opt.listchars = {
   eol = '¬',
   tab = '»·',
@@ -61,7 +75,6 @@ vim.opt.listchars = {
 vim.opt.showbreak = '⌙'
 vim.opt.list = false
 
-vim.opt.exrc = true
 vim.cmd.filetype('plugin indent on')
 
 vim.cmd('syntax enable')
