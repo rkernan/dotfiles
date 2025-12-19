@@ -1,8 +1,13 @@
 font-family = JetBrainsMono Nerd Font Mono
 font-size = 10.5
 theme = dark:gruvbones-dark,light:gruvbones-light
-
 gtk-custom-css = tab-style.css
+
+# window-save-state = always
+confirm-close-surface = false
+
+clipboard-trim-trailing-spaces = true
+clipboard-paste-protection = true
 
 keybind =
 
