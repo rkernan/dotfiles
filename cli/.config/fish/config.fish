@@ -31,6 +31,8 @@ set -x PAGER less
 #=========================#
 status is-interactive || exit
 
+set --global fish_key_bindings fish_hybrid_key_bindings
+
 _autostart_tmux
 
 if not functions -q fundle
