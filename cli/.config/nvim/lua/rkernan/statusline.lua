@@ -416,10 +416,6 @@ end
 function M.setup_winbar()
   local function should_skip(bufnr)
     bufnr = bufnr or 0
-    if vim.bo[bufnr].buftype == '' and vim.bo[bufnr].filetype == '' then
-      return true
-    end
-
     for _, pattern in ipairs({ 'nofile', 'help', 'prompt', 'quickfix', 'terminal' }) do
       if vim.bo[bufnr].buftype:find(pattern) then
         return true
