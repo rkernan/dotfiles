@@ -148,6 +148,7 @@ if __name__ == "__main__":
                     if not shutil.which(bin):
                         check_call(f"uv tool install {bin}")
                 check_call("uv tool upgrade --all")
+                check_call("uv python upgrade")
 
         if InstallTarget.GUI in targets:
             Path(Path.home(), ".config", "environment.d").mkdir(parents=True, exist_ok=True)
