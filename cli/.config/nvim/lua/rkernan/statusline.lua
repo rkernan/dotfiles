@@ -425,7 +425,7 @@ function M.setup_winbar()
   end
 
   local augroup = vim.api.nvim_create_augroup('rkernan.statusline.winbar', { clear = true })
-  vim.api.nvim_create_autocmd({ 'FileType', 'WinEnter' }, {
+  vim.api.nvim_create_autocmd({ 'BufWinEnter', 'FileType', 'WinEnter' }, {
     group = augroup,
     callback = function (args)
       if should_skip(args.buf) then
