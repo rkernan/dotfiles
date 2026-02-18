@@ -9,6 +9,7 @@ config.color_scheme = 'gruvbones-dark'
 config.default_domain = os.getenv('WEZTERM_DEFAULT_DOMAIN') or 'local'
 
 config.use_fancy_tab_bar = false
+config.show_new_tab_button_in_tab_bar = false
 config.tab_max_width = 60
 
 local function tab_title(tab)
