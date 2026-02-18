@@ -8,7 +8,27 @@ config.color_scheme = 'gruvbones-dark'
 
 config.default_domain = os.getenv('WEZTERM_DEFAULT_DOMAIN') or 'local'
 
-config.hide_tab_bar_if_only_one_tab = true
+config.use_fancy_tab_bar = false
+config.tab_max_width = 60
+
+local function tab_title(tab)
+  if tab.tab_title and #tab.tab_title > 0 then
+    return tab.tab_title
+  end
+  return tab.active_pane.title
+end
+
+wezterm.on(
+  'format-tab-title',
+  function (tab, _, _, _, _, max_width)
+    local prefix = ' ' .. tab.tab_index .. ': '
+    local title = tab_title(tab)
+    if tab.active_pane.is_zoomed then
+      prefix = ' ' .. tab.tab_index .. '+: '
+    end
+    return string.sub(prefix .. title, 1, max_width - 1) .. ' '
+  end
+)
 
 config.disable_default_key_bindings = true
 config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
