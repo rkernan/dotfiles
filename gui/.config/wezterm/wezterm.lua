@@ -12,6 +12,10 @@ config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
 config.tab_max_width = 60
 
+local function tab_index(tab)
+  return tab.tab_index + 1
+end
+
 local function tab_title(tab)
   if tab.tab_title and #tab.tab_title > 0 then
     return tab.tab_title
@@ -22,10 +26,10 @@ end
 wezterm.on(
   'format-tab-title',
   function (tab, _, _, _, _, max_width)
-    local prefix = ' ' .. tab.tab_index .. ': '
+    local prefix = ' ' .. tab_index(tab) .. ': '
     local title = tab_title(tab)
     if tab.active_pane.is_zoomed then
-      prefix = ' ' .. tab.tab_index .. '+: '
+      prefix = ' ' .. tab_index(tab) .. '+: '
     end
     return string.sub(prefix .. title, 1, max_width - 1) .. ' '
   end
