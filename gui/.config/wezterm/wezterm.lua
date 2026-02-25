@@ -1,16 +1,6 @@
 local wezterm = require('wezterm')
 
-local config = wezterm.config_builder()
-
-config.font = wezterm.font('JetBrainsMono Nerd Font Mono')
-config.font_size = 10.5
-config.color_scheme = 'gruvbones-dark'
-
-config.default_domain = os.getenv('WEZTERM_DEFAULT_DOMAIN') or 'local'
-
-config.use_fancy_tab_bar = false
-config.show_new_tab_button_in_tab_bar = false
-config.tab_max_width = 60
+local DEFAULT_WORKSPACE = 'default'
 
 local function tab_index(tab)
   return tab.tab_index + 1
@@ -23,17 +13,42 @@ local function tab_title(tab)
   return tab.active_pane.title
 end
 
+local function zoom_icon(tab)
+  if tab.active_pane.is_zoomed then
+    return ' '
+  else
+    return ' '
+  end
+end
+
 wezterm.on(
   'format-tab-title',
   function (tab, _, _, _, _, max_width)
-    local prefix = ' ' .. tab_index(tab) .. ': '
     local title = tab_title(tab)
-    if tab.active_pane.is_zoomed then
-      prefix = ' ' .. tab_index(tab) .. '+: '
-    end
-    return string.sub(prefix .. title, 1, max_width - 1) .. ' '
+    return ' ' .. tab_index(tab) .. ': ' .. zoom_icon(tab) .. title:sub(1, max_width) .. ' '
   end
 )
+
+wezterm.on('update-right-status', function (window)
+  local active_workspace = window:active_workspace()
+  if active_workspace == DEFAULT_WORKSPACE then
+    window:set_right_status('')
+  else
+    window:set_right_status(' ' .. active_workspace .. ' ')
+  end
+end)
+
+local config = wezterm.config_builder()
+config.font = wezterm.font('JetBrainsMono Nerd Font Mono')
+config.font_size = 10.5
+config.color_scheme = 'gruvbones-dark'
+
+config.default_domain = os.getenv('WEZTERM_DEFAULT_DOMAIN') or 'local'
+config.default_workspace = DEFAULT_WORKSPACE
+
+config.use_fancy_tab_bar = false
+config.show_new_tab_button_in_tab_bar = false
+config.tab_max_width = 50
 
 config.disable_default_key_bindings = true
 config.leader = { key = 'a', mods = 'CTRL', timeout_milliseconds = 1000 }
