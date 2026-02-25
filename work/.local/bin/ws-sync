@@ -21,4 +21,4 @@ remote_ws=${2:-"/docker-container/workspace"}
 name=$(basename $path)
 
 set -x
-rsync -av --delete --exclude=build ${path}/ ${remote}:${remote_ws}/${name}
+rsync -av --delete --exclude=build --exclude=.venv ${path}/ ${remote}:${remote_ws}/${name}
