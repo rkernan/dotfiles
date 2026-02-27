@@ -1,14 +1,26 @@
 [colors]
-foreground = '#EBDCB4'
+ansi    = ['#282828', '#FB4C36', '#B7BA26', '#F9BD30', '#83A598', '#D2859A', '#82C07B', '#EBDCB4']
+brights = ['#494344', '#FC7369', '#C2C524', '#FDC65F', '#82B9A5', '#E296AA', '#7FCE75', '#B5A885']
+
 background = '#282828'
+foreground = '#EBDCB4'
+
 cursor_bg = '#EEE2C3'
 cursor_border = '#EEE2C3'
 cursor_fg = '#282828'
+
 selection_bg = '#555041'
 selection_fg = '#EBDCB4'
-ansi    = ['#282828', '#FB4C36', '#B7BA26', '#F9BD30', '#83A598', '#D2859A', '#82C07B', '#EBDCB4']
-brights = ['#494344', '#FC7369', '#C2C524', '#FDC65F', '#82B9A5', '#E296AA', '#7FCE75', '#B5A885']
-# copy_mode_active_highlight_bg = '#DBA1B0'
-# copy_mode_active_highlight_fg = '#282828'
-# copy_mode_inactive_highlight_bg = '#93455D'
-# copy_mode_inactive_highlight_fg = '#EBDCB4'
+
+[colors.indexed]
+
+[colors.tab_bar]
+background = '#3E3E3E'
+
+[colors.tab_bar.active_tab]
+bg_color = '#282828'
+fg_color = '#EBDCB4'
+
+[colors.tab_bar.inactive_tab]
+bg_color = '#3E3E3E'
+fg_color = '#EBDCB4'
