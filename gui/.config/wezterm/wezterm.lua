@@ -21,11 +21,14 @@ local function zoom_icon(tab)
   end
 end
 
+local function tab_full_title(tab)
+  return tab_index(tab) .. ': ' .. zoom_icon(tab) .. tab_title(tab)
+end
+
 wezterm.on(
   'format-tab-title',
   function (tab, _, _, _, _, max_width)
-    local title = tab_title(tab)
-    return ' ' .. tab_index(tab) .. ': ' .. zoom_icon(tab) .. title:sub(1, max_width) .. ' '
+    return ' ' .. wezterm.truncate_right(tab_full_title(tab), max_width) .. ' '
   end
 )
 
