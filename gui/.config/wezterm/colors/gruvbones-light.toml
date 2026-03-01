@@ -20,5 +20,7 @@ bg_color = '#FBF1C9'
 fg_color = '#3C3836'
 
 [colors.tab_bar.inactive_tab]
+
+[colors.tab_bar.inactive_tab_hover]
 bg_color = '#E5D273'
 fg_color = '#3C3836'
