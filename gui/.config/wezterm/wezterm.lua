@@ -49,6 +49,13 @@ config.color_scheme = 'gruvbones-dark'
 config.default_domain = os.getenv('WEZTERM_DEFAULT_DOMAIN') or 'local'
 config.default_workspace = DEFAULT_WORKSPACE
 
+config.unix_domains = {
+  {
+    name = 'unix',
+  },
+}
+config.default_gui_startup_args = { 'connect', 'unix' }
+
 config.use_fancy_tab_bar = false
 config.show_new_tab_button_in_tab_bar = false
 config.tab_max_width = 50
