@@ -103,6 +103,7 @@ if __name__ == "__main__":
             "uv",
             "vscode-json-language-server",
             "yaml-language-server",
+            "zoxide",
         ]
 
         Path(Path.home(), ".config").mkdir(parents=True, exist_ok=True)

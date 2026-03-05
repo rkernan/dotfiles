@@ -69,6 +69,10 @@ set -x FZF_CTRL_R_OPTS "--prompt='history> ' --no-multi"
 set -x FZF_ALT_C_COMMAND "_list_dirs \$dir"
 set -x FZF_ALT_C_OPTS "--prompt='dirs> '"
 
+# zoxide config
+zoxide init fish | source
+set -x _ZO_FZF_OPTS $FZF_DEFAULT_OPTS "--height=10 --prompt='zoxide> ' --no-multi"
+
 # ripgrep config
 set -x RIPGREP_CONFIG_PATH $HOME"/.ripgreprc"
 
