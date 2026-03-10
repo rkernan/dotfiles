@@ -69,7 +69,7 @@ def guess_target() -> list[InstallTarget]:
         targets = [*targets, InstallTarget.BREW]
     if os.environ.get("XDG_CURRENT_DESKTOP", None) is not None:
         targets = [*targets, InstallTarget.GUI]
-    if Path(Path.home(), ".work").exists():
+    if (Path.home() / ".work").exists():
         targets = [*targets, InstallTarget.WORK]
     if shutil.which("wsl.exe"):
         targets = [*targets, InstallTarget.WSL]
@@ -106,9 +106,9 @@ if __name__ == "__main__":
             "zoxide",
         ]
 
-        Path(Path.home(), ".config").mkdir(parents=True, exist_ok=True)
-        Path(Path.home(), ".local", "bin").mkdir(parents=True, exist_ok=True)
-        Path(Path.home(), ".virtualenvs").mkdir(parents=True, exist_ok=True)
+        Path(Path.home() / ".config").mkdir(parents=True, exist_ok=True)
+        Path(Path.home() / ".local", "bin").mkdir(parents=True, exist_ok=True)
+        Path(Path.home() / ".virtualenvs").mkdir(parents=True, exist_ok=True)
         for path, filetype in ((Path("cli", ".ssh", "config.secure"), "sshconfig"),
                                (Path("cli", ".config", "git", "secure"), "gitconfig")):
             if not path.exists():
@@ -152,13 +152,13 @@ if __name__ == "__main__":
                 check_call("uv python upgrade")
 
         if InstallTarget.GUI in targets:
-            Path(Path.home(), ".config", "environment.d").mkdir(parents=True, exist_ok=True)
+            (Path.home() / ".config" / "environment.d").mkdir(parents=True, exist_ok=True)
             print(termcode(f"==> {InstallTarget.GUI.value}", TerminalCode.BOLD))
             checkhealth_bins = [*checkhealth_bins, "btop"]
 
         if InstallTarget.WORK in targets:
             print(termcode(f"==> {InstallTarget.WORK.value}", TerminalCode.BOLD))
-            Path(Path.home(), ".work").touch()
+            (Path.home() / ".work").touch()
             checkhealth_bins = [*checkhealth_bins, "groovy-language-server"]
 
         if InstallTarget.WSL in targets:
