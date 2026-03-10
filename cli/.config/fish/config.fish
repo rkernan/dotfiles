@@ -26,6 +26,10 @@ end
 set -x EDITOR nvim
 set -x PAGER less
 
+if not set -q XDG_CONFIG_HOME
+  set -u XDG_CONFIG_HOME $HOME"/.config"
+end
+
 #=========================#
 # interactive mode config #
 #=========================#
@@ -75,7 +79,7 @@ set -x _ZO_EXCLUDE_DIRS (string join ':' $HOME $HOME"/.*")
 set -x _ZO_FZF_OPTS $FZF_DEFAULT_OPTS "--height=10 --prompt='zoxide> ' --no-multi"
 
 # ripgrep config
-set -x RIPGREP_CONFIG_PATH $HOME"/.config/ripgrep/config"
+set -x RIPGREP_CONFIG_PATH $XDG_CONFIG_HOME"/ripgrep/config"
 
 # aliases
 abbr e $EDITOR
