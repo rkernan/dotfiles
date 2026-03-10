@@ -112,6 +112,7 @@ subcommand_abbr git a add
 subcommand_abbr git aa "add --all"
 subcommand_abbr git amend "commit --amend"
 subcommand_abbr git ap "add --patch"
+subcommand_abbr git b branch
 subcommand_abbr git ci commit
 subcommand_abbr git co checkout
 subcommand_abbr git cob "checkout -b"
