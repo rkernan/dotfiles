@@ -38,7 +38,7 @@ def check_call(cmd: str) -> None:
 
 def stow(install: list[Path]) -> None:
     targets = " ".join([str(p) for p in install])
-    check_call(f"stow -t {Path.home()} -vS {targets!s}")
+    check_call(f"stow --dotfiles -t {Path.home()} -vS {targets!s}")
 
 
 @contextmanager
@@ -109,8 +109,8 @@ if __name__ == "__main__":
         Path(Path.home() / ".config").mkdir(parents=True, exist_ok=True)
         Path(Path.home() / ".local", "bin").mkdir(parents=True, exist_ok=True)
         Path(Path.home() / ".virtualenvs").mkdir(parents=True, exist_ok=True)
-        for path, filetype in ((Path("cli", ".ssh", "config.secure"), "sshconfig"),
-                               (Path("cli", ".config", "git", "secure"), "gitconfig")):
+        for path, filetype in ((Path("cli", "dot-ssh", "config.secure"), "sshconfig"),
+                               (Path("cli", "dot-config", "git", "secure"), "gitconfig")):
             if not path.exists():
                 with open(path, "w") as fd:
                     fd.write(f"# vi: ft={filetype}\n")
@@ -171,7 +171,7 @@ if __name__ == "__main__":
             if userprofile is not None:
                 wezterm_config = Path(userprofile, ".config", "wezterm")
                 shutil.rmtree(wezterm_config, ignore_errors=True)
-                shutil.copytree(Path("gui", ".config", "wezterm"), wezterm_config, dirs_exist_ok=True)
+                shutil.copytree(Path("gui", "dot-config", "wezterm"), wezterm_config, dirs_exist_ok=True)
 
         if InstallTarget.CHECKHEALTH in targets:
             print(termcode(f"==> {InstallTarget.CHECKHEALTH.value}", TerminalCode.BOLD))
