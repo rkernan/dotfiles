@@ -108,7 +108,6 @@ if __name__ == "__main__":
 
         Path(Path.home() / ".config").mkdir(parents=True, exist_ok=True)
         Path(Path.home() / ".local", "bin").mkdir(parents=True, exist_ok=True)
-        Path(Path.home() / ".virtualenvs").mkdir(parents=True, exist_ok=True)
         for path, filetype in ((Path("cli", "dot-ssh", "config.secure"), "sshconfig"),
                                (Path("cli", "dot-config", "git", "secure"), "gitconfig")):
             if not path.exists():
