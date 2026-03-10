@@ -6,7 +6,7 @@ let g:colors_name = 'gruvbones'
 
 if &background ==# 'dark'
     " PATCH_OPEN dark
-    " This codeblock is auto-generate by shipwright.nvim 
+    " This codeblock is auto-generate by shipwright.nvim
     let g:terminal_color_0 = '#282828'
     let g:terminal_color_1 = '#FB4C36'
     let g:terminal_color_2 = '#B7BA26'
@@ -422,7 +422,7 @@ if &background ==# 'dark'
     " PATCH_CLOSE dark
 else
     " PATCH_OPEN light
-    " This codeblock is auto-generate by shipwright.nvim 
+    " This codeblock is auto-generate by shipwright.nvim
     let g:terminal_color_0 = '#FBF1C9'
     let g:terminal_color_1 = '#9C0003'
     let g:terminal_color_2 = '#7A750E'
