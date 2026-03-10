@@ -27,9 +27,11 @@ def termcode(s: str, color: TerminalCode, *args: TerminalCode) -> str:
 def check_call(cmd: str) -> None:
     print(">", termcode(cmd, TerminalCode.BOLD))
     output = []
-    with subprocess.Popen(cmd, shell=True, stderr=subprocess.STDOUT, text=True, bufsize=1) as proc:
+    with subprocess.Popen(
+        cmd, shell=True, stderr=subprocess.STDOUT, text=True, bufsize=1
+    ) as proc:
         if proc.stdout:
-            for line in iter(proc.stdout.readline, ''):
+            for line in iter(proc.stdout.readline, ""):
                 output = [*output, line.rstrip("\n")]
                 print(output[-1])
     if proc.returncode != 0:
@@ -78,7 +80,9 @@ def guess_target() -> list[InstallTarget]:
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("targets", type=InstallTarget, nargs="*", choices=list(InstallTarget))
+    parser.add_argument(
+        "targets", type=InstallTarget, nargs="*", choices=list(InstallTarget)
+    )
     args = parser.parse_args()
     targets = args.targets
     if not targets:
@@ -106,13 +110,17 @@ if __name__ == "__main__":
             "zoxide",
         ]
 
-        for path in (Path.home() / ".config" / "git",
-                     Path.home() / ".local" / "bin",
-                     Path.home() / ".ssh"):
+        for path in (
+            Path.home() / ".config" / "git",
+            Path.home() / ".local" / "bin",
+            Path.home() / ".ssh",
+        ):
             path.mkdir(parents=True, exist_ok=True)
 
-        for path, filetype in ((Path.home() / ".ssh" / "config.secure", "sshconfig"),
-                               (Path.home() / ".config" / "git" / "secure", "gitconfig")):
+        for path, filetype in (
+            (Path.home() / ".ssh" / "config.secure", "sshconfig"),
+            (Path.home() / ".config" / "git" / "secure", "gitconfig"),
+        ):
             if not path.exists():
                 with open(path, "w") as fd:
                     fd.write(f"# vi: ft={filetype}\n")
@@ -120,12 +128,16 @@ if __name__ == "__main__":
         if InstallTarget.BREW in targets:
             print(termcode(f"==> {InstallTarget.BREW.value}", TerminalCode.BOLD))
             if shutil.which("brew") is None:
-                check_call("curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s")
+                check_call(
+                    "curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s"
+                )
                 sys.exit(0)
             check_call("brew update")
             check_call("brew bundle --upgrade")
             if shutil.which("rustup") is None:
-                check_call("curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh")
+                check_call(
+                    "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
+                )
 
         stow_targets = []
         stow_target_names = []
@@ -140,21 +152,33 @@ if __name__ == "__main__":
         if InstallTarget.BREW in targets:
             print(termcode(f"==> {InstallTarget.BREW.value}", TerminalCode.BOLD))
             checkhealth_bins = [*checkhealth_bins, "brew", "tmux"]
-            brew_prefix = subprocess.check_output("brew --prefix", shell=True).decode("utf-8").strip()
+            brew_prefix = (
+                subprocess.check_output("brew --prefix", shell=True)
+                .decode("utf-8")
+                .strip()
+            )
             fzf_install = Path(brew_prefix, "opt", "fzf", "install")
             check_call(f"{fzf_install} --all --xdg")
 
         if InstallTarget.CLI in targets:
             print(termcode(f"==> {InstallTarget.CLI.value}", TerminalCode.BOLD))
             if shutil.which("uv"):
-                for bin in ("basedpyright", "black", "isort", "pycodestyle", "pydocstyle"):
+                for bin in (
+                    "basedpyright",
+                    "black",
+                    "isort",
+                    "pycodestyle",
+                    "pydocstyle",
+                ):
                     if not shutil.which(bin):
                         check_call(f"uv tool install {bin}")
                 check_call("uv tool upgrade --all")
                 check_call("uv python upgrade")
 
         if InstallTarget.GUI in targets:
-            (Path.home() / ".config" / "environment.d").mkdir(parents=True, exist_ok=True)
+            (Path.home() / ".config" / "environment.d").mkdir(
+                parents=True, exist_ok=True
+            )
             print(termcode(f"==> {InstallTarget.GUI.value}", TerminalCode.BOLD))
             checkhealth_bins = [*checkhealth_bins, "btop"]
 
@@ -173,7 +197,11 @@ if __name__ == "__main__":
             if userprofile is not None:
                 wezterm_config = Path(userprofile, ".config", "wezterm")
                 shutil.rmtree(wezterm_config, ignore_errors=True)
-                shutil.copytree(Path("gui", "dot-config", "wezterm"), wezterm_config, dirs_exist_ok=True)
+                shutil.copytree(
+                    Path("gui", "dot-config", "wezterm"),
+                    wezterm_config,
+                    dirs_exist_ok=True,
+                )
 
         if InstallTarget.CHECKHEALTH in targets:
             print(termcode(f"==> {InstallTarget.CHECKHEALTH.value}", TerminalCode.BOLD))
