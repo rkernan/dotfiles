@@ -48,6 +48,11 @@ if test -d $brew_prefix
   set -gx fish_complete_path $fish_complete_path $brew_prefix"/share/fish/vendor_completions.d"
 end
 
+# uv completions
+if type -q uv
+  uv generate-shell-completion fish | source
+end
+
 # python virtualenv auto-activate
 function auto_virtualenv --on-event fish_prompt
   set -f virtual_env (find_upwards ".venv")
