@@ -3,12 +3,8 @@ fish_add_path $HOME"/.local/bin"
 # brew
 set -l brew_prefix /home/linuxbrew/.linuxbrew
 if test -d $brew_prefix
-  # path
   fish_add_path $brew_prefix"/sbin"
   fish_add_path $brew_prefix"/bin"
-  # completions
-  set -gx fish_complete_path $fish_complete_path $brew_prefix"/share/fish/completions"
-  set -gx fish_complete_path $fish_complete_path $brew_prefix"/share/fish/vendor_completions.d"
 end
 
 # go
@@ -45,6 +41,12 @@ end
 fundle plugin 'jorgebucaran/autopair.fish'
 fundle plugin 'andreiborisov/sponge'
 fundle init
+
+# brew completions
+if test -d $brew_prefix
+  set -gx fish_complete_path $fish_complete_path $brew_prefix"/share/fish/completions"
+  set -gx fish_complete_path $fish_complete_path $brew_prefix"/share/fish/vendor_completions.d"
+end
 
 # python virtualenv auto-activate
 function auto_virtualenv --on-event fish_prompt
