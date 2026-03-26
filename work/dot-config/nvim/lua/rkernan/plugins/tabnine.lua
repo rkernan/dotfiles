@@ -2,23 +2,28 @@
 local add = MiniDeps.add
 ---@diagnostic enable: undefined-global
 
-local tabnine_enterprise_host = os.getenv('TABNINE_ENTERPRISE_HOST')
-if tabnine_enterprise_host == nil then
+local tabnine_host = os.getenv('TABNINE_HOST')
+if tabnine_host == nil then
     return
 end
 
 local function build(args)
-  vim.cmd('tabnew | terminal cd ' .. args.path .. ' && ./dl_binaries.sh ' .. tabnine_enterprise_host .. '/update')
-  vim.cmd('tabnew | terminal cd ' .. vim.fs.joinpath(args.path, 'chat') .. ' && cargo build --release' )
+  vim.cmd('tabnew | terminal ' .. table.concat({
+    ('cd "%s"'):format(args.path),
+    ('./dl_binaries.sh %s/update'):format(tabnine_host),
+    ('cd "%s"'):format(vim.fs.joinpath(args.path, 'webview')),
+    'cargo build --release'
+  }, ' && '))
 end
 
 add({ source = 'codota/tabnine-nvim', hooks = { post_install = build, post_checkout = build }})
 require('tabnine').setup({
   disable_auto_comment = true,
   accept_keymap = '<C-f>',
+  dismiss_keymap = '<C-]>',
   debounce_ms = 800,
   codelens_enabled = false,
-  tabnine_enterprise_host = tabnine_enterprise_host,
+  tabnine_enterprise_host = tabnine_host,
   workspace_folders = {
     get_paths = function ()
       local paths = {}
@@ -35,5 +40,5 @@ require('tabnine').setup({
         return { vim.fs.abspath('.') }
       end
     end
-  }
+  },
 })
