@@ -1,1 +1,1 @@
-../lua/rkernan/plugins/gruvbones/gruvbones.vim
+../lua/rkernan/gruvbones/gruvbones.vim

@@ -113,3 +113,9 @@ vim.api.nvim_create_user_command('SetTabs',
   end,
   { desc = 'Set current buffer tabs', nargs = 0 }
 )
+
+vim.api.nvim_create_user_command('ShipwrightGruvbones',
+  function ()
+    require('rkernan.gruvbones').build()
+  end,
+  { desc = 'Build gruvbones.vim', nargs = 0 })

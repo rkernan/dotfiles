@@ -51,8 +51,38 @@ vim.api.nvim_create_autocmd('QuickFixCmdPost', {
   callback = function () vim.cmd.lwindow() end,
 })
 
-require('rkernan.git').setup_head()
-require('rkernan.diagnostic').setup_auto_loclist()
+-- auto-polulate loclist with diagnostics
+vim.api.nvim_create_autocmd('DiagnosticChanged', {
+  group = augroup,
+  callback = function ()
+    vim.diagnostic.setloclist({ open = false })
+  end,
+})
+
+--- auto-set vim.g.git_head
+vim.api.nvim_create_autocmd({ 'DirChanged', 'VimEnter', 'VimResume' }, {
+  group = augroup,
+  callback = function ()
+    if require('mini.misc').find_root(0, { '.git' }) then
+      local cmd = { 'git', '--no-pager', '--no-optional-locks', '--literal-pathspecs', '-c', 'gc.auto=0', 'rev-parse' }
+      vim.g.git_head = vim.system(vim.list_extend(cmd, { '--abbrev-ref', 'HEAD' }), { text = true }):wait().stdout:gsub('%s+', '')
+      if vim.g.git_head == 'HEAD' then
+        vim.g.git_head = vim.system(vim.list_extend(cmd, { '--short', 'HEAD' }), { text = true }):wait().stdout:gsub('%s+', '')
+      end
+    else
+      vim.g.git_head = nil
+    end
+
+    vim.api.nvim_exec_autocmds('User', { pattern = 'GitHeadUpdate' })
+  end,
+})
+
+vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, {
+  group = augroup,
+  callback = function ()
+    require('lint').try_lint()
+  end,
+})
 
 local statusline = require('rkernan.statusline')
 statusline.setup_colors()

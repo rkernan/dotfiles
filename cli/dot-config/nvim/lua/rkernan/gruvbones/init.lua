@@ -2,7 +2,9 @@
 local add = MiniDeps.add
 ---@diagnostic enable: undefined-global
 
-local function build()
+local M = {}
+
+function M.build()
   add({ source = 'zenbones-theme/zenbones.nvim', depends = { 'rktjmp/lush.nvim' } })
   add({ source = 'rktjmp/shipwright.nvim' })
 
@@ -18,4 +20,4 @@ local function build()
   vim.api.nvim_set_current_dir(cwd)
 end
 
-vim.api.nvim_create_user_command('ShipwrightGruvbones', build, { desc = 'Build gruvbones.vim', nargs = 0 })
+return M

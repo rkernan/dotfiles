@@ -7,15 +7,4 @@ M.signs = {
   [vim.diagnostic.severity.HINT]  = '󰝤',
 }
 
----Update loclist on DiagnosticChanged
-function M.setup_auto_loclist()
-  local augroup = vim.api.nvim_create_augroup('rkernan.diagnostic', { clear = true })
-  vim.api.nvim_create_autocmd('DiagnosticChanged', {
-    group = augroup,
-    callback = function ()
-      vim.diagnostic.setloclist({ open = false })
-    end,
-  })
-end
-
 return M
