@@ -17,6 +17,7 @@ local function build(args)
 end
 
 add({ source = 'codota/tabnine-nvim', hooks = { post_install = build, post_checkout = build }})
+
 require('tabnine').setup({
   disable_auto_comment = true,
   accept_keymap = '<C-f>',

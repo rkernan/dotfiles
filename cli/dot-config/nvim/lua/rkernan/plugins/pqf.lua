@@ -1,9 +1,3 @@
----@diagnostic disable: undefined-global
-local add = MiniDeps.add
----@diagnostic enable: undefined-global
-
-add({ source = 'yorickpeterse/nvim-pqf' })
-
 local signs = require('rkernan.diagnostic').signs
 require('pqf').setup({
   signs = {

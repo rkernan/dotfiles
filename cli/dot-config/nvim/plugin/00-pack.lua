@@ -17,15 +17,26 @@ require('mini.deps').setup({ path = { package = path_package } })
 local add = MiniDeps.add
 ---@diagnostic enable: undefined-global
 
+add({ name = 'mini.nvim', checkout = 'stable' })
+add({ source = 'mfussenegger/nvim-lint' })
+add({ source = 'mrjones2014/smart-splits.nvim' })
+add({ source = 'neovim/nvim-lspconfig' })
+add({ source = 'nmac427/guess-indent.nvim' })
+add({ source = 'nvim-treesitter/nvim-treesitter' })
+add({ source = 'pteroctopus/faster.nvim' })
+add({ source = 'stevearc/conform.nvim' })
+add({ source = 'stevearc/oil.nvim' })
+add({ source = 'yorickpeterse/nvim-pqf' })
+
+require('guess-indent').setup()
+require('faster').setup()
+require('oil').setup()
+
 require('rkernan.plugins.mini')
 require('rkernan.plugins.conform')
-require('rkernan.plugins.faster')
-require('rkernan.plugins.guess-indent')
 require('rkernan.plugins.lint')
-require('rkernan.plugins.oil')
 require('rkernan.plugins.pqf')
 require('rkernan.plugins.treesitter')
 require('rkernan.plugins.gruvbones')
+
 pcall(require, 'rkernan.plugins.tabnine')
-add({ source = 'neovim/nvim-lspconfig' })
-add({ source = 'mrjones2014/smart-splits.nvim' })

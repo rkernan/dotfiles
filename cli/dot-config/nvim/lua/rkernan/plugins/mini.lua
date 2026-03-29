@@ -1,9 +1,3 @@
----@diagnostic disable: undefined-global
-local add = MiniDeps.add
----@diagnostic enable: undefined-global
-
-add({ name = 'mini.nvim', checkout = 'stable' })
-
 require('mini.ai').setup()
 require('mini.align').setup()
 require('mini.bracketed').setup()
