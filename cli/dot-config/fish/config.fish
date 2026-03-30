@@ -20,6 +20,9 @@ fundle init
 abbr e $EDITOR
 abbr p $PAGER
 
+subcommand_abbr sudo e $EDITOR
+subcommand_abbr sudo p $PAGER
+
 abbr cp cp -i
 abbr g git
 abbr ln ln -i
