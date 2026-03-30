@@ -42,6 +42,7 @@ wezterm.on('update-right-status', function (window)
 end)
 
 local config = wezterm.config_builder()
+config.term = 'wezterm'
 config.font = wezterm.font('JetBrainsMono Nerd Font Mono')
 config.font_size = 10.5
 config.color_scheme = 'gruvbones-dark'
