@@ -47,8 +47,13 @@ add({ source = 'stevearc/oil.nvim' })
 add({ source = 'yorickpeterse/nvim-pqf' })
 
 require('faster').setup()
-require('guess-indent').setup()
+
+require('guess-indent').setup({
+  disable_on_editorconfig = true,
+})
+
 require('lint').linters_by_ft = {}
+
 require('oil').setup()
 
 require('conform').setup({
