@@ -8,14 +8,11 @@ set -x PAGER less
 #=========================#
 status is-interactive || exit
 
-set --global fish_key_bindings fish_hybrid_key_bindings
+set -g fish_key_bindings fish_hybrid_key_bindings
 
-if not functions -q fundle
-  eval (curl -sfL https://git.io/fundle-install)
-end
-fundle plugin 'jorgebucaran/autopair.fish'
-fundle plugin 'andreiborisov/sponge'
-fundle init
+# fundle plugin 'jorgebucaran/autopair.fish'
+# fundle plugin 'andreiborisov/sponge'
+# fundle init
 
 abbr e $EDITOR
 abbr p $PAGER
