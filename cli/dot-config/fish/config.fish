@@ -2,6 +2,7 @@ fish_add_path $HOME"/.local/bin"
 
 set -x EDITOR nvim
 set -x PAGER less
+set -x VISUAL $EDITOR
 
 #=========================#
 # interactive mode config #
