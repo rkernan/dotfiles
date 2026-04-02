@@ -11,10 +11,6 @@ status is-interactive || exit
 
 set -g fish_key_bindings fish_hybrid_key_bindings
 
-# fundle plugin 'jorgebucaran/autopair.fish'
-# fundle plugin 'andreiborisov/sponge'
-# fundle init
-
 abbr e $EDITOR
 abbr p $PAGER
 
