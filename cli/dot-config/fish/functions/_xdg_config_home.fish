@@ -1,4 +1,4 @@
-function _xdg_config_home --description "get XDG_CONFIG_HOME or default"
+function _xdg_config_home --description "XDG_CONFIG_HOME or default"
   if test -n "$XDG_CONFIG_HOME"
     printf $XDG_CONFIG_HOME
   else
