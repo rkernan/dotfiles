@@ -54,7 +54,6 @@ def pushd(path: Path) -> Generator[Path, None, None]:
 
 
 class InstallTarget(Enum):
-    BREW = "brew"
     CHECKHEALTH = "checkhealth"
     CLI = "cli"
     GUI = "gui"
@@ -67,8 +66,6 @@ class InstallTarget(Enum):
 
 def guess_target() -> list[InstallTarget]:
     targets = [InstallTarget.CHECKHEALTH, InstallTarget.CLI]
-    if not shutil.which("pacman"):
-        targets = [*targets, InstallTarget.BREW]
     if os.environ.get("XDG_CURRENT_DESKTOP", None) is not None:
         targets = [*targets, InstallTarget.GUI]
     if (Path.home() / ".work").exists():
@@ -125,20 +122,6 @@ if __name__ == "__main__":
                 with open(path, "w") as fd:
                     fd.write(f"# vi: ft={filetype}\n")
 
-        if InstallTarget.BREW in targets:
-            print(termcode(f"==> {InstallTarget.BREW.value}", TerminalCode.BOLD))
-            if shutil.which("brew") is None:
-                check_call(
-                    "curl -sL https://raw.githubusercontent.com/Homebrew/install/master/install.sh | bash -s"
-                )
-                sys.exit(0)
-            check_call("brew update")
-            check_call("brew bundle --upgrade")
-            if shutil.which("rustup") is None:
-                check_call(
-                    "curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh"
-                )
-
         stow_targets = []
         stow_target_names = []
         for target in targets:
@@ -148,17 +131,6 @@ if __name__ == "__main__":
                 stow_target_names = [*stow_target_names, target.value]
         print(termcode(f"==> stow: {stow_target_names}", TerminalCode.BOLD))
         stow(stow_targets)
-
-        if InstallTarget.BREW in targets:
-            print(termcode(f"==> {InstallTarget.BREW.value}", TerminalCode.BOLD))
-            checkhealth_bins = [*checkhealth_bins, "brew", "tmux"]
-            brew_prefix = (
-                subprocess.check_output("brew --prefix", shell=True)
-                .decode("utf-8")
-                .strip()
-            )
-            fzf_install = Path(brew_prefix, "opt", "fzf", "install")
-            check_call(f"{fzf_install} --all --xdg")
 
         if InstallTarget.CLI in targets:
             print(termcode(f"==> {InstallTarget.CLI.value}", TerminalCode.BOLD))
