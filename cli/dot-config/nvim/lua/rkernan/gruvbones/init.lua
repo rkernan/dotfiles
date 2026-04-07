@@ -1,12 +1,11 @@
----@diagnostic disable: undefined-global
-local add = MiniDeps.add
----@diagnostic enable: undefined-global
-
 local M = {}
 
 function M.build()
-  add({ source = 'zenbones-theme/zenbones.nvim', depends = { 'rktjmp/lush.nvim' } })
-  add({ source = 'rktjmp/shipwright.nvim' })
+  vim.pack.add({
+      'https://github.com/rktjmp/lush.nvim.git',
+      'https://github.com/rktjmp/shipwright.nvim.git',
+      'https://github.com/zenbones-theme/zenbones.nvim.git',
+  })
 
   local cwd = vim.fn.getcwd()
   local gruvbones_dir = debug.getinfo(1).source:match("@?(.*/)")

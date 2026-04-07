@@ -1,50 +1,45 @@
-local path_package = vim.fn.stdpath('data') .. '/site/'
-local mini_deps_path = path_package .. 'pack/deps/start/mini.deps'
-if not vim.uv.fs_stat(mini_deps_path) then
-  vim.cmd('echo "Installing `mini.deps`" | redraw')
-  local clone_cmd = {
-    'git', 'clone', '--filter=blob:none',
-    'https://github.com/nvim-mini/mini.deps', mini_deps_path
-  }
-  vim.fn.system(clone_cmd)
-  vim.cmd('packadd mini.deps | helptags ALL')
-  vim.cmd('echo "Installed `mini.deps`" | redraw')
-end
+local augroup = vim.api.nvim_create_augroup('rkernan.pack', { clear = true })
+vim.api.nvim_create_autocmd('PackChanged', {
+  group = augroup,
+  callback = function (event)
+    local name, kind = event.data.spec.name, event.data.kind
+    if name == 'nvim-treesitter' and kind == 'update' then
+      if not event.data.active then
+        vim.cmd.packadd('nvim-treesitter')
+      end
+      vim.cmd('TSUpdate')
+    end
+  end
+})
 
-require('mini.deps').setup({ path = { package = path_package } })
-
----@diagnostic disable: undefined-global
-local add = MiniDeps.add
----@diagnostic enable: undefined-global
-
-add({ name = 'mini.deps', checkout = 'stable' })
-
-add({ source = 'mfussenegger/nvim-lint' })
-add({ source = 'mrjones2014/smart-splits.nvim' })
-add({ source = 'neovim/nvim-lspconfig' })
-add({ source = 'nmac427/guess-indent.nvim' })
-add({ source = 'nvim-mini/mini.ai' })
-add({ source = 'nvim-mini/mini.align' })
-add({ source = 'nvim-mini/mini.bracketed' })
-add({ source = 'nvim-mini/mini.cmdline' })
-add({ source = 'nvim-mini/mini.comment' })
-add({ source = 'nvim-mini/mini.completion' })
-add({ source = 'nvim-mini/mini.diff' })
-add({ source = 'nvim-mini/mini.extra' })
-add({ source = 'nvim-mini/mini.hipatterns' })
-add({ source = 'nvim-mini/mini.icons' })
-add({ source = 'nvim-mini/mini.keymap' })
-add({ source = 'nvim-mini/mini.misc' })
-add({ source = 'nvim-mini/mini.notify' })
-add({ source = 'nvim-mini/mini.operators' })
-add({ source = 'nvim-mini/mini.pairs' })
-add({ source = 'nvim-mini/mini.pick' })
-add({ source = 'nvim-mini/mini.surround' })
-add({ source = 'nvim-treesitter/nvim-treesitter' })
-add({ source = 'pteroctopus/faster.nvim' })
-add({ source = 'stevearc/conform.nvim' })
-add({ source = 'stevearc/oil.nvim' })
-add({ source = 'yorickpeterse/nvim-pqf' })
+vim.pack.add({
+  'https://github.com/NMAC427/guess-indent.nvim.git',
+  'https://github.com/mfussenegger/nvim-lint.git',
+  'https://github.com/mrjones2014/smart-splits.nvim.git',
+  'https://github.com/neovim/nvim-lspconfig.git',
+  'https://github.com/nvim-mini/mini.ai.git',
+  'https://github.com/nvim-mini/mini.align.git',
+  'https://github.com/nvim-mini/mini.bracketed.git',
+  'https://github.com/nvim-mini/mini.cmdline.git',
+  'https://github.com/nvim-mini/mini.comment.git',
+  'https://github.com/nvim-mini/mini.completion.git',
+  'https://github.com/nvim-mini/mini.diff.git',
+  'https://github.com/nvim-mini/mini.extra.git',
+  'https://github.com/nvim-mini/mini.hipatterns.git',
+  'https://github.com/nvim-mini/mini.icons.git',
+  'https://github.com/nvim-mini/mini.keymap.git',
+  'https://github.com/nvim-mini/mini.misc.git',
+  'https://github.com/nvim-mini/mini.notify.git',
+  'https://github.com/nvim-mini/mini.operators.git',
+  'https://github.com/nvim-mini/mini.pairs.git',
+  'https://github.com/nvim-mini/mini.pick.git',
+  'https://github.com/nvim-mini/mini.surround.git',
+  'https://github.com/nvim-treesitter/nvim-treesitter.git',
+  'https://github.com/pteroctopus/faster.nvim.git',
+  'https://github.com/stevearc/conform.nvim.git',
+  'https://github.com/stevearc/oil.nvim.git',
+  'https://github.com/yorickpeterse/nvim-pqf.git',
+})
 
 require('faster').setup()
 

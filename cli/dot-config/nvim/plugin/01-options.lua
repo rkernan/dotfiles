@@ -118,4 +118,12 @@ vim.api.nvim_create_user_command('ShipwrightGruvbones',
   function ()
     require('rkernan.gruvbones').build()
   end,
-  { desc = 'Build gruvbones.vim', nargs = 0 })
+  { desc = 'Build gruvbones.vim', nargs = 0 }
+)
+
+vim.api.nvim_create_user_command('PackUpdate',
+  function ()
+    vim.pack.update()
+  end,
+  { desc = 'Update vim.pack plugins', nargs = 0 }
+)

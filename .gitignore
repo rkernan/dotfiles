@@ -1,0 +1,4 @@
+/cli/dot-config/fish/fish_variables
+/cli/dot-config/git/secure
+/cli/dot-config/nvim/nvim-pack-lock.json
+/cli/dot-ssh/config.secure
