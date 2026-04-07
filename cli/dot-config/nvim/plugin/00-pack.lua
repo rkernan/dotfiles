@@ -15,7 +15,6 @@ vim.api.nvim_create_autocmd('PackChanged', {
 vim.pack.add({
   'https://github.com/NMAC427/guess-indent.nvim.git',
   'https://github.com/mfussenegger/nvim-lint.git',
-  'https://github.com/mrjones2014/smart-splits.nvim.git',
   'https://github.com/neovim/nvim-lspconfig.git',
   'https://github.com/nvim-mini/mini.ai.git',
   'https://github.com/nvim-mini/mini.align.git',
