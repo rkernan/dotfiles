@@ -3,7 +3,6 @@
 import os
 import shutil
 import subprocess
-import sys
 from argparse import ArgumentParser
 from contextlib import contextmanager
 from enum import Enum
