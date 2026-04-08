@@ -1,17 +1,3 @@
-local augroup = vim.api.nvim_create_augroup('rkernan.pack', { clear = true })
-vim.api.nvim_create_autocmd('PackChanged', {
-  group = augroup,
-  callback = function (event)
-    local name, kind = event.data.spec.name, event.data.kind
-    if name == 'nvim-treesitter' and kind == 'update' then
-      if not event.data.active then
-        vim.cmd.packadd('nvim-treesitter')
-      end
-      vim.cmd('TSUpdate')
-    end
-  end
-})
-
 vim.pack.add({
   'https://github.com/NMAC427/guess-indent.nvim.git',
   'https://github.com/mfussenegger/nvim-lint.git',
@@ -32,7 +18,6 @@ vim.pack.add({
   'https://github.com/nvim-mini/mini.operators.git',
   'https://github.com/nvim-mini/mini.pairs.git',
   'https://github.com/nvim-mini/mini.surround.git',
-  'https://github.com/nvim-treesitter/nvim-treesitter.git',
   'https://github.com/pteroctopus/faster.nvim.git',
   'https://github.com/stevearc/conform.nvim.git',
   'https://github.com/stevearc/oil.nvim.git',
@@ -92,11 +77,4 @@ require('pqf').setup({
     info    = { text = signs[vim.diagnostic.severity.INFO]  },
     hint    = { text = signs[vim.diagnostic.severity.HINT]  },
   }
-})
-
-require('nvim-treesitter').setup({
-  auto_install = true,
-  highlight = { enable = true },
-  indent = { enable = true },
-  additional_vim_regex_highlighting = false,
 })
