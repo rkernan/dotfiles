@@ -31,7 +31,6 @@ vim.pack.add({
   'https://github.com/nvim-mini/mini.notify.git',
   'https://github.com/nvim-mini/mini.operators.git',
   'https://github.com/nvim-mini/mini.pairs.git',
-  'https://github.com/nvim-mini/mini.pick.git',
   'https://github.com/nvim-mini/mini.surround.git',
   'https://github.com/nvim-treesitter/nvim-treesitter.git',
   'https://github.com/pteroctopus/faster.nvim.git',
@@ -68,7 +67,6 @@ require('mini.completion').setup()
 require('mini.cmdline').setup()
 require('mini.operators').setup()
 require('mini.pairs').setup()
-require('mini.pick').setup()
 require('mini.surround').setup()
 require('mini.diff').setup({ view = { style = 'number' }})
 require('mini.notify').setup({ window = { config = { row = 1 }}})

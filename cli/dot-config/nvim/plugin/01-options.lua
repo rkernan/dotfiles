@@ -53,6 +53,7 @@ vim.opt.foldcolumn = 'auto:1'
 vim.opt.foldmethod = 'expr'
 vim.opt.foldlevel = 99
 
+vim.opt.wildmode = 'noselect:lastused,full'
 vim.opt.wildoptions = 'pum,tagfile,fuzzy'
 
 vim.opt.completeopt = 'menuone,noselect,fuzzy'
@@ -86,10 +87,6 @@ if os.getenv('TERM'):find('-256color') then
 end
 
 vim.notify = require('mini.notify').make_notify({ INFO = { hl_group = 'MiniNotifyNormal' }})
-
----@diagnostic disable: duplicate-set-field
-vim.ui.select = function (...) return require('mini.pick').ui_select(...) end
----@diagnostic enable: duplicate-set-field
 
 require('rkernan.statusline')
 vim.opt.laststatus = 3
@@ -127,3 +124,16 @@ vim.api.nvim_create_user_command('PackUpdate',
   end,
   { desc = 'Update vim.pack plugins', nargs = 0 }
 )
+
+if vim.fn.executable('fd') then
+  function FindFiles(cmdarg)
+    local fnames = vim.fn.systemlist('fd --type f --hidden --follow --strip-cwd-prefix')
+    if #cmdarg == 0 then
+      return fnames
+    else
+      return vim.fn.matchfuzzy(fnames, cmdarg)
+    end
+  end
+
+  vim.opt.findfunc = 'v:lua.FindFiles'
+end
