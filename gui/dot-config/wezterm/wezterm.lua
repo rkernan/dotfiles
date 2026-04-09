@@ -25,14 +25,11 @@ local function tab_full_title(tab)
   return tab_index(tab) .. ': ' .. zoom_icon(tab) .. tab_title(tab)
 end
 
-wezterm.on(
-  'format-tab-title',
-  function (tab, _, _, _, _, max_width)
-    return ' ' .. wezterm.truncate_right(tab_full_title(tab), max_width) .. ' '
-  end
-)
+wezterm.on('format-tab-title', function(tab, _, _, _, _, max_width)
+  return ' ' .. wezterm.truncate_right(tab_full_title(tab), max_width) .. ' '
+end)
 
-wezterm.on('update-right-status', function (window)
+wezterm.on('update-right-status', function(window)
   local active_workspace = window:active_workspace()
   if active_workspace == DEFAULT_WORKSPACE then
     window:set_right_status('')
@@ -68,10 +65,10 @@ config.keys = {
   { key = 'C', mods = 'CTRL', action = wezterm.action.CopyTo('ClipboardAndPrimarySelection') },
   { key = 'V', mods = 'CTRL', action = wezterm.action.PasteFrom('Clipboard') },
   -- scrollback
-  { key = 'PageUp',   action = wezterm.action.ScrollByPage(-1) },
+  { key = 'PageUp', action = wezterm.action.ScrollByPage(-1) },
   { key = 'PageDown', action = wezterm.action.ScrollByPage(1) },
-  { key = 'Home',     action = wezterm.action.ScrollToTop },
-  { key = 'End',      action = wezterm.action.ScrollToBottom },
+  { key = 'Home', action = wezterm.action.ScrollToTop },
+  { key = 'End', action = wezterm.action.ScrollToBottom },
   -- font size
   { key = '=', mods = 'CTRL', action = wezterm.action.IncreaseFontSize },
   { key = '-', mods = 'CTRL', action = wezterm.action.DecreaseFontSize },
@@ -91,8 +88,16 @@ config.keys = {
   { key = '8', mods = 'LEADER', action = wezterm.action.ActivateTab(7) },
   { key = '9', mods = 'LEADER', action = wezterm.action.ActivateTab(8) },
   -- panes
-  { key = 's', mods = 'LEADER', action = wezterm.action.SplitVertical({ domain = 'CurrentPaneDomain'}) },
-  { key = 'v', mods = 'LEADER', action = wezterm.action.SplitHorizontal({ domain = 'CurrentPaneDomain' }) },
+  {
+    key = 's',
+    mods = 'LEADER',
+    action = wezterm.action.SplitVertical({ domain = 'CurrentPaneDomain' }),
+  },
+  {
+    key = 'v',
+    mods = 'LEADER',
+    action = wezterm.action.SplitHorizontal({ domain = 'CurrentPaneDomain' }),
+  },
   { key = 'x', mods = 'LEADER', action = wezterm.action.CloseCurrentPane({ confirm = false }) },
   { key = 'h', mods = 'LEADER', action = wezterm.action.ActivatePaneDirection('Left') },
   { key = 'j', mods = 'LEADER', action = wezterm.action.ActivatePaneDirection('Down') },
@@ -110,11 +115,17 @@ config.keys = {
 
 config.key_tables = {
   copy_mode = {
-    { key = 'y', action = wezterm.action.Multiple({ wezterm.action.CopyTo('ClipboardAndPrimarySelection'), wezterm.action.CopyMode('Close') }) },
+    {
+      key = 'y',
+      action = wezterm.action.Multiple({
+        wezterm.action.CopyTo('ClipboardAndPrimarySelection'),
+        wezterm.action.CopyMode('Close'),
+      }),
+    },
     { key = 'Escape', action = wezterm.action.CopyMode('Close') },
-    { key = 'v', action = wezterm.action.CopyMode({ SetSelectionMode = 'Cell' })},
-    { key = 'V', mods = 'SHIFT', action = wezterm.action.CopyMode({ SetSelectionMode = 'Line' })},
-    { key = 'v', mods = 'CTRL', action = wezterm.action.CopyMode({ SetSelectionMode = 'Block' })},
+    { key = 'v', action = wezterm.action.CopyMode({ SetSelectionMode = 'Cell' }) },
+    { key = 'V', mods = 'SHIFT', action = wezterm.action.CopyMode({ SetSelectionMode = 'Line' }) },
+    { key = 'v', mods = 'CTRL', action = wezterm.action.CopyMode({ SetSelectionMode = 'Block' }) },
     { key = 'h', action = wezterm.action.CopyMode('MoveLeft') },
     { key = 'j', action = wezterm.action.CopyMode('MoveDown') },
     { key = 'k', action = wezterm.action.CopyMode('MoveUp') },
@@ -130,10 +141,10 @@ config.key_tables = {
     { key = 'h', mods = 'SHIFT', action = wezterm.action.CopyMode('MoveToViewportTop') },
     { key = 'm', mods = 'SHIFT', action = wezterm.action.CopyMode('MoveToViewportMiddle') },
     { key = 'l', mods = 'SHIFT', action = wezterm.action.CopyMode('MoveToViewportBottom') },
-    { key = 'b', mods ='CTRL', action = wezterm.action.CopyMode('PageUp') },
-    { key = 'f', mods ='CTRL', action = wezterm.action.CopyMode('PageDown') },
-    { key = 'u', mods ='CTRL', action = wezterm.action.CopyMode({ MoveByPage = -0.5 }) },
-    { key = 'd', mods ='CTRL', action = wezterm.action.CopyMode({ MoveByPage = 0.5 }) },
+    { key = 'b', mods = 'CTRL', action = wezterm.action.CopyMode('PageUp') },
+    { key = 'f', mods = 'CTRL', action = wezterm.action.CopyMode('PageDown') },
+    { key = 'u', mods = 'CTRL', action = wezterm.action.CopyMode({ MoveByPage = -0.5 }) },
+    { key = 'd', mods = 'CTRL', action = wezterm.action.CopyMode({ MoveByPage = 0.5 }) },
     { key = '/', action = wezterm.action.CopyMode('EditPattern') },
     { key = 'n', action = wezterm.action.CopyMode('NextMatch') },
     { key = 'N', action = wezterm.action.CopyMode('PriorMatch') },
@@ -141,7 +152,7 @@ config.key_tables = {
   search_mode = {
     { key = 'Enter', action = wezterm.action.CopyMode('AcceptPattern') },
     { key = 'Escape', action = wezterm.action.CopyMode('Close') },
-  }
+  },
 }
 
 return config
