@@ -131,8 +131,9 @@ if __name__ == "__main__":
             if target_path.exists():
                 stow_targets = [*stow_targets, target_path]
                 stow_target_names = [*stow_target_names, target.value]
-        print(termcode(f"==> stow: {stow_target_names}", TerminalCode.BOLD))
-        stow(stow_targets)
+        if stow_targets:
+            print(termcode(f"==> stow: {stow_target_names}", TerminalCode.BOLD))
+            stow(stow_targets)
 
         if InstallTarget.CLI in targets:
             print(termcode(f"==> {InstallTarget.CLI.value}", TerminalCode.BOLD))
