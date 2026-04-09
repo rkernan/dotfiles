@@ -9,7 +9,7 @@ local function gen_specs(palette, bg)
   local generator = require('zenbones.specs')
   local base_specs = generator.generate(palette, bg, generator.get_global_config(colors_name, bg))
 
-  local specs = lush.extends({ base_specs }).with(function (injected_functions)
+  local specs = lush.extends({ base_specs }).with(function(injected_functions)
     local sym = injected_functions.sym
     return {
       --- @diagnostic disable: undefined-global
@@ -66,30 +66,26 @@ local function gen_specs(palette, bg)
 end
 
 local palette = {
-  light = util.palette_extend(
-    {
-      bg      = hsluv('#fbf1c7'),
-      fg      = hsluv('#3c3836'),
-      rose    = hsluv('#9d0006'),
-      leaf    = hsluv('#79740e'),
-      wood    = hsluv('#b57614'),
-      water   = hsluv('#076678'),
-      blossom = hsluv('#8f3f71'),
-      sky     = hsluv('#427b58'),
-    },
-    'light'),
-  dark = util.palette_extend(
-    {
-      bg      = hsluv('#282828'),
-      fg      = hsluv('#ebdbb2'),
-      rose    = hsluv('#fb4934'),
-      leaf    = hsluv('#b8bb26'),
-      wood    = hsluv('#fabd2f'),
-      water   = hsluv('#83a598'),
-      blossom = hsluv('#d3869b'),
-      sky     = hsluv('#83c07c'),
-    },
-    'dark'),
+  light = util.palette_extend({
+    bg = hsluv('#fbf1c7'),
+    fg = hsluv('#3c3836'),
+    rose = hsluv('#9d0006'),
+    leaf = hsluv('#79740e'),
+    wood = hsluv('#b57614'),
+    water = hsluv('#076678'),
+    blossom = hsluv('#8f3f71'),
+    sky = hsluv('#427b58'),
+  }, 'light'),
+  dark = util.palette_extend({
+    bg = hsluv('#282828'),
+    fg = hsluv('#ebdbb2'),
+    rose = hsluv('#fb4934'),
+    leaf = hsluv('#b8bb26'),
+    wood = hsluv('#fabd2f'),
+    water = hsluv('#83a598'),
+    blossom = hsluv('#d3869b'),
+    sky = hsluv('#83c07c'),
+  }, 'dark'),
 }
 
 return {
