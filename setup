@@ -97,6 +97,7 @@ if __name__ == "__main__":
             "go",
             "lua-language-server",
             "nvim",
+            "pre-commit",
             "rg",
             "rustup",
             "stow",
