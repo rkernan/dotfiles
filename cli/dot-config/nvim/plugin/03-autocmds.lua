@@ -1,5 +1,14 @@
 local augroup = vim.api.nvim_create_augroup('rkernan.autocmds', { clear = true })
 
+-- enable tree-sitter
+vim.api.nvim_create_autocmd('FileType', {
+  group = augroup,
+  pattern = '*',
+  callback = function (event)
+    pcall(vim.treesitter.start, event.buf)
+  end,
+})
+
 -- highlight on yank
 vim.api.nvim_create_autocmd('TextYankPost', {
   callback = function ()
