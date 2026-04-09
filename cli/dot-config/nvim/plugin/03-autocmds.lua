@@ -86,6 +86,7 @@ vim.api.nvim_create_autocmd({ 'DirChanged', 'VimEnter', 'VimResume' }, {
   end,
 })
 
+-- lint on save
 vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, {
   group = augroup,
   callback = function ()

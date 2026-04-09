@@ -4,7 +4,7 @@ local specs_name = 'gruvbones'
 
 for _, bg in pairs({'dark', 'light'}) do
   local term = colorschemes[bg].termcolors
-  ---@diagnostic disable: undefined-global
+  --- @diagnostic disable: undefined-global
   run(
     colorschemes[bg].specs,
     lushwright.to_vimscript,
@@ -45,5 +45,5 @@ for _, bg in pairs({'dark', 'light'}) do
       string.format([[" PATCH_CLOSE %s]], bg),
     }
   )
----@diagnostic enable: undefined-global
+  --- @diagnostic enable: undefined-global
 end

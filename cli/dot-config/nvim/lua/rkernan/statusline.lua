@@ -1,7 +1,7 @@
 local M = {}
 
----@class Part
----@field value string
+--- @class Part
+--- @field value string
 local Part = {}
 
 function Part:new(value)
@@ -13,9 +13,9 @@ function Part:new(value)
   return opts
 end
 
----Apply callback to the part
----@param cb fun(cb: string): string
----@return Part
+--- Apply callback to the part
+--- @param cb fun(cb: string): string
+--- @return Part
 function Part:apply(cb)
   if self.value == '' or self.value == nil then
     return self
@@ -23,16 +23,16 @@ function Part:apply(cb)
   return Part:new(cb(self.value))
 end
 
----Highlight the part if non-empty
----@param color string Hightlight group
----@return Part
+--- Highlight the part if non-empty
+--- @param color string Hightlight group
+--- @return Part
 function Part:hl(color)
   return self:apply(function (v) return string.format('%%#%s#%s%%*', color, v) end)
 end
 
----Format the part
----@param format string Format string
----@return Part
+--- Format the part
+--- @param format string Format string
+--- @return Part
 function Part:format(format)
   return self:apply(function (v) return string.format(format, v) end)
 end
@@ -76,21 +76,21 @@ local modes = {
   ['t']     = { name = 'TERMINAL',  shortname = 'T',   hl = 'StatusLineModeTerminal' },
 }
 
----Get current mode part with highlight
----@return  Part
+--- Get current mode part with highlight
+--- @return  Part
 local function mode()
   local current_mode = modes[vim.fn.mode(1)]
   return Part:new(string.format(' %s ', current_mode.shortname)):hl(current_mode.hl)
 end
 
----Get environment part
----@return Part
+--- Get environment part
+--- @return Part
 local function environment(variable)
   return Part:new(vim.fn.environ()[variable] or '')
 end
 
----Get current working directory part
----@return Part
+--- Get current working directory part
+--- @return Part
 local function cwd()
   local part = Part:new(vim.fn.fnamemodify(vim.fn.getcwd(), ':~'))
   if part.value:sub(-1) == '/' then
@@ -99,8 +99,8 @@ local function cwd()
   return part:format('%s/')
 end
 
----Get file icon part (from mini.icons)
----@return Part
+--- Get file icon part (from mini.icons)
+--- @return Part
 local function file_icon(bufnr)
   bufnr = bufnr or 0
 
@@ -118,8 +118,8 @@ local function file_icon(bufnr)
   return Part:new(icon)
 end
 
----Get modified flag part
----@return Part
+--- Get modified flag part
+--- @return Part
 local function modified(bufnr)
   bufnr = bufnr or 0
   if vim.bo[bufnr].modified then
@@ -128,8 +128,8 @@ local function modified(bufnr)
   return Part:new('')
 end
 
----Get readonly flag part
----@return Part
+--- Get readonly flag part
+--- @return Part
 local function readonly(bufnr)
   bufnr = bufnr or 0
   if not vim.bo[bufnr].modifiable or vim.bo[bufnr].readonly then
@@ -138,8 +138,8 @@ local function readonly(bufnr)
   return Part:new('')
 end
 
----Get tab summary part
----@return Part
+--- Get tab summary part
+--- @return Part
 local function tabsummary(bufnr)
   bufnr = bufnr or 0
   if vim.bo[bufnr].expandtab then
@@ -149,8 +149,8 @@ local function tabsummary(bufnr)
   end
 end
 
----Get file format part
----@return Part
+--- Get file format part
+--- @return Part
 local function fileformat(bufnr)
   bufnr = bufnr or 0
   return Part:new(vim.bo[bufnr].fileformat)
@@ -163,12 +163,12 @@ end
 
 local diff = {}
 
----@alias DiffField 'add'|'change'|'delete'
+--- @alias DiffField 'add'|'change'|'delete'
 
----Helper to get given diff status from mini.diff
----@param bufnr? integer Buffer or current buffer
----@param field DiffField Diff type to get
----@return Part
+--- Helper to get given diff status from mini.diff
+--- @param bufnr? integer Buffer or current buffer
+--- @param field DiffField Diff type to get
+--- @return Part
 local function _diff(bufnr, field)
   bufnr = bufnr or 0
   local count = 0
@@ -182,33 +182,33 @@ local function _diff(bufnr, field)
   return Part:new('')
 end
 
----Get diff add from mini.diff
----@param bufnr? integer Buffer or current buffer
----@return Part
+--- Get diff add from mini.diff
+--- @param bufnr? integer Buffer or current buffer
+--- @return Part
 function diff.add(bufnr)
   return _diff(bufnr, 'add')
 end
 
----Get diff change from mini.diff
----@param bufnr? integer Buffer or current buffer
----@return Part
+--- Get diff change from mini.diff
+--- @param bufnr? integer Buffer or current buffer
+--- @return Part
 function diff.change(bufnr)
   return _diff(bufnr, 'change')
 end
 
----Get diff delete from mini.diff
----@param bufnr? integer Buffer or current buffer
----@return Part
+--- Get diff delete from mini.diff
+--- @param bufnr? integer Buffer or current buffer
+--- @return Part
 function diff.delete(bufnr)
   return _diff(bufnr, 'delete')
 end
 
 local diagnostics = {}
 
----Helper to get given diagnostics count
----@param bufnr? integer Buffer or current buffer
----@param severity vim.diagnostic.Severity Diagnostic severity to get
----@return Part
+--- Helper to get given diagnostics count
+--- @param bufnr? integer Buffer or current buffer
+--- @param severity vim.diagnostic.Severity Diagnostic severity to get
+--- @return Part
 local function _diagnostics(bufnr, severity)
   bufnr = bufnr or 0
   local count = #vim.diagnostic.get(bufnr, { severity = severity })
@@ -219,36 +219,36 @@ local function _diagnostics(bufnr, severity)
     return Part:new('')
 end
 
----Get error diagnostic count part
----@param bufnr? integer Buffer or current buffer
----@return Part
+--- Get error diagnostic count part
+--- @param bufnr? integer Buffer or current buffer
+--- @return Part
 function diagnostics.error(bufnr)
   return _diagnostics(bufnr, vim.diagnostic.severity.ERROR)
 end
 
----Get warning diagnotic count part
----@param bufnr? integer Buffer or current buffer
----@return Part
+--- Get warning diagnotic count part
+--- @param bufnr? integer Buffer or current buffer
+--- @return Part
 function diagnostics.warn(bufnr)
   return _diagnostics(bufnr, vim.diagnostic.severity.WARN)
 end
 
----Get info diagnotic count part
----@param bufnr? integer Buffer or current buffer
----@return Part
+--- Get info diagnotic count part
+--- @param bufnr? integer Buffer or current buffer
+--- @return Part
 function diagnostics.info(bufnr)
   return _diagnostics(bufnr, vim.diagnostic.severity.INFO)
 end
 
----Get hint diagnotic count part
----@param bufnr? integer Buffer or current buffer
----@return Part
+--- Get hint diagnotic count part
+--- @param bufnr? integer Buffer or current buffer
+--- @return Part
 function diagnostics.hint(bufnr)
   return _diagnostics(bufnr, vim.diagnostic.severity.HINT)
 end
 
----Generate global statusline
----@return string
+--- Generate global statusline
+--- @return string
 function MyStatusline()
   return table.concat({
     mode().value,
@@ -262,8 +262,8 @@ function MyStatusline()
   })
 end
 
----Generate the active winbar
----@return string
+--- Generate the active winbar
+--- @return string
 function MyWinBarActive()
   local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
   return table.concat({
@@ -283,8 +283,8 @@ function MyWinBarActive()
   })
 end
 
----Generate the inactive winbar
----@return string
+--- Generate the inactive winbar
+--- @return string
 function MyWinBarInactive()
   local bufnr = vim.api.nvim_win_get_buf(vim.g.statusline_winid)
   return table.concat({
@@ -304,8 +304,8 @@ function MyWinBarInactive()
   })
 end
 
----Generate the status column
----@return string
+--- Generate the status column
+--- @return string
 function MyStatusColumn()
   return table.concat({
     vim.wo[vim.g.statusline_winid].foldenable and '%C ' or '',
@@ -314,9 +314,9 @@ function MyStatusColumn()
   })
 end
 
----Get tab title string
----@param bufnr? integer Buffer or current buffer
----@return string
+--- Get tab title string
+--- @param bufnr? integer Buffer or current buffer
+--- @return string
 local function tab_entry_title(bufnr)
   bufnr = bufnr or 0
   local name = vim.api.nvim_buf_get_name(bufnr)
@@ -335,9 +335,9 @@ local function tab_entry_title(bufnr)
   end
 end
 
----Get tab entry part
----@param index integer Tab index
----@return Part
+--- Get tab entry part
+--- @param index integer Tab index
+--- @return Part
 local function tabline_entry(index)
   local bufnr = vim.fn.tabpagebuflist(index)[vim.fn.tabpagewinnr(index)]
   local entry = table.concat({
@@ -355,8 +355,8 @@ local function tabline_entry(index)
   return Part:new(entry):hl('TabLine').value
 end
 
----Generate tab line
----@return string
+--- Generate tab line
+--- @return string
 function MyTabLine()
   local line = ''
   for i = 1, vim.fn.tabpagenr('$') do
@@ -366,7 +366,7 @@ function MyTabLine()
   return line
 end
 
----Set up auto-command to create statusline colors on ColorScheme
+--- Set up auto-command to create statusline colors on ColorScheme
 function M.setup_colors()
   local augroup = vim.api.nvim_create_augroup('rkernan.statusline.colors', { clear = true })
   vim.api.nvim_create_autocmd({'VimEnter', 'ColorScheme'}, {
@@ -401,7 +401,7 @@ function M.setup_colors()
   })
 end
 
----Set up auto-command to redraw the statusline when necessary
+--- Set up auto-command to redraw the statusline when necessary
 function M.setup_redraw()
   local function redraw_status()
     vim.schedule(function () vim.cmd.redrawstatus() end)
@@ -412,7 +412,7 @@ function M.setup_redraw()
   vim.api.nvim_create_autocmd({ 'User' }, { pattern = { 'GitHeadUpdate', 'MiniDiffUpdated' }, group = augroup, callback = redraw_status })
 end
 
----Set up auto-command to set active/inactive winbar
+--- Set up auto-command to set active/inactive winbar
 function M.setup_winbar()
   local function should_skip(bufnr)
     bufnr = bufnr or 0

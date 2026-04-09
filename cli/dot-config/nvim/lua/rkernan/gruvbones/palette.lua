@@ -12,7 +12,7 @@ local function gen_specs(palette, bg)
   local specs = lush.extends({ base_specs }).with(function (injected_functions)
     local sym = injected_functions.sym
     return {
-      ---@diagnostic disable: undefined-global
+      --- @diagnostic disable: undefined-global
 
       -- no italic comments
       Comment({ base_specs.Comment, gui = 'none' }),
@@ -32,12 +32,12 @@ local function gen_specs(palette, bg)
       sym('@float')({ Float }),
 
       -- sky booleans
-      ---@diagnostic disable-next-line: undefined-field
+      --- @diagnostic disable-next-line: undefined-field
       Boolean({ Constant, fg = palette.sky, gui = 'italic' }),
       sym('@boolean')({ Boolean }),
 
       -- rose italic statements
-      ---@diagnostic disable-next-line: undefined-field
+      --- @diagnostic disable-next-line: undefined-field
       Statement({ base_specs.Statement, fg = palette.rose, gui = 'italic' }),
       sym('@statement')({ Statement }),
 
@@ -58,7 +58,7 @@ local function gen_specs(palette, bg)
       -- tabnine
       TabnineSuggestion({ fg = base_specs.Normal.fg.da(50), gui = 'italic' }),
 
-      ---@diagnostic enable: undefined-global
+      --- @diagnostic enable: undefined-global
     }
   end)
 
