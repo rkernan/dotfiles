@@ -145,6 +145,7 @@ if __name__ == "__main__":
                 ):
                     if not shutil.which(bin):
                         check_call(f"uv tool install {bin}")
+                    checkhealth_bins = [*checkhealth_bins, bin]
                 check_call("uv tool upgrade --all")
                 check_call("uv python upgrade")
 
