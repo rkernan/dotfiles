@@ -119,6 +119,9 @@ statusline.setup_colors()
 statusline.setup_redraw()
 statusline.setup_winbar()
 
+local cmdline = require('rkernan.cmdline')
+cmdline.setup_floating_cmdline()
+
 local mini_misc = require('mini.misc')
 mini_misc.setup_auto_root({ '.git', '.venv', '.editorconfig' })
 mini_misc.setup_restore_cursor()

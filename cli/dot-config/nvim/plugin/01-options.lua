@@ -62,7 +62,6 @@ vim.opt.shortmess = vim.opt.shortmess:append('aIcC')
 vim.opt.pumblend = 10
 vim.opt.pumheight = 10
 
-vim.opt.winblend = 10
 vim.opt.winborder = 'rounded'
 
 vim.opt.listchars = {
@@ -125,3 +124,10 @@ if vim.fn.executable('fd') then
 
   vim.opt.findfunc = 'v:lua.FindFiles'
 end
+
+require('vim._core.ui2').enable({
+  enable = true,
+  msg = {
+    targets = 'msg',
+  },
+})
