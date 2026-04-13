@@ -450,19 +450,20 @@ function M.setup_redraw()
 end
 
 --- Set up auto-command to set active/inactive winbar
-function M.setup_winbar()
+--- @param skip? { buftypes?: string[], filetypes?: string[]}
+function M.setup_winbar(skip)
+  skip = skip or {}
+  vim.tbl_deep_extend('force', { buftypes = {}, filetypes = {} }, skip)
+
   local function should_skip(bufnr)
     bufnr = bufnr or 0
-    for _, pattern in ipairs({ 'nofile', 'help', 'prompt', 'quickfix', 'terminal' }) do
-      if vim.bo[bufnr].buftype:find(pattern) then
-        return true
-      end
-    end
-    return false
+    return vim.list_contains(skip.buftypes, vim.bo[bufnr].buftype)
+      or vim.list_contains(skip.filetypes, vim.bo[bufnr].filetype)
   end
 
   local augroup = vim.api.nvim_create_augroup('rkernan.statusline.winbar', { clear = true })
-  vim.api.nvim_create_autocmd({ 'BufWinEnter', 'FileType', 'WinEnter' }, {
+
+  vim.api.nvim_create_autocmd({ 'BufNew', 'BufWinEnter' }, {
     group = augroup,
     callback = function(args)
       if should_skip(args.buf) then
@@ -471,7 +472,8 @@ function M.setup_winbar()
       vim.opt_local.winbar = '%!v:lua.MyWinBarActive()'
     end,
   })
-  vim.api.nvim_create_autocmd('WinLeave', {
+
+  vim.api.nvim_create_autocmd('BufWinLeave', {
     group = augroup,
     callback = function(args)
       if should_skip(args.buf) then

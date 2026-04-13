@@ -114,10 +114,42 @@ vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, {
   end,
 })
 
+local winbar_skip = {
+  buftypes = { 'nofile', 'help', 'prompt', 'quickfix', 'terminal' },
+  filetypes = { 'dap-view', 'dap-view-term', 'dap-repl', 'pager' },
+}
+
+local function special_buffer_settings(bufnr)
+  vim.opt_local.statusline = nil
+  vim.opt_local.number = true
+  vim.opt_local.relativenumber = false
+  vim.opt_local.statuscolumn = '%=%l '
+  vim.opt_local.signcolumn = 'no'
+  vim.opt_local.winbar = nil
+  vim.keymap.set('n', 'q', '<C-w>q', { silent = true, buf = bufnr })
+end
+
+vim.api.nvim_create_autocmd('OptionSet', {
+  pattern = { 'buftype' },
+  callback = function(args)
+    if vim.list_contains(winbar_skip.buftypes, vim.bo[args.buf].buftype) then
+      special_buffer_settings(args.buf)
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = winbar_skip.filetypes,
+  group = augroup,
+  callback = function(args)
+    special_buffer_settings(args.buf)
+  end,
+})
+
 local statusline = require('rkernan.statusline')
 statusline.setup_colors()
 statusline.setup_redraw()
-statusline.setup_winbar()
+statusline.setup_winbar(winbar_skip)
 
 local cmdline = require('rkernan.cmdline')
 cmdline.setup_floating_cmdline()
