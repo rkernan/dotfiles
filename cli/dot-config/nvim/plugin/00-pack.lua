@@ -1,5 +1,7 @@
 vim.pack.add({
   'https://github.com/NMAC427/guess-indent.nvim.git',
+  'https://github.com/igorlfs/nvim-dap-view.git',
+  'https://github.com/mfussenegger/nvim-dap.git',
   'https://github.com/mfussenegger/nvim-lint.git',
   'https://github.com/neovim/nvim-lspconfig.git',
   'https://github.com/nvim-mini/mini.ai.git',
@@ -44,6 +46,8 @@ require('conform').setup({
     lsp_format = 'fallback',
   },
 })
+
+require('dap-view').setup({ winbar = { controls = { enabled = true } } })
 
 require('mini.ai').setup()
 require('mini.align').setup()
