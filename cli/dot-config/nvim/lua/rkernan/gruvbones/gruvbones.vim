@@ -190,9 +190,6 @@ if &background ==# 'dark'
     highlight Italic guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=italic
     highlight! link @markup.italic Italic
     highlight! link @markup.italic.markdown Italic
-    highlight LeapBackdrop guifg=#555555 guibg=NONE guisp=NONE blend=NONE gui=nocombine
-    highlight LeapLabel guifg=#F892AF guibg=NONE guisp=NONE blend=NONE gui=bold
-    highlight LeapMatch guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=bold,underline,nocombine
     highlight LineNr guifg=#6A6A6A guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight! link CocCodeLens LineNr
     highlight! link LspCodeLens LineNr
@@ -606,9 +603,6 @@ else
     highlight Italic guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=italic
     highlight! link @markup.italic Italic
     highlight! link @markup.italic.markdown Italic
-    highlight LeapBackdrop guifg=#CAB965 guibg=NONE guisp=NONE blend=NONE gui=nocombine
-    highlight LeapLabel guifg=#D4239E guibg=NONE guisp=NONE blend=NONE gui=bold
-    highlight LeapMatch guifg=NONE guibg=NONE guisp=NONE blend=NONE gui=bold,underline,nocombine
     highlight LineNr guifg=#AA9C54 guibg=NONE guisp=NONE blend=NONE gui=NONE
     highlight! link CocCodeLens LineNr
     highlight! link LspCodeLens LineNr
