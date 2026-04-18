@@ -112,37 +112,7 @@ vim.api.nvim_create_user_command('PackUpdate', function()
   vim.pack.update()
 end, { desc = 'Update vim.pack plugins', nargs = 0 })
 
-vim.api.nvim_create_user_command('PackClean', function(args)
-  local to_del
-  if args.args ~= '' then
-    to_del = vim.iter(vim.split(args.args, '%s+')):totable()
-  else
-    to_del = vim
-      .iter(vim.pack.get())
-      :filter(function(x)
-        return not x.active
-      end)
-      :map(function(x)
-        return x.spec.name
-      end)
-      :totable()
-  end
-  -- delete the plugins
-  if #to_del > 0 then
-    vim.pack.del(to_del, { force = true })
-  end
-end, {
-  desc = 'Clean vim.pack plugins',
-  nargs = '?',
-  complete = function()
-    return vim
-      .iter(vim.pack.get())
-      :map(function(x)
-        return x.spec.name
-      end)
-      :totable()
-  end,
-})
+require('rkernan.pack').setup_user_commands()
 
 if vim.fn.executable('fd') then
   function FindFiles(cmdarg)
