@@ -44,13 +44,18 @@ vim.api.nvim_create_autocmd('PackChanged', {
 })
 
 function M.setup_user_commands()
-  local function complete()
-    return vim
+  local function complete(lead)
+    local names = vim
       .iter(vim.pack.get())
       :map(function(x)
         return x.spec.name
       end)
       :totable()
+    if lead ~= '' then
+      return vim.fn.matchfuzzy(names, lead)
+    else
+      return names
+    end
   end
 
   local function split_args(args)
