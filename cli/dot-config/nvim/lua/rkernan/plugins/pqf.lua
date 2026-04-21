@@ -1,4 +1,4 @@
-vim.pack.add({ 'https://github.com/yorickpeterse/nvim-pqf.git' })
+vim.pack.add({ 'https://github.com/yorickpeterse/nvim-pqf.git' }, { confirm = false })
 
 local signs = require('rkernan.diagnostic').signs
 require('pqf').setup({

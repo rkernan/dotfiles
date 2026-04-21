@@ -15,7 +15,7 @@ vim.pack.add({
   'https://github.com/nvim-mini/mini.operators.git',
   'https://github.com/nvim-mini/mini.pairs.git',
   'https://github.com/nvim-mini/mini.surround.git',
-})
+}, { confirm = false })
 
 require('mini.ai').setup()
 require('mini.align').setup()

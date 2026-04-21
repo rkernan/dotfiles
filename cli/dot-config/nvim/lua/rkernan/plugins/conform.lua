@@ -1,4 +1,4 @@
-vim.pack.add({ 'https://github.com/stevearc/conform.nvim.git' })
+vim.pack.add({ 'https://github.com/stevearc/conform.nvim.git' }, { confirm = false })
 
 require('conform').setup({
   formatters_by_ft = {

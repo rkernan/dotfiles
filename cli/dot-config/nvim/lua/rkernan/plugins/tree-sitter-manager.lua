@@ -1,4 +1,4 @@
-vim.pack.add({ 'https://github.com/romus204/tree-sitter-manager.nvim.git' })
+vim.pack.add({ 'https://github.com/romus204/tree-sitter-manager.nvim.git' }, { confirm = false })
 require('tree-sitter-manager').setup({
   ensure_installed = {
     'bash',

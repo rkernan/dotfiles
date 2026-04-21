@@ -25,7 +25,7 @@ vim.api.nvim_create_autocmd('PackChanged', {
   end,
 })
 
-vim.pack.add({ 'https://github.com/codota/tabnine-nvim.git' })
+vim.pack.add({ 'https://github.com/codota/tabnine-nvim.git' }, { confirm = false })
 
 require('tabnine').setup({
   disable_auto_comment = true,
