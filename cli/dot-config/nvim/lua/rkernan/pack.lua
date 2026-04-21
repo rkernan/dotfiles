@@ -1,5 +1,48 @@
 local M = {}
 
+local on_install = {}
+local on_update = {}
+local on_delete = {}
+
+--- Run when package is installed
+--- @param name string
+--- @param callback fun(vim.pack.Spec, boolean, string)
+function M.on_install(name, callback)
+  on_install[name] = callback
+end
+
+--- Run when package is updated
+--- @param name string
+--- @param callback fun(vim.pack.Spec, boolean, string)
+function M.on_update(name, callback)
+  on_update[name] = callback
+end
+
+--- Run when package is deleted
+--- @param name string
+--- @param callback fun(vim.pack.Spec, boolean, string)
+function M.on_delete(name, callback)
+  on_delete[name] = callback
+end
+
+local augroup = vim.api.nvim_create_augroup('rkernan.pack', { clear = true })
+vim.api.nvim_create_autocmd('PackChanged', {
+  group = augroup,
+  callback = function(event)
+    local active = event.data.active
+    local spec = event.data.spec
+    local path = event.data.path
+    local kind = event.data.kind
+    if kind == 'install' and on_install[spec.name] ~= nil then
+      on_install[spec.name](spec, active, path)
+    elseif kind == 'update' and on_update[spec.name] ~= nil then
+      on_update[spec.name](spec, active, path)
+    elseif kind == 'delete' and on_delete[spec.name] ~= nil then
+      on_delete[spec.name](spec, active, path)
+    end
+  end,
+})
+
 function M.setup_user_commands()
   local function complete()
     return vim

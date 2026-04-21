@@ -3,9 +3,8 @@ if tabnine_host == nil then
   return
 end
 
-local function build()
-  local spec = vim.pack.get({ 'tabnine-nvim' })
-  local path = spec[1].path
+--- @param path string
+local function build_tabnine(_, _, path)
   vim.cmd('tabnew | terminal ' .. table.concat({
     ('cd "%s"'):format(path),
     ('./dl_binaries.sh %s/update'):format(tabnine_host),
@@ -14,16 +13,11 @@ local function build()
   }, ' && '))
 end
 
-local augroup = vim.api.nvim_create_augroup('rkernan.tabnine', { clear = true })
-vim.api.nvim_create_autocmd('PackChanged', {
-  group = augroup,
-  callback = function(event)
-    local name, kind = event.data.spec.name, event.data.kind
-    if name == 'tabnine-nvim' and kind ~= 'delete' then
-      build()
-    end
-  end,
-})
+vim.api.nvim_create_user_command('TabnineBuild', build_tabnine, { desc = 'Build tabnine' })
+
+local mypack = require('rkernan.pack')
+mypack.on_install('tabnine-nvim', build_tabnine)
+mypack.on_update('tabnine-nvim', build_tabnine)
 
 vim.pack.add({ 'https://github.com/codota/tabnine-nvim.git' }, { confirm = false })
 
@@ -52,5 +46,3 @@ require('tabnine').setup({
     end,
   },
 })
-
-vim.api.nvim_create_user_command('TabnineBuild', build, { desc = 'Build tabnine' })
