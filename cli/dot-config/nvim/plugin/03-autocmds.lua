@@ -106,14 +106,6 @@ vim.api.nvim_create_autocmd({ 'DirChanged', 'VimEnter', 'VimResume' }, {
   end,
 })
 
--- lint on save
-vim.api.nvim_create_autocmd({ 'BufReadPost', 'BufWritePost' }, {
-  group = augroup,
-  callback = function()
-    require('lint').try_lint()
-  end,
-})
-
 local winbar_skip = {
   buftypes = { 'nofile', 'help', 'prompt', 'quickfix', 'terminal' },
   filetypes = { 'dap-view', 'dap-view-term', 'dap-repl', 'pager' },

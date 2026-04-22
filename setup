@@ -98,6 +98,7 @@ if __name__ == "__main__":
             "lua-language-server",
             "nvim",
             "pre-commit",
+            "prettier",
             "rg",
             "rustup",
             "stow",

@@ -3,23 +3,11 @@ repos:
   rev: v6.0.0
   hooks:
   - id: check-added-large-files
+  - id: check-executables-have-shebangs
+  - id: check-json
   - id: check-shebang-scripts-are-executable
+  - id: check-symlinks
+  - id: check-toml
   - id: check-yaml
   - id: end-of-file-fixer
   - id: trailing-whitespace
-  - id: check-json
-  - id: check-symlinks
-  - id: pretty-format-json
-    args: [--autofix]
-- repo: https://github.com/pycqa/isort
-  rev: 8.0.1
-  hooks:
-  - id: isort
-- repo: https://github.com/psf/black
-  rev: 26.3.1
-  hooks:
-  - id: black
-- repo: https://github.com/JohnnyMorganz/StyLua
-  rev: v2.4.1
-  hooks:
-  - id: stylua-system
