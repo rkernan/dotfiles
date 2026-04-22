@@ -5,6 +5,7 @@ local formatters_by_ft = {
   json = { 'prettier' },
   just = { 'just' },
   lua = { 'stylua' },
+  markdown = { 'prettier' },
   python = { 'isort', 'black' },
   yaml = { 'prettier' },
 }
