@@ -21,6 +21,7 @@ require('tree-sitter-manager').setup({
     'jinja',
     'jinja_inline',
     'json',
+    'just',
     'lua',
     'make',
     'markdown',
