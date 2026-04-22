@@ -44,11 +44,15 @@ vim.api.nvim_create_autocmd('PackChanged', {
 })
 
 function M.setup_user_commands()
-  local function complete(lead)
+  local function complete(lead, cmdline)
+    local present = vim.list_slice(vim.fn.split(cmdline, ' '), 2, #cmdline)
     local names = vim
       .iter(vim.pack.get())
       :map(function(x)
         return x.spec.name
+      end)
+      :filter(function(x)
+        return not vim.list_contains(present, x)
       end)
       :totable()
     if lead ~= '' then
