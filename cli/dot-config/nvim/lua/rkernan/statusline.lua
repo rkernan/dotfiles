@@ -87,6 +87,12 @@ local function mode()
   return Part:new(string.format(' %s ', current_mode.shortname)):hl(current_mode.hl)
 end
 
+--- Get current recording register
+--- @return Part
+local function reg_recording()
+  return Part:new(vim.fn.reg_recording())
+end
+
 --- Get environment part
 --- @return Part
 local function environment(variable)
@@ -262,6 +268,7 @@ function MyStatusline()
       :format('  %s')
       :hl('StatusLineVirtualEnv').value,
     cwd():format(' %s').value,
+    reg_recording():format(' @%s'):hl('StatusLineRegRecording').value,
     '%=',
     tabsummary():hl('StatusLineDim').value,
     fileformat():format(' %s'):hl('StatusLineDim').value,
@@ -420,6 +427,7 @@ function M.setup_colors()
       )
       vim.api.nvim_set_hl(0, 'StatusLineGitHead', { fg = vim.g.terminal_color_5 })
       vim.api.nvim_set_hl(0, 'StatusLineVirtualEnv', { fg = vim.g.terminal_color_6 })
+      vim.api.nvim_set_hl(0, 'StatusLineRegRecording', { fg = vim.g.terminal_color_1 })
       vim.api.nvim_set_hl(0, 'WinBarModified', { fg = vim.g.terminal_color_2 })
       vim.api.nvim_set_hl(0, 'WinBarReadonly', { fg = vim.g.terminal_color_1 })
       vim.api.nvim_set_hl(0, 'WinBarDiffAdd', { fg = minidiff_add.fg })
