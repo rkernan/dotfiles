@@ -270,7 +270,7 @@ function MyStatusline()
     cwd():format(' %s').value,
     reg_recording():format(' @%s'):hl('StatusLineRegRecording').value,
     '%=',
-    tabsummary():hl('StatusLineDim').value,
+    tabsummary():format('%s '):hl('StatusLineDim').value,
     fileformat():format(' %s'):hl('StatusLineDim').value,
     fileencoding():format(' %s'):hl('StatusLineDim').value,
   })
