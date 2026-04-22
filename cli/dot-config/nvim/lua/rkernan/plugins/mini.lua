@@ -27,7 +27,10 @@ require('mini.operators').setup()
 require('mini.pairs').setup()
 require('mini.surround').setup()
 require('mini.diff').setup({ view = { style = 'number' } })
-require('mini.notify').setup({ window = { config = { row = 1 } } })
+require('mini.notify').setup({
+  lsp_progress = { enable = false },
+  window = { config = { row = 1 } },
+})
 require('mini.icons').setup()
 require('mini.icons').tweak_lsp_kind()
 local hipatterns = require('mini.hipatterns')
