@@ -1,47 +1,36 @@
 local M = {}
 
-local on_install = {}
-local on_update = {}
-local on_delete = {}
-
---- Run when package is installed
---- @param name string
---- @param callback fun(vim.pack.Spec, boolean, string)
-function M.on_install(name, callback)
-  on_install[name] = callback
-end
-
---- Run when package is updated
---- @param name string
---- @param callback fun(vim.pack.Spec, boolean, string)
-function M.on_update(name, callback)
-  on_update[name] = callback
-end
-
---- Run when package is deleted
---- @param name string
---- @param callback fun(vim.pack.Spec, boolean, string)
-function M.on_delete(name, callback)
-  on_delete[name] = callback
-end
-
-local augroup = vim.api.nvim_create_augroup('rkernan.pack', { clear = true })
-vim.api.nvim_create_autocmd('PackChanged', {
-  group = augroup,
-  callback = function(event)
-    local active = event.data.active
-    local spec = event.data.spec
-    local path = event.data.path
-    local kind = event.data.kind
-    if kind == 'install' and on_install[spec.name] ~= nil then
-      on_install[spec.name](spec, active, path)
-    elseif kind == 'update' and on_update[spec.name] ~= nil then
-      on_update[spec.name](spec, active, path)
-    elseif kind == 'delete' and on_delete[spec.name] ~= nil then
-      on_delete[spec.name](spec, active, path)
+function M.require_plugins(module)
+  local module_path, _ = string.gsub(module, '%.', '/')
+  local plugin_root = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h:h')
+  for file in vim.fs.dir(vim.fs.joinpath(plugin_root, module_path)) do
+    if file:match('%.lua$') then
+      local name = file:gsub('%.lua$', '')
+      if name ~= 'init' then
+        require(module .. '.' .. name)
+      end
     end
-  end,
-})
+  end
+end
+
+function M.setup_hooks()
+  local augroup = vim.api.nvim_create_augroup('rkernan.pack', { clear = true })
+  vim.api.nvim_create_autocmd('PackChanged', {
+    group = augroup,
+    callback = function(ev)
+      local spec = ev.data.spec
+      local path = ev.data.path
+      local kind = ev.data.kind
+      if kind == 'install' and spec.data.on_install ~= nil then
+        spec.data.on_install(spec, path)
+      elseif kind == 'update' and spec.data.on_update ~= nil then
+        spec.data.on_update(spec, path)
+      elseif kind == 'delete' and spec.data.on_delete ~= nil then
+        spec.data.on_delete(spec, path)
+      end
+    end,
+  })
+end
 
 function M.setup_user_commands()
   local function complete(lead, cmdline)

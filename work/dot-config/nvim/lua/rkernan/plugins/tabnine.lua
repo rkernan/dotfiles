@@ -15,11 +15,12 @@ end
 
 vim.api.nvim_create_user_command('TabnineBuild', build_tabnine, { desc = 'Build tabnine' })
 
-local mypack = require('rkernan.pack')
-mypack.on_install('tabnine-nvim', build_tabnine)
-mypack.on_update('tabnine-nvim', build_tabnine)
-
-vim.pack.add({ 'https://github.com/codota/tabnine-nvim.git' }, { confirm = false })
+vim.pack.add({
+  {
+    src = 'https://github.com/codota/tabnine-nvim.git',
+    data = { on_install = build_tabnine, on_update = build_tabnine },
+  },
+}, { confirm = false })
 
 require('tabnine').setup({
   disable_auto_comment = true,
