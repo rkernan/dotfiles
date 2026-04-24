@@ -57,11 +57,11 @@ function M.setup_hooks()
       local spec = ev.data.spec
       local path = ev.data.path
       local kind = ev.data.kind
-      if kind == 'install' and spec.data.on_install ~= nil then
+      if kind == 'install' and vim.tbl_get(spec, 'data', 'on_install') ~= nil then
         spec.data.on_install(spec, path)
-      elseif kind == 'update' and spec.data.on_update ~= nil then
+      elseif kind == 'update' and vim.tbl_get(spec, 'data', 'on_update') ~= nil then
         spec.data.on_update(spec, path)
-      elseif kind == 'delete' and spec.data.on_delete ~= nil then
+      elseif kind == 'delete' and vim.tbl_get(spec, 'data', 'on_delete') ~= nil then
         spec.data.on_delete(spec, path)
       end
     end,
