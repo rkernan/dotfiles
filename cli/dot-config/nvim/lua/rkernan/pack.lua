@@ -1,9 +1,7 @@
 local M = {}
 
-local augroup = vim.api.nvim_create_augroup('rkernan.pack', { clear = true })
-local specs = { 'https://github.com/nvim-mini/mini.misc.git' }
-
 function M.require_plugins(module)
+  local specs = { 'https://github.com/nvim-mini/mini.misc.git' }
   local module_path, _ = string.gsub(module, '%.', '/')
   local plugin_root = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h:h')
   for file in vim.fs.dir(vim.fs.joinpath(plugin_root, module_path)) do
@@ -52,6 +50,7 @@ function M.require_plugins(module)
 end
 
 function M.setup_hooks()
+  local augroup = vim.api.nvim_create_augroup('rkernan.pack', { clear = true })
   vim.api.nvim_create_autocmd('PackChanged', {
     group = augroup,
     callback = function(ev)
