@@ -4,7 +4,7 @@ if tabnine_host == nil then
 end
 
 --- @param path string
-local function build_tabnine(_, _, path)
+local function build_tabnine(_, path)
   vim.cmd('tabnew | terminal ' .. table.concat({
     ('cd "%s"'):format(path),
     ('./dl_binaries.sh %s/update'):format(tabnine_host),
@@ -17,6 +17,7 @@ vim.api.nvim_create_user_command('TabnineBuild', build_tabnine, { desc = 'Build 
 
 return {
   src = 'https://github.com/codota/tabnine-nvim.git',
+  name = 'tabnine',
   data = {
     on_install = build_tabnine,
     on_update = build_tabnine,
