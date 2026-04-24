@@ -1,2 +1,5 @@
-vim.pack.add({ 'https://github.com/stevearc/oil.nvim.git' }, { confirm = false })
-require('oil').setup()
+return {
+  src = 'https://github.com/stevearc/oil.nvim.git',
+  name = 'oil',
+  data = { config = true },
+}

@@ -1,5 +1,23 @@
-vim.pack.add({
-  'https://github.com/igorlfs/nvim-dap-view.git',
-  'https://github.com/mfussenegger/nvim-dap.git',
-}, { confirm = false })
-require('dap-view').setup({ winbar = { controls = { enabled = true } } })
+return {
+  {
+    src = 'https://github.com/mfussenegger/nvim-dap.git',
+    name = 'dap',
+    data = {
+      when = 'later',
+    },
+  },
+  {
+    src = 'https://github.com/igorlfs/nvim-dap-view.git',
+    name = 'dap-view',
+    data = {
+      when = 'later',
+      config = {
+        winbar = {
+          controls = {
+            enabled = true,
+          },
+        },
+      },
+    },
+  },
+}

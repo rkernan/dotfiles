@@ -1,38 +1,10 @@
-vim.pack.add({ 'https://github.com/romus204/tree-sitter-manager.nvim.git' }, { confirm = false })
-require('tree-sitter-manager').setup({
-  ensure_installed = {
-    'bash',
-    'c',
-    'cmake',
-    'cpp',
-    'diff',
-    'dockerfile',
-    'editorconfig',
-    'fish',
-    'git_config',
-    'git_rebase',
-    'gitattributes',
-    'gitcommit',
-    'gitignore',
-    'go',
-    'groovy',
-    'java',
-    'javadoc',
-    'jinja',
-    'jinja_inline',
-    'json',
-    'just',
-    'lua',
-    'make',
-    'markdown',
-    'markdown_inline',
-    'python',
-    'rust',
-    'ssh_config',
-    'tmux',
-    'toml',
-    'vim',
-    'vimdoc',
-    'yaml',
+return {
+  src = 'https://github.com/romus204/tree-sitter-manager.nvim.git',
+  name = 'tree-sitter-manager',
+  data = {
+    when = 'event:FileType',
+    config = {
+      auto_install = true,
+    },
   },
-})
+}

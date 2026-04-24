@@ -1,5 +1,8 @@
 local M = {}
 
+local augroup = vim.api.nvim_create_augroup('rkernan.pack', { clear = true })
+local specs = { 'https://github.com/nvim-mini/mini.misc.git' }
+
 function M.require_plugins(module)
   local module_path, _ = string.gsub(module, '%.', '/')
   local plugin_root = vim.fn.fnamemodify(debug.getinfo(1, 'S').source:sub(2), ':p:h:h')
@@ -7,14 +10,48 @@ function M.require_plugins(module)
     if file:match('%.lua$') then
       local name = file:gsub('%.lua$', '')
       if name ~= 'init' then
-        require(module .. '.' .. name)
+        local new_specs = require(module .. '.' .. name)
+        if not vim.islist(new_specs) then
+          new_specs = { new_specs }
+        end
+        vim.list_extend(specs, new_specs)
       end
     end
   end
+
+  local safely = nil
+
+  vim.pack.add(specs, {
+    confirm = false,
+    load = function(plug_data)
+      local spec = plug_data.spec
+      local when = vim.tbl_get(spec, 'data', 'when')
+      if when == nil then
+        when = 'now'
+      end
+      local config = vim.tbl_get(spec, 'data', 'config')
+
+      if safely == nil then
+        -- first plugin is always mini.misc
+        vim.cmd.packadd(spec.name)
+        safely = require('mini.misc').safely
+      else
+        safely(when, function()
+          vim.cmd.packadd(spec.name)
+          if type(config) == 'function' then
+            config()
+          elseif type(config) == 'table' then
+            require(spec.name).setup(config)
+          elseif config == true then
+            require(spec.name).setup()
+          end
+        end)
+      end
+    end,
+  })
 end
 
 function M.setup_hooks()
-  local augroup = vim.api.nvim_create_augroup('rkernan.pack', { clear = true })
   vim.api.nvim_create_autocmd('PackChanged', {
     group = augroup,
     callback = function(ev)
@@ -57,6 +94,10 @@ function M.setup_user_commands()
     end
     return nil
   end
+
+  vim.api.nvim_create_user_command('PackGet', function()
+    vim.print(vim.pack.get())
+  end, { desc = 'Get vim.pack plugins', nargs = 0 })
 
   vim.api.nvim_create_user_command('PackUpdate', function(args)
     local names = split_args(args.args)
