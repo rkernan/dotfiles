@@ -8,7 +8,7 @@ function M.require_plugins(module)
     if file:match('%.lua$') then
       local name = file:gsub('%.lua$', '')
       if name ~= 'init' then
-        local new_specs = require(module .. '.' .. name)
+        local new_specs = require(('%s.%s'):format(module, name))
         if not vim.islist(new_specs) then
           new_specs = { new_specs }
         end
@@ -54,15 +54,9 @@ function M.setup_hooks()
   vim.api.nvim_create_autocmd('PackChanged', {
     group = augroup,
     callback = function(ev)
-      local spec = ev.data.spec
-      local path = ev.data.path
-      local kind = ev.data.kind
-      if kind == 'install' and vim.tbl_get(spec, 'data', 'on_install') ~= nil then
-        spec.data.on_install(spec, path)
-      elseif kind == 'update' and vim.tbl_get(spec, 'data', 'on_update') ~= nil then
-        spec.data.on_update(spec, path)
-      elseif kind == 'delete' and vim.tbl_get(spec, 'data', 'on_delete') ~= nil then
-        spec.data.on_delete(spec, path)
+      local hook = vim.tbl_get(ev.data.spec, 'data', ('on_%s'):format(ev.data.kind))
+      if hook ~= nil then
+        hook(ev.data.spec, ev.data.path)
       end
     end,
   })
