@@ -36,12 +36,10 @@ function M.require_plugins(module)
       else
         safely(when, function()
           vim.cmd.packadd(spec.name)
-          if type(config) == 'function' then
+          if vim.is_callable(config) then
             config()
-          elseif type(config) == 'table' then
-            require(spec.name).setup(config)
-          elseif config == true then
-            require(spec.name).setup()
+          elseif config then
+            require(spec.name).setup(config ~= true and config or nil)
           end
         end)
       end
