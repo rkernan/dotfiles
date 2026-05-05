@@ -21,6 +21,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 vim.api.nvim_create_autocmd('BufWritePre', {
   callback = function(event)
     local file = vim.uv.fs_realpath(event.match) or event.match
+    if file:match('^%w+://') then
+      return
+    end
     vim.fn.mkdir(vim.fn.fnamemodify(file, ':p:h'), 'p')
   end,
   group = augroup,
