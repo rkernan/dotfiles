@@ -3,12 +3,7 @@ local M = {}
 --- Summarize current tab setings
 function M.summarize_tabs()
   vim.notify(
-    string.format(
-      'shiftwidth = %d, tabstop = %d, expandtab = %s',
-      vim.bo.shiftwidth,
-      vim.bo.tabstop,
-      vim.bo.expandtab
-    ),
+    string.format('shiftwidth = %d, tabstop = %d, expandtab = %s', vim.bo.shiftwidth, vim.bo.tabstop, vim.bo.expandtab),
     vim.log.levels.INFO
   )
 end

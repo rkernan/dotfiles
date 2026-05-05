@@ -2,18 +2,8 @@
 vim.keymap.set('n', 'Q', '<NOP>')
 
 -- only move over real lines when v:count > 0
-vim.keymap.set(
-  { 'n', 'x' },
-  'j',
-  "v:count == 0 ? 'gj' : 'j'",
-  { desc = 'Next line', expr = true, silent = true }
-)
-vim.keymap.set(
-  { 'n', 'x' },
-  'k',
-  "v:count == 0 ? 'gk' : 'k'",
-  { desc = 'Previous line', expr = true, silent = true }
-)
+vim.keymap.set({ 'n', 'x' }, 'j', "v:count == 0 ? 'gj' : 'j'", { desc = 'Next line', expr = true, silent = true })
+vim.keymap.set({ 'n', 'x' }, 'k', "v:count == 0 ? 'gk' : 'k'", { desc = 'Previous line', expr = true, silent = true })
 
 -- indent without leaving visual mode
 vim.keymap.set('x', '>', '>gv', { desc = 'Increase indent' })
@@ -61,32 +51,14 @@ end, { desc = 'Buffers' })
 
 -- native fuzzy finder
 vim.keymap.set('c', '<M-e>', '<Home><S-Right><C-w>edit<End>', { desc = 'change command to :edit' })
-vim.keymap.set(
-  'c',
-  '<C-s>',
-  '<Home><S-Right><C-w>split<End>',
-  { desc = 'change command to :split' }
-)
-vim.keymap.set(
-  'c',
-  '<C-v>',
-  '<Home><S-Right><C-w>vsplit<End>',
-  { desc = 'change command to :vsplit' }
-)
-vim.keymap.set(
-  'c',
-  '<C-t>',
-  '<Home><S-Right><C-w>tabnew<End>',
-  { desc = 'change command to :tabnew' }
-)
+vim.keymap.set('c', '<C-s>', '<Home><S-Right><C-w>split<End>', { desc = 'change command to :split' })
+vim.keymap.set('c', '<C-v>', '<Home><S-Right><C-w>vsplit<End>', { desc = 'change command to :vsplit' })
+vim.keymap.set('c', '<C-t>', '<Home><S-Right><C-w>tabnew<End>', { desc = 'change command to :tabnew' })
 vim.keymap.set('c', '<M-f>', '<Home><S-Right><C-w>find<End>', { desc = 'change command to :find' })
 vim.keymap.set('c', '<M-d>', function()
   local cmdline = vim.fn.split(vim.fn.getcmdline(), ' ')
   if #cmdline ~= 2 or vim.uv.fs_realpath(vim.fn.expand(cmdline[2])) == nil then
     return
   end
-  vim.fn.feedkeys(
-    vim.api.nvim_replace_termcodes('<C-u>edit ' .. vim.fs.dirname(cmdline[2]), true, true, true),
-    'c'
-  )
+  vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-u>edit ' .. vim.fs.dirname(cmdline[2]), true, true, true), 'c')
 end, { desc = 'change command to :edit directory' })

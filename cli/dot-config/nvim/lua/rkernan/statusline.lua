@@ -263,10 +263,7 @@ function MyStatusline()
   return table.concat({
     mode().value,
     Part:new(vim.g.git_head or ''):format('  %s'):hl('StatusLineGitHead').value,
-    environment('VIRTUAL_ENV_PROMPT')
-      :apply(vim.fs.basename)
-      :format('  %s')
-      :hl('StatusLineVirtualEnv').value,
+    environment('VIRTUAL_ENV_PROMPT'):apply(vim.fs.basename):format('  %s'):hl('StatusLineVirtualEnv').value,
     cwd():format(' %s').value,
     reg_recording():format(' @%s'):hl('StatusLineRegRecording').value,
     '%=',
@@ -390,41 +387,16 @@ function M.setup_colors()
       local minidiff_add = vim.api.nvim_get_hl(0, { name = 'MiniDiffSignAdd', link = false })
       local minidiff_change = vim.api.nvim_get_hl(0, { name = 'MiniDiffSignChange', link = false })
       local minidiff_delete = vim.api.nvim_get_hl(0, { name = 'MiniDiffSignDelete', link = false })
-      local diagnostics_error =
-        vim.api.nvim_get_hl(0, { name = 'DiagnosticSignError', link = false })
+      local diagnostics_error = vim.api.nvim_get_hl(0, { name = 'DiagnosticSignError', link = false })
       local diagnostics_warn = vim.api.nvim_get_hl(0, { name = 'DiagnosticSignWarn', link = false })
       local diagnostics_info = vim.api.nvim_get_hl(0, { name = 'DiagnosticSignInfo', link = false })
       local diagnostics_hint = vim.api.nvim_get_hl(0, { name = 'DiagnosticSignHint', link = false })
-      vim.api.nvim_set_hl(
-        0,
-        'StatusLineModeNormal',
-        { fg = statusline.bg, bg = vim.g.terminal_color_7 }
-      )
-      vim.api.nvim_set_hl(
-        0,
-        'StatusLineModeVisual',
-        { fg = statusline.bg, bg = vim.g.terminal_color_1 }
-      )
-      vim.api.nvim_set_hl(
-        0,
-        'StatusLineModeReplace',
-        { fg = statusline.bg, bg = vim.g.terminal_color_1 }
-      )
-      vim.api.nvim_set_hl(
-        0,
-        'StatusLineModeInsert',
-        { fg = statusline.bg, bg = vim.g.terminal_color_4 }
-      )
-      vim.api.nvim_set_hl(
-        0,
-        'StatusLineModeCommand',
-        { fg = statusline.bg, bg = vim.g.terminal_color_2 }
-      )
-      vim.api.nvim_set_hl(
-        0,
-        'StatusLineModeTerminal',
-        { fg = statusline.bg, bg = vim.g.terminal_color_3 }
-      )
+      vim.api.nvim_set_hl(0, 'StatusLineModeNormal', { fg = statusline.bg, bg = vim.g.terminal_color_7 })
+      vim.api.nvim_set_hl(0, 'StatusLineModeVisual', { fg = statusline.bg, bg = vim.g.terminal_color_1 })
+      vim.api.nvim_set_hl(0, 'StatusLineModeReplace', { fg = statusline.bg, bg = vim.g.terminal_color_1 })
+      vim.api.nvim_set_hl(0, 'StatusLineModeInsert', { fg = statusline.bg, bg = vim.g.terminal_color_4 })
+      vim.api.nvim_set_hl(0, 'StatusLineModeCommand', { fg = statusline.bg, bg = vim.g.terminal_color_2 })
+      vim.api.nvim_set_hl(0, 'StatusLineModeTerminal', { fg = statusline.bg, bg = vim.g.terminal_color_3 })
       vim.api.nvim_set_hl(0, 'StatusLineGitHead', { fg = vim.g.terminal_color_5 })
       vim.api.nvim_set_hl(0, 'StatusLineVirtualEnv', { fg = vim.g.terminal_color_6 })
       vim.api.nvim_set_hl(0, 'StatusLineRegRecording', { fg = vim.g.terminal_color_1 })

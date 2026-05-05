@@ -91,15 +91,11 @@ vim.api.nvim_create_autocmd({ 'DirChanged', 'VimEnter', 'VimResume' }, {
         'gc.auto=0',
         'rev-parse',
       }
-      vim.g.git_head = vim
-        .system(vim.list_extend(cmd, { '--abbrev-ref', 'HEAD' }), { text = true })
-        :wait().stdout
-        :gsub('%s+', '')
+      vim.g.git_head =
+        vim.system(vim.list_extend(cmd, { '--abbrev-ref', 'HEAD' }), { text = true }):wait().stdout:gsub('%s+', '')
       if vim.g.git_head == 'HEAD' then
-        vim.g.git_head = vim
-          .system(vim.list_extend(cmd, { '--short', 'HEAD' }), { text = true })
-          :wait().stdout
-          :gsub('%s+', '')
+        vim.g.git_head =
+          vim.system(vim.list_extend(cmd, { '--short', 'HEAD' }), { text = true }):wait().stdout:gsub('%s+', '')
       end
     else
       vim.g.git_head = nil
