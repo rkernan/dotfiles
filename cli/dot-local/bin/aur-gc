@@ -13,3 +13,8 @@ for d in "$AURDEST"/*; do
      printf '%s\n' "$d"
   fi
 done
+
+# Only keep latest version of packages
+aur repo --list-path | while read -r repo_path; do
+  paccache -c "${repo_path%/*}" -rk1
+done
