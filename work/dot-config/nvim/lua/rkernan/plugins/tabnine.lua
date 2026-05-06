@@ -13,7 +13,10 @@ local function build_tabnine(_, path)
   }, ' && '))
 end
 
-vim.api.nvim_create_user_command('TabnineBuild', build_tabnine, { desc = 'Build tabnine' })
+vim.api.nvim_create_user_command('TabnineBuild', function()
+  local path = vim.pack.get({ 'tabnine' })[1].path
+  build_tabnine(nil, path)
+end, { desc = 'Build tabnine' })
 
 return {
   src = 'https://github.com/codota/tabnine-nvim.git',
