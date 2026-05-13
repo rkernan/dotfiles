@@ -54,6 +54,8 @@ vim.opt.foldcolumn = 'auto:1'
 vim.opt.foldmethod = 'expr'
 vim.opt.foldlevel = 99
 
+vim.opt.conceallevel = 2
+
 vim.opt.wildmode = 'noselect:lastused,full'
 vim.opt.wildoptions = 'pum,tagfile,fuzzy'
 
