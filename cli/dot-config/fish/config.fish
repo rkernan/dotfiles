@@ -21,6 +21,7 @@ abbr mv mv -i
 abbr rm rm -i
 
 abbr sudo run0
+abbr sudoedit "run0 $EDITOR"
 
 subcommand_abbr git a add
 subcommand_abbr git aa "add --all"
