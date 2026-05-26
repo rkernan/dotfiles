@@ -20,6 +20,8 @@ abbr ln ln -i
 abbr mv mv -i
 abbr rm rm -i
 
+abbr sudo run0
+
 subcommand_abbr git a add
 subcommand_abbr git aa "add --all"
 subcommand_abbr git amend "commit --amend"
