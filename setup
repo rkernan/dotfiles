@@ -157,7 +157,7 @@ if __name__ == "__main__":
                 parents=True, exist_ok=True
             )
             print(termcode(f"==> {InstallTarget.GUI.value}", TerminalCode.BOLD))
-            checkhealth_bins = [*checkhealth_bins, "btop"]
+            checkhealth_bins = [*checkhealth_bins, "btop", "opencode"]
 
         if InstallTarget.WORK in targets:
             print(termcode(f"==> {InstallTarget.WORK.value}", TerminalCode.BOLD))
