@@ -5,7 +5,7 @@ import shutil
 import subprocess
 from argparse import ArgumentParser
 from contextlib import contextmanager
-from enum import Enum
+from enum import Enum, auto
 from pathlib import Path
 from typing import Generator
 
@@ -60,7 +60,7 @@ class InstallTarget(Enum):
     CHECKHEALTH = "checkhealth"
     CLI = "cli"
     GUI = "gui"
-    SYSTEM_ARCHLINUX = "system-archlinux"
+    SYSTEM_ARCHLINUX = "system-archlinux-nostow"
     WORK = "work"
     WSL = "wsl"
 
