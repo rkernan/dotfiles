@@ -1,0 +1,2 @@
+AUR_PACMAN_AUTH=run0
+AUR_PAGER=nvim -R
