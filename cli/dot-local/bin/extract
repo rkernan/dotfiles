@@ -29,7 +29,7 @@ if [ -f $1 ] ; then
       tar -vxzf $1
       ;;
     *.zip)
-      unzip $1
+      bsdtar xf $1
       ;;
     *.Z)
       uncompress $1
