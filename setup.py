@@ -91,7 +91,6 @@ STOW_TARGETS: frozenset[InstallTarget] = frozenset(
         InstallTarget.CLI,
         InstallTarget.GUI,
         InstallTarget.WORK,
-        InstallTarget.WSL,
     }
 )
 
